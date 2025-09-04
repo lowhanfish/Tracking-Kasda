@@ -21,7 +21,7 @@ function Home() {
                             <div>
 
                             </div>
-                            <div className='h_Home1'>Welcome to</div>
+                            <div className='h_Home1'>Selamat datang di</div>
                             {/* <div className='h_Home5'>Temp-React</div> */}
                             <div>
                                 <img
@@ -34,13 +34,13 @@ function Home() {
                                     }}
                                 />
                             </div>
-                            <div style={{ marginTop: 2 }} className='h_Home2'>This is an admin version template built with ReactJS. This template is a frontend that can be used as a basis for developing your application.</div>
-                            <div style={{ marginTop: 15 }} className='h_Home3'>
+                            <div style={{ marginTop: 2 }} className='h_Home2'>Aplikasi ini sebagai tools dalam melakukan pemantauan progress pencairan sekaligus sebagai Dashboard untuk melakukan monitoring dan evaluasi pelaksanaan kegiatan proses pencairan keuangan.</div>
+                            {/* <div style={{ marginTop: 15 }} className='h_Home3'>
                                 You can also contribute to the development of this application on the page
                             </div>
                             <div className='h_Home4'>
                                 <a className='h_Home4' href="https://github.com/lowhanfish/temp_react">https://github.com/lowhanfish/temp_react</a>
-                            </div>
+                            </div> */}
                             <div>
                                 <Button onClick={() => navigate('/Login')} sx={{ marginTop: 2, backgroundColor: 'rgba(0, 106, 255, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Login</Button>
                             </div>

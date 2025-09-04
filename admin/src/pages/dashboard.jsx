@@ -93,7 +93,7 @@ const Template1 = () => {
                         <div className='barContainer shaddow1'>
                             <div className='barLeft cyant1'>
                                 <AccountCircle className='shaddowText' sx={{ fontSize: 70, color: 'white' }} />
-                                <div className='barLeftText shaddowText'>User</div>
+                                <div className='barLeftText shaddowText'>Jml Pengajuan</div>
                             </div>
                             <div className='barRight cyant11'>
                                 <span className='barRightText shaddowText'>100</span>
@@ -141,13 +141,13 @@ const Template1 = () => {
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='chartContainer shaddow1'>
-                            <div className='dashboardTitle'>Bar Chart</div>
+                            <div className='dashboardTitle'>Frekwensi Pengajuan</div>
                             <BarChartx />
                         </div>
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='chartContainer shaddow1'>
-                            <div className='dashboardTitle'>Pie Chart</div>
+                            <div className='dashboardTitle'>Status</div>
                             <PieChartx />
                         </div>
                     </Grid>
@@ -157,7 +157,7 @@ const Template1 = () => {
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 12, xs: 12 }}>
                         <div className='chartContainer shaddow1' style={{ paddingBottom: 30 }}>
-                            <div className='dashboardTitle'>Time Series</div>
+                            <div className='dashboardTitle'>Time Series Pengajuan</div>
                             <LineChartx />
                         </div>
                     </Grid>
@@ -168,7 +168,7 @@ const Template1 = () => {
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='dashboardContainer shaddow1'>
-                            <div className='dashboardTitle'>New Data</div>
+                            <div className='dashboardTitle'>List Pengajuan</div>
                             <ListData />
                             <ListData />
                             <ListData />
@@ -179,27 +179,14 @@ const Template1 = () => {
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='dashboardContainer shaddow1'>
-                            <div className='dashboardTitle'>Our Process</div>
+                            <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
                             <Stepperx />
                         </div>
                     </Grid>
                 </Grid>
 
                 <hr className='hrku1' />
-                <Grid container spacing={2} sx={{ marginTop: 3 }}>
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div className='dashboardContainer shaddow1'>
-                            <div className='dashboardTitle'>New Video</div>
-                            <ListImage />
-                        </div>
-                    </Grid>
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div className='dashboardContainer shaddow1'>
-                            <div className='dashboardTitle'>New Picture</div>
-                            <ListImage />
-                        </div>
-                    </Grid>
-                </Grid>
+
 
 
             </div>
