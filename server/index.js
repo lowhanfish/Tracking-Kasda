@@ -11,9 +11,6 @@ const router = express.Router();
 app.use(router);
 
 app.use(express.json());
-// app.use(isLoggedIn);
-// app.use(checkTokenAndSetUser);
-
 
 router.get('/', (req, res) => {
   res.json({
@@ -23,6 +20,8 @@ router.get('/', (req, res) => {
 });
 
 // =============== START YOUR API ==================
+
+    app.use('/auth', auth)
 
     import checkAuth from "./api/checkAuth.js";
     app.use('/api/checkAuth', isLoggedIn, checkAuth)
