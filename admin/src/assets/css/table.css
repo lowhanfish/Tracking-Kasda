@@ -1,0 +1,69 @@
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    /* margin: 20px 0; */
+    border-radius: 5px;
+    /* radius lebih kecil */
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.124);
+    /* shadow luar */
+}
+
+.tabelku {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.tabelku thead {
+    /* background: #1576d1; */
+    background: #a5ceff;
+    /* warna dasar */
+    /* color: #fff; */
+}
+
+.tabelku th,
+.tabelku td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    /* garis bawah */
+    border-right: 1px solid #e5e7eb;
+    /* garis tengah */
+}
+
+.tabelku th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    /* font-size: 13px; */
+}
+
+/* Hilangkan border kanan terakhir biar rapi */
+.tabelku th:last-child,
+.tabelku td:last-child {
+    border-right: none;
+}
+
+/* Strip effect */
+.tabelku tbody tr:nth-child(odd) {
+    background-color: #f8fafc;
+    /* abu muda */
+}
+
+.tabelku tbody tr:nth-child(even) {
+    background-color: #ffffff;
+    /* putih */
+}
+
+/* Hover effect */
+.tabelku tbody tr:hover {
+    background-color: #e6f2fc;
+    /* biru muda lembut */
+    transition: 0.3s;
+}
+
+/* Badge styling */

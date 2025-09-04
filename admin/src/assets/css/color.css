@@ -1,0 +1,80 @@
+.primary {
+    background-color: #1576d1;
+}
+
+.warning {
+    background-color: #c49240;
+}
+
+.danger {
+    background-color: #c44040;
+}
+
+.primaryDark {
+    background-color: #4a5661;
+}
+
+.primarySoft {
+    background-color: #84aed6;
+}
+
+.rw1 {
+    background-color: #e0e0e0 !important;
+    color: #636363 !important;
+    font-weight: bold !important;
+}
+
+.rw2 {
+    background-color: #f4f4f4 !important;
+    color: #6e6e6e !important;
+    font-size: 12px !important;
+    /* font-style: italic; */
+}
+
+.rw3 {
+
+    color: #1576d1 !important;
+    font-size: 10px !important;
+}
+
+.rw1Revert {
+    background-color: #ffffff !important;
+    color: #84aed6 !important;
+}
+
+.gradientPurpleBlue {
+    background: #DFC2F3;
+    background: linear-gradient(0deg, rgba(223, 194, 243, 1) 0%, rgba(188, 175, 242, 1) 32%, rgba(106, 174, 251, 1) 84%);
+}
+
+.bluex1 {
+    background-color: #6aaefb;
+}
+
+.bluex11 {
+    background-color: #bfddff;
+}
+
+.cyant1 {
+    background-color: #81d2f1;
+}
+
+.cyant11 {
+    background-color: #afe4f8;
+}
+
+.purple1 {
+    background-color: #beb6f3;
+}
+
+.purple11 {
+    background-color: #dedaf4;
+}
+
+.purpleLight1 {
+    background-color: #ceb4f5;
+}
+
+.purpleLight11 {
+    background-color: #e5d4ff;
+}
