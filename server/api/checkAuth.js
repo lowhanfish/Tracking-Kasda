@@ -1,11 +1,12 @@
-// const express = require('express');
-// const router = express.Router();
+import { Router } from 'express';
+
+const router = Router();
 
 
-import express from "express";
-const router = express.Router();
 
-
-router.post((req, res)=>{
+router.get('/',(req, res)=>{
     res.json("OK")
 })
+
+
+export default router;

@@ -10,6 +10,9 @@ const port = 3000;
 const router = express.Router();
 app.use(router);
 
+app.use(express.json());
+// app.use(isLoggedIn);
+// app.use(checkTokenAndSetUser);
 
 
 router.get('/', (req, res) => {
@@ -18,6 +21,17 @@ router.get('/', (req, res) => {
     user : req.user
   });
 });
+
+// =============== START YOUR API ==================
+
+    import checkAuth from "./api/checkAuth.js";
+    app.use('/api/checkAuth', isLoggedIn, checkAuth)
+
+
+// =============== END YOUR API ==================
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
