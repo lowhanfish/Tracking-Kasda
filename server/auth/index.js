@@ -11,6 +11,8 @@ const router = express.Router();
 app.use(router);
 
 
+// console.log(process.env.DB_USER_HOST)
+
 
 const schema = Joi.object({
     username: Joi.string()
@@ -31,7 +33,7 @@ const schema = Joi.object({
 const respondError422 = (res, next, text)=>{
     res.status(422);
     const error = new Error(text);
-    console.log("woooooooow : ",error)
+    console.log(error)
     // next(error);
     next(text);
 }
@@ -50,9 +52,6 @@ router.post('/login', (req, res, next)=>{
     // res.json("test")
 
     const result = schema.validate({ username: req.body.username, password: req.body.password });
-    console.log(result);
-    // res.json(result.error)
-    
     
     if (result.error == null || result.error == undefined) {
         let query = ` SELECT 
@@ -71,10 +70,7 @@ router.post('/login', (req, res, next)=>{
             simpeg.biodata.alamat as bio_alamat,
             simpeg.instansi.id as instansi_id,
             simpeg.instansi.instansi as instansi_nama,
-
-
             monev_pembangunan.menu_klp.akses_unit as akses_unit
-
 
         FROM egov.users 
 
@@ -93,50 +89,59 @@ router.post('/login', (req, res, next)=>{
         WHERE users.username = '`+req.body.username+`';`
 
         db.query(query, (err, row)=>{
-            // console.log(row)
             if (row.length <= 0) {
                 console.log("akun tidak di temukan");
                 respondError422(res, next, 'Akun tidak ditemukan')
-                // res.json("Akun tidak ditemukan")
             } else {
-                var user = {};
-                row.forEach(user => {
-                    user = user;
-                });
-
+                var user = row[0];
+                
+                
                 const payload =  {
-                        _id: user.id,
+                    _id: user.id,
+                    username : user.username,
+                    profile : {
                         username : user.username,
-                        profile : {
-                            username : user.username,
-                            nama : user.nama,
-                            hp : user.hp,
-                            email : user.email,
-                            id_pengguna : user.id_pengguna,
-                        }
-                    };
-            }
-
-
+                        nama : user.nama,
+                        hp : user.hp,
+                        email : user.email,
+                        id_pengguna : user.id_pengguna,
+                    }
+                };
                 // prepare bcrypt compare
+                
+                // console.log(user)
+                    // console.log("password", req.body.password)
+                    // console.log("Token_secret : ", process.env.TOKEN_SECRET);
+                    // console.log("hash", user.password)
+                bcrypt.compare(req.body.password, user.password).then((result)=>{
+                    if (result) {
+
+                        jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '24h' }, (err, token)=>{
+                            if (err) {
+                                respondError422(res, next, "Kesalahan dalam pembuatan token, silahkan login ulang..!");
+                            } else {
+                                res.json({token : token, profile : payload});
+                            }
+                        });
+                        
+                    } else {
+                        respondError422(res, next, "Username atau Password Salah..!")
+                    }
+
+                })
+
+            }
 
         })
     } else {
         res.json(result.error.details[0].message)
     }
 
-
-    // Berikutnya commit tentang check user at database, soalnya masih jam 23:32
-
-
 })
 
 
 router.post('/general_register',(req, res)=>{
     
-
-
-
 })
 
 
