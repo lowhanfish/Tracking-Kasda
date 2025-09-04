@@ -1,11 +1,14 @@
 import express from "express";
 import Joi from "joi";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import uniqid from "uniqid";
 import db from "../db/mysql/egov.js";
 
+
+const app = express();
 const router = express.Router();
+app.use(router);
 
 const schema = Joi.object({
     username : Joi.string()
@@ -90,3 +93,4 @@ router.post('/general_register',(req, res)=>{
 })
 
 
+export default router

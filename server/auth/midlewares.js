@@ -1,6 +1,6 @@
 
 import jwt from "jsonwebtoken";
-import db from "../db/mysql/index";
+import db from "../db/mysql/index.js";
 
 
 function checkTokenSeetUser(req, res, next){
