@@ -15,8 +15,10 @@ import useStorex from '../../store';
 
 function AccessSettingAdd({ handleCloseModalAdd }) {
 
+    const token = localStorage.getItem('authToken');
     const { url } = useStorex();
-    console.log(url.URL_MENU)
+    // console.log(token)
+    // console.log(url.URL_MENU)
 
     const [form, setForm] = useState({
         id: '',
@@ -24,7 +26,7 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
         title: '',
         icon: '',
         path: '',
-        parent: '',
+        parent: null,
         multiple: 0,
     })
 
@@ -40,9 +42,8 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
 
     const getHandle = () => {
 
-
-        console.log(form)
-        axios.post(url.URL_MENU, JSON.stringify(form), {
+        // console.log(form)
+        axios.post(url.URL_MENU + '/add', JSON.stringify(form), {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `kikensbatara ${token}`
@@ -50,6 +51,7 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
         }).then((response) => {
             console.log(response)
         }).catch((error) => {
+            alert(JSON.stringify(error.response.data))
             console.log(error)
         })
     }

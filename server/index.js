@@ -31,6 +31,9 @@ router.get('/', (req, res) => {
 
     import checkAuth from "./api/checkAuth.js";
     app.use('/api/checkAuth', isLoggedIn, checkAuth)
+    
+    import menu from "./auth/menu.js";
+    app.use('/api/menu', isLoggedIn, menu)
 
 
 // =============== END YOUR API ==================

@@ -1,37 +1,39 @@
 
 import { useState, Fragment } from "react";
 import Grid from '@mui/material/Grid';
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+
 // import AddIcon from '@mui/icons-material/Add';
 
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
-import { Clear, Add, Settings, ArrowDropDown } from '@mui/icons-material';
+
+import { Add, ArrowDropDown } from '@mui/icons-material';
 import FieldWithButton from '@components/items/FieldWithButton';
 import Anchorx from '@components/items/Anchorx';
 
 import AccessSettingAdd from "./accessSetting/add";
 import menuConfig from "../configs/menuConfig";
 
-
-
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import SettingsIcon from '@mui/icons-material/Settings';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import LogoutIcon from '@mui/icons-material/Logout';
+import axios from "axios";
+import useStorex from "../store";
 
 
 
 
 function AccessSetting() {
+
+    const token = localStorage.getItem('authToken');
+    const { url } = useStorex()
+
+    const [form, setForm] = useState({
+        id: '',
+        number: '',
+        title: '',
+        icon: '',
+        path: '',
+        parent: null,
+        multiple: 0,
+    })
 
 
     // ====== TOGLE SHOW/HIDE ====== 
@@ -56,11 +58,26 @@ function AccessSetting() {
     };
     // ====== MODAL ADD ====== 
 
-    const [menu, setMenu] = useState(menuConfig)
-
-    // var menu = menuConfig
-
+    // const [menu, setMenu] = useState(menuConfig)
+    const [menu, setMenu] = useState([])
     console.log(menu)
+
+
+    const getData = () => {
+        axios.post(url.URL_MENU + '/view', JSON.stringify({ data: '' }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara + ${token}`
+            }
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(err)
+        })
+    }
+
+
+
 
 
     return (
