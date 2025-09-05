@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from "react";
 
 
 
@@ -42,9 +42,11 @@ function srcset(image, size, rows = 1, cols = 1) {
 
 const Template1 = () => {
 
+    const token = localStorage.getItem('authToken');
+    console.log("myToken : ", token)
+
     // ====== ANCHOR ====== 
     const [anchorEls, setAnchorEls] = React.useState({}); // key = index
-
     const handleClick = (event, index) => {
         setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
     };
@@ -70,6 +72,13 @@ const Template1 = () => {
         setOpenModal(false);
     };
     // ====== MODAL ADD ====== 
+
+    useEffect(() => {
+
+
+    }, [])
+
+
 
     return (
         <div className="cardx">

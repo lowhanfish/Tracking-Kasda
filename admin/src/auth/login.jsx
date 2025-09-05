@@ -44,6 +44,23 @@ export default function Login() {
             // console.log("sukses")
             setLoadingx(false)
             console.log(response.data)
+
+            const token = response.data.token;
+            const profile = JSON.stringify(response.data.profile);
+
+            if (token) {
+                // 1. Simpan token ke localStorage
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('profile', profile);
+
+                // 2. Arahkan pengguna ke halaman Dashboard
+                navigate("/Dashboard");
+            } else {
+                // Handle jika token tidak ditemukan
+                console.error("Token tidak ditemukan dalam respons.");
+                setErrorStatus(true);
+                SetErrorAlert("Login berhasil, tapi token tidak ditemukan.");
+            }
         }).catch((err) => {
             // console.log("error")
             setLoadingx(false)
