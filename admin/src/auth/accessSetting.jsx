@@ -214,36 +214,15 @@ function AccessSetting() {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add Data</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-
-
-                            <AccessSettingAdd />
 
 
 
 
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleCloseModalAdd} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
+                    <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} />
+
+
+
+
                 </Dialog>
 
 

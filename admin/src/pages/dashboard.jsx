@@ -43,7 +43,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 const Template1 = () => {
 
     const token = localStorage.getItem('authToken');
-    console.log("myToken : ", token)
+    // console.log("myToken : ", token)
 
     // ====== ANCHOR ====== 
     const [anchorEls, setAnchorEls] = React.useState({}); // key = index
