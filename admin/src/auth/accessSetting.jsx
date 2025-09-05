@@ -1,19 +1,10 @@
-
 import { useState, Fragment, useEffect } from "react";
 import Grid from '@mui/material/Grid';
-
-// import AddIcon from '@mui/icons-material/Add';
-
-import Dialog from '@mui/material/Dialog';
-
-
+import { Dialog, Menu, MenuItem } from '@mui/material';
 import { Add, ArrowDropDown } from '@mui/icons-material';
 import FieldWithButton from '@components/items/FieldWithButton';
-import Anchorx from '@components/items/Anchorx';
-
 import AccessSettingAdd from "./accessSetting/add";
 import menuConfig from "../configs/menuConfig";
-
 import axios from "axios";
 import useStorex from "../store";
 
@@ -24,13 +15,24 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
+import StopIcon from '@mui/icons-material/Stop';
+import Settings from '@mui/icons-material/Settings';
 
-
+const iconMap = {
+    'InboxIcon': InboxIcon,
+    'MailIcon': MailIcon,
+    'DashboardIcon': DashboardIcon,
+    'FiberManualRecordIcon': FiberManualRecordIcon,
+    'SettingsIcon': SettingsIcon,
+    'PeopleAltIcon': PeopleAltIcon,
+    'LogoutIcon': LogoutIcon,
+    'StopIcon': StopIcon,
+    'Settings': Settings,
+};
 
 function AccessSetting() {
-
     const token = localStorage.getItem('authToken');
-    const { url } = useStorex()
+    const { url } = useStorex();
 
     const [form, setForm] = useState({
         id: '',
@@ -40,20 +42,7 @@ function AccessSetting() {
         path: '',
         parent: null,
         multiple: 0,
-    })
-
-
-    const iconMap = {
-        'InboxIcon': InboxIcon,
-        'MailIcon': MailIcon,
-        'DashboardIcon': DashboardIcon,
-        'FiberManualRecordIcon': FiberManualRecordIcon,
-        'SettingsIcon': SettingsIcon,
-        'PeopleAltIcon': PeopleAltIcon,
-        'LogoutIcon': LogoutIcon,
-
-        // Tambahkan ikon lain di sini
-    };
+    });
 
     // ====== MAPPING ICON ====== 
     const mapIcon = (data) => {
@@ -61,16 +50,28 @@ function AccessSetting() {
     }
     // ====== MAPPING ICON ====== 
 
-    // ====== TOGLE SHOW/HIDE ====== 
+    // ====== TOGGLE SHOW/HIDE ====== 
     const [openParent, setOpenParent] = useState(null);
     const [openChild, setOpenChild] = useState(null);
-    // ====== TOGLE SHOW/HIDE ====== 
+    // ====== TOGGLE SHOW/HIDE ====== 
 
+    // ====== ANCHOR ====== 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openIndex, setOpenIndex] = useState(null);
 
+    const handleClick = (event, index) => {
+        setAnchorEl(event.currentTarget);
+        setOpenIndex(index);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setOpenIndex(null);
+    };
+    // ====== ANCHOR ======
 
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModal] = useState(false);
-    // const theme = useTheme();
     const [fullScreen, setFullScreen] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
 
@@ -83,10 +84,7 @@ function AccessSetting() {
     };
     // ====== MODAL ADD ====== 
 
-    const [menu, setMenu] = useState(menuConfig)
-    // const [menu, setMenu] = useState([])
-    // console.log(menu)
-
+    const [menu, setMenu] = useState([]);
 
     const getData = () => {
         axios.post(url.URL_MENU + '/view', JSON.stringify({ data: '' }), {
@@ -103,10 +101,8 @@ function AccessSetting() {
     }
 
     useEffect(() => {
-        // getData();
-    }, [])
-
-
+        getData();
+    }, []);
 
     return (
         <div className="cardx">
@@ -118,16 +114,11 @@ function AccessSetting() {
                 </Grid>
             </div>
             <div className="cardxBody">
-
-
-                {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
                     <button onClick={handleClickopenModalAdd} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
-                    {/* <button className='btn danger shaddow1'>Add Data</button> <br /> <br />
-                    <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
                 </div>
 
                 <div className="table-wrap" tabIndex="0">
@@ -144,13 +135,9 @@ function AccessSetting() {
                             </tr>
                         </thead>
                         <tbody className="h_body">
-
-                            <Fragment >
-
-                                {/* const IconComponent = mapIcon(data.icon); */}
+                            <Fragment>
                                 {
                                     menu.map((data, index) => {
-
                                         const IconComponent = mapIcon(data.icon);
                                         return (
                                             <Fragment key={index}>
@@ -166,101 +153,49 @@ function AccessSetting() {
                                                                     <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
                                                                 )}
                                                             </button>
-
                                                         )}
                                                     </td>
                                                     <td>
-                                                        <Anchorx />
+                                                        <div className='settingContainer'>
+                                                            <button
+                                                                className="btn rad primarySoft sm"
+                                                                onClick={(e) => handleClick(e, index)}
+                                                            >
+                                                                <Settings sx={{ fontSize: 14 }} />
+                                                            </button>
+
+                                                            <Menu
+                                                                keepMounted
+                                                                id={`menu-${index}`}
+                                                                anchorEl={openIndex === index ? anchorEl : null}
+                                                                open={openIndex === index}
+                                                                onClose={handleClose}
+                                                                slotProps={{
+                                                                    list: {
+                                                                        'aria-labelledby': `basic-button-${index}`,
+                                                                    },
+                                                                }}
+                                                            >
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleClose}>Detail</MenuItem>
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleClose}>Edit</MenuItem>
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleClose}>Delete</MenuItem>
+                                                            </Menu>
+                                                        </div>
                                                     </td>
                                                     <td className="text-center">{index + 1}.</td>
                                                     <td className="text-center"><IconComponent sx={{ fontSize: 20 }} /></td>
                                                     <td>{data.title}</td>
                                                     <td>{data.path}</td>
-                                                    <td>
-                                                        {
-                                                            data.multiple ? (
-                                                                <>True</>
-                                                            ) : (
-                                                                <>false</>
-
-                                                            )
-                                                        }
-                                                    </td>
+                                                    <td>{data.multiple ? "True" : "False"}</td>
                                                 </tr>
-
-                                                {openParent === index && data.multiple === true && (
-
-                                                    data.children.map((data1, index1) => {
-                                                        const IconComponent1 = mapIcon(data1.icon);
-                                                        return (
-                                                            <>
-                                                                <tr key={index + "." + index1} className="rw2 text-center">
-                                                                    <td>
-                                                                        {
-                                                                            data1.multiple && (
-                                                                                <button
-                                                                                    onClick={() => setOpenChild(openChild === index + "." + index1 ? null : index + "." + index1)}
-                                                                                    className="btn rad rw1Revert sm">
-                                                                                    {openChild === index + "." + index1 ? (
-                                                                                        <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(-90deg)", transition: "0.2s" }} />
-                                                                                    ) : (
-                                                                                        <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
-                                                                                    )}
-                                                                                </button>
-
-                                                                            )
-                                                                        }
-                                                                    </td>
-                                                                    <td className="text-center">
-                                                                        <Anchorx />
-                                                                    </td>
-                                                                    <td className="text-center">{index1 + 1}</td>
-                                                                    <td className="text-center"><IconComponent1 sx={{ fontSize: 16 }} /></td>
-                                                                    <td>{data1.title}</td>
-                                                                    <td>{data1.path}</td>
-                                                                    <td>Data child</td>
-                                                                </tr>
-
-                                                                {openChild === index + "." + index1 && data1.multiple === true && (
-                                                                    data1.children.map((data2, index2) => (
-                                                                        <tr key={index + "." + index1 + "." + index2} className="rw3">
-                                                                            <td></td>
-                                                                            <td className="text-center">
-                                                                                <Anchorx />
-                                                                            </td>
-                                                                            <td className="text-center">{index2 + 1}</td>
-                                                                            {/* <td className="text-center"><data2.icon sx={{ fontSize: 8 }} /></td> */}
-                                                                            <td className="text-center"></td>
-                                                                            <td>{data2.title}</td>
-                                                                            <td>{data2.path}</td>
-                                                                            <td>xx</td>
-                                                                        </tr>
-
-                                                                    ))
-
-                                                                )}
-
-                                                            </>
-
-                                                        )
-                                                    }
-                                                    )
-
-                                                )}
-
                                             </Fragment>
                                         )
-                                    }
-                                    )
-
+                                    })
                                 }
-
                             </Fragment>
-
                         </tbody>
                     </table>
                 </div>
-
 
                 <Dialog
                     fullWidth={fullScreen}
@@ -269,23 +204,11 @@ function AccessSetting() {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-
-
-
-
                     <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} />
-
-
-
-
                 </Dialog>
-
-
-
-
             </div>
         </div>
     )
 }
 
-export default AccessSetting
+export default AccessSetting;

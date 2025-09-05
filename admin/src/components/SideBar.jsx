@@ -21,8 +21,38 @@ import KopImage from '@assets/img/kop.png';
 
 const drawerWidth = 240;
 
+
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import SettingsIcon from '@mui/icons-material/Settings';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import LogoutIcon from '@mui/icons-material/Logout';
+import StopIcon from '@mui/icons-material/Stop';
+
+
+const iconMap = {
+    'InboxIcon': InboxIcon,
+    'MailIcon': MailIcon,
+    'DashboardIcon': DashboardIcon,
+    'FiberManualRecordIcon': FiberManualRecordIcon,
+    'SettingsIcon': SettingsIcon,
+    'PeopleAltIcon': PeopleAltIcon,
+    'LogoutIcon': LogoutIcon,
+    'StopIcon': StopIcon
+
+    // Tambahkan ikon lain di sini
+};
+
 export default function SideBar({ variant, open, onClose }) {
     const [openMenus, setOpenMenus] = React.useState({});
+
+    // ====== MAPPING ICON ====== 
+    const mapIcon = (data) => {
+        return iconMap[data] || null
+    }
+    // ====== MAPPING ICON ======
 
     const handleToggle = (title) => {
         setOpenMenus((prev) => ({
@@ -36,6 +66,8 @@ export default function SideBar({ variant, open, onClose }) {
         return items.map((item) => {
             const hasChildren = item.children && item.children.length > 0;
             const isOpen = openMenus[item.title] || false;
+            const IconComponent = mapIcon(item.icon);
+
 
             return (
                 <React.Fragment key={item.title}>
@@ -46,9 +78,9 @@ export default function SideBar({ variant, open, onClose }) {
                             onClick={hasChildren ? () => handleToggle(item.title) : undefined}
                             sx={{ pl: level > 1 ? level * 2 : 2 }} // indentasi dinamis
                         >
-                            {item.icon && (
+                            {IconComponent && (
                                 <ListItemIcon sx={{ minWidth: 32 }}>
-                                    <item.icon sx={level > 2 ? { fontSize: 8 } : {}} />
+                                    <IconComponent sx={level > 2 ? { fontSize: 8 } : {}} />
                                 </ListItemIcon>
                             )}
                             <ListItemText

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,7 +8,7 @@ import { Settings } from '@mui/icons-material';
 
 function Anchorx({ index }) {
     // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+    const [anchorEls, setAnchorEls] = useState({}); // key = index
 
     const handleClick = (event, index) => {
         setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
