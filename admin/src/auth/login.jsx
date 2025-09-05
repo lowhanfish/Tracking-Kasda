@@ -3,6 +3,7 @@ import { Button, TextField, Box, Typography, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import Logox from '@assets/img/logox.png';
+import useStorex from "../store";
 
 
 export default function Login() {
