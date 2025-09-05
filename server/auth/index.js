@@ -15,27 +15,40 @@ app.use(router);
 
 
 const schema = Joi.object({
-    username: Joi.string()
-        .pattern(/^[a-zA-Z0-9_]*$/)
-        .alphanum()
-        .min(6)
-        .max(16)
-        .required(),
-    password: Joi.string()
-        .pattern(/^[a-zA-Z0-9_]*$/)
-        .alphanum()
-        .min(6)
-        .max(16)
-        .required(),
+  username: Joi.string()
+    .pattern(/^[a-zA-Z0-9_!@#$%^&*()+-=]*$/) // Mengizinkan simbol
+    .min(6) // Panjang minimum 6 karakter
+    .max(16) // Panjang maksimum 16 karakter
+    .required()
+    .messages({
+      'string.min': 'Username minimal 6 karakter',
+      'string.max': 'Username maksimal 16 karakter',
+      'string.pattern.base': 'Username hanya boleh berisi huruf, angka, underscore, dan simbol tertentu.',
+      'string.empty': 'Username tidak boleh kosong',
+      'any.required': 'Username wajib diisi',
+    }),
+  password: Joi.string()
+    .pattern(/^[a-zA-Z0-9_!@#$%^&*()+-=]*$/)
+    .min(6)
+    .max(16)
+    .required()
+    .messages({
+      'string.min': 'Password minimal 6 karakter',
+      'string.max': 'Password maksimal 16 karakter',
+      'string.pattern.base': 'Password hanya boleh berisi huruf, angka, underscore, dan simbol tertentu.',
+      'string.empty': 'Password tidak boleh kosong',
+      'any.required': 'Password wajib diisi',
+    }),
 });
 
 
 const respondError422 = (res, next, text)=>{
     res.status(422);
-    const error = new Error(text);
-    console.log(error)
+    // const error = new Error(text);
+    // console.log(error)
     // next(error);
-    next(text);
+    // next(text);
+    res.json(text)
 }
 
 
@@ -52,6 +65,8 @@ router.post('/login', (req, res, next)=>{
     // res.json("test")
 
     const result = schema.validate({ username: req.body.username, password: req.body.password });
+
+    // console.log(result)
     
     if (result.error == null || result.error == undefined) {
         let query = ` SELECT 
@@ -90,7 +105,7 @@ router.post('/login', (req, res, next)=>{
 
         db.query(query, (err, row)=>{
             if (row.length <= 0) {
-                console.log("akun tidak di temukan");
+                // console.log("akun tidak di temukan");
                 respondError422(res, next, 'Akun tidak ditemukan')
             } else {
                 var user = row[0];
@@ -135,7 +150,8 @@ router.post('/login', (req, res, next)=>{
 
         })
     } else {
-        res.json(result.error.details[0].message)
+        respondError422(res, next, result.error.details[0].message)
+        // res.json(result.error.details[0].message)
     }
 
 })

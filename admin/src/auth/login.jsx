@@ -1,18 +1,61 @@
-import React from "react";
-import { Button, TextField, Box, Typography, Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, TextField, Box, Typography, Paper, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import Logox from '@assets/img/logox.png';
-import useStorex from "../store";
+import useStorex from "@store";
+
+import axios from "axios";
 
 
 export default function Login() {
     const navigate = useNavigate();
+    const { url } = useStorex();
+
+    const [errorStatus, setErrorStatus] = useState(false);
+    const [loadingx, setLoadingx] = useState(false);
+
+    const [errorAlert, SetErrorAlert] = useState('');
+    const [form, setForm] = useState({
+        username: '',
+        password: '',
+    })
 
     const handleLogin = () => {
-        // nanti bisa ditambah validasi login di sini
         navigate("/Dashboard"); // arahkan ke Dashboard setelah login
     };
+
+    const handleForm = (field) => (e) => {
+        setForm({
+            ...form,
+            [field]: e.target.value
+        });
+    };
+
+
+    //  value={form.password}
+
+    const login = () => {
+        setLoadingx(true)
+        axios.post(url.URL_LOGIN, {
+            username: form.username,
+            password: form.password
+        }).then((response) => {
+            // console.log("sukses")
+            setLoadingx(false)
+            console.log(response.data)
+        }).catch((err) => {
+            // console.log("error")
+            setLoadingx(false)
+            setErrorStatus(true)
+            SetErrorAlert(err.response.data)
+            // console.log(err.response.data)
+        })
+    }
+
+    useEffect(() => {
+
+    }, [])
 
 
 
@@ -22,6 +65,7 @@ export default function Login() {
                 <Paper sx={{ p: 4, width: 300, backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
 
                     <Typography variant="h6" mb={2}>Login</Typography>
+                    {/* <h1>{url.URL_LOGIN}</h1> */}
                     <img
                         src={Logox}
                         alt="No image"
@@ -32,10 +76,30 @@ export default function Login() {
                             opacity: '0.95'
                         }}
                     />
+
+                    {
+                        errorStatus && (
+
+                            <Alert variant="filled" severity="error">
+                                {errorAlert}.!!!
+                            </Alert>
+
+                        )
+                    }
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 3 }}>
-                        <TextField label="Email" fullWidth />
-                        <TextField label="Password" type="password" fullWidth />
-                        <Button sx={{ backgroundColor: 'rgba(7, 123, 211, 0.34)' }} onClick={handleLogin} variant="contained">Login</Button>
+                        <TextField onClick={() => setErrorStatus(false)} value={form.username} onChange={handleForm('username')} label="Email" fullWidth />
+                        <TextField onClick={() => setErrorStatus(false)} value={form.password} onChange={handleForm('password')} label="Password" type="password" fullWidth />
+
+
+
+
+                        <Button
+                            {...(loadingx && { loading: true })}
+                            sx={{ backgroundColor: 'rgba(7, 123, 211, 0.34)' }}
+                            onClick={login}
+                            variant="contained">
+                            Login
+                        </Button>
                     </Box>
                 </Paper>
 

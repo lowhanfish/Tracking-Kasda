@@ -3,7 +3,7 @@ import db from "../db/mysql/index.js";
 
 function checkTokenAndSetUser(req, res, next) {
     const authHeader = req.get('authorization');
-    console.log("authHeader : ", authHeader)
+    // console.log("authHeader : ", authHeader)
     if (!authHeader) {
         return next(); // Jika tidak ada header, lewati saja
     }

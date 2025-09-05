@@ -4,12 +4,17 @@ import 'dotenv/config';
 import db from "./db/mysql/index.js";
 import auth from "./auth/index.js";
 import {isLoggedIn, checkTokenAndSetUser} from "./auth/midlewares.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
 const router = express.Router();
 
 app.use(router);
+app.use(cors({
+  // origin : 'http://localhost:8081'
+  origin : '*'
+}))
 app.use(express.json());
 app.use(checkTokenAndSetUser);
 
