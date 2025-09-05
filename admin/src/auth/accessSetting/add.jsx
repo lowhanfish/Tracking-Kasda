@@ -9,28 +9,48 @@ import { Selectx, MenuItemx } from '@assets/styling/style';
 import stylex from '@assets/styling/stylex'
 
 import axios from "axios";
+import useStorex from '../../store';
 
 
 
 function AccessSettingAdd({ handleCloseModalAdd }) {
 
-    const [type, setType] = useState(0);
-    const [form, setForm] = useState({
+    const { url } = useStorex();
+    console.log(url.URL_MENU)
 
+    const [form, setForm] = useState({
+        id: '',
+        number: '',
+        title: '',
+        icon: '',
+        path: '',
+        parent: '',
+        multiple: 0,
     })
 
 
-    const handleChange = (event) => {
-        setType(event.target.value);
+    const handleForm = (field) => (e) => {
+        setForm(prevForm => ({
+            ...prevForm,
+            [field]: e.target.value
+        }));
     };
 
+
+
     const getHandle = () => {
-        axios.post(URL, {
 
+
+        console.log(form)
+        axios.post(url.URL_MENU, JSON.stringify(form), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
         }).then((response) => {
-
+            console.log(response)
         }).catch((error) => {
-
+            console.log(error)
         })
     }
 
@@ -51,18 +71,18 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
                 <DialogContentText component="div">
                     <div className='inputContainer'>
                         <div className='inputText'>Route Name</div>
-                        <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
+                        <Fieldx value={form.title} onChange={handleForm('title')} size='small' fullWidth id="outlined-basic" variant="outlined" />
                     </div>
 
                     <div className='inputContainer'>
                         <Grid container spacing={1}>
                             <Grid size={{ md: 6, xs: 12 }}>
                                 <div className='inputText'>List Number</div>
-                                <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
+                                <Fieldx type={'number'} value={form.number} onChange={handleForm('number')} size='small' fullWidth id="outlined-basic" variant="outlined" />
                             </Grid>
                             <Grid size={{ md: 6, xs: 12 }}>
                                 <div className='inputText'>Icon Name</div>
-                                <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
+                                <Fieldx value={form.icon} onChange={handleForm('icon')} ize='small' fullWidth id="outlined-basic" variant="outlined" />
                             </Grid>
                         </Grid>
                     </div>
@@ -70,7 +90,7 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
                         <Grid container spacing={1}>
                             <Grid size={{ md: 6, xs: 12 }}>
                                 <div className='inputText'>Route</div>
-                                <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
+                                <Fieldx value={form.path} onChange={handleForm('path')} size='small' fullWidth id="outlined-basic" variant="outlined" />
                             </Grid>
                             <Grid size={{ md: 6, xs: 12 }}>
                                 <div className='inputText'>Type</div>
@@ -78,8 +98,8 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
                                     labelId="demo-simple-select-label"
                                     size='small'
                                     fullWidth id="outlined-basic" variant="outlined"
-                                    value={type}
-                                    onChange={handleChange}
+                                    value={form.multiple}
+                                    onChange={handleForm('multiple')}
                                 >
                                     <MenuItemx value={1}>Multiple</MenuItemx>
                                     <MenuItemx value={0}>Single</MenuItemx>
@@ -94,7 +114,7 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
                 <Button autoFocus onClick={handleCloseModalAdd}>
                     Cancel
                 </Button>
-                <Button onClick={handleCloseModalAdd} autoFocus>
+                <Button onClick={getHandle} autoFocus>
                     Save
                 </Button>
             </DialogActions>

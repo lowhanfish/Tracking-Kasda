@@ -70,7 +70,6 @@ function AccessSetting() {
                     <Grid size={{ md: 4, xs: 12 }}>
                         <FieldWithButton placeholderx={'Cari Data..'} />
                     </Grid>
-
                 </Grid>
             </div>
             <div className="cardxBody">
