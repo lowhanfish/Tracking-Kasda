@@ -120,6 +120,7 @@ router.post('/login', (req, res, next)=>{
                             if (err) {
                                 respondError422(res, next, "Kesalahan dalam pembuatan token, silahkan login ulang..!");
                             } else {
+                                console.log(token)
                                 res.json({token : token, profile : payload});
                             }
                         });

@@ -3,14 +3,15 @@ import 'dotenv/config';
 
 import db from "./db/mysql/index.js";
 import auth from "./auth/index.js";
-import {isLoggedIn} from "./auth/midlewares.js";
+import {isLoggedIn, checkTokenAndSetUser} from "./auth/midlewares.js";
 
 const app = express();
 const port = 3000;
 const router = express.Router();
-app.use(router);
 
+app.use(router);
 app.use(express.json());
+app.use(checkTokenAndSetUser);
 
 router.get('/', (req, res) => {
   res.json({
