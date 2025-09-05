@@ -1,5 +1,5 @@
 
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import Grid from '@mui/material/Grid';
 
 // import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +17,13 @@ import menuConfig from "../configs/menuConfig";
 import axios from "axios";
 import useStorex from "../store";
 
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import SettingsIcon from '@mui/icons-material/Settings';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 
@@ -35,6 +42,24 @@ function AccessSetting() {
         multiple: 0,
     })
 
+
+    const iconMap = {
+        'InboxIcon': InboxIcon,
+        'MailIcon': MailIcon,
+        'DashboardIcon': DashboardIcon,
+        'FiberManualRecordIcon': FiberManualRecordIcon,
+        'SettingsIcon': SettingsIcon,
+        'PeopleAltIcon': PeopleAltIcon,
+        'LogoutIcon': LogoutIcon,
+
+        // Tambahkan ikon lain di sini
+    };
+
+    // ====== MAPPING ICON ====== 
+    const mapIcon = (data) => {
+        return iconMap[data] || null
+    }
+    // ====== MAPPING ICON ====== 
 
     // ====== TOGLE SHOW/HIDE ====== 
     const [openParent, setOpenParent] = useState(null);
@@ -58,25 +83,28 @@ function AccessSetting() {
     };
     // ====== MODAL ADD ====== 
 
-    // const [menu, setMenu] = useState(menuConfig)
-    const [menu, setMenu] = useState([])
-    console.log(menu)
+    const [menu, setMenu] = useState(menuConfig)
+    // const [menu, setMenu] = useState([])
+    // console.log(menu)
 
 
     const getData = () => {
         axios.post(url.URL_MENU + '/view', JSON.stringify({ data: '' }), {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `kikensbatara + ${token}`
+                'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            console.log(response)
+            console.log(response.data);
+            setMenu(response.data)
         }).catch((error) => {
-            console.log(err)
+            console.log(error)
         })
     }
 
-
+    useEffect(() => {
+        // getData();
+    }, [])
 
 
 
@@ -119,100 +147,111 @@ function AccessSetting() {
 
                             <Fragment >
 
+                                {/* const IconComponent = mapIcon(data.icon); */}
                                 {
-                                    menu.map((data, index) => (
-                                        <Fragment key={index}>
-                                            <tr className="rw1">
-                                                <td className="text-center">
-                                                    {data.multiple && (
-                                                        <button
-                                                            onClick={() => setOpenParent(openParent === index ? null : index)}
-                                                            className="btn rad rw1Revert sm">
-                                                            {openParent === index ? (
-                                                                <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(-90deg)", transition: "0.2s" }} />
+                                    menu.map((data, index) => {
+
+                                        const IconComponent = mapIcon(data.icon);
+                                        return (
+                                            <Fragment key={index}>
+                                                <tr className="rw1">
+                                                    <td className="text-center">
+                                                        {data.multiple && (
+                                                            <button
+                                                                onClick={() => setOpenParent(openParent === index ? null : index)}
+                                                                className="btn rad rw1Revert sm">
+                                                                {openParent === index ? (
+                                                                    <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(-90deg)", transition: "0.2s" }} />
+                                                                ) : (
+                                                                    <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
+                                                                )}
+                                                            </button>
+
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        <Anchorx />
+                                                    </td>
+                                                    <td className="text-center">{index + 1}.</td>
+                                                    <td className="text-center"><IconComponent sx={{ fontSize: 20 }} /></td>
+                                                    <td>{data.title}</td>
+                                                    <td>{data.path}</td>
+                                                    <td>
+                                                        {
+                                                            data.multiple ? (
+                                                                <>True</>
                                                             ) : (
-                                                                <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
-                                                            )}
-                                                        </button>
+                                                                <>false</>
 
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    <Anchorx />
-                                                </td>
-                                                <td className="text-center">{index + 1}.</td>
-                                                <td className="text-center"><data.icon sx={{ fontSize: 20 }} /></td>
-                                                <td>{data.title}</td>
-                                                <td>{data.path}</td>
-                                                <td>
-                                                    {
-                                                        data.multiple ? (
-                                                            <>True</>
-                                                        ) : (
-                                                            <>false</>
+                                                            )
+                                                        }
+                                                    </td>
+                                                </tr>
 
-                                                        )
-                                                    }
-                                                </td>
-                                            </tr>
+                                                {openParent === index && data.multiple === true && (
 
-                                            {openParent === index && data.multiple === true && (
+                                                    data.children.map((data1, index1) => {
+                                                        const IconComponent1 = mapIcon(data1.icon);
+                                                        return (
+                                                            <>
+                                                                <tr key={index + "." + index1} className="rw2 text-center">
+                                                                    <td>
+                                                                        {
+                                                                            data1.multiple && (
+                                                                                <button
+                                                                                    onClick={() => setOpenChild(openChild === index + "." + index1 ? null : index + "." + index1)}
+                                                                                    className="btn rad rw1Revert sm">
+                                                                                    {openChild === index + "." + index1 ? (
+                                                                                        <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(-90deg)", transition: "0.2s" }} />
+                                                                                    ) : (
+                                                                                        <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
+                                                                                    )}
+                                                                                </button>
 
-                                                data.children.map((data1, index1) => (
-                                                    <>
-                                                        <tr key={index + "." + index1} className="rw2 text-center">
-                                                            <td>
-                                                                {
-                                                                    data1.multiple && (
-                                                                        <button
-                                                                            onClick={() => setOpenChild(openChild === index + "." + index1 ? null : index + "." + index1)}
-                                                                            className="btn rad rw1Revert sm">
-                                                                            {openChild === index + "." + index1 ? (
-                                                                                <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(-90deg)", transition: "0.2s" }} />
-                                                                            ) : (
-                                                                                <ArrowDropDown sx={{ fontSize: 14, transform: "rotate(0deg)", transition: "0.2s" }} />
-                                                                            )}
-                                                                        </button>
-
-                                                                    )
-                                                                }
-                                                            </td>
-                                                            <td className="text-center">
-                                                                <Anchorx />
-                                                            </td>
-                                                            <td className="text-center">{index1 + 1}</td>
-                                                            <td className="text-center"><data1.icon sx={{ fontSize: 16 }} /></td>
-                                                            <td>{data1.title}</td>
-                                                            <td>{data1.path}</td>
-                                                            <td>Data child</td>
-                                                        </tr>
-
-                                                        {openChild === index + "." + index1 && data1.multiple === true && (
-                                                            data1.children.map((data2, index2) => (
-                                                                <tr key={index + "." + index1 + "." + index2} className="rw3">
-                                                                    <td></td>
+                                                                            )
+                                                                        }
+                                                                    </td>
                                                                     <td className="text-center">
                                                                         <Anchorx />
                                                                     </td>
-                                                                    <td className="text-center">{index2 + 1}</td>
-                                                                    <td className="text-center"><data2.icon sx={{ fontSize: 8 }} /></td>
-                                                                    <td>{data2.title}</td>
-                                                                    <td>{data2.path}</td>
-                                                                    <td>xx</td>
+                                                                    <td className="text-center">{index1 + 1}</td>
+                                                                    <td className="text-center"><IconComponent1 sx={{ fontSize: 16 }} /></td>
+                                                                    <td>{data1.title}</td>
+                                                                    <td>{data1.path}</td>
+                                                                    <td>Data child</td>
                                                                 </tr>
 
-                                                            ))
+                                                                {openChild === index + "." + index1 && data1.multiple === true && (
+                                                                    data1.children.map((data2, index2) => (
+                                                                        <tr key={index + "." + index1 + "." + index2} className="rw3">
+                                                                            <td></td>
+                                                                            <td className="text-center">
+                                                                                <Anchorx />
+                                                                            </td>
+                                                                            <td className="text-center">{index2 + 1}</td>
+                                                                            {/* <td className="text-center"><data2.icon sx={{ fontSize: 8 }} /></td> */}
+                                                                            <td className="text-center"></td>
+                                                                            <td>{data2.title}</td>
+                                                                            <td>{data2.path}</td>
+                                                                            <td>xx</td>
+                                                                        </tr>
 
-                                                        )}
+                                                                    ))
 
-                                                    </>
+                                                                )}
 
-                                                ))
+                                                            </>
 
-                                            )}
+                                                        )
+                                                    }
+                                                    )
 
-                                        </Fragment>
-                                    ))
+                                                )}
+
+                                            </Fragment>
+                                        )
+                                    }
+                                    )
 
                                 }
 

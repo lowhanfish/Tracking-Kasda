@@ -9,6 +9,22 @@ const router = Router();
 router.get('/',(req, res)=>{
     res.json("OK")
 })
+
+router.post('/view',(req, res)=>{
+    const query = `SELECT * FROM menu`
+    
+    db.query(query, (err, rows)=>{
+        if (err) {
+            console.log(err)
+            res.status(422);
+            res.send(err)
+        } else {
+            res.send(rows)
+        }
+    })
+})
+
+
 router.post('/add',(req, res)=>{
     const data = req.body
     const query = `
@@ -26,6 +42,9 @@ router.post('/add',(req, res)=>{
     })
 
 })
+
+
+
 
 
 export default router;

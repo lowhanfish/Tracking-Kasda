@@ -11,31 +11,31 @@ import StopIcon from '@mui/icons-material/Stop';
 const menuConfig = [
   {
     title: "Dashboard",
-    icon: DashboardIcon,
+    icon: 'DashboardIcon',
     path: "/Dashboard",
     multiple : false,
   },
   {
     title: "Profile",
-    icon: PeopleAltIcon,
+    icon: 'PeopleAltIcon',
     path: "/profile",
     multiple : false,
   },
   {
     title: "e-Tracking",
-    icon: InboxIcon,
+    icon: 'InboxIcon',
     multiple : true,
     children: [
           {
             title: "Add User",
             path: "/Registration",
-            icon: StopIcon,
+            icon: 'StopIcon',
             multiple : false,
           },
           {
             title: "User List",
             path: "/Dashboard",
-            icon: StopIcon,
+            icon: 'StopIcon',
             multiple : false,
           },
           
@@ -43,30 +43,30 @@ const menuConfig = [
   },
   {
     title: "Master Data",
-    icon: SettingsIcon,
+    icon: 'SettingsIcon',
     multiple : true,
     children: [
       {
         title: "User Management",
         multiple : true,
-        icon: StopIcon,
+        icon: 'StopIcon',
         children: [
           {
             title: "Add User",
             path: "/Registration",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           {
             title: "User groups",
             path: "/Dashboard",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           {
             title: "Access Settingsz",
             path: "/AccessSetting",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
         ],
@@ -74,24 +74,24 @@ const menuConfig = [
       {
         title: "Template",
         multiple : true,
-        icon: StopIcon,
+        icon: 'StopIcon',
         children: [
           {
             title: "Template 1",
             path: "/Template1",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           {
             title: "Template 2",
             path: "/Template2",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           {
             title: "Documentation",
             path: "/Documentation",
-            icon: FiberManualRecordIcon,
+            icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           
@@ -102,9 +102,107 @@ const menuConfig = [
   {
     title: "Logout",
     path: "/",
-    icon: LogoutIcon,
+    icon: 'LogoutIcon',
     multiple : false,
   },
 ];
+// const menuConfig = [
+//   {
+//     title: "Dashboard",
+//     icon: DashboardIcon,
+//     path: "/Dashboard",
+//     multiple : false,
+//   },
+//   {
+//     title: "Profile",
+//     icon: PeopleAltIcon,
+//     path: "/profile",
+//     multiple : false,
+//   },
+//   {
+//     title: "e-Tracking",
+//     icon: InboxIcon,
+//     multiple : true,
+//     children: [
+//           {
+//             title: "Add User",
+//             path: "/Registration",
+//             icon: StopIcon,
+//             multiple : false,
+//           },
+//           {
+//             title: "User List",
+//             path: "/Dashboard",
+//             icon: StopIcon,
+//             multiple : false,
+//           },
+          
+//         ],
+//   },
+//   {
+//     title: "Master Data",
+//     icon: SettingsIcon,
+//     multiple : true,
+//     children: [
+//       {
+//         title: "User Management",
+//         multiple : true,
+//         icon: StopIcon,
+//         children: [
+//           {
+//             title: "Add User",
+//             path: "/Registration",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+//           {
+//             title: "User groups",
+//             path: "/Dashboard",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+//           {
+//             title: "Access Settingsz",
+//             path: "/AccessSetting",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+//         ],
+//       },
+//       {
+//         title: "Template",
+//         multiple : true,
+//         icon: StopIcon,
+//         children: [
+//           {
+//             title: "Template 1",
+//             path: "/Template1",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+//           {
+//             title: "Template 2",
+//             path: "/Template2",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+//           {
+//             title: "Documentation",
+//             path: "/Documentation",
+//             icon: FiberManualRecordIcon,
+//             multiple : false,
+//           },
+          
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     title: "Logout",
+//     path: "/",
+//     icon: LogoutIcon,
+//     multiple : false,
+//   },
+// ];
 
 export default menuConfig;
