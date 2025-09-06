@@ -72,7 +72,7 @@ router.post('/update',(req, res)=>{
 });
 
 
-router.post('/remove', ()=>{
+router.post('/remove', (req, res)=>{
     const query = `
         DELETE from menu
         WHERE id = `+req.body.id+`

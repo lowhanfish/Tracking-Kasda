@@ -120,6 +120,20 @@ function AccessSetting() {
         }).catch((error) => {
             console.log(error)
         })
+    };
+
+    const removeData = (id) => {
+        axios.post(url.URL_MENU + '/remove', JSON.stringify({ id: id }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
+        }).then((response) => {
+            console.log(response);
+            getData()
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     useEffect(() => {
@@ -223,7 +237,10 @@ function AccessSetting() {
                                                                         handleCloseAnchor();
 
                                                                     }}>Edit</MenuItem>
-                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={() => {
+                                                                    removeData(data.id)
+                                                                    handleCloseAnchor()
+                                                                }}>Delete</MenuItem>
                                                             </Menu>
                                                         </div>
                                                     </td>
