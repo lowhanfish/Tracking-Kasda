@@ -51,15 +51,7 @@ function AccessSetting() {
     const token = localStorage.getItem('authToken');
     const { url } = useStorex()
 
-    const [form, setForm] = useState({
-        id: '',
-        number: '',
-        title: '',
-        icon: '',
-        path: '',
-        parent: null,
-        multiple: 0,
-    })
+    const [form, setForm] = useState(null)
 
 
 
@@ -102,11 +94,17 @@ function AccessSetting() {
 
     const handleCloseModalAdd = () => {
         setOpenModal(false);
+        getData();
     };
     // ====== MODAL ADD ====== 
 
-    const [menu, setMenu] = useState(menuConfig)
-    // const [menu, setMenu] = useState([])
+
+
+    // START YOUR CODE =========================================================
+
+    // const [menu, setMenu] = useState(menuConfig)
+    const [menu, setMenu] = useState([])
+    const [typeEvent, setTypeEvent] = useState("ADD")
     // console.log(menu)
 
 
@@ -125,10 +123,10 @@ function AccessSetting() {
     }
 
     useEffect(() => {
-        // getData();
+        getData();
     }, [])
 
-
+    // START YOUR CODE =========================================================
 
     return (
         <div className="cardx">
@@ -144,7 +142,10 @@ function AccessSetting() {
 
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={handleClickopenModalAdd} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={() => {
+                        setTypeEvent("ADD")
+                        handleClickopenModalAdd();
+                    }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -178,7 +179,7 @@ function AccessSetting() {
                                             <Fragment key={index}>
                                                 <tr className="rw1">
                                                     <td className="text-center">
-                                                        {data.multiple && (
+                                                        {data.multiple ? (
                                                             <button
                                                                 onClick={() => setOpenParent(openParent === index ? null : index)}
                                                                 className="btn rad rw1Revert sm">
@@ -189,7 +190,7 @@ function AccessSetting() {
                                                                 )}
                                                             </button>
 
-                                                        )}
+                                                        ) : (<></>)}
                                                     </td>
                                                     <td>
                                                         {/* <Anchorx /> */}
@@ -214,7 +215,14 @@ function AccessSetting() {
                                                                 }}
                                                             >
                                                                 <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                    () => {
+                                                                        setTypeEvent("EDIT")
+                                                                        setForm(data);
+                                                                        handleClickopenModalAdd();
+                                                                        handleCloseAnchor();
+
+                                                                    }}>Edit</MenuItem>
                                                                 <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                             </Menu>
                                                         </div>
@@ -379,7 +387,7 @@ function AccessSetting() {
 
 
 
-                    <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} />
+                    <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} />
 
 
 

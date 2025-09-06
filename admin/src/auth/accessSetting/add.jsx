@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Fieldx, FieldxKamio } from '@assets/styling/style'
 import { Button, DialogActions, Grid, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
 import { Clear } from '@mui/icons-material';
@@ -13,13 +13,16 @@ import useStorex from '../../store';
 
 
 
-function AccessSettingAdd({ handleCloseModalAdd }) {
+function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx }) {
+
+    // console.log(typeEvent)
 
     const token = localStorage.getItem('authToken');
     const { url } = useStorex();
     // console.log(token)
     // console.log(url.URL_MENU)
 
+    const [pathx, setPathx] = useState("/add")
     const [form, setForm] = useState({
         id: '',
         number: '',
@@ -43,7 +46,7 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
     const getHandle = () => {
 
         // console.log(form)
-        axios.post(url.URL_MENU + '/add', JSON.stringify(form), {
+        axios.post(url.URL_MENU + pathx, JSON.stringify(form), {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `kikensbatara ${token}`
@@ -55,6 +58,32 @@ function AccessSettingAdd({ handleCloseModalAdd }) {
             console.log(error)
         })
     }
+
+    useEffect(() => {
+        setForm({
+            id: '',
+            number: '',
+            title: '',
+            icon: '',
+            path: '',
+            parent: null,
+            multiple: 0,
+        })
+        if (typeEvent === 'ADD') {
+            setPathx("/add")
+        } else if (typeEvent === 'EDIT') {
+            setPathx("/update")
+            setForm({
+                id: formx.id,
+                number: formx.number,
+                title: formx.title,
+                icon: formx.icon,
+                path: formx.path,
+                parent: formx.parent,
+                multiple: formx.multiple,
+            })
+        }
+    }, [])
 
 
     return (

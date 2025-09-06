@@ -44,6 +44,33 @@ router.post('/add',(req, res)=>{
 })
 
 
+router.post('/update',(req, res)=>{
+    const data = req.body;
+    // console.log(data);
+    // res.send(data);
+    const query = `
+        UPDATE menu SET
+        number = `+data.number+`,
+        title = '`+data.title+`',
+        icon = '`+data.icon+`',
+        path = '`+data.path+`',
+        parent = `+data.parent+`,
+        multiple = `+data.multiple+`
+
+        WHERE id = `+data.id+`
+    `
+
+    db.query(query, (err, rows)=>{
+        if (err) {
+            console.log(err);
+            res.status(422);
+            res.json(err)
+        } else {
+            res.json(rows)
+        }
+    })
+})
+
 
 
 
