@@ -343,7 +343,14 @@ function AccessSetting() {
                                                                     <td className="text-center"><IconComponent1 sx={{ fontSize: 16 }} /></td>
                                                                     <td>{data1.title}</td>
                                                                     <td>{data1.path}</td>
-                                                                    <td>Data child</td>
+                                                                    <td>{
+                                                                        data1.multiple ? (
+                                                                            <>True</>
+                                                                        ) : (
+                                                                            <>false</>
+
+                                                                        )
+                                                                    }</td>
                                                                 </tr>
 
                                                                 {openChild === index + "." + index1 && data1.multiple === 1 && (
@@ -401,7 +408,14 @@ function AccessSetting() {
                                                                                 <td className="text-center"><IconComponent2 sx={{ fontSize: 8 }} /></td>
                                                                                 <td>{data2.title}</td>
                                                                                 <td>{data2.path}</td>
-                                                                                <td>xx</td>
+                                                                                <td>{
+                                                                                    data2.multiple ? (
+                                                                                        <>True</>
+                                                                                    ) : (
+                                                                                        <>false</>
+
+                                                                                    )
+                                                                                }</td>
                                                                             </tr>
 
                                                                         )
