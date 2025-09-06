@@ -275,7 +275,7 @@ function AccessSetting() {
                                                                 <tr className="rw2 text-center">
                                                                     <td>
                                                                         {
-                                                                            data1.multiple && (
+                                                                            data1.multiple ? (
                                                                                 <button
                                                                                     onClick={() => setOpenChild(openChild === index + "." + index1 ? null : index + "." + index1)}
                                                                                     className="btn rad rw1Revert sm">
@@ -286,7 +286,7 @@ function AccessSetting() {
                                                                                     )}
                                                                                 </button>
 
-                                                                            )
+                                                                            ) : (<></>)
                                                                         }
                                                                     </td>
                                                                     <td className="text-center">
@@ -312,9 +312,26 @@ function AccessSetting() {
                                                                                     },
                                                                                 }}
                                                                             >
+                                                                                <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                                    () => {
+                                                                                        setTypeEvent("SUB")
+                                                                                        setForm(data1);
+                                                                                        handleClickopenModalAdd();
+                                                                                        handleCloseAnchor();
+                                                                                    }}>Add Sub-Menu</MenuItem>
                                                                                 <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
-                                                                                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                                                <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                                    () => {
+                                                                                        setTypeEvent("EDIT")
+                                                                                        setForm(data1);
+                                                                                        handleClickopenModalAdd();
+                                                                                        handleCloseAnchor();
+
+                                                                                    }}>Edit</MenuItem>
+                                                                                <MenuItem sx={{ fontSize: 12 }} onClick={() => {
+                                                                                    removeData(data1.id)
+                                                                                    handleCloseAnchor()
+                                                                                }}>Delete</MenuItem>
                                                                             </Menu>
                                                                         </div>
 
@@ -357,9 +374,26 @@ function AccessSetting() {
                                                                                                 },
                                                                                             }}
                                                                                         >
+                                                                                            <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                                                () => {
+                                                                                                    setTypeEvent("SUB")
+                                                                                                    setForm(data2);
+                                                                                                    handleClickopenModalAdd();
+                                                                                                    handleCloseAnchor();
+                                                                                                }}>Add Sub-Menu</MenuItem>
                                                                                             <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                                                                                            <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
-                                                                                            <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                                                            <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                                                () => {
+                                                                                                    setTypeEvent("EDIT")
+                                                                                                    setForm(data2);
+                                                                                                    handleClickopenModalAdd();
+                                                                                                    handleCloseAnchor();
+
+                                                                                                }}>Edit</MenuItem>
+                                                                                            <MenuItem sx={{ fontSize: 12 }} onClick={() => {
+                                                                                                removeData(data2.id)
+                                                                                                handleCloseAnchor()
+                                                                                            }}>Delete</MenuItem>
                                                                                         </Menu>
                                                                                     </div>
                                                                                 </td>
