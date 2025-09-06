@@ -94,7 +94,6 @@ function AccessSetting() {
 
     const handleCloseModalAdd = () => {
         setOpenModal(false);
-        getData();
     };
     // ====== MODAL ADD ====== 
 
@@ -228,6 +227,13 @@ function AccessSetting() {
                                                                     },
                                                                 }}
                                                             >
+                                                                <MenuItem sx={{ fontSize: 12 }} onClick={
+                                                                    () => {
+                                                                        setTypeEvent("SUB")
+                                                                        setForm(data);
+                                                                        handleClickopenModalAdd();
+                                                                        handleCloseAnchor();
+                                                                    }}>Add Sub-Menu</MenuItem>
                                                                 <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
                                                                 <MenuItem sx={{ fontSize: 12 }} onClick={
                                                                     () => {
@@ -260,7 +266,7 @@ function AccessSetting() {
                                                     </td>
                                                 </tr>
 
-                                                {openParent === index && data.multiple === true && (
+                                                {openParent === index && data.multiple === 1 && (
 
                                                     data.children.map((data1, index1) => {
                                                         const IconComponent1 = mapIcon(data1.icon);
@@ -323,7 +329,7 @@ function AccessSetting() {
                                                                     <td>Data child</td>
                                                                 </tr>
 
-                                                                {openChild === index + "." + index1 && data1.multiple === true && (
+                                                                {openChild === index + "." + index1 && data1.multiple === 1 && (
                                                                     data1.children.map((data2, index2) => {
                                                                         const IconComponent2 = mapIcon(data2.icon);
                                                                         return (
@@ -400,7 +406,7 @@ function AccessSetting() {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} />
+                    <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} getData={getData} />
                 </Dialog>
 
 

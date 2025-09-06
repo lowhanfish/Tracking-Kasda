@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import db from '../db/mysql/index.js';
+import buildTree from '../lib/buildTree.js';
 
 
 const router = Router();
@@ -19,7 +20,9 @@ router.post('/view',(req, res)=>{
             res.status(422);
             res.send(err)
         } else {
-            res.send(rows)
+            const data = buildTree(rows)
+            console.log(data);
+            res.send(data)
         }
     })
 })
@@ -42,6 +45,8 @@ router.post('/add',(req, res)=>{
     })
 
 })
+
+
 
 
 router.post('/update',(req, res)=>{

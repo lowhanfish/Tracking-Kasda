@@ -13,7 +13,7 @@ import useStorex from '../../store';
 
 
 
-function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx }) {
+function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     // console.log(typeEvent)
 
@@ -40,6 +40,12 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx }) {
             [field]: e.target.value
         }));
     };
+    const handleForm1 = (field, valuex) => {
+        setForm(prevForm => ({
+            ...prevForm,
+            [field]: valuex
+        }));
+    };
 
 
 
@@ -52,7 +58,8 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx }) {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            console.log(response)
+            console.log(response);
+            getData();
         }).catch((error) => {
             alert(JSON.stringify(error.response.data))
             console.log(error)
@@ -82,6 +89,12 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx }) {
                 parent: formx.parent,
                 multiple: formx.multiple,
             })
+        } else if (typeEvent === 'SUB') {
+            console.log("SUB TERPANGGIL")
+            setPathx("/add")
+            handleForm1('parent', formx.id);
+            // console.log(formx.id)
+            // console.log(form)
         }
     }, [])
 
