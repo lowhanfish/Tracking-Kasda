@@ -8,6 +8,7 @@ import Template1 from "./pages/example/template1.jsx";
 import Template2 from "./pages/example/template2.jsx";
 import Documentation from "./pages/example/documentation.jsx";
 import AccessSetting from "./auth/accessSetting.jsx";
+import MenuSetting from "./auth/menuSetting.jsx";
 
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";
@@ -63,8 +64,7 @@ function App() {
           <Route path="/Template2" element={<Template2 />} />
           <Route path="/Documentation" element={<Documentation />} />
           <Route path="/AccessSetting" element={<AccessSetting />} />
-          <Route path="/Registration" element={<Registration />} />
-        </Route> */}
+          </Route> */}
 
 
         {/* ------------------------------------------- */}
@@ -77,6 +77,8 @@ function App() {
             <Route path="/Template2" element={<Template2 />} />
             <Route path="/Documentation" element={<Documentation />} />
             <Route path="/AccessSetting" element={<AccessSetting />} />
+            <Route path="/MenuSetting" element={<MenuSetting />} />
+            <Route path="/Registration" element={<Registration />} />
 
           </Route>
         </Route>

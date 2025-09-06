@@ -127,6 +127,25 @@ export default function SideBar({ variant, open, onClose }) {
             </Box>
 
             <List>{renderMenu(menuConfig)}</List>
+
+            {/* <Box sx={{ mt: "auto" }}> */}
+            <List sx={{ marginTop: -2 }}>
+                <ListItemSatu disablePadding>
+                    <ListItemButton
+                        to={"/" || ""}
+                        onClick={() => {
+                            localStorage.removeItem("authToken");
+                            localStorage.removeItem("profile");
+                        }}
+                    >
+                        <ListItemIcon sx={{ minWidth: 32 }}>
+                            <LogoutIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Logout" primaryTypographyProps={stylex.sideBarText1} />
+                    </ListItemButton>
+                </ListItemSatu>
+            </List>
+            {/* </Box> */}
         </Box>
     );
 

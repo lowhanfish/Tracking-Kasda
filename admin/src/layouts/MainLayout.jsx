@@ -63,7 +63,9 @@ export default function MainLayout() {
             case "/settings":
                 return "Settings";
             case "/AccessSetting":
-                return "Access Setting";
+                return "User groups";
+            case "/MenuSetting":
+                return "Menu Setting";
             // tambahkan route lain sesuai kebutuhan
             default:
                 return "";

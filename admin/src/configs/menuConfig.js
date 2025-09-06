@@ -8,6 +8,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StopIcon from '@mui/icons-material/Stop';
 
+import axio from "axios";
+
 const menuConfig = [
   {
     title: "Dashboard",
@@ -59,13 +61,13 @@ const menuConfig = [
           },
           {
             title: "User groups",
-            path: "/Dashboard",
+            path: "/AccessSetting",
             icon: 'FiberManualRecordIcon',
             multiple : false,
           },
           {
-            title: "Access Settingsz",
-            path: "/AccessSetting",
+            title: "Menu Setting",
+            path: "/MenuSetting",
             icon: 'FiberManualRecordIcon',
             multiple : false,
           },
@@ -100,7 +102,7 @@ const menuConfig = [
     ],
   },
   {
-    title: "Logout",
+    title: "wkwkwkwk",
     path: "/",
     icon: 'LogoutIcon',
     multiple : false,
@@ -204,5 +206,10 @@ const menuConfig = [
 //     multiple : false,
 //   },
 // ];
+
+
+
+
+
 
 export default menuConfig;
