@@ -69,6 +69,24 @@ router.post('/update',(req, res)=>{
             res.json(rows)
         }
     })
+});
+
+
+router.post('/remove', ()=>{
+    const query = `
+        DELETE from menu
+        WHERE id = `+req.body.id+`
+    `
+
+    db.query(query, (err, rows)=>{
+        if (err) {
+            console.log(err);
+            res.status(422);
+            res.send(err);
+        } else {
+            res.json(rows)
+        }
+    })
 })
 
 

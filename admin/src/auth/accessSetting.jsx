@@ -383,15 +383,7 @@ function AccessSetting() {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-
-
-
-
                     <AccessSettingAdd handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} />
-
-
-
-
                 </Dialog>
 
 
