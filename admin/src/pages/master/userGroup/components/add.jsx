@@ -58,16 +58,20 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     const [listMenu, setListMenu] = useState([]);
 
-    axios.post(url.URL_MENU, JSON.stringify(form), {
-        headers: {
-            'Authorization': `kikensbatara ${token}`,
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
+    const getDataMenu = () => {
+
+        axios.post(url.URL_MENU, JSON.stringify(form), {
+            headers: {
+                'Authorization': `kikensbatara ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
 
 
     useEffect(() => {
