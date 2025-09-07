@@ -18,6 +18,7 @@ const useStorex = create((set) => ({
     URL_APP: BASE_URL,
     URL_LOGIN: `${BASE_URL}auth/login`,
     URL_MENU: `${BASE_URL}api/menu`,
+    URL_GROUP: `${BASE_URL}api/group`,
     dua: `${BASE_URL}duax`
   },
 

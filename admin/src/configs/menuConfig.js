@@ -61,7 +61,7 @@ const menuConfig = [
           },
           {
             title: "User groups",
-            path: "/AccessSetting",
+            path: "/userGroup",
             icon: 'FiberManualRecordIcon',
             multiple : false,
           },

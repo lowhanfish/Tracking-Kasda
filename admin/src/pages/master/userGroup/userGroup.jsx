@@ -12,16 +12,26 @@ import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 import Anchorx from '@components/items/Anchorx';
-import FieldDatex from '@components/items/FieldDatex';
-import BasicSelect from '@components/items/BasicSelect';
-import Checkboxz from '@components/items/Checkboxz';
-import CheckboxzLable from '@components/items/CheckboxLable';
+
+import { Fieldx, Selectx, MenuItemx } from '@assets/styling/style'
+import { useState } from 'react';
 
 
+import Addx from './components/add.jsx'
 
 
 
 const Registration = () => {
+
+
+    const [menu, setMenu] = useState([])
+    const [typeEvent, setTypeEvent] = useState("ADD")
+
+    const [form, setForm] = useState({
+        id: '',
+        title: '',
+        access_unit: 0,
+    })
 
 
 
@@ -37,6 +47,8 @@ const Registration = () => {
         setAnchorEls(prev => ({ ...prev, [index]: null }));
     };
     // ====== ANCHOR ====== 
+
+
 
 
 
@@ -66,10 +78,7 @@ const Registration = () => {
                         <FieldSingle />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-
                         <FieldAutocomplete />
-
-
                     </Grid>
                 </Grid>
             </div>
@@ -90,10 +99,7 @@ const Registration = () => {
                             <tr>
                                 <th style={{ width: '5%' }} scope="col" className='center'>set</th>
                                 <th style={{ width: '5%' }} scope="col" className='center'>No</th>
-                                <th style={{ width: '30%' }} scope="col">Nama</th>
-                                <th style={{ width: '20%' }} scope="col">Email</th>
-                                <th style={{ width: '20%' }} scope="col">Username</th>
-                                <th style={{ width: '20%' }} scope="col" className='center'>Status</th>
+                                <th style={{ width: '90%' }} scope="col">Group</th>
                             </tr>
                         </thead>
                         <tbody className="h_body">
@@ -105,9 +111,6 @@ const Registration = () => {
                                         </td>
                                         <td className='center'>{index + 1}</td>
                                         <td>Galang Aditya</td>
-                                        <td>galang@example.com</td>
-                                        <td>yourUsername</td>
-                                        <td className='center'><span className="badge ok">Active</span></td>
                                     </tr>
                                 ))
 
@@ -130,38 +133,7 @@ const Registration = () => {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add User</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-                            <FieldSingle Title={'Name'} />
-                            <FieldSingle Title={'Address'} />
-                            <FieldSingle Title={'Email'} />
-                            <FieldSingle Title={'Phone Number'} />
-                            <BasicSelect Title={'Level Access'} />
-                            <FieldSingle Title={'Username'} />
-                            <FieldSingle Title={'Password'} />
-                            <FieldSingle Title={'Confirm Password'} />
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleCloseModalAdd} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
+                    <Addx handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} />
                 </Dialog>
 
 

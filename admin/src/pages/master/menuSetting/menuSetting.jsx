@@ -13,11 +13,11 @@ import Anchorx from '@components/items/Anchorx';
 
 
 
-import MenuSettingAdd from "./menuSetting/add";
-import menuConfig from "../configs/menuConfig";
+import MenuSettingAdd from "./components/add";
+import menuConfig from "@configs/menuConfig";
 
 import axios from "axios";
-import useStorex from "../store";
+import useStorex from "@store/index.js";
 
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";

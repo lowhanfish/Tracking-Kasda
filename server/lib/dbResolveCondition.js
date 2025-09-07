@@ -1,4 +1,4 @@
-const dbResolveCondition = (resolve)=>{
+const dbResolveCondition = (resolve, err, rows)=>{
     if (err) {
         console.log(err);
         resolve({

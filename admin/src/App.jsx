@@ -7,8 +7,8 @@ import Profile from "./pages/profile.jsx";
 import Template1 from "./pages/example/template1.jsx";
 import Template2 from "./pages/example/template2.jsx";
 import Documentation from "./pages/example/documentation.jsx";
-import AccessSetting from "./auth/accessSetting.jsx";
-import MenuSetting from "./auth/menuSetting.jsx";
+import UserGroup from "./pages/master/userGroup/userGroup.jsx";
+import MenuSetting from "./pages/master/menuSetting/menuSetting.jsx";
 
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";
@@ -76,7 +76,7 @@ function App() {
             <Route path="/Template1" element={<Template1 />} />
             <Route path="/Template2" element={<Template2 />} />
             <Route path="/Documentation" element={<Documentation />} />
-            <Route path="/AccessSetting" element={<AccessSetting />} />
+            <Route path="/userGroup" element={<UserGroup />} />
             <Route path="/MenuSetting" element={<MenuSetting />} />
             <Route path="/Registration" element={<Registration />} />
 

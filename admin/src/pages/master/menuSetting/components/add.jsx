@@ -9,11 +9,11 @@ import { Selectx, MenuItemx } from '@assets/styling/style';
 import stylex from '@assets/styling/stylex'
 
 import axios from "axios";
-import useStorex from '../../store';
+import useStorex from '@store/index.js';
 
 
 
-function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
+function MenuSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     // console.log(typeEvent)
 
@@ -168,4 +168,4 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
     )
 }
 
-export default AccessSettingAdd
+export default MenuSettingAdd

@@ -37,10 +37,7 @@ router.get('/', (req, res) => {
     import group from "./api/group.js";
     app.use('/api/group', isLoggedIn, group)
 
-
 // =============== END YOUR API ==================
-
-
 
 
 app.listen(port, () => {
