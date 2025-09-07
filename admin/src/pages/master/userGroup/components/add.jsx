@@ -1,6 +1,6 @@
 import { useEffect, useState, Fragment } from 'react'
 import { Fieldx } from '@assets/styling/style'
-import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
+import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Checkbox } from "@mui/material";
 import { Clear } from '@mui/icons-material';
 
 
@@ -149,28 +149,28 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                                         <Fragment key={index}>
 
                                             <tr>
-                                                <td className='center'>{index + 1}</td>
+                                                <td className=''>{index + 1}</td>
                                                 <td>111</td>
-                                                <td>222</td>
-                                                <td>333</td>
-                                                <td>444</td>
-                                                <td>555</td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
                                             </tr>
                                             <tr>
-                                                <td className='center'>{index + 1}</td>
+                                                <td className=''>{index + 1}.{index + 1}</td>
                                                 <td>111</td>
-                                                <td>222</td>
-                                                <td>333</td>
-                                                <td>444</td>
-                                                <td>555</td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
                                             </tr>
-                                            <tr >
-                                                <td className='center'>{index + 1}</td>
+                                            <tr>
+                                                <td className=''>{index + 1}.{index + 1}.{index + 1}</td>
                                                 <td>111</td>
-                                                <td>222</td>
-                                                <td>333</td>
-                                                <td>444</td>
-                                                <td>555</td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
                                             </tr>
                                         </Fragment>
                                     ))
