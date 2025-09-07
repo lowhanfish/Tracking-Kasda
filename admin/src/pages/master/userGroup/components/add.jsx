@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { Fieldx } from '@assets/styling/style'
 import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
 import { Clear } from '@mui/icons-material';
@@ -127,6 +127,58 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                             <MenuItemx value={1}>Unit Kerja</MenuItemx>
                             <MenuItemx value={2}>Instansi</MenuItemx>
                         </Selectx>
+                    </div>
+
+
+
+                    <div className="table-wrap" tabIndex="0">
+                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                            <thead className="h_thead shaddowText">
+                                <tr>
+                                    <th style={{ width: '10%' }} scope="col">No</th>
+                                    <th style={{ width: '70%' }} scope="col">Title</th>
+                                    <th style={{ width: '5%' }} scope="col">view</th>
+                                    <th style={{ width: '5%' }} scope="col">add</th>
+                                    <th style={{ width: '5%' }} scope="col">update</th>
+                                    <th style={{ width: '5%' }} scope="col">remove</th>
+                                </tr>
+                            </thead>
+                            <tbody className="h_body">
+                                {
+                                    [...Array(1)].map((_, index) => (
+                                        <Fragment key={index}>
+
+                                            <tr>
+                                                <td className='center'>{index + 1}</td>
+                                                <td>111</td>
+                                                <td>222</td>
+                                                <td>333</td>
+                                                <td>444</td>
+                                                <td>555</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='center'>{index + 1}</td>
+                                                <td>111</td>
+                                                <td>222</td>
+                                                <td>333</td>
+                                                <td>444</td>
+                                                <td>555</td>
+                                            </tr>
+                                            <tr >
+                                                <td className='center'>{index + 1}</td>
+                                                <td>111</td>
+                                                <td>222</td>
+                                                <td>333</td>
+                                                <td>444</td>
+                                                <td>555</td>
+                                            </tr>
+                                        </Fragment>
+                                    ))
+
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
 
                 </DialogContentText>

@@ -2,33 +2,41 @@
 import db from "../db/mysql/index.js";
 import buildTree from "../lib/buildTree.js";
 
-export const getAddMenu = (req, res)=>{
-    const query = `SELECT * FROM menu`
+export const getAddMenu = async (req, res)=>{
 
-    db.query(query, async (err, rows)=>{
-
-        if (err) {
-            res.status(400);
-            res.send(err)
-        } else {
-            const data = []
-
-            rows.forEach(element => {
-
-                element.add = false;
-                element.update = false;
-                element.remove = false;
-
-                data.push(element);
-            });
-
-            const dataFinal = buildTree(data);
-            res.send(dataFinal)
-
-
-        }
-
+    var query = `SELECT * FROM menu`
+    return new Promise((resolve, reject) => {
+        
+    
+        db.query(query, async (err, rows)=>{
+    
+            console.log(rows)
+    
+            if (err) {
+                res.status(400);
+                resolve(err)
+            } else {
+                const data = []
+    
+                rows.forEach(element => {
+    
+                    element.add = false;
+                    element.update = false;
+                    element.remove = false;
+    
+                    data.push(element);
+                });
+    
+                const dataFinal = buildTree(data);
+                resolve(dataFinal)
+    
+    
+            }
+    
+        })
     })
+
+
 }
 
 
