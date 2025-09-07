@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import db from '../db/mysql/index.js';
 import buildTree from '../lib/buildTree.js';
+import { getAddMenu } from "../controller/menu.js";
 
 
 const router = Router();
@@ -92,6 +93,11 @@ router.post('/remove', (req, res)=>{
             res.json(rows)
         }
     })
+})
+
+
+router.post('/viewMenu', async (req, res)=>{
+    getAddMenu(req, res)
 })
 
 
