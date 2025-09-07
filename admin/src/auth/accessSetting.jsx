@@ -82,8 +82,6 @@ const Registration = () => {
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
-                    {/* <button className='btn danger shaddow1'>Add Data</button> <br /> <br />
-                    <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
                 </div>
 
                 <div className="table-wrap" tabIndex="0">
