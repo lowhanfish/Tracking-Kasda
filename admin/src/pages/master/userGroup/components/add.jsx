@@ -60,7 +60,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     const getDataMenu = () => {
 
-        axios.post(url.URL_MENU, JSON.stringify(form), {
+        axios.post(url.URL_MENU + '/viewMenu', JSON.stringify(form), {
             headers: {
                 'Authorization': `kikensbatara ${token}`,
                 'Content-Type': 'application/json'
@@ -75,6 +75,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
     useEffect(() => {
+        getDataMenu();
         setForm({
             id: '',
             title: '',
