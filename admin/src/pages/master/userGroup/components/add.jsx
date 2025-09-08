@@ -66,6 +66,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
+            setListMenu(response.data)
             console.log(response)
         }).catch((error) => {
             console.log(error)
@@ -145,33 +146,46 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                             </thead>
                             <tbody className="h_body">
                                 {
-                                    [...Array(1)].map((_, index) => (
-                                        <Fragment key={index}>
+                                    listMenu.map((data, index) => (
+                                        <Fragment key={data.id}>
 
-                                            <tr>
+                                            <tr className='tablex1'>
                                                 <td className=''>{index + 1}</td>
-                                                <td>111</td>
+                                                <td>{data.title}</td>
                                                 <td className='center'><input type="checkbox" value="Bike"></input></td>
                                                 <td className='center'><input type="checkbox" value="Bike"></input></td>
                                                 <td className='center'><input type="checkbox" value="Bike"></input></td>
                                                 <td className='center'><input type="checkbox" value="Bike"></input></td>
                                             </tr>
-                                            <tr>
-                                                <td className=''>{index + 1}.{index + 1}</td>
-                                                <td>111</td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                            </tr>
-                                            <tr>
-                                                <td className=''>{index + 1}.{index + 1}.{index + 1}</td>
-                                                <td>111</td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                                <td className='center'><input type="checkbox" value="Bike"></input></td>
-                                            </tr>
+
+                                            {
+                                                data.children.map((data1, index1) => (
+                                                    <Fragment key={data1.id}>
+
+                                                        <tr className='tablex2'>
+                                                            <td className=''>{index + 1}.{index + 1}</td>
+                                                            <td>{data1.title}</td>
+                                                            <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                            <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                            <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                            <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                        </tr>
+                                                        {
+                                                            data1.children.map((data2, index2) => (
+                                                                <tr className='tablex3'>
+                                                                    <td className=''>{index + 1}.{index + 1}.{index + 1}</td>
+                                                                    <td>- {data2.title}</td>
+                                                                    <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                                    <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                                    <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                                    <td className='center'><input type="checkbox" value="Bike"></input></td>
+                                                                </tr>
+
+                                                            ))
+                                                        }
+                                                    </Fragment>
+                                                ))
+                                            }
                                         </Fragment>
                                     ))
 
