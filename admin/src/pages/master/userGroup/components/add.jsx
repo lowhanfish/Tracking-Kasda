@@ -226,7 +226,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                                                                     <td className='center'><input type="checkbox" checked={data2.update} onChange={bindCheckbox(data2.id, "update", setListMenu)}></input></td>
                                                                     <td className='center'><input type="checkbox" checked={data2.remove} onChange={bindCheckbox(data2.id, "remove", setListMenu)}></input></td>
                                                                 </tr>
-
                                                             ))
                                                         }
                                                     </Fragment>

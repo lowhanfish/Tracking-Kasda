@@ -19,10 +19,15 @@ export const getAddMenu = async (req, res)=>{
                 const data = []
     
                 rows.forEach(element => {
+
+                    if (element.multiple != 1) {
+                        
+                        element.view = false;
+                        element.add = false;
+                        element.update = false;
+                        element.remove = false;
+                    }
     
-                    element.add = false;
-                    element.update = false;
-                    element.remove = false;
     
                     data.push(element);
                 });
