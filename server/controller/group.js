@@ -5,13 +5,14 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 export const add = async (req, res)=> {
     console.log(req.body)
     const addx = await addGroup(req, res);
+    const access = await addAccess(req, res, addx.message.insertId);
     console.log(addx.message.insertId)
     res.send(addx);
 }
 
 
 export const addGroup = async (req, res) => {
-    var data = req.body;
+    var data = req.body.data;
     // var query = `INSERT INTO group (title, access_unit, createdAt, createdBy) VALUES (?, ?, NOW(), ?)`
     var query = `INSERT INTO \`group\` (title, access_unit, createdAt, createdBy) VALUES (?, ?, NOW(), ?)`
     var values = [
@@ -26,7 +27,30 @@ export const addGroup = async (req, res) => {
 }
 
 
-const addAccess = async(req, res)=>{
+const addAccess = async(req, res, insertId)=>{
+    const data = req.body.array;
 
+
+
+    for (let i = 0; i < data.length; i++) {
+        await loopAccess(data[i], insertId)
+        
+    }
     
+}
+
+const loopAccess = async (data, insertId) =>{
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `INSERT INTO access (menu_id, group_id, add, update, remove, createdAt, createdBy) VALUES (?,?,?,?,?,NOW(),?)`
+        const values = [data.id, insertId, data.add, data.update, data.remove, req.user._id];
+    
+        db.query(query, values, (err, rows)=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+
+
+
 }
