@@ -16,7 +16,9 @@ router.post('/view', (req, res)=>{
 
 })
 router.post('/add',  (req, res)=>{
-    add(req, res);
+    console.log(req.body);
+    res.send("OK")
+    // add(req, res);
 })
 router.post('/update', (req, res)=>{
 

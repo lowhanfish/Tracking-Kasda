@@ -45,17 +45,20 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
     const getHandle = () => {
 
         console.log(listMenu)
-        // axios.post(url.URL_GROUP + pathx, JSON.stringify(form), {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `kikensbatara ${token}`
-        //     }
-        // }).then((response) => {
-        //     console.log(response);
-        // }).catch((error) => {
-        //     alert(JSON.stringify(error.response.data))
-        //     console.log(error)
-        // })
+        axios.post(url.URL_GROUP + pathx, JSON.stringify({
+            data: form,
+            array: listMenu
+        }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            alert(JSON.stringify(error.response.data))
+            console.log(error)
+        })
     }
 
     const [listMenu, setListMenu] = useState([]);
@@ -218,7 +221,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                                                         </tr>
                                                         {
                                                             data1.children.map((data2, index2) => (
-                                                                <tr className='tablex3'>
+                                                                <tr key={data2.id} className='tablex3'>
                                                                     <td className=''>{index + 1}.{index + 1}.{index + 1}</td>
                                                                     <td>- {data2.title}</td>
                                                                     <td className='center'><input type="checkbox" checked={data2.view} onChange={bindCheckbox(data2.id, "view", setListMenu)}></input></td>
