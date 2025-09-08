@@ -174,11 +174,23 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
                                             <tr className='tablex1'>
                                                 <td className=''>{index + 1}</td>
-                                                <td>{data.title}</td>
-                                                <td className='center'><input type="checkbox" checked={data.view} onChange={bindCheckbox(data.id, "view", setListMenu)}></input></td>
-                                                <td className='center'><input type="checkbox" checked={data.add} onChange={bindCheckbox(data.id, "add", setListMenu)}></input></td>
-                                                <td className='center'><input type="checkbox" checked={data.update} onChange={bindCheckbox(data.id, "update", setListMenu)}></input></td>
-                                                <td className='center'><input type="checkbox" checked={data.remove} onChange={bindCheckbox(data.id, "remove", setListMenu)}></input></td>
+                                                {
+                                                    data.multiple == 1 ? (
+                                                        <>
+                                                            <td colSpan={5}>{data.title}</td>
+
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <td>{data.title}</td>
+                                                            <td className='center'><input type="checkbox" checked={data.view} onChange={bindCheckbox(data.id, "view", setListMenu)}></input></td>
+                                                            <td className='center'><input type="checkbox" checked={data.add} onChange={bindCheckbox(data.id, "add", setListMenu)}></input></td>
+                                                            <td className='center'><input type="checkbox" checked={data.update} onChange={bindCheckbox(data.id, "update", setListMenu)}></input></td>
+                                                            <td className='center'><input type="checkbox" checked={data.remove} onChange={bindCheckbox(data.id, "remove", setListMenu)}></input></td>
+                                                        </>
+                                                    )
+                                                }
+
                                             </tr>
 
                                             {
@@ -187,11 +199,22 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
                                                         <tr className='tablex2'>
                                                             <td className=''>{index + 1}.{index + 1}</td>
-                                                            <td>{data1.title}</td>
-                                                            <td className='center'><input checked={data1.view} onChange={bindCheckbox(data1.id, "view", setListMenu)} type="checkbox"></input></td>
-                                                            <td className='center'><input checked={data1.add} onChange={bindCheckbox(data1.id, "add", setListMenu)} type="checkbox"></input></td>
-                                                            <td className='center'><input checked={data1.update} onChange={bindCheckbox(data1.id, "update", setListMenu)} type="checkbox"></input></td>
-                                                            <td className='center'><input checked={data1.remove} onChange={bindCheckbox(data1.id, "remove", setListMenu)} type="checkbox"></input></td>
+
+                                                            {
+                                                                data1.multiple == 1 ? (
+                                                                    <>
+                                                                        <td colSpan={5}>{data1.title}</td>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <td>{data1.title}</td>
+                                                                        <td className='center'><input checked={data1.view} onChange={bindCheckbox(data1.id, "view", setListMenu)} type="checkbox"></input></td>
+                                                                        <td className='center'><input checked={data1.add} onChange={bindCheckbox(data1.id, "add", setListMenu)} type="checkbox"></input></td>
+                                                                        <td className='center'><input checked={data1.update} onChange={bindCheckbox(data1.id, "update", setListMenu)} type="checkbox"></input></td>
+                                                                        <td className='center'><input checked={data1.remove} onChange={bindCheckbox(data1.id, "remove", setListMenu)} type="checkbox"></input></td>
+                                                                    </>
+                                                                )
+                                                            }
                                                         </tr>
                                                         {
                                                             data1.children.map((data2, index2) => (
