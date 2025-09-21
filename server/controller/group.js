@@ -5,12 +5,12 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 export const add = async (req, res)=> {
     // console.log(req.body.array)
     const arr = normalizeArray(req.body.array)
-    console.log(arr)
-    res.send("OK")
-    // const addx = await addGroup(req, res);
-    // const access = await addAccess(req, res, addx.message.insertId);
+    // console.log(arr)
+    // res.send("OK")
+    const addx = await addGroup(req, res);
+    await addAccess(arr, req, res, addx.message.insertId);
     // console.log(addx.message.insertId)
-    // res.send(addx);
+    res.send(addx);
 }
 
 
@@ -30,23 +30,24 @@ export const addGroup = async (req, res) => {
 }
 
 
-const addAccess = async(req, res, insertId)=>{
-    const data = req.body.array;
+const addAccess = async(arr, req, res, insertId)=>{
+    const data = arr;
 
     for (let i = 0; i < data.length; i++) {
-        await loopAccess(data[i], insertId)
-        
+        await loopAccess(req, data[i], insertId)     
     }
     
 }
 
-const loopAccess = async (data, insertId) =>{
+const loopAccess = async (req, data, insertId) =>{
 
     return new Promise((resolve, reject) => {
         
-        const query = `INSERT INTO access (menu_id, group_id, add, update, remove, createdAt, createdBy) VALUES (?,?,?,?,?,NOW(),?)`
-        const values = [data.id, insertId, data.add, data.update, data.remove, req.user._id];
-    
+        const query = `
+        INSERT INTO \`access\` (menu_id, group_id, view, \`add\`, \`update\`, \`remove\`, createdAt, createdBy) VALUES (?,?,?,?,?,?,NOW(),?)`;
+
+        const values = [data.id, insertId, data.view, data.add, data.update, data.remove, req.user._id];
+
         db.query(query, values, (err, rows)=>{
             dbResolveCondition(resolve, err, rows)
         })
@@ -61,7 +62,11 @@ const normalizeArray = (arr)=>{
     for (const item of items) {
       // salin item tanpa properti children
       const { children, ...rest } = item;
-      result.push(rest);
+      
+        if (rest.view===true ||rest.add===true || rest.update===true || rest.remove===true) {
+            result.push(rest);
+        }
+
 
       if (children && Array.isArray(children)) {
         helper(children); // rekursif
