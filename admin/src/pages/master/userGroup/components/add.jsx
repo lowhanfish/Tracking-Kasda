@@ -126,7 +126,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         <>
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
-                    <div className='headerModalLeft'>Add User</div>
+                    <div className='headerModalLeft'>Add Group</div>
                     <div className='headerModalRight'>
                         <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
                             <Clear />

@@ -3,11 +3,14 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 
 
 export const add = async (req, res)=> {
-    console.log(req.body)
-    const addx = await addGroup(req, res);
-    const access = await addAccess(req, res, addx.message.insertId);
-    console.log(addx.message.insertId)
-    res.send(addx);
+    // console.log(req.body.array)
+    const arr = normalizeArray(req.body.array)
+    console.log(arr)
+    res.send("OK")
+    // const addx = await addGroup(req, res);
+    // const access = await addAccess(req, res, addx.message.insertId);
+    // console.log(addx.message.insertId)
+    // res.send(addx);
 }
 
 
@@ -30,8 +33,6 @@ export const addGroup = async (req, res) => {
 const addAccess = async(req, res, insertId)=>{
     const data = req.body.array;
 
-
-
     for (let i = 0; i < data.length; i++) {
         await loopAccess(data[i], insertId)
         
@@ -50,7 +51,24 @@ const loopAccess = async (data, insertId) =>{
             dbResolveCondition(resolve, err, rows)
         })
     })
+}
 
 
+const normalizeArray = (arr)=>{
+    const result = [];
+  
+  function helper(items) {
+    for (const item of items) {
+      // salin item tanpa properti children
+      const { children, ...rest } = item;
+      result.push(rest);
 
+      if (children && Array.isArray(children)) {
+        helper(children); // rekursif
+      }
+    }
+  }
+  
+  helper(arr);
+  return result;
 }
