@@ -4,19 +4,21 @@ import { useState } from 'react';
 
 
 
-import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
+import { Button, Dialog, Grid, Menu, MenuItem, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 import axios from 'axios'
 
-import { Clear, Add, Store } from '@mui/icons-material';
+import useStorex from '@store/index.js';
+import { Settings, Add, Store } from '@mui/icons-material';
+
+
 import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 import Anchorx from '@components/items/Anchorx';
-import { accessUnit } from "@lib/index.js";
 
+import { accessUnit } from "@lib/index.js";
 import { Fieldx, Selectx, MenuItemx } from '@assets/styling/style'
 
-import useStorex from '@store/index.js';
 
 
 import Addx from './components/add.jsx'
@@ -64,14 +66,17 @@ const userGroup = () => {
 
 
     // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openIndex, setOpenAnchorIndex] = useState(null);
 
-    const handleClick = (event, index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
+    const handleClickAnchor = (event, index) => {
+        setAnchorEl(event.currentTarget);
+        setOpenAnchorIndex(index);
     };
 
-    const handleClose = (index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: null }));
+    const handleCloseAnchor = () => {
+        setAnchorEl(null);
+        setOpenAnchorIndex(null);
     };
     // ====== ANCHOR ====== 
 
@@ -141,7 +146,38 @@ const userGroup = () => {
                                 listData.map((data, index) => (
                                     <tr key={data.id}>
                                         <td>
-                                            <Anchorx index={index} />
+                                            {/* <Anchorx index={index} /> */}
+
+
+                                            <div className='settingContainer'>
+                                                <button
+                                                    className="btn rad primarySoft sm"
+                                                    onClick={(e) => handleClickAnchor(e, index)}
+                                                >
+                                                    <Settings sx={{ fontSize: 14 }} />
+                                                </button>
+
+                                                <Menu
+                                                    keepMounted
+                                                    id={`menu-${index}`}
+                                                    anchorEl={openIndex === index ? anchorEl : null}
+                                                    open={openIndex === index}
+                                                    onClose={handleCloseAnchor}
+                                                    slotProps={{
+                                                        list: {
+                                                            'aria-labelledby': `basic-button-${index}`,
+                                                        },
+                                                    }}
+                                                >
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                </Menu>
+                                            </div>
+
+
+
+
                                         </td>
                                         <td className='center'>{index + 1}</td>
                                         <td>{data.title}</td>
