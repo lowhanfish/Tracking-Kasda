@@ -1,6 +1,16 @@
 import db from "../db/mysql/index.js";
+import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
+
+
+
+export const view = (req, res)=>{
+    const query = `SELECT * FROM \`group\``;
+    db.query(query,(err, rows)=>{
+        dbCondition(res, err, rows)
+    })
+}
 
 export const add = async (req, res)=> {
     // console.log(req.body.array)
@@ -12,7 +22,6 @@ export const add = async (req, res)=> {
     // console.log(addx.message.insertId)
     res.send(addx);
 }
-
 
 export const addGroup = async (req, res) => {
     var data = req.body.data;
