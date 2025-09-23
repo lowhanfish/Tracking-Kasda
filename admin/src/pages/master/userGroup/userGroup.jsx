@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 const userGroup = () => {
 
     const { url } = useStorex();
+    const token = localStorage.getItem('authToken');
 
     const [menu, setMenu] = useState([])
     const [typeEvent, setTypeEvent] = useState("ADD")
@@ -39,14 +40,17 @@ const userGroup = () => {
 
 
     const getData = () => {
-        const token = localStorage.getItem('token');
+
+        // console.log(url.URL_GROUP);
+        // console.log(token)
         axios.post(url.URL_GROUP + "/view", JSON.stringify(form), {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `kikensbatara ${token}`
             }
         }).then(response => {
-            console.log(response);
+            // console.log(response);
+            setListData(response.data);
         }).catch(error => {
             console.log(error);
         })
@@ -132,13 +136,13 @@ const userGroup = () => {
                         </thead>
                         <tbody className="h_body">
                             {
-                                [...Array(10)].map((_, index) => (
-                                    <tr key={index}>
+                                listData.map((data, index) => (
+                                    <tr key={data.id}>
                                         <td>
                                             <Anchorx index={index} />
                                         </td>
                                         <td className='center'>{index + 1}</td>
-                                        <td>Galang Aditya</td>
+                                        <td>{data.title}</td>
                                     </tr>
                                 ))
 
@@ -148,9 +152,9 @@ const userGroup = () => {
                     </table>
                 </div>
 
-                <div className='paginContainer'>
+                {/* <div className='paginContainer'>
                     <Pagination count={10} color="primary" variant="outlined" />
-                </div>
+                </div> */}
 
 
 

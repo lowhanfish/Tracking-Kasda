@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add } from "../controller/group.js";
+import { add, view } from "../controller/group.js";
 
 
 
@@ -13,7 +13,7 @@ router.get('/', (req, res)=>{
 
 
 router.post('/view', (req, res)=>{
-
+    view(req, res);
 })
 router.post('/add',  (req, res)=>{
     // console.log(req.body);
