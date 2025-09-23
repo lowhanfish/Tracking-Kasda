@@ -12,6 +12,7 @@ import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 import Anchorx from '@components/items/Anchorx';
+import { accessUnit } from "@lib/index.js";
 
 import { Fieldx, Selectx, MenuItemx } from '@assets/styling/style'
 
@@ -131,7 +132,8 @@ const userGroup = () => {
                             <tr>
                                 <th style={{ width: '5%' }} scope="col" className='center'>set</th>
                                 <th style={{ width: '5%' }} scope="col" className='center'>No</th>
-                                <th style={{ width: '90%' }} scope="col">Group</th>
+                                <th style={{ width: '60%' }} scope="col">Group</th>
+                                <th style={{ width: '30%' }} scope="col">Access Unit</th>
                             </tr>
                         </thead>
                         <tbody className="h_body">
@@ -143,6 +145,7 @@ const userGroup = () => {
                                         </td>
                                         <td className='center'>{index + 1}</td>
                                         <td>{data.title}</td>
+                                        <td>{accessUnit(data.access_unit)}</td>
                                     </tr>
                                 ))
 
