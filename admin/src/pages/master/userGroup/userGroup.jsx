@@ -1,37 +1,59 @@
 import * as React from 'react';
-
-
+import { useState } from 'react';
 
 
 
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
+import axios from 'axios'
 
-import { Clear, Add } from '@mui/icons-material';
+import { Clear, Add, Store } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 import Anchorx from '@components/items/Anchorx';
 
 import { Fieldx, Selectx, MenuItemx } from '@assets/styling/style'
-import { useState } from 'react';
+
+import useStorex from '@store/index.js';
 
 
 import Addx from './components/add.jsx'
+import { useEffect } from 'react';
 
 
 
-const Registration = () => {
+const userGroup = () => {
 
+    const { url } = useStorex();
 
     const [menu, setMenu] = useState([])
     const [typeEvent, setTypeEvent] = useState("ADD")
+    const [listData, setListData] = useState([])
 
     const [form, setForm] = useState({
         id: '',
         title: '',
         access_unit: 0,
     })
+
+
+    const getData = () => {
+        const token = localStorage.getItem('token');
+        axios.post(url.URL_GROUP + "/view", JSON.stringify(form), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
+        }).then(response => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+
+
 
 
 
@@ -66,6 +88,12 @@ const Registration = () => {
         setOpenModal(false);
     };
     // ====== MODAL ADD ====== 
+
+
+    useEffect(() => {
+        getData();
+    }, [])
+
 
     return (
         <div className="cardx">
@@ -144,4 +172,4 @@ const Registration = () => {
     )
 }
 
-export default Registration
+export default userGroup

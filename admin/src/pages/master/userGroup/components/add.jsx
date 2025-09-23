@@ -54,9 +54,11 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
+            // console.log("SUKSES")
             console.log(response);
         }).catch((error) => {
             alert(JSON.stringify(error.response.data))
+            // console.log('ERROR')
             console.log(error)
         })
     }
