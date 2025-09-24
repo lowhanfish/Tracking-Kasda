@@ -14,12 +14,17 @@ import useStorex from '@store/index.js';
 
 
 function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
+    var pathx = ''
+    var pathMenux = ''
+
+
 
 
     const token = localStorage.getItem('authToken');
     const { url } = useStorex();
 
-    const [pathx, setPathx] = useState("/add")
+    // const [pathx, setPathx] = useState("/add")
+    // const [pathMenux, setPathMenux] = useState("/viewMenu")
     const [form, setForm] = useState({
         id: '',
         title: '',
@@ -44,7 +49,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     const getHandle = () => {
 
-        console.log(listMenu)
+        // console.log(listMenu)
         axios.post(url.URL_GROUP + pathx, JSON.stringify({
             data: form,
             array: listMenu
@@ -67,7 +72,9 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     const getDataMenu = () => {
 
-        axios.post(url.URL_MENU + '/viewMenu', JSON.stringify(form), {
+
+
+        axios.post(url.URL_MENU + pathMenux, JSON.stringify(form), {
             headers: {
                 'Authorization': `kikensbatara ${token}`,
                 'Content-Type': 'application/json'
@@ -104,7 +111,8 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
     useEffect(() => {
-        getDataMenu();
+
+
         setForm({
             id: '',
             title: '',
@@ -112,16 +120,59 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         })
 
         if (typeEvent === 'ADD') {
-            setPathx("/add")
+            // setPathx("/add");
+            // setPathMenux('/viewMenu')
+            pathx = "/add"
+            pathMenux = "/viewMenu"
         } else if (typeEvent === 'EDIT') {
-            setPathx("/update")
+            // setPathx("/update")
+            // setPathMenux('/viewUpdateMenu')
+            pathx = "/update"
+            pathMenux = "/viewUpdateMenu"
+
             setForm({
                 id: formx.id,
                 title: formx.title,
                 access_unit: formx.access_unit,
             })
         }
+        getDataMenu();
+
     }, [])
+
+
+    // Jalankan ini ketika typeEvent/formx berubah
+    // Tentukan path berdasarkan typeEvent
+
+
+    // useEffect(() => {
+    //     if (typeEvent === "ADD") {
+    //         setPathx("/add");
+    //         setPathMenux("/viewMenu");
+    //         setForm({ id: "", title: "", access_unit: 0 });
+    //     } else if (typeEvent === "EDIT") {
+    //         setPathx("/update");
+    //         setPathMenux("/viewUpdateMenu");
+    //         setForm({
+    //             id: formx.id,
+    //             title: formx.title,
+    //             access_unit: formx.access_unit,
+    //         });
+    //     }
+    // }, [typeEvent, formx]);
+
+    // // Jalankan getDataMenu HANYA setelah pathMenux selesai di-update
+    // useEffect(() => {
+    //     if (!pathMenux) return;
+    //     console.log("🔗 FINAL pathx:", pathx, "pathMenux:", pathMenux);
+    //     getDataMenu();
+    // }, [pathx, pathMenux]);
+
+
+
+
+
+
 
 
     return (

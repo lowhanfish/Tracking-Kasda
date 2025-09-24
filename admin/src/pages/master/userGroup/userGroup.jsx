@@ -125,7 +125,7 @@ const userGroup = () => {
 
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={handleClickopenModalAdd} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={(e) => { e.currentTarget.blur(); setTypeEvent('ADD'); handleClickopenModalAdd(); }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -170,7 +170,7 @@ const userGroup = () => {
                                                     }}
                                                 >
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
+                                                    <MenuItem onClick={(e) => { e.currentTarget.blur(); setTypeEvent('EDIT'); handleClickopenModalAdd(); }} sx={{ fontSize: 12 }}>Edit</MenuItem>
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                 </Menu>
                                             </div>
