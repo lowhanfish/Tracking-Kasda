@@ -94,7 +94,7 @@ router.post('/remove', (req, res)=>{
         }
     })
 })
-
+    
 
 router.post('/viewMenu', async (req, res)=>{
     const data = await getAddMenu(req, res)

@@ -74,14 +74,14 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
 
-        axios.post(url.URL_MENU + pathMenux, JSON.stringify(form), {
+        axios.post(url.URL_MENU + pathMenux, JSON.stringify(formx), {
             headers: {
                 'Authorization': `kikensbatara ${token}`,
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             setListMenu(response.data)
-            console.log(response)
+            // console.log(response)
         }).catch((error) => {
             console.log(error)
         })
@@ -130,12 +130,17 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
             pathx = "/update"
             pathMenux = "/viewUpdateMenu"
 
+
+            // console.log(formx)
+
             setForm({
                 id: formx.id,
                 title: formx.title,
                 access_unit: formx.access_unit,
             })
         }
+
+
         getDataMenu();
 
     }, [])

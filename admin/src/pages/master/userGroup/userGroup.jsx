@@ -170,7 +170,7 @@ const userGroup = () => {
                                                     }}
                                                 >
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                                                    <MenuItem onClick={(e) => { e.currentTarget.blur(); setTypeEvent('EDIT'); handleClickopenModalAdd(); }} sx={{ fontSize: 12 }}>Edit</MenuItem>
+                                                    <MenuItem onClick={(e) => { e.currentTarget.blur(); setTypeEvent('EDIT'); setForm(data); handleClickopenModalAdd(); handleCloseAnchor(e, index); }} sx={{ fontSize: 12 }}>Edit</MenuItem>
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                 </Menu>
                                             </div>
