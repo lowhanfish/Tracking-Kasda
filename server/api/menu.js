@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import db from '../db/mysql/index.js';
 import buildTree from '../lib/buildTree.js';
-import { getAddMenu } from "../controller/menu.js";
+import { getAddMenu, getUpdateMenu } from "../controller/menu.js";
 
 
 const router = Router();
@@ -101,7 +101,10 @@ router.post('/viewMenu', async (req, res)=>{
     res.send(data);
 })
 
-
+router.post('/viewUpdateMenu', async (req, res)=>{
+    const data = await getUpdateMenu(req, res)
+    res.send(data);
+})
 
 
 export default router;
