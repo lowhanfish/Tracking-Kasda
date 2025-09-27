@@ -62,32 +62,19 @@ export const getUpdateMenu = async (req, res)=>{
     ON menu.id = access.menu_id AND access.group_id = `+req.body.id+` 
     ORDER BY menu.number ASC
 
-
-
-
-
     `
     return new Promise((resolve, reject) => {
-        
-    
         db.query(query, async (err, rows)=>{
-    
-            // console.log(rows)
-    
             if (err) {
                 res.status(400);
                 resolve(err)
             } else {
-                
-    
                 const dataFinal = buildTree(rows);
                 resolve(dataFinal)
-    
-    
             }
-    
         })
     })
 
 
 }
+

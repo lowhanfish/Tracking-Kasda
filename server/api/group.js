@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, view } from "../controller/group.js";
+import { add, view, removeGroup } from "../controller/group.js";
 
 
 
@@ -16,15 +16,13 @@ router.post('/view', (req, res)=>{
     view(req, res);
 })
 router.post('/add',  (req, res)=>{
-    // console.log(req.body);
-    // res.send("OK")
     add(req, res);
 })
 router.post('/update', (req, res)=>{
 
 })
-router.post('/remove', (req, res)=>{
-
+router.post('/removeData', (req, res)=>{
+    removeGroup(req, res)
 })
 
 

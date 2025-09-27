@@ -39,7 +39,7 @@ export const addGroup = async (req, res) => {
 }
 
 
-const addAccess = async(arr, req, res, insertId)=>{
+export const addAccess = async(arr, req, res, insertId)=>{
     const data = arr;
 
     for (let i = 0; i < data.length; i++) {
@@ -64,7 +64,7 @@ const loopAccess = async (req, data, insertId) =>{
 }
 
 
-const normalizeArray = (arr)=>{
+export const normalizeArray = (arr)=>{
     const result = [];
   
   function helper(items) {
@@ -85,4 +85,37 @@ const normalizeArray = (arr)=>{
   
   helper(arr);
   return result;
+}
+
+
+
+export const removeGroup = async (req, res)=>{
+
+    // console.log(req.body)
+
+    const query = `
+        DELETE FROM \`group\` WHERE id = `+req.body.id+`
+    `
+
+    db.query(query, async (err, rows)=>{
+        await removeAccess(req, res, req.body.id)
+        dbCondition(res, err, rows)
+    })
+
+
+}
+
+export const removeAccess = async(req, res, group_id) => {
+//    console.log(req.body); 
+
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM \`access\` WHERE group_id = `+group_id+`
+        `
+        db.query(query, (err, rows)=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+        
+    })
+
 }

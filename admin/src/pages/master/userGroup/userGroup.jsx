@@ -59,6 +59,20 @@ const userGroup = () => {
         })
     }
 
+    const removeData = (data) => {
+        axios.post(url.URL_GROUP + "/removeData", JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `kikensbatarar ${token}`
+            }
+        }).then(response => {
+            getData();
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
 
 
 
@@ -171,7 +185,7 @@ const userGroup = () => {
                                                 >
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
                                                     <MenuItem onClick={(e) => { e.currentTarget.blur(); setTypeEvent('EDIT'); setForm(data); handleClickopenModalAdd(); handleCloseAnchor(e, index); }} sx={{ fontSize: 12 }}>Edit</MenuItem>
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={() => { removeData(data); handleCloseAnchor(e, index); }}>Delete</MenuItem>
                                                 </Menu>
                                             </div>
 
