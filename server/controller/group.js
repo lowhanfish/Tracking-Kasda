@@ -13,23 +13,18 @@ export const view = (req, res)=>{
 }
 
 export const add = async (req, res)=> {
-    // console.log(req.body.array)
     const arr = normalizeArray(req.body.array)
-    // console.log(arr)
-
     const addx = await addGroup(req, res);
     await addAccess(arr, req, res, addx.message.insertId);
-    // console.log(addx.message.insertId)
     res.send(addx);
 }
 
 export const update = async(req, res) =>{
-    var arr = normalizeArray(req.body.array)
-    console.log(arr)
     var data = req.body.data;
+    var arr = normalizeArray(req.body.array)
+    await updateGroup(data);
     await removeAccess(req, res, data.id)
     await addAccess(arr, req, res, data.id);
-    // console.log(addx.message.insertId)
     res.send(data);
 }
 
@@ -46,6 +41,20 @@ export const addGroup = async (req, res) => {
             dbResolveCondition(resolve, err, rows)
         })
     })
+}
+
+export const updateGroup = async (data)=>{
+
+    const query = `
+        UPDATE \`group\` SET
+        title = '`+data.title+`',
+        access_unit = `+data.access_unit+`
+        WHERE id = `+data.id+`
+    `
+    db.query(query, (err, rows)=>{
+
+    })
+
 }
 
 
