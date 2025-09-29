@@ -16,11 +16,21 @@ export const add = async (req, res)=> {
     // console.log(req.body.array)
     const arr = normalizeArray(req.body.array)
     // console.log(arr)
-    // res.send("OK")
+
     const addx = await addGroup(req, res);
     await addAccess(arr, req, res, addx.message.insertId);
     // console.log(addx.message.insertId)
     res.send(addx);
+}
+
+export const update = async(req, res) =>{
+    var arr = normalizeArray(req.body.array)
+    console.log(arr)
+    var data = req.body.data;
+    await removeAccess(req, res, data.id)
+    await addAccess(arr, req, res, data.id);
+    // console.log(addx.message.insertId)
+    res.send(data);
 }
 
 export const addGroup = async (req, res) => {
@@ -58,6 +68,7 @@ const loopAccess = async (req, data, insertId) =>{
         const values = [data.id, insertId, data.view, data.add, data.update, data.remove, req.user._id];
 
         db.query(query, values, (err, rows)=>{
+            console.log("sukses input data")
             dbResolveCondition(resolve, err, rows)
         })
     })
@@ -66,13 +77,14 @@ const loopAccess = async (req, data, insertId) =>{
 
 export const normalizeArray = (arr)=>{
     const result = [];
+    console.log(arr)
   
   function helper(items) {
     for (const item of items) {
       // salin item tanpa properti children
       const { children, ...rest } = item;
       
-        if (rest.view===true ||rest.add===true || rest.update===true || rest.remove===true) {
+        if (rest.view==true ||rest.add==true || rest.update==true || rest.remove==true) {
             result.push(rest);
         }
 
@@ -86,8 +98,6 @@ export const normalizeArray = (arr)=>{
   helper(arr);
   return result;
 }
-
-
 
 export const removeGroup = async (req, res)=>{
 
@@ -104,6 +114,8 @@ export const removeGroup = async (req, res)=>{
 
 
 }
+
+
 
 export const removeAccess = async(req, res, group_id) => {
 //    console.log(req.body); 

@@ -46,7 +46,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
         // console.log(listMenu)
         // console.log(pathx)
-        // console.log("PATH : ", url.URL_GROUP + pathy)
+        console.log("PATH : ", url.URL_GROUP + pathy)
         axios.post(url.URL_GROUP + pathy, JSON.stringify({
             data: form,
             array: listMenu
@@ -56,7 +56,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            // console.log(response);
+            console.log(response);
             getData();
         }).catch((error) => {
             // alert(JSON.stringify(error.response.data))

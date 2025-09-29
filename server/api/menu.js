@@ -48,8 +48,6 @@ router.post('/add',(req, res)=>{
 })
 
 
-
-
 router.post('/update',(req, res)=>{
     const data = req.body;
     // console.log(data);
