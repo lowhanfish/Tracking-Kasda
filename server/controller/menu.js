@@ -10,7 +10,7 @@ export const getAddMenu = async (req, res)=>{
     
         db.query(query, async (err, rows)=>{
     
-            console.log(rows)
+            // console.log(rows)
     
             if (err) {
                 res.status(400);

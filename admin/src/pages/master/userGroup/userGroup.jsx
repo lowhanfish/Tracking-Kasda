@@ -218,7 +218,7 @@ const userGroup = () => {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <Addx handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} />
+                    <Addx handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} getData={getData} />
                 </Dialog>
 
 
