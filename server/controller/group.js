@@ -12,7 +12,6 @@ export const viewGet = ()=>{
 }
 
 
-
 export const view = (req, res)=>{
     const query = `SELECT * FROM \`group\``;
     db.query(query,(err, rows)=>{
