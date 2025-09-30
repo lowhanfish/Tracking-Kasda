@@ -12,6 +12,9 @@ router.get('/', (req, res)=>{
 })
 
 
+router.get('/', (req, res)=>{
+    viewGet(req, res);
+})
 router.post('/view', (req, res)=>{
     view(req, res);
 })

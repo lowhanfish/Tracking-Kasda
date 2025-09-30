@@ -4,6 +4,14 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 
 
 
+export const viewGet = ()=>{
+    const query = `SELECT * FROM \`group\``
+    db.query(query,(err, rows)=>{
+        dbCondition(res, err, rows)
+    })
+}
+
+
 
 export const view = (req, res)=>{
     const query = `SELECT * FROM \`group\``;

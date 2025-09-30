@@ -11,10 +11,8 @@ const port = 3000;
 const router = express.Router();
 
 
-import { sendEmail } from "./lib/sendEmail.js";
-
-
-// sendEmail();
+// import { sendEmail } from "./lib/sendEmail.js";
+// sendEmail('kikensbatara@gmail.com', 'coba email', 'ini adalah email text')
 
 app.use(router);
 app.use(cors({

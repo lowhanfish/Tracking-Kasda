@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer'
 
 
 
-export const sendEmail = async ()=>{
+export const sendEmail = async (to, subject, text)=>{
 
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -23,9 +23,9 @@ export const sendEmail = async ()=>{
 const mailOptions = {
     // from: 'kikensbatara@gmail.com',
     from: process.env.EMAIL,
-    to: "kikensbatara@gmail.com",
-    subject: "Hello dari Node.js (ESM)",
-    text: "Ini email dengan Node.js pakai import!",
+    to: to,
+    subject: subject,
+    text: text,
 };
 
 
