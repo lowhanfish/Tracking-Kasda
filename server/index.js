@@ -10,6 +10,12 @@ const app = express();
 const port = 3000;
 const router = express.Router();
 
+
+import { sendEmail } from "./lib/sendEmail.js";
+
+
+// sendEmail();
+
 app.use(router);
 app.use(cors({
   // origin : 'http://localhost:8081'
