@@ -77,7 +77,7 @@ const loopAccess = async (req, data, insertId) =>{
         const values = [data.id, insertId, data.view, data.add, data.update, data.remove, req.user._id];
 
         db.query(query, values, (err, rows)=>{
-            console.log("sukses input data")
+            // console.log("sukses input data")
             dbResolveCondition(resolve, err, rows)
         })
     })
@@ -86,7 +86,7 @@ const loopAccess = async (req, data, insertId) =>{
 
 export const normalizeArray = (arr)=>{
     const result = [];
-    console.log(arr)
+    // console.log(arr)
   
   function helper(items) {
     for (const item of items) {
