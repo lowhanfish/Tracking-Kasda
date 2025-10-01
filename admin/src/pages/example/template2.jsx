@@ -14,6 +14,8 @@ import FieldAutocomplete from '@components/items/FieldAutocomplete';
 
 
 import Photo from '@assets/img/Logo.png';
+import SideBarImagex from '@assets/img/Kop.png';
+import LoginImagex from '@assets/img/logox.png';
 
 
 const Template2 = () => {
@@ -98,11 +100,15 @@ const Template2 = () => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>SideBar Image</div>
-                                <div className='DivProfileLeftVal TextProfileLeftVal'>yyyy</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <img src={SideBarImagex} alt="No image" style={{ width: "300px", height: "auto", display: "block", }} />
+                                </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Login Image</div>
-                                <div className='DivProfileLeftVal TextProfileLeftVal'>yyyy</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <img src={LoginImagex} alt="No image" style={{ width: "300px", height: "auto", display: "block", }} />
+                                </div>
                             </div>
 
                         </Grid>
