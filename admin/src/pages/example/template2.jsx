@@ -13,7 +13,7 @@ import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 
 
-import Photo from '@assets/img/Photo.png';
+import Photo from '@assets/img/Logo.png';
 
 
 const Template2 = () => {
@@ -63,89 +63,49 @@ const Template2 = () => {
 
                 <div className='TextProfileContainer'>
                     <Grid container spacing={1} sx={{ paddingLeft: 2, paddingRight: 2, paddingBottom: 2 }}>
-                        <Grid size={{ md: 6, xs: 12 }} sx={{ marginTop: 2 }}>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Profile</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Name</div>
-                                <div className='TextProfileLeftVal'>Kiken S batara</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Company</div>
-                                <div className='TextProfileLeftVal'>
-                                    Department of Communication, Informatics, and Encryption of South Konawe Regency
-                                </div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Job title</div>
-                                <div className='TextProfileLeftVal'>
-                                    Head of Application, Information Technology, and Communication Division
-                                </div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Primary industry</div>
-                                <div className='TextProfileLeftVal'>Government</div>
-                            </div>
-                            {/* <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>xxxxx</div>
-                                <div className='TextProfileLeftVal'>yyyy</div>
-                            </div> */}
-
-
-                        </Grid>
-                        <Grid size={{ md: 6, xs: 12 }} sx={{ marginTop: 2 }}>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Contact</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Phone</div>
-                                <div className='TextProfileLeftVal'>+62 82349018600</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>email</div>
-                                <div className='TextProfileLeftVal'>kikensbatara@gmail.com</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Address</div>
-                                <div className='TextProfileLeftVal'>Jl. Beringin No.31
-                                    Kel. Bende Kec. Kadia
-                                    Kota Kendari - Sulawesi Tenggara</div>
-                            </div>
-
-                        </Grid>
-
 
                         <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Education</div>
+                                <div className='TextProfileHead shaddowText'>Color</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Bachelor's Degree</div>
+                                <div className='TextProfileLeftTitle'>Template Colors</div>
                                 <div className='TextProfileLeftVal'>Information Systems - STMIK Bina Bangsa Kendari (2004 – 2009)</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Master's Degree</div>
-                                <div className='TextProfileLeftVal'>Electrical Engineering - Universitas Islam Sultan Agung (2011 – 2014)</div>
+                                <div className='TextProfileLeftTitle'>Dashboard Colors</div>
+                                <div className='TextProfileLeftVal'>Information Systems - STMIK Bina Bangsa Kendari (2004 – 2009)</div>
                             </div>
-
                         </Grid>
+
                         <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Work Experience</div>
+                                <div className='TextProfileHead shaddowText'>Image</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>xxxxx</div>
+                                <div className='TextProfileLeftTitle'>Icon</div>
+                                <div className='TextProfileLeftVal'>yyyy</div>
+                            </div>
+                            <div className='TextProfileLeftContainer'>
+                                <div className='TextProfileLeftTitle'>SideBar Image</div>
+                                <div className='TextProfileLeftVal'>yyyy</div>
+                            </div>
+                            <div className='TextProfileLeftContainer'>
+                                <div className='TextProfileLeftTitle'>Login Image</div>
                                 <div className='TextProfileLeftVal'>yyyy</div>
                             </div>
 
                         </Grid>
                         <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Product Development</div>
+                                <div className='TextProfileHead shaddowText'>Link</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>xxxxx</div>
+                                <div className='TextProfileLeftTitle'>YouTube URL</div>
+                                <div className='TextProfileLeftVal'>yyyy</div>
+                            </div>
+                            <div className='TextProfileLeftContainer'>
+                                <div className='TextProfileLeftTitle'>File URL (PDF)</div>
                                 <div className='TextProfileLeftVal'>yyyy</div>
                             </div>
 
