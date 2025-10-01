@@ -2,10 +2,10 @@ import mysql from "mysql";
 
 var db= mysql.createPool({
     connectionLimit : 50,
-    host : 'localhost',
-    user : 'root',
-    password : 'root',
-    database : 'egov'
+    host : process.env.DB_USER_HOST,
+    user : process.env.DB_USER_USERNAME,
+    password : process.env.DB_USER_PASSWORD,
+    database : process.env.DB_USER,
 });
 
 
