@@ -70,11 +70,19 @@ const Template2 = () => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Template Colors</div>
-                                <div className='TextProfileLeftVal'>Information Systems - STMIK Bina Bangsa Kendari (2004 – 2009)</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor'></div>
+                                </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Dashboard Colors</div>
-                                <div className='TextProfileLeftVal'>Information Systems - STMIK Bina Bangsa Kendari (2004 – 2009)</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor'></div>
+                                </div>
                             </div>
                         </Grid>
 
