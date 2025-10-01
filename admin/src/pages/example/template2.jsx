@@ -83,6 +83,16 @@ const Template2 = () => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>
+                                    Content Colors
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#84aed6' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#a5ceff' }}></div>
+                                </div>
+                            </div>
+                            <div className='TextProfileLeftContainer'>
+                                <div className='TextProfileLeftTitle'>
                                     Dashboard Colors
                                     <button className='btnIcon shaddow1'>⚙️</button>
                                 </div>
