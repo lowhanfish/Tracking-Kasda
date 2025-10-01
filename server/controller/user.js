@@ -29,3 +29,50 @@ export const updateProfile = (req, res)=>{
 
 }
 
+export const countUsersGroup = async (req, res)=>{
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+            
+        `
+    
+        db.query(query, ()=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+
+}
+
+export const updateUsersGroup = async (req, res)=>{
+
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE users_group
+            SET
+            group_id = `+req.body.group_id+`
+            WHERE
+            user_id = '`+req.body.user_id+`'
+        `
+    
+        db.query(query, ()=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+        
+    })
+
+}
+export const addUsersGroup = async (req, res)=>{
+
+    return new Promise((resolve, reject) => {
+        const query = `
+            
+        `
+    
+        db.query(query, ()=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+        
+    })
+}
+
