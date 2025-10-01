@@ -71,19 +71,26 @@ const Template2 = () => {
                                 <div className='TextProfileHead shaddowText'>Color</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Template Colors</div>
+                                <div className='TextProfileLeftTitle'>
+                                    Template Colors
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='DivProfileLeftVal TextProfileLeftVal'>
-                                    <div className='DivProfileBoxColor'></div>
-                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#6aaefb' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#bcaff2' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#dfc2f3' }}></div>
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Dashboard Colors</div>
+                                <div className='TextProfileLeftTitle'>
+                                    Dashboard Colors
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='DivProfileLeftVal TextProfileLeftVal'>
-                                    <div className='DivProfileBoxColor'></div>
-                                    <div className='DivProfileBoxColor'></div>
-                                    <div className='DivProfileBoxColor'></div>
-                                    <div className='DivProfileBoxColor'></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#81d2f1' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#6aaefb' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#ceb4f5' }}></div>
+                                    <div className='DivProfileBoxColor' style={{ backgroundColor: '#beb6f3' }}></div>
                                 </div>
                             </div>
                         </Grid>
@@ -93,19 +100,28 @@ const Template2 = () => {
                                 <div className='TextProfileHead shaddowText'>Image</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Icon</div>
+                                <div className='TextProfileLeftTitle'>
+                                    Icon
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='DivProfileLeftVal TextProfileLeftVal'>
                                     <img className='ProfilePhotoItem shaddow1' src={Photo} alt="" />
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>SideBar Image</div>
+                                <div className='TextProfileLeftTitle'>
+                                    SideBar Image
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='DivProfileLeftVal TextProfileLeftVal'>
                                     <img src={SideBarImagex} alt="No image" style={{ width: "300px", height: "auto", display: "block", }} />
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Login Image</div>
+                                <div className='TextProfileLeftTitle'>
+                                    Login Image
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='DivProfileLeftVal TextProfileLeftVal'>
                                     <img src={LoginImagex} alt="No image" style={{ width: "300px", height: "auto", display: "block", }} />
                                 </div>
@@ -117,11 +133,17 @@ const Template2 = () => {
                                 <div className='TextProfileHead shaddowText'>Link</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>YouTube URL</div>
+                                <div className='TextProfileLeftTitle'>
+                                    YouTube URL
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='TextProfileLeftVal'>yyyy</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>File URL (PDF)</div>
+                                <div className='TextProfileLeftTitle'>
+                                    File URL (PDF)
+                                    <button className='btnIcon shaddow1'>⚙️</button>
+                                </div>
                                 <div className='TextProfileLeftVal'>yyyy</div>
                             </div>
 

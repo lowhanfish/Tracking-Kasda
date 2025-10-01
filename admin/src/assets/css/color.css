@@ -44,7 +44,7 @@
 
 .gradientPurpleBlue {
     background: #DFC2F3;
-    background: linear-gradient(0deg, rgba(223, 194, 243, 1) 0%, rgba(188, 175, 242, 1) 32%, rgba(106, 174, 251, 1) 84%);
+    background: linear-gradient(0deg, #dfc2f3 0%, #bcaff2 32%, #6aaefb 84%);
 }
 
 .bluex1 {

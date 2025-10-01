@@ -126,3 +126,25 @@
 .pulsex {
     animation: pulse 2s infinite;
 }
+
+.btnIcon {
+    background-color: #fff;
+    border-style: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 7px;
+    font-size: 20px;
+
+}
+
+.btnIcon:hover {
+    background-color: #e1e1e1;
+}
+
+.btnIcon:active {
+    background-color: #cacaca;
+}
