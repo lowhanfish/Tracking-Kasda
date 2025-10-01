@@ -3,7 +3,6 @@ import axios from axios
 export const getDataGroup = async () =>{
 
     const TOKEN = ``
-
     return new Promise((resolve, reject) => {
         
         axios.get(URLX,{
