@@ -92,15 +92,17 @@ const Template2 = () => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Icon</div>
-                                <div className='TextProfileLeftVal'>yyyy</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>
+                                    <img className='ProfilePhotoItem shaddow1' src={Photo} alt="" />
+                                </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>SideBar Image</div>
-                                <div className='TextProfileLeftVal'>yyyy</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>yyyy</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Login Image</div>
-                                <div className='TextProfileLeftVal'>yyyy</div>
+                                <div className='DivProfileLeftVal TextProfileLeftVal'>yyyy</div>
                             </div>
 
                         </Grid>
