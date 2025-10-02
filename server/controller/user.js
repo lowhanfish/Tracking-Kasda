@@ -4,75 +4,117 @@ import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
 
-export const getDataUser = (req, res) =>{
+
+// // INI DI PAKAI JIKA MENGGUNAKAN DB E-GOV
+const db_egov = process.env.DB_USER
+const db_simpeg = process.env.DB_SIMPEG
+
+export const getDataUser = (req, res) => {
     const query = `
     SELECT
     users.username,
-    users.name,
     users.email,
-    users.address,
-    users.phone,
-    users.createdAt,
-    users.createdBy
-    FROM users
+    users.hp,
+    users.nama_nip as nip,
+
+    biodata.nama,
+    biodata.alamat,
+    biodata.gelar_belakang,
+    biodata.gelar_depan,
+
+    jabatan.jabatan as jabatan,
+
+    unit_kerja.unit_kerja unit_kerja
+
+    FROM `+db_egov+`.users users
+
+    LEFT JOIN `+db_egov+`.biodata biodata
+    ON biodata.nip = users.nama_nip
+
+    LEFT JOIN `+db_egov+`.jabatan jabatan
+    ON jabatan._id = biodata.jabatan
+
+    LEFT JOIN `+db_egov+`.unit_kerja unit_kerja
+    ON unit_kerja.id = jabatan.unit_kerja
+
     `
-    dbx.query(query, (err, rows)=>{
+    dbx.query(query, (err, rows) => {
         dbCondition(res, err, rows)
     })
 }
 
 
-export const updateAccount = (req, res)=>{
+// // INI DI PAKAI JIKA TIDAK MENGGUNAKAN DB E-GOV
+
+// export const getDataUser = (req, res) =>{
+//     const query = `
+//     SELECT
+//     users.username,
+//     users.name,
+//     users.email,
+//     users.address,
+//     users.phone,
+//     users.createdAt,
+//     users.createdBy
+//     FROM users
+//     `
+//     db.query(query, (err, rows)=>{
+//         dbCondition(res, err, rows)
+//     })
+// }
+
+
+export const updateAccount = (req, res) => {
 
 }
-export const updateProfile = (req, res)=>{
+export const updateProfile = (req, res) => {
 
 }
 
-export const countUsersGroup = async (req, res)=>{
+export const countUsersGroup = async (req, res) => {
 
     return new Promise((resolve, reject) => {
-        
+
         const query = `
             
         `
-    
-        db.query(query, ()=>{
+
+        db.query(query, () => {
             dbResolveCondition(resolve, err, rows)
         })
     })
 
 }
 
-export const updateUsersGroup = async (req, res)=>{
+export const updateUsersGroup = async (req, res) => {
 
     return new Promise((resolve, reject) => {
         const query = `
             UPDATE users_group
             SET
-            group_id = `+req.body.group_id+`
+            group_id = `+ req.body.group_id + `
             WHERE
-            user_id = '`+req.body.user_id+`'
+            user_id = '`+ req.body.user_id + `'
         `
-    
-        db.query(query, ()=>{
+
+        db.query(query, () => {
             dbResolveCondition(resolve, err, rows)
         })
-        
+
     })
 
 }
-export const addUsersGroup = async (req, res)=>{
+export const addUsersGroup = async (req, res) => {
 
     return new Promise((resolve, reject) => {
         const query = `
             
         `
-    
-        db.query(query, ()=>{
+
+        db.query(query, () => {
             dbResolveCondition(resolve, err, rows)
         })
-        
+
     })
 }
 

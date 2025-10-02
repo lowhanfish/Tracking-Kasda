@@ -40,6 +40,8 @@ router.get('/', (req, res) => {
     app.use('/api/menu', isLoggedIn, menu)
     import group from "./api/group.js";
     app.use('/api/group', isLoggedIn, group)
+    import user from "./api/user.js";
+    app.use('/api/user', isLoggedIn, user)
 
 // =============== END YOUR API ==================
 
