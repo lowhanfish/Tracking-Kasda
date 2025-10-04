@@ -15,7 +15,7 @@ export const getDataUser = async (req, res) => {
     // console.log(data)
     res.send({
         data : data.message,
-        jml : jml.message[0].jml,
+        jml : Math.ceil((jml.message[0].jml)/req.body.dataLimit),
     });
     
 }

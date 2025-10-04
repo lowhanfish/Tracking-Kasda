@@ -190,7 +190,12 @@ const Registration = () => {
                 </div>
 
                 <div className='paginContainer'>
-                    <Pagination count={10} color="primary" variant="outlined" />
+                    <Pagination
+                        count={jmlData}
+                        page={pageFirst}
+
+                        color="primary"
+                        variant="outlined" />
                 </div>
 
 
