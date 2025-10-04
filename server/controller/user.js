@@ -9,6 +9,8 @@ const db_simpeg = process.env.DB_SIMPEG
 
 export const getDataUser = async (req, res) => {
 
+    console.log(req.body)
+
     const jml = await getJmlUser(req, res)
     const data = await getUser(req, res)
     

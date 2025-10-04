@@ -69,6 +69,11 @@ const Registration = () => {
         getData();
     }
 
+    const handlePageChange = (event, value) => {
+        setPageFirst(value); // update halaman aktif
+        getData();           // fetch data halaman baru
+    };
+
 
 
     // ====== ANCHOR ====== 
@@ -100,10 +105,9 @@ const Registration = () => {
     };
     // ====== MODAL ADD ====== 
 
-
     useEffect(() => {
         getData();
-    }, [searchData])
+    }, [searchData, pageFirst])
 
 
     return (
@@ -193,7 +197,7 @@ const Registration = () => {
                     <Pagination
                         count={jmlData}
                         page={pageFirst}
-
+                        onChange={handlePageChange}
                         color="primary"
                         variant="outlined" />
                 </div>
