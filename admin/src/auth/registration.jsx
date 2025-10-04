@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 
-import { Clear, Add } from '@mui/icons-material';
+import { Clear, Add, Search } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
@@ -16,6 +16,13 @@ import FieldDatex from '@components/items/FieldDatex';
 import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
+
+import { Fieldx } from '@assets/styling/style'
+import InputAdornment from "@mui/material/InputAdornment";
+
+
+
+
 import axios from 'axios';
 
 import useStorex from '@store/index.js'
@@ -57,6 +64,11 @@ const Registration = () => {
 
     }
 
+    const cariData = (e) => {
+        console.log(e)
+        getData();
+    }
+
 
 
     // ====== ANCHOR ====== 
@@ -91,7 +103,7 @@ const Registration = () => {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [searchData])
 
 
     return (
@@ -99,7 +111,26 @@ const Registration = () => {
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldWithButton placeholderx={'Cari Data..'} />
+                        <Fieldx
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                            placeholder={"Cari Data"}
+                            value={searchData}
+                            onChange={(e) => {
+                                setSearchData(e.target.value);  // update state
+                                cariData(e.target.value);       // gunakan value terbaru langsung
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton edge="end">
+                                            <Search />
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
                         <FieldSingle />
@@ -139,15 +170,15 @@ const Registration = () => {
                         </thead>
                         <tbody className="h_body">
                             {
-                                [...Array(10)].map((_, index) => (
-                                    <tr key={index}>
+                                listData.map((data, index) => (
+                                    <tr key={data.username}>
                                         <td>
                                             <Anchorx index={index} />
                                         </td>
                                         <td className='center'>{index + 1}</td>
-                                        <td>Galang Aditya</td>
-                                        <td>galang@example.com</td>
-                                        <td>yourUsername</td>
+                                        <td>{data.nama}</td>
+                                        <td>{data.email}</td>
+                                        <td>{data.username}</td>
                                         <td className='center'><span className="badge ok">Active</span></td>
                                     </tr>
                                 ))

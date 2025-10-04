@@ -9,12 +9,13 @@ const db_simpeg = process.env.DB_SIMPEG
 
 export const getDataUser = async (req, res) => {
 
-    const data = await getJmlUser(req, res)
+    const jml = await getJmlUser(req, res)
+    const data = await getUser(req, res)
     
     // console.log(data)
     res.send({
-        data : data.message[0].jml,
-        jml : data.message[0].jml,
+        data : data.message,
+        jml : jml.message[0].jml,
     });
     
 }
@@ -42,7 +43,10 @@ export const getDataUser = async (req, res) => {
 
 export const getUser = async (req, res)=>{
 
+    // console.log(req.body)
+
     const limit = req.body.dataLimit
+    const cari = req.body.searchData
 
 
     return new Promise((resolve, reject)=>{
@@ -73,6 +77,8 @@ export const getUser = async (req, res)=>{
     
         LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
         ON unit_kerja.id = jabatan.unit_kerja
+
+        WHERE biodata.nama LIKE '%`+cari+`%'
     
         LIMIT `+limit+`
     
@@ -104,6 +110,8 @@ export const getJmlUser = (req, res) =>{
     
         LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
         ON unit_kerja.id = jabatan.unit_kerja
+
+        WHERE biodata.nama LIKE '%`+req.body.searchData+`%'
     
         `
         dbx.query(query, (err, rows) => {
