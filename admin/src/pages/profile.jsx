@@ -38,6 +38,7 @@ const Template1 = ({ biodata }) => {
 
 
     const [profilex, setProfilex] = useState({})
+    const [listEducations, setListEducations] = useState([])
 
 
     const getData = () => {
@@ -54,8 +55,8 @@ const Template1 = ({ biodata }) => {
             }).then(result => {
                 console.log(result.data)
                 var datax = result.data.profile
-                var datax = result.data.profile
                 setProfilex(datax)
+                setListEducations(result.data.educations)
                 // console.log(profilex)
             }).catch(error => {
                 console.log(error)
@@ -164,14 +165,18 @@ const Template1 = ({ biodata }) => {
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileHead shaddowText'>Education</div>
                             </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Bachelor's Degree</div>
-                                <div className='TextProfileLeftVal'>Information Systems - STMIK Bina Bangsa Kendari (2004 – 2009)</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>Master's Degree</div>
-                                <div className='TextProfileLeftVal'>Electrical Engineering - Universitas Islam Sultan Agung (2011 – 2014)</div>
-                            </div>
+
+                            {
+                                listEducations.map((data, index) => (
+
+                                    <div key={index} className='TextProfileLeftContainer'>
+                                        <div className='TextProfileLeftTitle'>{data.keterangan_pendidikan}</div>
+                                        <div className='TextProfileLeftVal'>{data.jurusan} - {data.nm_sekolah} ({data.thn_masuk} – {data.thn_lulus})</div>
+                                    </div>
+                                ))
+                            }
+
+
 
                         </Grid>
                         <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>

@@ -274,7 +274,6 @@ export const getUserEducations = async (req, res)=>{
             WHERE pendidikan_formal.biodata_id = '`+req.body.id+`'
             ORDER BY pendidikan_formal.strata_ijazah_id
         `
-    
         dby.query(query, (err, rows)=>{
             dbResolveCondition(resolve, err, rows)
         })
