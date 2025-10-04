@@ -24,18 +24,20 @@ const Template1 = ({ biodata }) => {
     var data = ''
     if (biodata) {
         data = biodata
-        console.log(biodata)
+        // console.log(biodata)
     } else {
         data = {
             id: '',
             nip: ''
         }
     }
-    console.log(data)
+    // console.log(data)
 
     const token = localStorage.getItem('authToken');
     const { url } = useStorex();
 
+
+    const [profilex, setProfilex] = useState({})
 
 
     const getData = () => {
@@ -50,8 +52,11 @@ const Template1 = ({ biodata }) => {
                     'Content-Type': 'application/json'
                 }
             }).then(result => {
-                console.log("=======")
-                console.log(result);
+
+                var datax = result.data.profile
+                console.log(datax)
+                setProfilex(datax)
+                // console.log(profilex)
             }).catch(error => {
                 console.log(error)
             })
@@ -110,18 +115,18 @@ const Template1 = ({ biodata }) => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Name</div>
-                                <div className='TextProfileLeftVal'>Kiken S batara</div>
+                                <div className='TextProfileLeftVal'>{profilex.nama}</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Company</div>
                                 <div className='TextProfileLeftVal'>
-                                    Department of Communication, Informatics, and Encryption of South Konawe Regency
+                                    {profilex.unit_kerja}
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Job title</div>
                                 <div className='TextProfileLeftVal'>
-                                    Head of Application, Information Technology, and Communication Division
+                                    {profilex.jabatan}
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
@@ -141,7 +146,7 @@ const Template1 = ({ biodata }) => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Phone</div>
-                                <div className='TextProfileLeftVal'>+62 82349018600</div>
+                                <div className='TextProfileLeftVal'>{profilex.hp}</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>email</div>

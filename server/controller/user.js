@@ -184,7 +184,13 @@ export const addUsersGroup = async (req, res) => {
 
 export const getProfile = async(req, res) =>{
     const nip = await getNIPById(req, res);
-    res.send(nip)
+    const profile = await getUserDetail(req, res)
+    
+    res.send({
+        profile : profile.message[0],
+
+
+    })
 }
 
 
@@ -200,11 +206,11 @@ export const getNIPById = async (req, res) =>{
         `
         dby.query(query, (err, rows)=>{
             if (err) {
-                console.log(err);
+                // console.log(err);
                 resolve(err)
             } else {
-                console.log("===========")
-                console.log(rows[0])
+                // console.log("===========")
+                // console.log(rows[0])
                 resolve(rows[0])
             }
         })
@@ -229,7 +235,7 @@ export const getUserDetail = async (req, res)=>{
             biodata.gelar_depan,
             biodata.alamat,
             biodata.email,
-            biodata.hp,
+            biodata.kontak as hp,
             biodata.nip,
             jabatan.jabatan as jabatan,
             unit_kerja.unit_kerja unit_kerja

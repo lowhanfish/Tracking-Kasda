@@ -49,7 +49,7 @@ const Registration = () => {
             }
 
         }).then(response => {
-            console.log(response)
+            // console.log(response)
             setListData(response.data.data);
             setJmlData(response.data.jml);
         }).catch(error => {
@@ -60,7 +60,7 @@ const Registration = () => {
     }
 
     const cariData = (e) => {
-        console.log(e)
+        // console.log(e)
         getData();
     }
 
@@ -72,7 +72,7 @@ const Registration = () => {
 
     const selectData = (data) => {
 
-        console.log(data)
+        // console.log(data)
 
         const newProfile = { ...profile, data }
         setProfile(newProfile)
