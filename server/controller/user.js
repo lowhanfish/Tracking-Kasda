@@ -3,13 +3,14 @@ import dbx from "../db/mysql/egov.js";
 import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
-
-
 // // INI DI PAKAI JIKA MENGGUNAKAN DB E-GOV
 const db_egov = process.env.DB_USER
 const db_simpeg = process.env.DB_SIMPEG
 
 export const getDataUser = (req, res) => {
+
+
+    
     const query = `
     SELECT
     users.username,
@@ -28,13 +29,13 @@ export const getDataUser = (req, res) => {
 
     FROM `+db_egov+`.users users
 
-    LEFT JOIN `+db_egov+`.biodata biodata
+    LEFT JOIN `+db_simpeg+`.biodata biodata
     ON biodata.nip = users.nama_nip
 
-    LEFT JOIN `+db_egov+`.jabatan jabatan
+    LEFT JOIN `+db_simpeg+`.jabatan jabatan
     ON jabatan._id = biodata.jabatan
 
-    LEFT JOIN `+db_egov+`.unit_kerja unit_kerja
+    LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
     ON unit_kerja.id = jabatan.unit_kerja
 
     `
@@ -104,6 +105,7 @@ export const updateUsersGroup = async (req, res) => {
     })
 
 }
+
 export const addUsersGroup = async (req, res) => {
 
     return new Promise((resolve, reject) => {

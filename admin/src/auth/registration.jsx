@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -16,18 +16,51 @@ import FieldDatex from '@components/items/FieldDatex';
 import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
+import axios from 'axios';
 
-
-
+import useStorex from '@store/index.js'
 
 
 const Registration = () => {
 
 
+    const [listData, setListData] = useState([]);
+    const [dataLimit, setDataLimit] = useState(8);
+    const [searchData, setSearchData] = useState('');
+    const [pageFirst, setPageFirst] = useState(1);
+    const [jmlData, setJmlData] = useState(1);
+
+    const token = localStorage.getItem("authToken");
+    const { url } = useStorex()
+
+    const getData = () => {
+
+        axios.post(url.URL_USER + '/view', JSON.stringify({
+            pageFirst: pageFirst,
+            searchData: searchData,
+            dataLimit: dataLimit,
+        }), {
+
+            headers: {
+                'Authorization': `kikensbatara ${token}`,
+                'Content-Type': 'application/json'
+            }
+
+        }).then(response => {
+            console.log(response)
+            setListData(response.data.data);
+            setJmlData(response.data.jml);
+        }).catch(error => {
+            console.log(error)
+        })
+
+
+    }
+
 
 
     // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+    const [anchorEls, setAnchorEls] = useState({}); // key = index
 
     const handleClick = (event, index) => {
         setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
@@ -41,10 +74,10 @@ const Registration = () => {
 
 
     // ====== MODAL ADD ====== 
-    const [openModalAdd, setOpenModal] = React.useState(false);
+    const [openModalAdd, setOpenModal] = useState(false);
     // const theme = useTheme();
-    const [fullScreen, setFullScreen] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [fullScreen, setFullScreen] = useState(true);
+    const [maxWidth, setMaxWidth] = useState('sm');
 
     const handleClickopenModalAdd = () => {
         setOpenModal(true);
@@ -54,6 +87,12 @@ const Registration = () => {
         setOpenModal(false);
     };
     // ====== MODAL ADD ====== 
+
+
+    useEffect(() => {
+        getData();
+    }, [])
+
 
     return (
         <div className="cardx">
