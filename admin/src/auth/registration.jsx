@@ -209,8 +209,8 @@ const Registration = () => {
                                                         },
                                                     }}
                                                 >
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleClickopenModalDetail}>Detail</MenuItem>
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={() => { handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit Account</MenuItem>
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                 </Menu>
                                             </div>
@@ -265,8 +265,6 @@ const Registration = () => {
                         <div>
                             <Profile />
                         </div>
-
-
                     </div>
                 </Dialog>
 

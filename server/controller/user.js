@@ -123,15 +123,6 @@ export const getJmlUser = (req, res) =>{
 
 }
 
-
-export const getUserDetail = (req, res)=>{
-    const query = `
-        SELECT 
-    `
-
-
-}
-
 export const updateAccount = (req, res) => {
 
 }
@@ -186,4 +177,97 @@ export const addUsersGroup = async (req, res) => {
 
     })
 }
+
+
+export const getNIPById = async (req, res) =>{
+
+    return new Promise((resolve, reject)=>{
+        const query = `
+            SELECT
+
+            FROM biodata
+        `
+
+        dbx.query(query, (err, rows)=>{
+
+        })
+
+    })
+
+
+}
+
+
+export const getUserDetail = async (req, res)=>{
+
+    var nip = req.body.nip
+
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+            SELECT 
+            biodata.nama,
+            biodata.alamat,
+            biodata.gelar_belakang,
+            biodata.gelar_depan,
+            biodata.alamat,
+            biodata.email,
+            biodata.hp,
+            biodata.nip,
+            jabatan.jabatan as jabatan,
+            unit_kerja.unit_kerja unit_kerja
+    
+            FROM biodata
+            LEFT JOIN jabatan jabatan
+            ON jabatan._id = biodata.jabatan
+        
+            LEFT JOIN unit_kerja unit_kerja
+            ON unit_kerja.id = jabatan.unit_kerja
+
+            WHERE biodata.nip = '`+nip+`'
+        `
+    
+        dbx.query(query, (err, rows)=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+
+}
+
+export const getUserEducations = async (req, res)=>{
+
+    var nip = req.body.nip
+
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+            SELECT 
+            biodata.nama,
+            biodata.alamat,
+            biodata.gelar_belakang,
+            biodata.gelar_depan,
+            biodata.alamat,
+            biodata.email,
+            biodata.hp,
+            biodata.nip,
+            jabatan.jabatan as jabatan,
+            unit_kerja.unit_kerja unit_kerja
+    
+            FROM biodata
+            LEFT JOIN jabatan jabatan
+            ON jabatan._id = biodata.jabatan
+        
+            LEFT JOIN unit_kerja unit_kerja
+            ON unit_kerja.id = jabatan.unit_kerja
+
+            WHERE biodata.nip = '`+nip+`'
+        `
+    
+        dbx.query(query, (err, rows)=>{
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+
+}
+
 
