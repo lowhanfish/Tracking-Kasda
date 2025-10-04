@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -12,17 +12,53 @@ import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 
+import useStorex from '@store/index.js'
 
 import Photo from '@assets/img/Photo.png';
+import axios from 'axios';
 
 
-const Template1 = () => {
+const Template1 = ({ biodata }) => {
+
+
+    var data = ''
+    if (biodata) {
+        data = biodata
+        console.log(biodata)
+    } else {
+        data = {
+            id: '',
+            nip: ''
+        }
+    }
+    console.log(data)
+
+    const token = localStorage.getItem('authToken');
+    const { url } = useStorex();
 
 
 
+    const getData = () => {
+
+        axios.post(url.URL_USER + '/detail', JSON.stringify({
+            id: data.id,
+            nip: data.nip
+        }),
+            {
+                headers: {
+                    'Authorization': `kikensbatara ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).then(result => {
+                console.log("=======")
+                console.log(result);
+            }).catch(error => {
+                console.log(error)
+            })
+    }
 
     // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+    const [anchorEls, setAnchorEls] = useState({}); // key = index
 
     const handleClick = (event, index) => {
         setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
@@ -36,10 +72,10 @@ const Template1 = () => {
 
 
     // ====== MODAL ADD ====== 
-    const [openModalAdd, setOpenModal] = React.useState(false);
+    const [openModalAdd, setOpenModal] = useState(false);
     // const theme = useTheme();
-    const [fullScreen, setFullScreen] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [fullScreen, setFullScreen] = useState(true);
+    const [maxWidth, setMaxWidth] = useState('sm');
 
     const handleClickopenModalAdd = () => {
         setOpenModal(true);
@@ -49,6 +85,11 @@ const Template1 = () => {
         setOpenModal(false);
     };
     // ====== MODAL ADD ====== 
+
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return (
         <div className="cardx">

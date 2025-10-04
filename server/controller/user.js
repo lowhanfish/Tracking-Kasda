@@ -1,5 +1,6 @@
 import db from "../db/mysql/index.js";
 import dbx from "../db/mysql/egov.js";
+import dby from "../db/mysql/simpeg.js";
 import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
@@ -9,7 +10,7 @@ const db_simpeg = process.env.DB_SIMPEG
 
 export const getDataUser = async (req, res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
 
     const jml = await getJmlUser(req, res)
     const data = await getUser(req, res)
@@ -60,6 +61,7 @@ export const getUser = async (req, res)=>{
         users.hp,
         users.nama_nip as nip,
     
+        biodata.id,
         biodata.nama,
         biodata.alamat,
         biodata.gelar_belakang,
@@ -179,17 +181,32 @@ export const addUsersGroup = async (req, res) => {
 }
 
 
+
+export const getProfile = async(req, res) =>{
+    const nip = await getNIPById(req, res);
+    res.send(nip)
+}
+
+
 export const getNIPById = async (req, res) =>{
 
+    // console.log(req.body)
     return new Promise((resolve, reject)=>{
         const query = `
             SELECT
-
+            biodata.nip
             FROM biodata
+            WHERE biodata.id = '`+req.body.id+`'
         `
-
-        dbx.query(query, (err, rows)=>{
-
+        dby.query(query, (err, rows)=>{
+            if (err) {
+                console.log(err);
+                resolve(err)
+            } else {
+                console.log("===========")
+                console.log(rows[0])
+                resolve(rows[0])
+            }
         })
 
     })
@@ -227,7 +244,7 @@ export const getUserDetail = async (req, res)=>{
             WHERE biodata.nip = '`+nip+`'
         `
     
-        dbx.query(query, (err, rows)=>{
+        dby.query(query, (err, rows)=>{
             dbResolveCondition(resolve, err, rows)
         })
     })
@@ -263,7 +280,7 @@ export const getUserEducations = async (req, res)=>{
             WHERE biodata.nip = '`+nip+`'
         `
     
-        dbx.query(query, (err, rows)=>{
+        dby.query(query, (err, rows)=>{
             dbResolveCondition(resolve, err, rows)
         })
     })

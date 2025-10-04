@@ -33,6 +33,8 @@ const Registration = () => {
     const token = localStorage.getItem("authToken");
     const { url } = useStorex()
 
+    const [profile, setProfile] = useState({})
+
     const getData = () => {
 
         axios.post(url.URL_USER + '/view', JSON.stringify({
@@ -66,6 +68,15 @@ const Registration = () => {
         setPageFirst(value); // update halaman aktif
         getData();           // fetch data halaman baru
     };
+
+
+    const selectData = (data) => {
+
+        console.log(data)
+
+        const newProfile = { ...profile, data }
+        setProfile(newProfile)
+    }
 
 
 
@@ -209,7 +220,7 @@ const Registration = () => {
                                                         },
                                                     }}
                                                 >
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={() => { handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={() => { selectData(data); handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit Account</MenuItem>
                                                     <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                 </Menu>
@@ -263,7 +274,7 @@ const Registration = () => {
                     <div className='modalProfile'>
                         <div className='modalProfileExit shaddow2' onClick={handleCloseModalDetail}>x</div>
                         <div>
-                            <Profile />
+                            <Profile biodata={profile.data} />
                         </div>
                     </div>
                 </Dialog>
