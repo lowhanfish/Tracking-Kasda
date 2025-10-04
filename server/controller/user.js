@@ -123,6 +123,15 @@ export const getJmlUser = (req, res) =>{
 
 }
 
+
+export const getUserDetail = (req, res)=>{
+    const query = `
+        SELECT 
+    `
+
+
+}
+
 export const updateAccount = (req, res) => {
 
 }

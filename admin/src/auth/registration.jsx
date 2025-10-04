@@ -5,27 +5,20 @@ import { useEffect, useState } from 'react';
 
 
 
-import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
+import { Button, Dialog, Grid, Pagination, IconButton, Menu, MenuItem, InputAdornment } from "@mui/material";
 
-import { Clear, Add, Search } from '@mui/icons-material';
+import { Add, Search, Settings } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
-import FieldWithButton from '@components/items/FieldWithButton';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
-import Anchorx from '@components/items/Anchorx';
-import FieldDatex from '@components/items/FieldDatex';
-import BasicSelect from '@components/items/BasicSelect';
-import Checkboxz from '@components/items/Checkboxz';
-import CheckboxzLable from '@components/items/CheckboxLable';
+
 
 import { Fieldx } from '@assets/styling/style'
-import InputAdornment from "@mui/material/InputAdornment";
 
-
-
-
+import AddData from './registration/AddData.jsx'
 import axios from 'axios';
-
 import useStorex from '@store/index.js'
+
+import Profile from '@pages/profile.jsx'
 
 
 const Registration = () => {
@@ -77,33 +70,49 @@ const Registration = () => {
 
 
     // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = useState({}); // key = index
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openIndex, setOpenAnchorIndex] = useState(null);
 
-    const handleClick = (event, index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
+    const handleClickAnchor = (event, index) => {
+        setAnchorEl(event.currentTarget);
+        setOpenAnchorIndex(index);
     };
 
-    const handleClose = (index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: null }));
+    const handleCloseAnchor = () => {
+        setAnchorEl(null);
+        setOpenAnchorIndex(null);
     };
     // ====== ANCHOR ====== 
 
 
 
     // ====== MODAL ADD ====== 
-    const [openModalAdd, setOpenModal] = useState(false);
+    const [openModalAdd, setOpenModalAdd] = useState(false);
     // const theme = useTheme();
     const [fullScreen, setFullScreen] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
 
     const handleClickopenModalAdd = () => {
-        setOpenModal(true);
+        setOpenModalAdd(true);
     };
 
     const handleCloseModalAdd = () => {
-        setOpenModal(false);
+        setOpenModalAdd(false);
     };
+
     // ====== MODAL ADD ====== 
+
+    // ====== MODAL DETAIL ====== 
+    const [openModalDetail, setOpenModalDetail] = useState(false);
+    const [maxWidthLarge, setMaxWidthLarge] = useState('md');
+
+    const handleClickopenModalDetail = () => {
+        setOpenModalDetail(true);
+    };
+    const handleCloseModalDetail = () => {
+        setOpenModalDetail(false)
+    }
+    // ====== MODAL DETAIL ====== 
 
     useEffect(() => {
         getData();
@@ -169,7 +178,7 @@ const Registration = () => {
                                 <th style={{ width: '30%' }} scope="col">Nama</th>
                                 <th style={{ width: '20%' }} scope="col">Email</th>
                                 <th style={{ width: '20%' }} scope="col">Username</th>
-                                <th style={{ width: '20%' }} scope="col" className='center'>Status</th>
+                                <th style={{ width: '20%' }} scope="col" className='center'>Group</th>
                             </tr>
                         </thead>
                         <tbody className="h_body">
@@ -177,7 +186,38 @@ const Registration = () => {
                                 listData.map((data, index) => (
                                     <tr key={data.username}>
                                         <td>
-                                            <Anchorx index={index} />
+                                            {/* <Anchorx index={index} /> */}
+
+
+                                            <div className='settingContainer'>
+                                                <button
+                                                    className="btn rad primarySoft sm"
+                                                    onClick={(e) => handleClickAnchor(e, index)}
+                                                >
+                                                    <Settings sx={{ fontSize: 14 }} />
+                                                </button>
+
+                                                <Menu
+                                                    keepMounted
+                                                    id={`menu-${index}`}
+                                                    anchorEl={openIndex === index ? anchorEl : null}
+                                                    open={openIndex === index}
+                                                    onClose={handleCloseAnchor}
+                                                    slotProps={{
+                                                        list: {
+                                                            'aria-labelledby': `basic-button-${index}`,
+                                                        },
+                                                    }}
+                                                >
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleClickopenModalDetail}>Detail</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
+                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                </Menu>
+                                            </div>
+
+
+
+
                                         </td>
                                         <td className='center'>{index + 1}</td>
                                         <td>{data.nama}</td>
@@ -211,39 +251,26 @@ const Registration = () => {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add User</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-                            <FieldSingle Title={'Name'} />
-                            <FieldSingle Title={'Address'} />
-                            <FieldSingle Title={'Email'} />
-                            <FieldSingle Title={'Phone Number'} />
-                            <BasicSelect Title={'Level Access'} />
-                            <FieldSingle Title={'Username'} />
-                            <FieldSingle Title={'Password'} />
-                            <FieldSingle Title={'Confirm Password'} />
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleCloseModalAdd} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
+                    <AddData handleCloseModalAdd={handleCloseModalAdd} />
                 </Dialog>
+                <Dialog
+                    fullWidth={fullScreen}
+                    maxWidth={maxWidthLarge}
+                    open={openModalDetail}
+                    onClose={handleCloseModalDetail}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <div className='modalProfile'>
+                        <div className='modalProfileExit shaddow2' onClick={handleCloseModalDetail}>x</div>
+                        <div>
+                            <Profile />
+                        </div>
+
+
+                    </div>
+                </Dialog>
+
+
 
 
 

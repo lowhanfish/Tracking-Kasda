@@ -8,6 +8,9 @@ const router = Router();
 router.post('/view', (req, res)=>{
     getDataUser(req, res);
 })
+router.post('/detail', (req, res)=>{
+    getDataUser(req, res);
+})
 
 
 

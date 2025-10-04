@@ -2,3 +2,30 @@
     display: flex;
     flex-direction: row;
 }
+
+
+.modalProfile {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalProfileExit {
+    font-size: 25px;
+    margin-bottom: -20px;
+    z-index: 2;
+    position: absolute;
+    right: 20px;
+
+    color: aliceblue;
+
+    background-color: rgba(0, 0, 0, 0.059);
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    margin-top: 10px;
+}
