@@ -7,41 +7,16 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 const db_egov = process.env.DB_USER
 const db_simpeg = process.env.DB_SIMPEG
 
-export const getDataUser = (req, res) => {
+export const getDataUser = async (req, res) => {
 
-
+    const data = await getJmlUser(req, res)
     
-    const query = `
-    SELECT
-    users.username,
-    users.email,
-    users.hp,
-    users.nama_nip as nip,
-
-    biodata.nama,
-    biodata.alamat,
-    biodata.gelar_belakang,
-    biodata.gelar_depan,
-
-    jabatan.jabatan as jabatan,
-
-    unit_kerja.unit_kerja unit_kerja
-
-    FROM `+db_egov+`.users users
-
-    LEFT JOIN `+db_simpeg+`.biodata biodata
-    ON biodata.nip = users.nama_nip
-
-    LEFT JOIN `+db_simpeg+`.jabatan jabatan
-    ON jabatan._id = biodata.jabatan
-
-    LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
-    ON unit_kerja.id = jabatan.unit_kerja
-
-    `
-    dbx.query(query, (err, rows) => {
-        dbCondition(res, err, rows)
-    })
+    // console.log(data)
+    res.send({
+        data : data.message[0].jml,
+        jml : data.message[0].jml,
+    });
+    
 }
 
 
@@ -64,6 +39,79 @@ export const getDataUser = (req, res) => {
 //     })
 // }
 
+
+export const getUser = async (req, res)=>{
+
+    const limit = req.body.dataLimit
+
+
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+        SELECT
+        users.username,
+        users.email,
+        users.hp,
+        users.nama_nip as nip,
+    
+        biodata.nama,
+        biodata.alamat,
+        biodata.gelar_belakang,
+        biodata.gelar_depan,
+    
+        jabatan.jabatan as jabatan,
+    
+        unit_kerja.unit_kerja unit_kerja
+    
+        FROM `+db_egov+`.users users
+    
+        LEFT JOIN `+db_simpeg+`.biodata biodata
+        ON biodata.nip = users.nama_nip
+    
+        LEFT JOIN `+db_simpeg+`.jabatan jabatan
+        ON jabatan._id = biodata.jabatan
+    
+        LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
+        ON unit_kerja.id = jabatan.unit_kerja
+    
+        LIMIT `+limit+`
+    
+        `
+        dbx.query(query, (err, rows) => {
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+    
+}
+
+export const getJmlUser = (req, res) =>{
+
+
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+        SELECT
+        
+        count(users.id) as jml
+    
+        FROM `+db_egov+`.users users
+    
+        LEFT JOIN `+db_simpeg+`.biodata biodata
+        ON biodata.nip = users.nama_nip
+    
+        LEFT JOIN `+db_simpeg+`.jabatan jabatan
+        ON jabatan._id = biodata.jabatan
+    
+        LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
+        ON unit_kerja.id = jabatan.unit_kerja
+    
+        `
+        dbx.query(query, (err, rows) => {
+            dbResolveCondition(resolve, err, rows)
+        })
+    })
+
+}
 
 export const updateAccount = (req, res) => {
 
