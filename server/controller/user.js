@@ -185,10 +185,11 @@ export const addUsersGroup = async (req, res) => {
 export const getProfile = async(req, res) =>{
     const nip = await getNIPById(req, res);
     const profile = await getUserDetail(req, res)
+    const educations = await getUserEducations(req, res)
     
     res.send({
         profile : profile.message[0],
-
+        educations : educations.message,
 
     })
 }
@@ -259,31 +260,19 @@ export const getUserDetail = async (req, res)=>{
 
 export const getUserEducations = async (req, res)=>{
 
-    var nip = req.body.nip
-
     return new Promise((resolve, reject)=>{
 
         const query = `
             SELECT 
-            biodata.nama,
-            biodata.alamat,
-            biodata.gelar_belakang,
-            biodata.gelar_depan,
-            biodata.alamat,
-            biodata.email,
-            biodata.hp,
-            biodata.nip,
-            jabatan.jabatan as jabatan,
-            unit_kerja.unit_kerja unit_kerja
-    
-            FROM biodata
-            LEFT JOIN jabatan jabatan
-            ON jabatan._id = biodata.jabatan
-        
-            LEFT JOIN unit_kerja unit_kerja
-            ON unit_kerja.id = jabatan.unit_kerja
-
-            WHERE biodata.nip = '`+nip+`'
+            pendidikan_formal.*,
+            strata_ijazah.keterangan as keterangan_pendidikan
+            FROM pendidikan_formal
+            
+            LEFT JOIN strata_ijazah
+            ON strata_ijazah.strata_ijazah_id = pendidikan_formal.strata_ijazah_id
+            
+            WHERE pendidikan_formal.biodata_id = '`+req.body.id+`'
+            ORDER BY pendidikan_formal.strata_ijazah_id
         `
     
         dby.query(query, (err, rows)=>{

@@ -52,9 +52,9 @@ const Template1 = ({ biodata }) => {
                     'Content-Type': 'application/json'
                 }
             }).then(result => {
-
+                console.log(result.data)
                 var datax = result.data.profile
-                console.log(datax)
+                var datax = result.data.profile
                 setProfilex(datax)
                 // console.log(profilex)
             }).catch(error => {
@@ -150,13 +150,11 @@ const Template1 = ({ biodata }) => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>email</div>
-                                <div className='TextProfileLeftVal'>kikensbatara@gmail.com</div>
+                                <div className='TextProfileLeftVal'>{profilex.email}</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Address</div>
-                                <div className='TextProfileLeftVal'>Jl. Beringin No.31
-                                    Kel. Bende Kec. Kadia
-                                    Kota Kendari - Sulawesi Tenggara</div>
+                                <div className='TextProfileLeftVal'>{profilex.alamat}</div>
                             </div>
 
                         </Grid>
