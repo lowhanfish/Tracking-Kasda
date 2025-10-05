@@ -10,9 +10,17 @@ const accessUnit = (data)=>{
 
 
 function capitalizeWords(str) {
-  return str
-    .toLowerCase()
-    .replace(/\b\w/g, c => c.toUpperCase());
+
+    if(str){
+        return str
+          .toLowerCase()
+          .replace(/\b\w/g, c => c.toUpperCase());
+    }
+    else{
+        return "-"
+    }
+
+
 }
 
 

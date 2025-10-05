@@ -119,7 +119,6 @@ const Registration = () => {
     // ====== AUTO COMPLETE ====== 
 
 
-
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModalAdd] = useState(false);
     // const theme = useTheme();
@@ -227,13 +226,15 @@ const Registration = () => {
                         <tbody className="h_body">
                             {
                                 loadData ? (
-                                    <td colSpan={6}>
-                                        <Loadingx />
-                                    </td>
+                                    <tr>
+                                        <td colSpan={6}>
+                                            <Loadingx />
+                                        </td>
+                                    </tr>
                                 ) : (
 
                                     listData.map((data, index) => (
-                                        <tr key={index}>
+                                        <tr className='fade-in' key={index}>
                                             <td>
                                                 {/* <Anchorx index={index} /> */}
 
@@ -263,9 +264,6 @@ const Registration = () => {
                                                         <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                     </Menu>
                                                 </div>
-
-
-
 
                                             </td>
                                             <td className='center'>{index + 1}</td>
