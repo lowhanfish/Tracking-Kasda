@@ -5,20 +5,23 @@ import { useEffect, useState } from 'react';
 
 
 
-import { Button, Dialog, Grid, Pagination, IconButton, Menu, MenuItem, InputAdornment } from "@mui/material";
+import { TextField, Dialog, Grid, Pagination, IconButton, Menu, MenuItem, InputAdornment } from "@mui/material";
 
 import { Add, Search, Settings } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 
 
-import { Fieldx } from '@assets/styling/style'
+import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 
 import AddData from './registration/AddData.jsx'
 import axios from 'axios';
 import useStorex from '@store/index.js'
 
 import Profile from '@pages/profile.jsx'
+import Loadingx from '../components/Loadingx.jsx';
+
+
 
 
 const Registration = () => {
@@ -29,6 +32,7 @@ const Registration = () => {
     const [searchData, setSearchData] = useState('');
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
+    const [loadData, setLoadData] = useState(false);
 
     const token = localStorage.getItem("authToken");
     const { url } = useStorex()
@@ -37,6 +41,7 @@ const Registration = () => {
 
     const getData = () => {
 
+        setLoadData(true);
         axios.post(url.URL_USER + '/view', JSON.stringify({
             pageFirst: pageFirst,
             searchData: searchData,
@@ -53,7 +58,9 @@ const Registration = () => {
             setListData([]);
             setListData(response.data.data);
             setJmlData(response.data.jml);
+            setLoadData(false);
         }).catch(error => {
+            setLoadData(false);
             console.log(error)
         })
 
@@ -97,6 +104,20 @@ const Registration = () => {
     };
     // ====== ANCHOR ====== 
 
+    // ====== AUTO COMPLETE ====== 
+    const top100Films = [
+        { id: 1, label: 'The Shawshank Redemption', year: 1994 },
+        { id: 2, label: 'The Godfather', year: 1972 },
+        { id: 3, label: 'The Godfather: Part II', year: 1974 },
+        { id: 4, label: 'The Dark Knight', year: 2008 },
+        { id: 5, label: '12 Angry Men', year: 1957 },
+        { id: 6, label: "Schindler's List", year: 1993 },
+    ];
+
+    const [value, setValue] = useState(top100Films[0]);
+    const [inputValue, setInputValue] = useState('');
+    // ====== AUTO COMPLETE ====== 
+
 
 
     // ====== MODAL ADD ====== 
@@ -137,6 +158,21 @@ const Registration = () => {
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
+
+                    </Grid>
+                    <Grid size={{ md: 4, xs: 12 }}>
+                        <Autocompletex
+                            value={value}
+                            onChange={(event, newValue) => setValue(newValue)}
+                            inputValue={inputValue}
+                            onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+                            size="small"
+                            options={top100Films}
+                            PopperComponent={Popperx}
+                            renderInput={(params) => <TextField {...params} />}
+                        />
+                    </Grid>
+                    <Grid size={{ md: 4, xs: 12 }}>
                         <Fieldx
                             fullWidth
                             variant="outlined"
@@ -158,15 +194,6 @@ const Registration = () => {
                             }}
                         />
                     </Grid>
-                    <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldSingle />
-                    </Grid>
-                    <Grid size={{ md: 4, xs: 12 }}>
-
-                        <FieldAutocomplete />
-
-
-                    </Grid>
                 </Grid>
             </div>
             <div className="cardxBody">
@@ -182,6 +209,9 @@ const Registration = () => {
                     <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
                 </div>
 
+
+
+
                 <div className="table-wrap" tabIndex="0">
                     <table className="tabelku shaddow2" style={{ width: '100%' }}>
                         <thead className="h_thead shaddowText">
@@ -196,49 +226,57 @@ const Registration = () => {
                         </thead>
                         <tbody className="h_body">
                             {
-                                listData.map((data, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            {/* <Anchorx index={index} /> */}
+                                loadData ? (
+                                    <td colSpan={6}>
+                                        <Loadingx />
+                                    </td>
+                                ) : (
+
+                                    listData.map((data, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                {/* <Anchorx index={index} /> */}
 
 
-                                            <div className='settingContainer'>
-                                                <button
-                                                    className="btn rad primarySoft sm"
-                                                    onClick={(e) => handleClickAnchor(e, index)}
-                                                >
-                                                    <Settings sx={{ fontSize: 14 }} />
-                                                </button>
+                                                <div className='settingContainer'>
+                                                    <button
+                                                        className="btn rad primarySoft sm"
+                                                        onClick={(e) => handleClickAnchor(e, index)}
+                                                    >
+                                                        <Settings sx={{ fontSize: 14 }} />
+                                                    </button>
 
-                                                <Menu
-                                                    keepMounted
-                                                    id={`menu-${index}`}
-                                                    anchorEl={openIndex === index ? anchorEl : null}
-                                                    open={openIndex === index}
-                                                    onClose={handleCloseAnchor}
-                                                    slotProps={{
-                                                        list: {
-                                                            'aria-labelledby': `basic-button-${index}`,
-                                                        },
-                                                    }}
-                                                >
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={() => { selectData(data); handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit Account</MenuItem>
-                                                    <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
-                                                </Menu>
-                                            </div>
-
-
+                                                    <Menu
+                                                        keepMounted
+                                                        id={`menu-${index}`}
+                                                        anchorEl={openIndex === index ? anchorEl : null}
+                                                        open={openIndex === index}
+                                                        onClose={handleCloseAnchor}
+                                                        slotProps={{
+                                                            list: {
+                                                                'aria-labelledby': `basic-button-${index}`,
+                                                            },
+                                                        }}
+                                                    >
+                                                        <MenuItem sx={{ fontSize: 12 }} onClick={() => { selectData(data); handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
+                                                        <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit Account</MenuItem>
+                                                        <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                                                    </Menu>
+                                                </div>
 
 
-                                        </td>
-                                        <td className='center'>{index + 1}</td>
-                                        <td>{data.nama}</td>
-                                        <td>{data.email}</td>
-                                        <td>{data.username}</td>
-                                        <td className='center'><span className="badge ok">Active</span></td>
-                                    </tr>
-                                ))
+
+
+                                            </td>
+                                            <td className='center'>{index + 1}</td>
+                                            <td>{data.nama}</td>
+                                            <td>{data.email}</td>
+                                            <td>{data.username}</td>
+                                            <td className='center'><span className="badge ok">Active</span></td>
+                                        </tr>
+                                    ))
+                                )
+
 
                             }
 

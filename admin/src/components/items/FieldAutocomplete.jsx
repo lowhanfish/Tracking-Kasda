@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Autocompletex, Popperx } from '@assets/styling/style'
 import { TextField } from '@mui/material';
 
@@ -16,8 +16,8 @@ function FieldAutocomplete({ Title }) {
         { id: 6, label: "Schindler's List", year: 1993 },
     ];
 
-    const [value, setValue] = React.useState(top100Films[0]);
-    const [inputValue, setInputValue] = React.useState('');
+    const [value, setValue] = useState(top100Films[0]);
+    const [inputValue, setInputValue] = useState('');
     // ====== AUTO COMPLETE ====== 
 
 
