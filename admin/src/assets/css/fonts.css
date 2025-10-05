@@ -196,7 +196,10 @@
     font-weight: 400;
 }
 
-
+.capitalFirst {
+    text-transform: lowercase !important;
+    text-transform: capitalize !important;
+}
 
 
 @media only screen and (max-width: 600px) {

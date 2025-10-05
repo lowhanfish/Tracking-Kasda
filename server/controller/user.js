@@ -50,7 +50,7 @@ export const getUser = async (req, res)=>{
 
     const limit = req.body.dataLimit
     const cari = req.body.searchData
-
+    const startFrom = (req.body.pageFirst - 1)* limit;
 
     return new Promise((resolve, reject)=>{
 
@@ -84,7 +84,7 @@ export const getUser = async (req, res)=>{
 
         WHERE biodata.nama LIKE '%`+cari+`%'
     
-        LIMIT `+limit+`
+        LIMIT `+startFrom+`,`+limit+`
     
         `
         dbx.query(query, (err, rows) => {

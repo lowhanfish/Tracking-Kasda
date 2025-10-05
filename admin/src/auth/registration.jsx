@@ -49,7 +49,8 @@ const Registration = () => {
             }
 
         }).then(response => {
-            // console.log(response)
+            console.log(response.data.data)
+            setListData([]);
             setListData(response.data.data);
             setJmlData(response.data.jml);
         }).catch(error => {
@@ -61,6 +62,7 @@ const Registration = () => {
 
     const cariData = (e) => {
         // console.log(e)
+        setPageFirst(1)
         getData();
     }
 
@@ -195,7 +197,7 @@ const Registration = () => {
                         <tbody className="h_body">
                             {
                                 listData.map((data, index) => (
-                                    <tr key={data.username}>
+                                    <tr key={index}>
                                         <td>
                                             {/* <Anchorx index={index} /> */}
 

@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 
+import { capitalizeWords } from '@lib/index.js'
+
 import { Clear, Add } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
@@ -116,18 +118,18 @@ const Template1 = ({ biodata }) => {
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Name</div>
-                                <div className='TextProfileLeftVal'>{profilex.nama}</div>
+                                <div className='TextProfileLeftVal'>{capitalizeWords(profilex.nama)}</div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Company</div>
                                 <div className='TextProfileLeftVal'>
-                                    {profilex.unit_kerja}
+                                    {capitalizeWords(profilex.unit_kerja)}
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
                                 <div className='TextProfileLeftTitle'>Job title</div>
                                 <div className='TextProfileLeftVal'>
-                                    {profilex.jabatan}
+                                    {capitalizeWords(profilex.jabatan)}
                                 </div>
                             </div>
                             <div className='TextProfileLeftContainer'>
@@ -163,15 +165,16 @@ const Template1 = ({ biodata }) => {
 
                         <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>
                             <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Education</div>
+                                <div className='TextProfileHead shaddowText'>Educations</div>
                             </div>
 
                             {
                                 listEducations.map((data, index) => (
 
                                     <div key={index} className='TextProfileLeftContainer'>
-                                        <div className='TextProfileLeftTitle'>{data.keterangan_pendidikan}</div>
-                                        <div className='TextProfileLeftVal'>{data.jurusan} - {data.nm_sekolah} ({data.thn_masuk} – {data.thn_lulus})</div>
+                                        <div className='TextProfileLeftTitle '>{data.keterangan_pendidikan}</div>
+                                        <div className='TextProfileLeftVal capitalFirst'>{capitalizeWords(data.jurusan)} - {capitalizeWords(data.nm_sekolah)} ({data.thn_masuk} – {data.thn_lulus})</div>
+
                                     </div>
                                 ))
                             }
@@ -189,16 +192,7 @@ const Template1 = ({ biodata }) => {
                             </div>
 
                         </Grid>
-                        <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: 2 }}>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileHead shaddowText'>Product Development</div>
-                            </div>
-                            <div className='TextProfileLeftContainer'>
-                                <div className='TextProfileLeftTitle'>xxxxx</div>
-                                <div className='TextProfileLeftVal'>yyyy</div>
-                            </div>
 
-                        </Grid>
 
 
                     </Grid>
