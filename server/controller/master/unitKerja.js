@@ -6,7 +6,7 @@ import dbResolveCondition from '../../lib/dbResolveCondition.js'
 
 export const getUnit = (req, res)=>{
 
-    console.log(req.body)
+    // console.log(req.body)
     
 
     const query = `
