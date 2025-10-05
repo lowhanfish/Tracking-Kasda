@@ -1,7 +1,7 @@
-import dby from '../db/mysql/simpeg.js'
+import dby from '../../db/mysql/simpeg.js'
 
-import dbCondition from '../lib/dbCondition.js'
-import dbResolveCondition from '../lib/dbResolveCondition.js'
+import dbCondition from '../../lib/dbCondition.js'
+import dbResolveCondition from '../../lib/dbResolveCondition.js'
 
 
 export const getUnit = (req, res)=>{

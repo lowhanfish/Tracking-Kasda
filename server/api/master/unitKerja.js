@@ -2,7 +2,7 @@ import {Router} from 'express'
 const router = Router();
 
 
-import {getUnit} from '../controller/unitKerja.js'
+import {getUnit} from '../../controller/master/unitKerja.js'
 
 
 router.post('/', (req, res)=>{

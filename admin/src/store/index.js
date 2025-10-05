@@ -20,6 +20,8 @@ const useStorex = create((set) => ({
     URL_MENU: `${BASE_URL}api/menu`,
     URL_GROUP: `${BASE_URL}api/group`,
     URL_USER: `${BASE_URL}api/user`,
+
+    URL_UNIT_KERJA: `${BASE_URL}api/unitKerja`,
     dua: `${BASE_URL}duax`
   },
 

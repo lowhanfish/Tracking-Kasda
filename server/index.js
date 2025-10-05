@@ -43,6 +43,10 @@ router.get('/', (req, res) => {
     import user from "./api/user.js";
     app.use('/api/user', isLoggedIn, user)
 
+
+    import unitKerja from "./api/master/unitKerja.js";
+    app.use('/api/unitKerja', isLoggedIn, unitKerja)
+
 // =============== END YOUR API ==================
 
 
