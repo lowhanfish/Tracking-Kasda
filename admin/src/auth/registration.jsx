@@ -22,9 +22,13 @@ import Profile from '@pages/profile.jsx'
 import Loadingx from '../components/Loadingx.jsx';
 
 
+import { GetUnitKerja } from "@lib/dataFetch.js";
+
+
 
 
 const Registration = () => {
+
 
 
     const [listData, setListData] = useState([]);
@@ -34,8 +38,8 @@ const Registration = () => {
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
 
-    const token = localStorage.getItem("authToken");
-    const { url } = useStorex()
+    var token = localStorage.getItem("authToken");
+    var { url } = useStorex()
 
     const [profile, setProfile] = useState({})
 
@@ -105,17 +109,19 @@ const Registration = () => {
     // ====== ANCHOR ====== 
 
     // ====== AUTO COMPLETE ====== 
-    const top100Films = [
-        { id: 1, label: 'The Shawshank Redemption', year: 1994 },
-        { id: 2, label: 'The Godfather', year: 1972 },
-        { id: 3, label: 'The Godfather: Part II', year: 1974 },
-        { id: 4, label: 'The Dark Knight', year: 2008 },
-        { id: 5, label: '12 Angry Men', year: 1957 },
-        { id: 6, label: "Schindler's List", year: 1993 },
-    ];
 
-    const [value, setValue] = useState(top100Films[0]);
+
+
+    const [APIUnitKerja, setAPIUnitKerja] = useState([])
+    const [valueUnitKerja, setValueUnitKerja] = useState("");
     const [inputValue, setInputValue] = useState('');
+
+    const handleDataUnitKerja = async (data) => {
+        const newAPIUnitKerja = await GetUnitKerja(data, token, url);
+        setAPIUnitKerja(newAPIUnitKerja);
+    };
+
+
     // ====== AUTO COMPLETE ====== 
 
 
@@ -149,6 +155,7 @@ const Registration = () => {
 
     useEffect(() => {
         getData();
+        handleDataUnitKerja("");
     }, [searchData, pageFirst])
 
 
@@ -161,14 +168,27 @@ const Registration = () => {
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
                         <Autocompletex
-                            value={value}
-                            onChange={(event, newValue) => setValue(newValue)}
+                            value={valueUnitKerja}
+                            onChange={(event, newValue) => setValueUnitKerja(newValue)}
                             inputValue={inputValue}
-                            onInputChange={(event, newInputValue) => setInputValue(newInputValue)}
+                            onInputChange={(event, newInputValue) => { setInputValue(newInputValue), handleDataUnitKerja(newInputValue) }}
                             size="small"
-                            options={top100Films}
+                            options={APIUnitKerja}
+                            getOptionLabel={(option) => option.unit_kerja || ""}
                             PopperComponent={Popperx}
                             renderInput={(params) => <TextField {...params} />}
+                            renderOption={(props, option) => (
+                                <li {...props} key={option.id}>
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <span style={{ fontWeight: "bold", color: "#1976d2" }}>
+                                            {option.unit_kerja}
+                                        </span>
+                                        <span style={{ fontSize: "10px", color: "#666" }}>
+                                            {option.uraian_instansi}
+                                        </span>
+                                    </div>
+                                </li>
+                            )}
                         />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>

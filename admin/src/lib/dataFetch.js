@@ -1,12 +1,12 @@
 import useStorex from "../store";
-import axios from axios
+import axios from 'axios'
 
 
 
 
 
 
-export const getDataGroup = async () =>{
+export const GetDataGroup = async () =>{
 
     const {url} = useStorex();
 
@@ -15,7 +15,7 @@ export const getDataGroup = async () =>{
         
         axios.get(url.URL_MENU,{
             headers : {
-                'Content-Type' : 'application/json',
+                'Content-type' : 'application/json',
                 'Authorization' : `kikensbatara ${TOKEN}`
             }
         }).then(response =>{
@@ -29,15 +29,21 @@ export const getDataGroup = async () =>{
 }
 
 
-export const getUnitKerja = async (data)=>{
-    const TOKEN = localStorage.getItem("authToken");
+export const GetUnitKerja = async (data, token, url)=>{
+    
+    console.log("TOKENKU : ",token)
+    
 
     return new Promise((resolve, reject) => {
+
         
-        axios.post(url.URL_UNIT_KERJA, JSON.stringify({data : data}),{
-            Headers : {
-                'Authorization' : `kikensbatara ${TOKEN}`,
-                'Content-Type' : 'application/json'
+        axios.post(url.URL_UNIT_KERJA+"/", JSON.stringify({
+            data : data
+        }),
+        {
+            headers: {
+                'Authorization': `kikensbatara ${token}`,
+                'Content-Type': 'application/json'
             }
         }).then(response => {
             console.log(response.data)
