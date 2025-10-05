@@ -12,8 +12,18 @@ export const getDataUser = async (req, res) => {
 
     // console.log(req.body)
 
-    const jml = await getJmlUser(req, res)
-    const data = await getUser(req, res)
+    var filterUnitKerja = ``
+    
+    if (req.body.unitKerja) {
+        filterUnitKerja = `AND (biodata.unit_kerja = '`+req.body.unitKerja+`')`
+    } else {
+        filterUnitKerja = ``
+    }
+
+
+
+    const data = await getUser(req, res, filterUnitKerja)
+    const jml = await getJmlUser(req, res, filterUnitKerja)
     
     // console.log(data)
     res.send({
@@ -44,9 +54,9 @@ export const getDataUser = async (req, res) => {
 // }
 
 
-export const getUser = async (req, res)=>{
+export const getUser = async (req, res, filterUnitKerja)=>{
 
-    // console.log(req.body)
+   
 
     const limit = req.body.dataLimit
     const cari = req.body.searchData
@@ -82,10 +92,10 @@ export const getUser = async (req, res)=>{
         LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
         ON unit_kerja.id = jabatan.unit_kerja
 
-        WHERE biodata.nama LIKE '%`+cari+`%'
+        WHERE biodata.nama LIKE '%`+cari+`%' 
+        `+filterUnitKerja+`
     
         LIMIT `+startFrom+`,`+limit+`
-    
         `
         dbx.query(query, (err, rows) => {
             dbResolveCondition(resolve, err, rows)
@@ -94,7 +104,7 @@ export const getUser = async (req, res)=>{
     
 }
 
-export const getJmlUser = (req, res) =>{
+export const getJmlUser = (req, res, filterUnitKerja) =>{
 
 
     return new Promise((resolve, reject)=>{
@@ -116,6 +126,7 @@ export const getJmlUser = (req, res) =>{
         ON unit_kerja.id = jabatan.unit_kerja
 
         WHERE biodata.nama LIKE '%`+req.body.searchData+`%'
+        `+filterUnitKerja+`
     
         `
         dbx.query(query, (err, rows) => {
