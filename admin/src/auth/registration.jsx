@@ -43,16 +43,25 @@ const Registration = () => {
 
     const [profile, setProfile] = useState({})
 
-    const getData = (idUnitKerja = null) => {
+    const getData = () => {
 
         setLoadData(true);
-        axios.post(url.URL_USER + '/view', JSON.stringify({
+
+        const payload = {
             pageFirst: pageFirst,
             searchData: searchData,
             dataLimit: dataLimit,
-            unitKerja: idUnitKerja
-        }), {
+        };
 
+        console.log("========", selectedUnitKerja)
+
+        if (selectedUnitKerja) {
+            payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
+        }
+
+        console.log(payload)
+
+        axios.post(url.URL_USER + '/view', JSON.stringify(payload), {
             headers: {
                 'Authorization': `kikensbatara ${token}`,
                 'Content-Type': 'application/json'
@@ -85,9 +94,6 @@ const Registration = () => {
 
 
     const selectData = (data) => {
-
-        // console.log(data)
-
         const newProfile = { ...profile, data }
         setProfile(newProfile)
     }
@@ -116,6 +122,7 @@ const Registration = () => {
     const [APIUnitKerja, setAPIUnitKerja] = useState([])
     const [valueUnitKerja, setValueUnitKerja] = useState("");
     const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
+    const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
 
     const handleDataUnitKerja = async (data) => {
         const newAPIUnitKerja = await GetUnitKerja(data, token, url);
@@ -157,7 +164,7 @@ const Registration = () => {
     useEffect(() => {
         getData();
         handleDataUnitKerja("");
-    }, [searchData, pageFirst])
+    }, [selectedUnitKerja, searchData, pageFirst])
 
 
     return (
@@ -193,19 +200,15 @@ const Registration = () => {
                         /> */}
 
                         <Autocompletex
-                            value={APIUnitKerja.find(opt => opt.id === valueUnitKerja) || null}
+                            value={APIUnitKerja.find(opt => opt.id === selectedUnitKerja) || null}
                             onChange={(event, newValue) => {
-                                if (newValue) {
-                                    setValueUnitKerja(newValue.id); // simpan ID saja
-                                    getData(newValue.id); // panggil getData dengan id yang dipilih
-                                } else {
-                                    setValueUnitKerja(null);
-                                }
+                                setSelectedUnitKerja(newValue); // simpan full object
+                                // getData(); // panggil ulang data
                             }}
                             inputValue={inputValueUnitKerja}
                             onInputChange={(event, newInputValue) => {
                                 setInputValueUnitKerja(newInputValue);
-                                handleDataUnitKerja(newInputValue); // search ke API sesuai input
+                                handleDataUnitKerja(newInputValue); // cari data unit kerja sesuai input
                             }}
                             size="small"
                             options={APIUnitKerja}
@@ -225,6 +228,7 @@ const Registration = () => {
                                 </li>
                             )}
                         />
+
 
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>

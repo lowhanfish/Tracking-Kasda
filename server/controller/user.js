@@ -14,8 +14,8 @@ export const getDataUser = async (req, res) => {
 
     var filterUnitKerja = ``
     
-    if (req.body.unitKerja) {
-        filterUnitKerja = `AND (biodata.unit_kerja = '`+req.body.unitKerja+`')`
+    if (req.body.id_unit_kerja) {
+        filterUnitKerja = `AND (biodata.unit_kerja = '`+req.body.id_unit_kerja+`')`
     } else {
         filterUnitKerja = ``
     }
@@ -56,7 +56,7 @@ export const getDataUser = async (req, res) => {
 
 export const getUser = async (req, res, filterUnitKerja)=>{
 
-   
+    console.log(req.body)
 
     const limit = req.body.dataLimit
     const cari = req.body.searchData
