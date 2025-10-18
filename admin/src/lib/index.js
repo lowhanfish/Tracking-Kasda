@@ -8,7 +8,6 @@ const accessUnit = (data)=>{
     }
 }
 
-
 function capitalizeWords(str) {
 
     if(str){
@@ -23,5 +22,13 @@ function capitalizeWords(str) {
 
 }
 
+const indexingPage = (page_first, page_limit, index)=>{
+    console.log(page_first)
+    var idx = ((page_first-1)*page_limit)+index
+    return idx+1;
+}
 
-export {accessUnit, capitalizeWords}
+
+
+
+export {accessUnit, capitalizeWords, indexingPage}

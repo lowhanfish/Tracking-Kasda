@@ -23,6 +23,7 @@ import Loadingx from '../components/Loadingx.jsx';
 
 
 import { GetUnitKerja } from "@lib/dataFetch.js";
+import { indexingPage } from '../lib/index.js';
 
 
 
@@ -326,7 +327,7 @@ const Registration = () => {
                                                 </div>
 
                                             </td>
-                                            <td className='center'>{index + 1}</td>
+                                            <td className='center'>{indexingPage(pageFirst, dataLimit, index)}</td>
                                             <td>{data.nama}</td>
                                             <td>{data.email}</td>
                                             <td>{data.username}</td>

@@ -46,7 +46,7 @@ export const GetUnitKerja = async (data, token, url)=>{
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             resolve(response.data)
         }).catch(error => {
             console.log(error)
