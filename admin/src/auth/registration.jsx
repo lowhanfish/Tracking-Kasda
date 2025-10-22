@@ -39,6 +39,7 @@ const Registration = () => {
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
 
+
     var token = localStorage.getItem("authToken");
     var { url } = useStorex()
 
@@ -93,13 +94,11 @@ const Registration = () => {
         getData();           // fetch data halaman baru
     };
 
-
     const selectData = (data) => {
+        // console.log(data)
         const newProfile = { ...profile, data }
         setProfile(newProfile)
     }
-
-
 
     // ====== ANCHOR ====== 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -321,7 +320,7 @@ const Registration = () => {
                                                         }}
                                                     >
                                                         <MenuItem sx={{ fontSize: 12 }} onClick={() => { selectData(data); handleClickopenModalDetail(); handleCloseAnchor() }}>Detail</MenuItem>
-                                                        <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit Account</MenuItem>
+                                                        <MenuItem sx={{ fontSize: 12 }} onClick={() => { selectData(data); handleClickopenModalAdd(); handleCloseAnchor() }}>Edit Account</MenuItem>
                                                         <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
                                                     </Menu>
                                                 </div>
@@ -353,7 +352,7 @@ const Registration = () => {
                 </div>
 
 
-
+                {/* ========== ADD DATA ========== */}
                 <Dialog
                     fullWidth={fullScreen}
                     maxWidth={maxWidth}
@@ -361,8 +360,10 @@ const Registration = () => {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <AddData handleCloseModalAdd={handleCloseModalAdd} />
+                    <AddData biodata={profile.data} handleCloseModalAdd={handleCloseModalAdd} />
                 </Dialog>
+
+                {/* ========== DETAIL DATA ========== */}
                 <Dialog
                     fullWidth={fullScreen}
                     maxWidth={maxWidthLarge}

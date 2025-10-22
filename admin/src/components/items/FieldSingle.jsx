@@ -1,26 +1,40 @@
 import React from 'react'
-import { Fieldx, FieldxKamio } from '@assets/styling/style'
-import stylex from '@assets/styling/stylex'
+import { Fieldx } from '@assets/styling/style'
+// import FieldxKamio and stylex tidak diperlukan jika tidak digunakan di sini
 
+// Definisikan nilai default untuk props opsional (name, value, onChange)
+function FieldSingle({ Title, name = '', value = undefined, onChange = () => { } }) {
 
-function FieldSingle({ Title }) {
-    // Periksa apakah properti 'Title' ada (tidak null, undefined, atau string kosong)
+    // Objek props untuk Fieldx. 
+    // Jika name, value, atau onChange tidak diset, ia akan menggunakan nilai default-nya.
+    const inputProps = {
+        size: 'small',
+        fullWidth: true,
+        // id unik diperlukan untuk aksesibilitas, gunakan name jika ada
+        id: name ? `${name}-input` : "outlined-basic",
+        variant: "outlined",
+
+        // Meneruskan props opsional (value dan onChange diperlukan untuk controlled input)
+        name: name,
+        value: value,
+        onChange: onChange,
+    };
+
+    // Pengecekan: Jika 'Title' didefinisikan (bukan null, undefined, atau string kosong)
     if (Title) {
-        // Jika 'Title' ada, kembalikan elemen div dengan title dan Fieldx
         return (
             <div className='inputContainer'>
                 <div className='inputText'>{Title}</div>
-                <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
+                {/* Meneruskan semua props yang diperlukan ke Fieldx */}
+                <Fieldx {...inputProps} />
             </div>
-        )
-    } else {
-        // Jika 'Title' tidak ada, kembalikan hanya elemen Fieldx
-        return (
-            <>
-                <Fieldx size='small' fullWidth id="outlined-basic" variant="outlined" />
-            </>
-        )
+        );
     }
+
+    // Jika 'Title' tidak ada, kembalikan hanya elemen Fieldx
+    return (
+        <Fieldx {...inputProps} />
+    );
 }
 
-export default FieldSingle
+export default FieldSingle;
