@@ -148,7 +148,7 @@ export const countUsersGroup = async (req, res) => {
     return new Promise((resolve, reject) => {
 
         const query = `
-            
+            SELECT * FROM group
         `
 
         db.query(query, () => {
@@ -291,5 +291,6 @@ export const getUserEducations = async (req, res)=>{
     })
 
 }
+
 
 
