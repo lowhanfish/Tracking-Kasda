@@ -25,8 +25,6 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
 
     // 💡 FUNGSI HANDLER PERUBAHAN STATE 💡
     const handleChange = (e) => {
-        // e.target.name: Mengambil nama field (misalnya 'nama', 'alamat')
-        // e.target.value: Mengambil nilai yang diketik pengguna
         setForm(prevForm => ({
             ...prevForm,
             [e.target.name]: e.target.value,
@@ -36,7 +34,14 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
     return (
         <>
             <DialogTitle id="responsive-dialog-title">
-                {/* ... Header Modal ... */}
+                <div className='headerModal'>
+                    <div className='headerModalLeft'>Add Data</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
             </DialogTitle>
             <DialogContent>
                 <DialogContentText component="div">
@@ -83,28 +88,15 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         onChange={handleChange}
                     />
 
-                    {/* 6. FIELD PASSWORD (Biasanya tidak terisi dari biodata, tapi tetap terhubung ke state) */}
-                    <FieldSingle
-                        Title={'Password'}
-                        name={'password'}
-                        value={form.password}
-                        onChange={handleChange}
-                    // Tambahkan prop type='password' jika Fieldx Anda mendukungnya
-                    />
-
-                    {/* 7. FIELD CONFIRM PASSWORD */}
-                    <FieldSingle
-                        Title={'Confirm Password'}
-                        name={'confirmPassword'}
-                        value={form.confirmPassword}
-                        onChange={handleChange}
-                    // type='password'
-                    />
-
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                {/* ... Dialog Actions ... */}
+                <Button autoFocus onClick={handleCloseModalAdd}>
+                    Cancel
+                </Button>
+                <Button onClick={handleCloseModalAdd} autoFocus>
+                    Save
+                </Button>
             </DialogActions>
         </>
     )
