@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, view, update, removeGroup } from "../controller/group.js";
+import { add, view, update, removeGroup, viewGet } from "../controller/group.js";
 
 
 
@@ -8,14 +8,11 @@ const router = Router();
 
 
 router.get('/', (req, res)=>{
-    res.json("Active");
-})
-
-
-router.get('/', (req, res)=>{
+    console.log("GROUP / DI PANGGIIIILL")
     viewGet(req, res);
 })
 router.post('/view', (req, res)=>{
+    console.log("GROUP /view DI PANGGIIIILL")
     view(req, res);
 })
 router.post('/add',  (req, res)=>{

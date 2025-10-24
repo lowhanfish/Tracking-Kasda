@@ -4,7 +4,8 @@ import dbResolveCondition from "../lib/dbResolveCondition.js";
 
 
 
-export const viewGet = ()=>{
+export const viewGet = (req, res)=>{
+    
     const query = `SELECT * FROM \`group\``
     db.query(query,(err, rows)=>{
         dbCondition(res, err, rows)

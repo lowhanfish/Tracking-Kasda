@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from "@mui/material";
 import { Clear, Add, Search } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import BasicSelect from '@components/items/BasicSelect';
-
+import axios from "axios";
+import useStorex from '@store/index.js'
+import { getAllUserGroup } from "@lib/dataFetch.js";
 
 const AddData = ({ handleCloseModalAdd, biodata }) => {
 
     // Jika biodata mungkin undefined (misalnya untuk mode "Tambah"), berikan nilai default {}
     const safeBiodata = biodata || {};
+    var token = localStorage.getItem("authToken");
+    const { url } = useStorex()
 
     const [form, setForm] = useState({
         // Inisialisasi state dengan nilai dari biodata
@@ -18,10 +22,8 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
         email: safeBiodata.email || '',
         hp: safeBiodata.hp || '',
         username: safeBiodata.username || '',
-        // Tambahkan password secara terpisah karena tidak ada di biodata awal
-        password: '',
-        confirmPassword: '',
     });
+    const [group, setGroup] = useState([])
 
     // 💡 FUNGSI HANDLER PERUBAHAN STATE 💡
     const handleChange = (e) => {
@@ -30,6 +32,32 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
             [e.target.name]: e.target.value,
         }));
     };
+
+    const editData = () => {
+        axios.post(url.URL_USER + '/update', JSON.stringify(form), {
+            headers: {
+                Authorization: `kikensbatara ${token}`,
+                "Content-Type": 'application/json'
+            }
+        }).then(response => {
+            console.log(response)
+            alert("Sukses update data..!")
+        }).catch(error => {
+            alert("Gagal update data..!")
+            console.log(error)
+        })
+    }
+
+    const getUserGroup = async () => {
+        const getGroup = await getAllUserGroup(token, url)
+        console.log(getGroup)
+        setGroup(getGroup);
+    }
+
+    useEffect(() => {
+        // console.log(url)
+        getUserGroup()
+    }, [])
 
     return (
         <>

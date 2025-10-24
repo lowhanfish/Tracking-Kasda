@@ -28,15 +28,10 @@ export const GetDataGroup = async () =>{
     })
 }
 
-
 export const GetUnitKerja = async (data, token, url)=>{
     
-    console.log("TOKENKU : ",token)
-    
-
     return new Promise((resolve, reject) => {
 
-        
         axios.post(url.URL_UNIT_KERJA+"/", JSON.stringify({
             data : data
         }),
@@ -46,11 +41,31 @@ export const GetUnitKerja = async (data, token, url)=>{
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            // console.log(response.data)
             resolve(response.data)
         }).catch(error => {
             console.log(error)
             resolve(error)
+        })
+
+    })
+}
+
+
+export const getAllUserGroup = async (token, url) =>{
+
+    return new Promise ((resove, reject)=>{
+        console.log(url.URL_GROUP+'/')
+        // console.log(url.URL_GROUP)
+        axios.get(url.URL_GROUP+'/', {
+            headers : {
+                Authorization : `kikensbatara ${token}`,
+                "Content-Type" : 'application/json'
+            }
+        }).then(result => {
+            resove(result.data)
+        }).catch(error => {
+            reject(error)
+            console.log(error)
         })
 
     })
