@@ -35,19 +35,19 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
     };
 
     const editData = () => {
-        console.log(form)
-        // axios.post(url.URL_USER + '/update', JSON.stringify(form), {
-        //     headers: {
-        //         Authorization: `kikensbatara ${token}`,
-        //         "Content-Type": 'application/json'
-        //     }
-        // }).then(response => {
-        //     console.log(response)
-        //     alert("Sukses update data..!")
-        // }).catch(error => {
-        //     alert("Gagal update data..!")
-        //     console.log(error)
-        // })
+        // console.log(form)
+        axios.post(url.URL_USER + '/update', JSON.stringify(form), {
+            headers: {
+                Authorization: `kikensbatara ${token}`,
+                "Content-Type": 'application/json'
+            }
+        }).then(response => {
+            console.log(response)
+            alert("Sukses update data..!")
+        }).catch(error => {
+            alert("Gagal update data..!")
+            console.log(error)
+        })
     }
 
     const getUserGroup = async () => {

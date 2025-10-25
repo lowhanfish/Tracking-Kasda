@@ -139,8 +139,13 @@ export const getJmlUser = (req, res, filterUnitKerja) =>{
 export const updateAccount = (req, res) => {
 
 }
-export const updateProfile = (req, res) => {
-
+export const updateProfile =  async (req, res) => {
+    const userGroupLevel = await countUsersGroup(req, res);
+    if (userGroupLevel.length <= 0){
+        res.send("UPDATE GROUP")
+    }else {
+        res.send("ADD GROUP")
+    }
 }
 
 export const countUsersGroup = async (req, res) => {
@@ -148,10 +153,11 @@ export const countUsersGroup = async (req, res) => {
     return new Promise((resolve, reject) => {
 
         const query = `
-            SELECT * FROM group
+            SELECT * FROM users_group
+            WHERE users_group.user_id = '`+req.body.id+`'
         `
 
-        db.query(query, () => {
+        db.query(query, (err, rows) => {
             dbResolveCondition(resolve, err, rows)
         })
     })
@@ -164,12 +170,12 @@ export const updateUsersGroup = async (req, res) => {
         const query = `
             UPDATE users_group
             SET
-            group_id = `+ req.body.group_id + `
+            group_id = `+ req.body.level + `
             WHERE
-            user_id = '`+ req.body.user_id + `'
+            user_id = '`+ req.body.id + `'
         `
 
-        db.query(query, () => {
+        db.query(query, (err, rows) => {
             dbResolveCondition(resolve, err, rows)
         })
 
@@ -181,10 +187,14 @@ export const addUsersGroup = async (req, res) => {
 
     return new Promise((resolve, reject) => {
         const query = `
-            
+            INSERT INTO user_group (user_id, group_id) VALUES (?, ?);
         `
+        const values = [
+            req.body.id,
+            req.body.level
+        ]
 
-        db.query(query, () => {
+        db.query(query, values, (err, rows) => {
             dbResolveCondition(resolve, err, rows)
         })
 

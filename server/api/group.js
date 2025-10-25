@@ -8,11 +8,11 @@ const router = Router();
 
 
 router.get('/', (req, res)=>{
-    console.log("GROUP / DI PANGGIIIILL")
+    // console.log("GROUP / DI PANGGIIIILL")
     viewGet(req, res);
 })
 router.post('/view', (req, res)=>{
-    console.log("GROUP /view DI PANGGIIIILL")
+    // console.log("GROUP /view DI PANGGIIIILL")
     view(req, res);
 })
 router.post('/add',  (req, res)=>{
