@@ -22,8 +22,9 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
         email: safeBiodata.email || '',
         hp: safeBiodata.hp || '',
         username: safeBiodata.username || '',
+        level: safeBiodata.level || '',
     });
-    const [group, setGroup] = useState([])
+    const [listGroup, setListGroup] = useState([])
 
     // 💡 FUNGSI HANDLER PERUBAHAN STATE 💡
     const handleChange = (e) => {
@@ -34,24 +35,25 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
     };
 
     const editData = () => {
-        axios.post(url.URL_USER + '/update', JSON.stringify(form), {
-            headers: {
-                Authorization: `kikensbatara ${token}`,
-                "Content-Type": 'application/json'
-            }
-        }).then(response => {
-            console.log(response)
-            alert("Sukses update data..!")
-        }).catch(error => {
-            alert("Gagal update data..!")
-            console.log(error)
-        })
+        console.log(form)
+        // axios.post(url.URL_USER + '/update', JSON.stringify(form), {
+        //     headers: {
+        //         Authorization: `kikensbatara ${token}`,
+        //         "Content-Type": 'application/json'
+        //     }
+        // }).then(response => {
+        //     console.log(response)
+        //     alert("Sukses update data..!")
+        // }).catch(error => {
+        //     alert("Gagal update data..!")
+        //     console.log(error)
+        // })
     }
 
     const getUserGroup = async () => {
         const getGroup = await getAllUserGroup(token, url)
         console.log(getGroup)
-        setGroup(getGroup);
+        setListGroup(getGroup);
     }
 
     useEffect(() => {
@@ -80,6 +82,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         name={'nama'}          // Kunci di dalam state 'form'
                         value={form.nama}       // Nilai saat ini dari state
                         onChange={handleChange} // Fungsi untuk memperbarui state
+                        disabledx={true}
                     />
 
                     {/* 2. FIELD ALAMAT */}
@@ -88,6 +91,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         name={'alamat'}
                         value={form.alamat}
                         onChange={handleChange}
+                        disabledx={true}
                     />
 
                     {/* 3. FIELD EMAIL */}
@@ -96,6 +100,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         name={'email'}
                         value={form.email}
                         onChange={handleChange}
+                        disabledx={false}
                     />
 
                     {/* 4. FIELD HP (Phone Number) */}
@@ -104,9 +109,22 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         name={'hp'}
                         value={form.hp}
                         onChange={handleChange}
+                        disabledx={false}
                     />
 
-                    <BasicSelect Title={'Level Access'} />
+
+
+                    <BasicSelect
+                        Title="Level Access"
+                        name="level"
+                        value={form.level}
+                        onChange={handleChange}
+                        options={listGroup.map(item => ({
+                            value: item.id,
+                            label: item.title // bukan title, tapi label
+                        }))}
+                    />
+
 
                     {/* 5. FIELD USERNAME */}
                     <FieldSingle
@@ -114,6 +132,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                         name={'username'}
                         value={form.username}
                         onChange={handleChange}
+                        disabledx={false}
                     />
 
                 </DialogContentText>
@@ -122,7 +141,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                 <Button autoFocus onClick={handleCloseModalAdd}>
                     Cancel
                 </Button>
-                <Button onClick={handleCloseModalAdd} autoFocus>
+                <Button onClick={editData} autoFocus>
                     Save
                 </Button>
             </DialogActions>

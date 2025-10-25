@@ -1,57 +1,59 @@
-import React from 'react'
-
-
+import React from 'react';
+// Import Select dan MenuItem dari MUI
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+// Asumsi Selectx dan MenuItemx adalah varian styling Anda
 import { Selectx, MenuItemx } from '@assets/styling/style';
 
 
-function BasicSelect({ Title }) {
+// Definisikan nilai default untuk props opsional
+function BasicSelect({
+    Title,
+    name = '',
+    value = '', // Default value harus diset agar controlled component berfungsi
+    onChange = () => { },
+    options = [] // Menerima array opsi: [{ value: '...', label: '...' }]
+}) {
 
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    // Kumpulan props yang akan diteruskan ke komponen Selectx
+    const selectProps = {
+        size: 'small',
+        fullWidth: true,
+        id: name ? `${name}-select` : "basic-select-id",
+        variant: "outlined",
+        name: name,
+        value: value,
+        onChange: onChange,
+        labelId: name ? `${name}-label` : "basic-select-label"
     };
 
+    // Mapping array options menjadi komponen MenuItemx
+    const menuItems = options.map((option, index) => (
+        <MenuItemx key={index} value={option.value}>
+            {option.label || option.title || option.uraian}
+        </MenuItemx>
+    ));
 
 
+    // Logika menampilkan Title atau tidak
     if (Title) {
-        // Jika 'Title' ada, kembalikan elemen div dengan title dan Fieldx
         return (
             <div className='inputContainer'>
+                {/* Gunakan elemen label jika memungkinkan untuk aksesibilitas */}
                 <div className='inputText'>{Title}</div>
-                <Selectx
-                    labelId="demo-simple-select-label"
-                    size='small'
-                    fullWidth id="outlined-basic" variant="outlined"
-                    value={age}
-                    onChange={handleChange}
-                >
-                    <MenuItemx value={10}>Ten</MenuItemx>
-                    <MenuItemx value={20}>Twenty</MenuItemx>
-                    <MenuItemx value={30}>Thirty</MenuItemx>
+                <Selectx {...selectProps}>
+                    {menuItems}
                 </Selectx>
             </div>
-        )
-    } else {
-        // Jika 'Title' tidak ada, kembalikan hanya elemen Fieldx
-        return (
-            <>
-                <Selectx
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Age"
-                    onChange={handleChange}
-                >
-                    <MenuItemx value={10}>Ten</MenuItemx>
-                    <MenuItemx value={20}>Twenty</MenuItemx>
-                    <MenuItemx value={30}>Thirty</MenuItemx>
-                </Selectx>
-            </>
-        )
+        );
     }
+
+    // Jika 'Title' tidak ada, kembalikan hanya elemen Selectx
+    return (
+        <Selectx {...selectProps}>
+            {menuItems}
+        </Selectx>
+    );
 }
 
-export default BasicSelect
+export default BasicSelect;
