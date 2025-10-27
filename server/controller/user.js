@@ -5,6 +5,7 @@ import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
 // // INI DI PAKAI JIKA MENGGUNAKAN DB E-GOV
+const db_main = process.env.DB_MAIN
 const db_egov = process.env.DB_USER
 const db_simpeg = process.env.DB_SIMPEG
 
@@ -20,8 +21,6 @@ export const getDataUser = async (req, res) => {
         filterUnitKerja = ``
     }
 
-
-
     const data = await getUser(req, res, filterUnitKerja)
     const jml = await getJmlUser(req, res, filterUnitKerja)
     
@@ -32,26 +31,6 @@ export const getDataUser = async (req, res) => {
     });
     
 }
-
-
-// // INI DI PAKAI JIKA TIDAK MENGGUNAKAN DB E-GOV
-
-// export const getDataUser = (req, res) =>{
-//     const query = `
-//     SELECT
-//     users.username,
-//     users.name,
-//     users.email,
-//     users.address,
-//     users.phone,
-//     users.createdAt,
-//     users.createdBy
-//     FROM users
-//     `
-//     db.query(query, (err, rows)=>{
-//         dbCondition(res, err, rows)
-//     })
-// }
 
 
 export const getUser = async (req, res, filterUnitKerja)=>{
@@ -66,6 +45,7 @@ export const getUser = async (req, res, filterUnitKerja)=>{
 
         const query = `
         SELECT
+        users.id as user_id,
         users.username,
         users.email,
         users.hp,
@@ -79,7 +59,8 @@ export const getUser = async (req, res, filterUnitKerja)=>{
     
         jabatan.jabatan as jabatan,
     
-        unit_kerja.unit_kerja unit_kerja
+        unit_kerja.unit_kerja unit_kerja,
+        IFNULL(users_group.group_id, NULL) AS level
     
         FROM `+db_egov+`.users users
     
@@ -91,6 +72,9 @@ export const getUser = async (req, res, filterUnitKerja)=>{
     
         LEFT JOIN `+db_simpeg+`.unit_kerja unit_kerja
         ON unit_kerja.id = jabatan.unit_kerja
+
+        LEFT JOIN `+db_main+`.users_group users_group
+        ON users_group.user_id = users.id
 
         WHERE biodata.nama LIKE '%`+cari+`%' 
         `+filterUnitKerja+`
@@ -136,16 +120,57 @@ export const getJmlUser = (req, res, filterUnitKerja) =>{
 
 }
 
-export const updateAccount = (req, res) => {
+export const updateAccount = async (req, res) => {
+
+    console.log(req.body)
+
+    await updateProfile(req, res);
+
+    const userGroupLevel = await countUsersGroup(req, res);
+    // console.log(userGroupLevel.message.length)
+    if (userGroupLevel.message.length <= 0){
+        await addUsersGroup(req, res)
+        console.log("ADD")
+        res.send("ADD GROUP")
+    }else {
+        await updateUsersGroup(req, res);
+        console.log("UPDATE")
+        res.send("UPDATE GROUP")
+    }
+        
+
+
+
 
 }
+
 export const updateProfile =  async (req, res) => {
-    const userGroupLevel = await countUsersGroup(req, res);
-    if (userGroupLevel.length <= 0){
-        res.send("UPDATE GROUP")
-    }else {
-        res.send("ADD GROUP")
-    }
+
+
+    // console.log("UPDATE PROFILE DI PANGGIL")
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+                UPDATE users
+                SET
+                username = '`+req.body.username+`',
+                email = '`+req.body.email+`',
+                hp = '`+req.body.hp+`'
+                WHERE id = '`+req.body.user_id+`'
+            `
+        
+            dbx.query(query, (err, rows)=>{
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(rows)
+                }
+            })
+    })
+
+    
 }
 
 export const countUsersGroup = async (req, res) => {
@@ -154,7 +179,7 @@ export const countUsersGroup = async (req, res) => {
 
         const query = `
             SELECT * FROM users_group
-            WHERE users_group.user_id = '`+req.body.id+`'
+            WHERE users_group.user_id = '`+req.body.user_id+`'
         `
 
         db.query(query, (err, rows) => {
@@ -172,7 +197,7 @@ export const updateUsersGroup = async (req, res) => {
             SET
             group_id = `+ req.body.level + `
             WHERE
-            user_id = '`+ req.body.id + `'
+            user_id = '`+ req.body.user_id + `'
         `
 
         db.query(query, (err, rows) => {
@@ -185,13 +210,15 @@ export const updateUsersGroup = async (req, res) => {
 
 export const addUsersGroup = async (req, res) => {
 
+    console.log(req.body)
+
     return new Promise((resolve, reject) => {
         const query = `
-            INSERT INTO user_group (user_id, group_id) VALUES (?, ?);
+            INSERT INTO users_group (user_id, group_id) VALUES (?, ?);
         `
         const values = [
-            req.body.id,
-            req.body.level
+            req.body.user_id,
+            req.body.level || 0
         ]
 
         db.query(query, values, (err, rows) => {

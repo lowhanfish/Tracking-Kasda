@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,4 +16,15 @@ export default defineConfig({
       '@lib': path.resolve(__dirname, 'src/lib'),
     },
   },
-})
+
+  // ✨ Tambahkan bagian ini
+  build: {
+    minify: 'terser', // pastikan pakai terser (bukan esbuild)
+    terserOptions: {
+      compress: {
+        drop_console: true,   // ❌ hapus semua console.log / console.warn / console.error
+        drop_debugger: true,  // ❌ hapus semua debugger
+      },
+    },
+  },
+});

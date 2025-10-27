@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {getDataUser,getProfile, updateProfile} from '../controller/user.js'
+import {getDataUser,getProfile, updateAccount} from '../controller/user.js'
 
 const router = Router();
 
@@ -13,7 +13,7 @@ router.post('/detail', (req, res)=>{
 })
 
 router.post('/update', (req, res)=>{
-    updateProfile(req, res);
+    updateAccount(req, res);
 })
 
 

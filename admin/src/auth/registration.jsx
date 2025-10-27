@@ -360,7 +360,7 @@ const Registration = () => {
                     onClose={handleCloseModalAdd}
                     aria-labelledby="responsive-dialog-title"
                 >
-                    <AddData biodata={profile.data} handleCloseModalAdd={handleCloseModalAdd} />
+                    <AddData biodata={profile.data} handleCloseModalAdd={handleCloseModalAdd} getData={getData} />
                 </Dialog>
 
                 {/* ========== DETAIL DATA ========== */}

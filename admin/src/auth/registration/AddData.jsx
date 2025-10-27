@@ -7,7 +7,7 @@ import axios from "axios";
 import useStorex from '@store/index.js'
 import { getAllUserGroup } from "@lib/dataFetch.js";
 
-const AddData = ({ handleCloseModalAdd, biodata }) => {
+const AddData = ({ handleCloseModalAdd, biodata, getData }) => {
 
     // Jika biodata mungkin undefined (misalnya untuk mode "Tambah"), berikan nilai default {}
     const safeBiodata = biodata || {};
@@ -17,6 +17,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
     const [form, setForm] = useState({
         // Inisialisasi state dengan nilai dari biodata
         id: safeBiodata.id || '',
+        user_id: safeBiodata.user_id || '',
         nama: safeBiodata.nama || '',
         alamat: safeBiodata.alamat || '',
         email: safeBiodata.email || '',
@@ -42,8 +43,9 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
                 "Content-Type": 'application/json'
             }
         }).then(response => {
-            console.log(response)
-            alert("Sukses update data..!")
+            console.log(response);
+            getData()
+            alert("Sukses update data..!");
         }).catch(error => {
             alert("Gagal update data..!")
             console.log(error)
@@ -105,7 +107,7 @@ const AddData = ({ handleCloseModalAdd, biodata }) => {
 
                     {/* 4. FIELD HP (Phone Number) */}
                     <FieldSingle
-                        Title={'Phone Number'}
+                        Title={'Phone Number (Notification)'}
                         name={'hp'}
                         value={form.hp}
                         onChange={handleChange}
