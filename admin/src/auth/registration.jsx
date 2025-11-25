@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-
-
-
-
-
-
 import { TextField, Dialog, Grid, Pagination, IconButton, Menu, MenuItem, InputAdornment } from "@mui/material";
 
-import { Add, Search, Settings } from '@mui/icons-material';
+import Add from '@mui/icons-material/Add';
+import Search from '@mui/icons-material/Search';
+import Settings from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
+import KeyIcon from '@mui/icons-material/Key';
+
 import FieldSingle from '@components/items/FieldSingle';
 import FieldAutocomplete from '@components/items/FieldAutocomplete';
 
@@ -61,7 +60,7 @@ const Registration = () => {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
 
-        console.log(payload)
+        // console.log(payload)
 
         axios.post(url.URL_USER + '/view', JSON.stringify(payload), {
             headers: {
@@ -70,14 +69,15 @@ const Registration = () => {
             }
 
         }).then(response => {
-            console.log(response.data.data)
+            // console.log(response.data.data)
+            console.log(response.data)
             setListData([]);
             setListData(response.data.data);
             setJmlData(response.data.jml);
             setLoadData(false);
         }).catch(error => {
             setLoadData(false);
-            console.log(error)
+            // console.log(error)
         })
 
 
@@ -329,7 +329,17 @@ const Registration = () => {
                                             <td className='center'>{indexingPage(pageFirst, dataLimit, index)}</td>
                                             <td>{data.nama}</td>
                                             <td>{data.email}</td>
-                                            <td>{data.username}</td>
+                                            <td>
+                                                <div className='center-items'>
+                                                    <PersonIcon sx={{ fontSize: 14, marginRight: 1 }} />
+                                                    {data.username}
+                                                </div>
+                                                <div className='center-items'>
+                                                    <KeyIcon sx={{ fontSize: 14, marginRight: 1 }} />
+                                                    <span className="tablex4">{data.level_title}</span>
+
+                                                </div>
+                                            </td>
                                             <td className='center'><span className="badge ok">Active</span></td>
                                         </tr>
                                     ))

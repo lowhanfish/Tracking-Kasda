@@ -2,6 +2,24 @@
 import db from "../db/mysql/index.js";
 import buildTree from "../lib/buildTree.js";
 
+
+export const getMenuSidebar = (req, res) =>{
+    const query = `
+        SELECT * FROM menu
+    `
+    db.query(query, (err, rows)=>{
+        if (err) {
+        console.log(err);
+        res.status(500);
+        res.send(err);
+    } else {
+        res.status(200);
+        res.send(rows);
+    }
+    })
+}
+
+
 export const getAddMenu = async (req, res)=>{
 
     var query = `SELECT * FROM menu`

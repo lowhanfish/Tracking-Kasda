@@ -8,7 +8,31 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import StopIcon from '@mui/icons-material/Stop';
 
-import axio from "axios";
+import axios from "axios";
+
+const token = localStorage.getItem("authToken");
+
+
+console.log("Token dari menu : ", token)
+
+
+// export const getmenuItem = ()=>{
+//   console.log("aaaaaaaa")
+// }
+
+export const getmenuItem = (URL) => {
+  axios.post(URL, JSON.stringify({}), {
+    headers : {
+      'Authorization' : `kikensbatara ${token}`,
+      'Content-Type' : 'application/json'
+    }
+  }).then((result) => {
+    console.log(result)
+  }).catch(error => {
+    console.log(error)
+  })
+}
+
 
 const menuConfig = [
   {
@@ -108,6 +132,11 @@ const menuConfig = [
     multiple : false,
   },
 ];
+
+
+
+
+
 // const menuConfig = [
 //   {
 //     title: "Dashboard",

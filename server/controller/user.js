@@ -60,7 +60,9 @@ export const getUser = async (req, res, filterUnitKerja)=>{
         jabatan.jabatan as jabatan,
     
         unit_kerja.unit_kerja unit_kerja,
-        IFNULL(users_group.group_id, NULL) AS level
+        IFNULL(users_group.group_id, NULL) AS level,
+        IFNULL(groupx.title, NULL) AS level_title
+
     
         FROM `+db_egov+`.users users
     
@@ -75,6 +77,9 @@ export const getUser = async (req, res, filterUnitKerja)=>{
 
         LEFT JOIN `+db_main+`.users_group users_group
         ON users_group.user_id = users.id
+
+        LEFT JOIN `+db_main+`.\`group\` groupx
+        ON groupx.id = users_group.group_id
 
         WHERE biodata.nama LIKE '%`+cari+`%' 
         `+filterUnitKerja+`

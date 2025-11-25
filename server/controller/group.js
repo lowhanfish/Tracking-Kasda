@@ -2,16 +2,12 @@ import db from "../db/mysql/index.js";
 import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
-
-
 export const viewGet = (req, res)=>{
-    
     const query = `SELECT * FROM \`group\``
     db.query(query,(err, rows)=>{
         dbCondition(res, err, rows)
     })
 }
-
 
 export const view = (req, res)=>{
     const query = `SELECT * FROM \`group\``;
@@ -38,7 +34,6 @@ export const update = async(req, res) =>{
 
 export const addGroup = async (req, res) => {
     var data = req.body.data;
-    // var query = `INSERT INTO group (title, access_unit, createdAt, createdBy) VALUES (?, ?, NOW(), ?)`
     var query = `INSERT INTO \`group\` (title, access_unit, createdAt, createdBy) VALUES (?, ?, NOW(), ?)`
     var values = [
         data.title, data.access_unit, req.user._id
@@ -91,7 +86,6 @@ const loopAccess = async (req, data, insertId) =>{
     })
 }
 
-
 export const normalizeArray = (arr)=>{
     const result = [];
     // console.log(arr)
@@ -104,7 +98,6 @@ export const normalizeArray = (arr)=>{
         if (rest.view==true ||rest.add==true || rest.update==true || rest.remove==true) {
             result.push(rest);
         }
-
 
       if (children && Array.isArray(children)) {
         helper(children); // rekursif
@@ -131,8 +124,6 @@ export const removeGroup = async (req, res)=>{
 
 
 }
-
-
 
 export const removeAccess = async(req, res, group_id) => {
 //    console.log(req.body); 

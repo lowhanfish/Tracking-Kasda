@@ -1,45 +1,73 @@
+/* ========== CSS Variables ========== */
+:root {
+    --color-primary: #d77ef7;
+    --color-warning: #c49240;
+    --color-danger: #991b1b;
+    --color-oke: #065f46;
+    --color-primary-dark: #4a5661;
+    --color-primary-soft: #84aed6;
+
+    /* DO NOT TOUCH */
+    --color-banner-x1: #6aaefb;
+    --color-banner-x2: #bfddff;
+    --color-cyan-t1: #81d2f1;
+    --color-cyan-t11: #afe4f8;
+    --color-purple-1: #beb6f3;
+    --color-purple-11: #dedaf4;
+    --color-purple-light-1: #ceb4f5;
+    --color-purple-light-11: #e5d4ff;
+    /* DO NOT TOUCH */
+
+
+    --color-text-primary: #636363;
+    --color-text-secondary: #6e6e6e;
+    --color-background-row1: #e0e0e0;
+    --color-background-row2: #f4f4f4;
+
+    --color-white: #ffffff;
+}
+
+/* ========== Background Classes ========== */
 .primary {
-    background-color: #1576d1;
+    background-color: var(--color-primary);
 }
 
 .warning {
-    background-color: #c49240;
+    background-color: var(--color-warning);
 }
 
 .danger {
-    background-color: #c44040;
+    background-color: var(--color-danger);
 }
 
 .primaryDark {
-    background-color: #4a5661;
+    background-color: var(--color-primary-dark);
 }
 
 .primarySoft {
-    background-color: #84aed6;
+    background-color: var(--color-primary-soft);
 }
 
 .rw1 {
-    background-color: #e0e0e0 !important;
-    color: #636363 !important;
+    background-color: var(--color-background-row1) !important;
+    color: var(--color-text-primary) !important;
     font-weight: bold !important;
 }
 
 .rw2 {
-    background-color: #f4f4f4 !important;
-    color: #6e6e6e !important;
+    background-color: var(--color-background-row2) !important;
+    color: var(--color-text-secondary) !important;
     font-size: 12px !important;
-    /* font-style: italic; */
 }
 
 .rw3 {
-
-    color: #1576d1 !important;
+    color: var(--color-primary) !important;
     font-size: 10px !important;
 }
 
 .rw1Revert {
     background-color: #ffffff !important;
-    color: #84aed6 !important;
+    color: var(--color-primary-soft) !important;
 }
 
 .gradientPurpleBlue {
@@ -48,33 +76,33 @@
 }
 
 .bluex1 {
-    background-color: #6aaefb;
+    background-color: var(--color-banner-x1);
 }
 
 .bluex11 {
-    background-color: #bfddff;
+    background-color: var(--color-banner-x2);
 }
 
 .cyant1 {
-    background-color: #81d2f1;
+    background-color: var(--color-cyan-t1);
 }
 
 .cyant11 {
-    background-color: #afe4f8;
+    background-color: var(--color-cyan-t11);
 }
 
 .purple1 {
-    background-color: #beb6f3;
+    background-color: var(--color-purple-1);
 }
 
 .purple11 {
-    background-color: #dedaf4;
+    background-color: var(--color-purple-11);
 }
 
 .purpleLight1 {
-    background-color: #ceb4f5;
+    background-color: var(--color-purple-light-1);
 }
 
 .purpleLight11 {
-    background-color: #e5d4ff;
+    background-color: var(--color-purple-light-11);
 }

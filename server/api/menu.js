@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import db from '../db/mysql/index.js';
 import buildTree from '../lib/buildTree.js';
-import { getAddMenu, getUpdateMenu } from "../controller/menu.js";
+import { getAddMenu, getUpdateMenu, getMenuSidebar } from "../controller/menu.js";
 
 
 const router = Router();
 
-
+router.post('/getMenuSidebar', (req,res)=>{
+    getMenuSidebar(req, res)
+})
 
 router.get('/',(req, res)=>{
     res.json("OK")
