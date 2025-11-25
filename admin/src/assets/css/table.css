@@ -20,7 +20,7 @@
 
 .tabelku thead {
     /* background: #1576d1; */
-    background: #a5ceff;
+    background: var(--color-primary-soft);
     /* warna dasar */
     /* color: #fff; */
 }

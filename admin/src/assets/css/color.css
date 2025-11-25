@@ -1,11 +1,27 @@
 /* ========== CSS Variables ========== */
 :root {
-    --color-primary: #d77ef7;
+    --color-primary: #cc87e4;
+    --color-secondary: #579cf6;
     --color-warning: #c49240;
+    --color-warning-soft: #fff7d6;
     --color-danger: #991b1b;
+    --color-danger-soft: #fee2e2;
     --color-oke: #065f46;
+    --color-oke-soft: #d1fae5;
     --color-primary-dark: #4a5661;
     --color-primary-soft: #84aed6;
+
+
+
+    --color-text-primary: #636363;
+    --color-text-secondary: #6e6e6e;
+    --color-background-row1: #e0e0e0;
+    --color-background-row2: #f4f4f4;
+
+    --color-white: #ffffff;
+    --color-border: #9f9f9f;
+
+
 
     /* DO NOT TOUCH */
     --color-banner-x1: #6aaefb;
@@ -17,14 +33,6 @@
     --color-purple-light-1: #ceb4f5;
     --color-purple-light-11: #e5d4ff;
     /* DO NOT TOUCH */
-
-
-    --color-text-primary: #636363;
-    --color-text-secondary: #6e6e6e;
-    --color-background-row1: #e0e0e0;
-    --color-background-row2: #f4f4f4;
-
-    --color-white: #ffffff;
 }
 
 /* ========== Background Classes ========== */
@@ -71,8 +79,8 @@
 }
 
 .gradientPurpleBlue {
-    background: #DFC2F3;
-    background: linear-gradient(0deg, #dfc2f3 0%, #bcaff2 32%, #6aaefb 84%);
+    background: var(--color-purple-light-1);
+    background: linear-gradient(0deg, var(--color-purple-light-11) 0%, var(--color-purple-light-1) 32%, var(--color-banner-x1) 84%);
 }
 
 .bluex1 {

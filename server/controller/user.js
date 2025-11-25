@@ -61,7 +61,7 @@ export const getUser = async (req, res, filterUnitKerja)=>{
     
         unit_kerja.unit_kerja unit_kerja,
         IFNULL(users_group.group_id, NULL) AS level,
-        IFNULL(groupx.title, NULL) AS level_title
+        IFNULL(groupx.title, "No Access") AS level_title
 
     
         FROM `+db_egov+`.users users
