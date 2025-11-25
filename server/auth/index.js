@@ -6,6 +6,11 @@ import uniqid from "uniqid";
 import db from "../db/mysql/egov.js";
 
 
+const db_main = process.env.DB_MAIN
+const db_egov = process.env.DB_USER
+const db_simpeg = process.env.DB_SIMPEG
+
+
 const app = express();
 const router = express.Router();
 app.use(router);
@@ -70,36 +75,38 @@ router.post('/login', (req, res, next)=>{
     
     if (result.error == null || result.error == undefined) {
         let query = ` SELECT 
-            egov.users.*, 
-            simpeg.unit_kerja.unit_kerja as unit_kerja_nama,
-            simpeg.unit_kerja.alamat as unit_kerja_alamat,
+            users.*, 
+            unit_kerja.id as unit_kerja_id,
+            unit_kerja.unit_kerja as unit_kerja_nama,
+            unit_kerja.alamat as unit_kerja_alamat,
 
-            simpeg.biodata.id as bio_id,
-            simpeg.biodata.nama as bio_nama,
-            simpeg.biodata.gelar_depan as bio_gelar_depan,
-            simpeg.biodata.gelar_belakang as bio_gelar_belakang,
-            simpeg.biodata.tempat_lahir  as bio_tempat_lahir ,
-            simpeg.biodata.ttl as bio_ttl,
-            simpeg.biodata.gol as bio_gol,
-            simpeg.biodata.jabatan as bio_jabatan ,
-            simpeg.biodata.alamat as bio_alamat,
-            simpeg.instansi.id as instansi_id,
-            simpeg.instansi.instansi as instansi_nama,
-            monev_pembangunan.menu_klp.akses_unit as akses_unit
+            biodata.id as bio_id,
+            biodata.nama as bio_nama,
+            biodata.gelar_depan as bio_gelar_depan,
+            biodata.gelar_belakang as bio_gelar_belakang,
+            biodata.tempat_lahir  as bio_tempat_lahir ,
+            biodata.ttl as bio_ttl,
+            biodata.gol as bio_gol,
+            biodata.jabatan as bio_jabatan ,
+            biodata.alamat as bio_alamat,
+            instansi.id as instansi_id,
+            instansi.instansi as instansi_nama,
+            IFNULL (users_group.group_id, 22) as level
 
-        FROM egov.users 
+        FROM ${db_egov}.users users
 
-        JOIN simpeg.unit_kerja 
-            ON egov.users.unit_kerja = simpeg.unit_kerja.id
+        JOIN ${db_simpeg}.unit_kerja unit_kerja
+            ON users.unit_kerja = unit_kerja.id
 
-        JOIN simpeg.instansi 
-            ON simpeg.instansi.id = simpeg.unit_kerja.instansi
+        JOIN ${db_simpeg}.instansi instansi
+            ON instansi.id = unit_kerja.instansi
 
-        JOIN simpeg.biodata 
-            ON egov.users.nama_nip = simpeg.biodata.nip
+        JOIN ${db_simpeg}.biodata biodata
+            ON users.nama_nip = biodata.nip
 
-        LEFT JOIN monev_pembangunan.menu_klp 
-            ON monev_pembangunan.menu_klp.id = egov.users.monev_pembangunan
+        JOIN ${db_main}.users_group users_group
+            ON users_group.user_id = users.id
+
 
         WHERE users.username = '`+req.body.username+`';`
 
@@ -116,10 +123,15 @@ router.post('/login', (req, res, next)=>{
                     username : user.username,
                     profile : {
                         username : user.username,
-                        nama : user.nama,
+                        nama : user.bio_nama,
                         hp : user.hp,
                         email : user.email,
                         id_pengguna : user.id_pengguna,
+                        unit_kerja_id : user.instansi_id,
+                        unit_kerja_uraian : user.instansi_nama,
+                        sub_unit_kerja_id : user.unit_kerja_id,
+                        sub_unit_kerja_uraian : user.unit_kerja_nama,
+                        level : user.level,
                     }
                 };
                 // prepare bcrypt compare

@@ -70,7 +70,7 @@ const Registration = () => {
 
         }).then(response => {
             // console.log(response.data.data)
-            console.log(response.data)
+            // console.log(response.data)
             setListData([]);
             setListData(response.data.data);
             setJmlData(response.data.jml);

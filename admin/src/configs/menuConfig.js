@@ -13,7 +13,7 @@ import axios from "axios";
 const token = localStorage.getItem("authToken");
 
 
-console.log("Token dari menu : ", token)
+// console.log("Token dari menu : ", token)
 
 
 // export const getmenuItem = ()=>{
@@ -27,7 +27,8 @@ export const getmenuItem = (URL) => {
       'Content-Type' : 'application/json'
     }
   }).then((result) => {
-    console.log(result)
+    console.log("dari config/menuCinfig")
+    console.log(result.data)
   }).catch(error => {
     console.log(error)
   })
