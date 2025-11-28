@@ -18,39 +18,82 @@ import ListDataItems from '@components/ListDataItems';
 
 
 
+// Small reusable Dialog wrapper for consistency
+function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
+    // fullScreen => Dialog.fullScreen (boolean)
+    // fullWidth is always helpful for our layout, so pass it as true
+    return (
+        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='headerModalLeft'>{title}</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">{children}</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose} autoFocus>Save</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
+function AddDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
+    // fullScreen => Dialog.fullScreen (boolean)
+    return (
+        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='headerModalLeft'>Add Data</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">{children}</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose} autoFocus>Save</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
 const Template1 = () => {
 
+    // ====== ANCHOR ======
+    const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
+
+    const handleAnchorOpen = (event: any, index: number) => setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
+    const handleAnchorClose = (index: number) => setAnchorEls(prev => ({ ...prev, [index]: null }));
+
+    // ====== ANCHOR ======
 
 
 
-    // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+    // ====== MODAL DETAIL ======
+    const [openModalDetail, setOpenModalDetail] = useState(false);
+    const openDetail = () => setOpenModalDetail(true);
+    const closeDetail = () => setOpenModalDetail(false);
 
-    const handleClick = (event, index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
-    };
-
-    const handleClose = (index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: null }));
-    };
-    // ====== ANCHOR ====== 
-
-
-
-    // ====== MODAL ADD ====== 
-    const [openModalAdd, setOpenModal] = useState(false);
-    // const theme = useTheme();
+    // ====== MODAL ADD ======
+    const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fullScreen, setFullScreen] = useState(true);
-    const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('sm');
-
-    const handleClickopenModalAdd = () => {
-        setOpenModal(true);
-    };
-
-    const handleCloseModalAdd = () => {
-        setOpenModal(false);
-    };
-    // ====== MODAL ADD ====== 
+    const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('lg');
+    const openAdd = () => setOpenModalAdd(true);
+    const closeAdd = () => setOpenModalAdd(false);
+    // ====== MODAL ADD ======
 
     return (
         <div className="cardx">
@@ -72,7 +115,7 @@ const Template1 = () => {
 
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={handleClickopenModalAdd} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={() => { openAdd(); setMaxWidth('sm'); }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -85,12 +128,13 @@ const Template1 = () => {
                     {
                         [...Array(10)].map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
-
-                                <ListDataItems
-                                    title='(LS)-Pembangunan Data Center Kab. Konawe Selatan'
-                                    unit='Dinas Komunikasi Informatika dan Persandian'
-                                    price={120000}
-                                />
+                                <div onClick={() => { openDetail(); setMaxWidth('lg'); }}>
+                                    <ListDataItems
+                                        title='(LS)-Pembangunan Data Center Kab. Konawe Selatan'
+                                        unit='Dinas Komunikasi Informatika dan Persandian'
+                                        price={120000}
+                                    />
+                                </div>
 
                             </Grid>
                         ))
@@ -106,68 +150,47 @@ const Template1 = () => {
                     <Pagination count={10} color="primary" variant="outlined" />
                 </div>
 
-                {/* ================= ADD DATA ================= */}
-                <Dialog
-                    fullWidth={fullScreen}
+                {/* ================= DETAIL DATA ================= */}
+                <DetailDialog
+                    open={openModalDetail}
+                    onClose={closeDetail}
+                    fullScreen={fullScreen}
                     maxWidth={maxWidth}
-
-                    open={openModalAdd}
-                    onClose={handleCloseModalAdd}
-                    aria-labelledby="responsive-dialog-title"
+                    title="Detail Data"
                 >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add Data</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-                            <FieldSingle Title={'FieldSingle'} />
-                            <FieldWithButton Title={'FieldWithButton'} />
-
-                            <Grid container spacing={1}>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <FieldAutocomplete Title={'FieldAutocomplete'} />
-                                </Grid>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <FieldDatex Title={'FieldDatex'} />
-                                </Grid>
-                            </Grid>
-
-                            <BasicSelect Title={'BasicSelect'} />
-
-                            <Grid container spacing={1}>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <Checkboxz Title={'Checkboxz Without Lable'} />
-                                </Grid>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <CheckboxzLable Title={'CheckboxzLable With Lable'} />
-                                </Grid>
-                            </Grid>
+                    CONTENT HERE..!
+                </DetailDialog>
+                {/* ================= DETAIL DATA ================= */}
 
 
 
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleCloseModalAdd} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
                 {/* ================= ADD DATA ================= */}
+                <AddDialog
+                    open={openModalAdd}
+                    onClose={closeAdd}
+                    fullScreen={fullScreen}
+                    maxWidth={maxWidth}
+                >
+                    <FieldSingle Title={'Nama Kegiatan'} />
 
-
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <BasicSelect Title={'Jenis Pencairan'} />
+                        </Grid>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <FieldSingle Title={'Besaran Anggaran'} />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <BasicSelect Title={'Jenis PPN'} />
+                        </Grid>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <BasicSelect Title={'Jenis PPH'} />
+                        </Grid>
+                    </Grid>
+                </AddDialog>
+                {/* ================= ADD DATA ================= */}
 
             </div>
         </div>
