@@ -22,7 +22,7 @@ import BarChartx from '@components/chart/BarChartx';
 
 
 
-import ListData from '@components/ListData';
+import ListData from '@components/ListDataUser';
 import ListImage from '@components/ListImage';
 import Stepperx from '../components/Stepperx';
 import LineChartx from '../components/chart/LineChartx';

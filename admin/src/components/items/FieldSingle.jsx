@@ -3,7 +3,7 @@ import { Fieldx } from '@assets/styling/style'
 // import FieldxKamio and stylex tidak diperlukan jika tidak digunakan di sini
 
 // Definisikan nilai default untuk props opsional (name, value, onChange)
-function FieldSingle({ Title, name = '', value = undefined, onChange = () => { }, disabledx = false }) {
+function FieldSingle({ Title = "", name = '', value = undefined, onChange = () => { }, disabledx = false }) {
 
     // Objek props untuk Fieldx. 
     // Jika name, value, atau onChange tidak diset, ia akan menggunakan nilai default-nya.

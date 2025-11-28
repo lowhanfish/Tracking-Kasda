@@ -54,14 +54,20 @@ const menuConfig = [
     multiple : true,
     children: [
           {
-            title: "Add User",
-            path: "/Registration",
+            title: "Registrasi Dokumen SPP-SPM",
+            path: "/RegistrasiDokumen",
             icon: 'StopIcon',
             multiple : false,
           },
           {
-            title: "User List",
-            path: "/Dashboard",
+            title: "Verifikasi Dokumen",
+            path: "/VerifikasiDokumen",
+            icon: 'StopIcon',
+            multiple : false,
+          },
+          {
+            title: "Tracking",
+            path: "/TrackingDokumen",
             icon: 'StopIcon',
             multiple : false,
           },

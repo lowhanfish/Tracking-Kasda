@@ -66,6 +66,12 @@ export default function MainLayout() {
                 return "User groups";
             case "/MenuSetting":
                 return "Menu Setting";
+            case "/RegistrasiDokumen":
+                return "Registrasi SPP-SMP";
+            case "/TrackingDokumen":
+                return "Tracking Dokumen";
+            case "/VerifikasiDokumen":
+                return "Verifikasi Dokumen";
             // tambahkan route lain sesuai kebutuhan
             default:
                 return "";

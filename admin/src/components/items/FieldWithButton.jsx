@@ -6,7 +6,7 @@ import { Fieldx } from '@assets/styling/style'
 
 
 
-function FieldWithButton({ Title, placeholderx }) {
+function FieldWithButton({ Title = "", placeholderx = "Cari..." }) {
     // Periksa apakah properti 'Title' ada (tidak null, undefined, atau string kosong)
     if (Title) {
         // Jika 'Title' ada, kembalikan elemen div dengan title dan Fieldx

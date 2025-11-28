@@ -10,6 +10,11 @@ import Documentation from "./pages/example/documentation.jsx";
 import UserGroup from "./pages/master/userGroup/userGroup.jsx";
 import MenuSetting from "./pages/master/menuSetting/menuSetting.jsx";
 
+
+import RegistrasiDokumen from "./pages/tracking/registrasiDokumen.jsx";
+import TrackingDokumen from "./pages/tracking/trackingDokumen.jsx";
+import VerifikasiDokumen from "./pages/tracking/verifikasiDokumen.jsx";
+
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";
 import Home from "./auth/home.jsx";
@@ -79,6 +84,10 @@ function App() {
             <Route path="/userGroup" element={<UserGroup />} />
             <Route path="/MenuSetting" element={<MenuSetting />} />
             <Route path="/Registration" element={<Registration />} />
+
+            <Route path="/RegistrasiDokumen" element={<RegistrasiDokumen />} />
+            <Route path="/TrackingDokumen" element={<TrackingDokumen />} />
+            <Route path="/VerifikasiDokumen" element={<VerifikasiDokumen />} />
 
           </Route>
         </Route>

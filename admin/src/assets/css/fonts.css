@@ -181,6 +181,28 @@
     /* font-weight: 550; */
 }
 
+.list-text1 {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    text-decoration: underline;
+    /* font-family: "Poppins", sans-serif; */
+}
+
+.list-text2 {
+    font-size: 11px;
+    color: var(--color-secondary);
+    line-height: 1;
+    font-family: "Poppins", sans-serif;
+}
+
+.list-text3 {
+    font-size: 16px;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+
 
 .tablex1 {
     font-family: "Poppins", sans-serif;

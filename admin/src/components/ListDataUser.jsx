@@ -1,7 +1,7 @@
 import React from 'react'
 import Folder from '@assets/img/icon/icons8-folder-100.png';
 
-function ListData() {
+function ListDataUser() {
     return (
         <div className='dashboardListContainer shaddow1'>
             <div className='dashboardListLeft'>
@@ -26,4 +26,4 @@ function ListData() {
     )
 }
 
-export default ListData
+export default ListDataUser

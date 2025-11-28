@@ -16,7 +16,8 @@
     --color-text-primary: #636363;
     --color-text-secondary: #6e6e6e;
     --color-background-row1: #e0e0e0;
-    --color-background-row2: #f4f4f4;
+    --color-background-row2: #ebebeb;
+    --color-background-row3: #f4f4f4;
 
     --color-white: #ffffff;
     --color-border: #9f9f9f;
@@ -113,4 +114,9 @@
 
 .purpleLight11 {
     background-color: var(--color-purple-light-11);
+}
+
+
+.bg-row-3 {
+    background-color: var(--color-background-row3);
 }
