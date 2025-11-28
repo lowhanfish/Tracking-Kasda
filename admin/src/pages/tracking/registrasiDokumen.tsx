@@ -13,6 +13,7 @@ import BasicSelect from '@components/items/BasicSelect.jsx';
 import Checkboxz from '@components/items/Checkboxz.jsx';
 import CheckboxzLable from '@components/items/CheckboxLable.jsx';
 import ListDataItems from '@components/ListDataItems';
+import Stepperx from '@components/Stepperx';
 
 
 
@@ -26,7 +27,8 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: 
         <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
-                    <div className='headerModalLeft'>{title}</div>
+                    {/* <div className='headerModalLeft'>{title}</div> */}
+                    <div className='TextProfileHead shaddowText'>{title}</div>
                     <div className='headerModalRight'>
                         <IconButton onClick={onClose} aria-label="close">
                             <Clear />
@@ -39,7 +41,6 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: 
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={onClose}>Cancel</Button>
-                <Button onClick={onClose} autoFocus>Save</Button>
             </DialogActions>
         </Dialog>
     );
@@ -51,7 +52,7 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
         <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
-                    <div className='headerModalLeft'>Add Data</div>
+                    <div className='TextProfileHead shaddowText'>Add Data</div>
                     <div className='headerModalRight'>
                         <IconButton onClick={onClose} aria-label="close">
                             <Clear />
@@ -70,17 +71,14 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     );
 }
 
-const Template1 = () => {
+const RegistrasiDokumen = () => {
 
     // ====== ANCHOR ======
     const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
-
     const handleAnchorOpen = (event: any, index: number) => setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
     const handleAnchorClose = (index: number) => setAnchorEls(prev => ({ ...prev, [index]: null }));
 
     // ====== ANCHOR ======
-
-
 
     // ====== MODAL DETAIL ======
     const [openModalDetail, setOpenModalDetail] = useState(false);
@@ -89,7 +87,7 @@ const Template1 = () => {
 
     // ====== MODAL ADD ======
     const [openModalAdd, setOpenModalAdd] = useState(false);
-    const [fullScreen, setFullScreen] = useState(true);
+    const [fullScreen, setFullScreen] = useState(false);
     const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('lg');
     const openAdd = () => setOpenModalAdd(true);
     const closeAdd = () => setOpenModalAdd(false);
@@ -155,10 +153,57 @@ const Template1 = () => {
                     open={openModalDetail}
                     onClose={closeDetail}
                     fullScreen={fullScreen}
-                    maxWidth={maxWidth}
+                    maxWidth="sm"
                     title="Detail Data"
                 >
-                    CONTENT HERE..!
+
+
+                    <div>
+
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Unit Kerja</div>
+                            <div className='TextProfileLeftVal'>Dinas xxxx</div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Nama Kegiatan</div>
+                            <div className='TextProfileLeftVal'>Pengadaan xxxx</div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
+                            <div className='TextProfileLeftVal'>Tanggal xxxx</div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Pagu Anggaran</div>
+                            <div className='TextProfileLeftVal'>xxxxx</div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Pajak</div>
+                            <div className='TextProfileLeftVal'>
+                                PPN : 10% - PPH(21) : 1.2%
+                            </div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Total Pencairan</div>
+                            <div className='TextProfileLeftVal'>
+                                Rp.xxx
+                            </div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>Di Ajukan Oleh</div>
+                            <div className='TextProfileLeftVal'>xxxxx</div>
+                        </div>
+
+
+                        <div style={{ marginTop: 20 }} className='dashboardContainer'>
+                            <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
+                            <Stepperx />
+                        </div>
+
+
+                    </div>
+
+
+
                 </DetailDialog>
                 {/* ================= DETAIL DATA ================= */}
 
@@ -169,7 +214,7 @@ const Template1 = () => {
                     open={openModalAdd}
                     onClose={closeAdd}
                     fullScreen={fullScreen}
-                    maxWidth={maxWidth}
+                    maxWidth={"sm"}
                 >
                     <FieldSingle Title={'Nama Kegiatan'} />
 
@@ -197,4 +242,4 @@ const Template1 = () => {
     )
 }
 
-export default Template1
+export default RegistrasiDokumen
