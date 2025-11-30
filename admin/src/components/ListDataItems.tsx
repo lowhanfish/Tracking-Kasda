@@ -10,7 +10,7 @@ type ListDataItemsProps = {
 
 const ListDataItems = ({ title, unit, price }: ListDataItemsProps) => {
     return (
-        <div className='item-list-container shaddow1 bg-row-3'>
+        <div className='item-list-container '>
             <div className='dashboardListLeft'>
                 <img
                     src={Folder}

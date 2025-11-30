@@ -268,8 +268,20 @@ hr.hrku2 {
     margin-top: 5px;
     padding: 5px 5px 5px 5px;
     border-radius: 5px;
-    background-color: var(--color-white);
     cursor: pointer;
+
+
+
+    /* border-bottom-style: solid; */
+    border-color: var(--color-primary-soft);
+    /* border-bottom-width: 5px; */
+
+    border-left-style: solid !important;
+    border-left-width: 15px;
+
+    border-style: dotted;
+
+
 
 }
 

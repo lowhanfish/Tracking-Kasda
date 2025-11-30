@@ -46,13 +46,13 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: 
     );
 }
 
-function AddDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
+function AddDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
         <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
-                    <div className='TextProfileHead shaddowText'>Add Data</div>
+                    <div className='TextProfileHead shaddowText'>{title} Data</div>
                     <div className='headerModalRight'>
                         <IconButton onClick={onClose} aria-label="close">
                             <Clear />
@@ -71,6 +71,26 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     );
 }
 
+function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
+    // fullScreen => Dialog.fullScreen (boolean)
+    return (
+        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">{children}</DialogContentText>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
 const RegistrasiDokumen = () => {
 
     // ====== ANCHOR ======
@@ -80,15 +100,21 @@ const RegistrasiDokumen = () => {
 
     // ====== ANCHOR ======
 
+    // ====== MODAL SETTING ======
+    const [openModalSetting, setOpenModalSetting] = useState(false);
+    const openSetting = () => setOpenModalSetting(true);
+    const closeSetting = () => setOpenModalSetting(false);
+
     // ====== MODAL DETAIL ======
     const [openModalDetail, setOpenModalDetail] = useState(false);
     const openDetail = () => setOpenModalDetail(true);
     const closeDetail = () => setOpenModalDetail(false);
 
     // ====== MODAL ADD ======
+    const [addMode, setAddMode] = useState("ADD");
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
-    const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('lg');
+    // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
     const openAdd = () => setOpenModalAdd(true);
     const closeAdd = () => setOpenModalAdd(false);
     // ====== MODAL ADD ======
@@ -113,7 +139,7 @@ const RegistrasiDokumen = () => {
 
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={() => { openAdd(); setMaxWidth('sm'); }} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={() => { openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -126,7 +152,7 @@ const RegistrasiDokumen = () => {
                     {
                         [...Array(10)].map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
-                                <div onClick={() => { openDetail(); setMaxWidth('lg'); }}>
+                                <div onClick={() => { openSetting(); }}>
                                     <ListDataItems
                                         title='(LS)-Pembangunan Data Center Kab. Konawe Selatan'
                                         unit='Dinas Komunikasi Informatika dan Persandian'
@@ -147,6 +173,42 @@ const RegistrasiDokumen = () => {
                 <div className='paginContainer'>
                     <Pagination count={10} color="primary" variant="outlined" />
                 </div>
+
+                {/* ================= SETTINGDETAIL DATA ================= */}
+                <SettingDialog
+                    open={openModalSetting}
+                    onClose={closeSetting}
+                    fullScreen={fullScreen}
+                    maxWidth={"sm"}
+                    title="Detail Data"
+                >
+                    <Grid container spacing={1}>
+                        <Grid size={12}>
+                            <Button onClick={() => { openDetail(); }} fullWidth variant="outlined" size="small">
+                                Detail
+                            </Button>
+                        </Grid>
+                        <Grid size={12}>
+                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
+                                Edit
+                            </Button>
+                        </Grid>
+                        <Grid size={12}>
+                            <Button color="error" fullWidth variant="outlined" size="small">
+                                Remove
+                            </Button>
+                        </Grid>
+
+
+
+                    </Grid>
+
+
+
+
+
+                </SettingDialog>
+                {/* ================= SETTING DATA ================= */}
 
                 {/* ================= DETAIL DATA ================= */}
                 <DetailDialog
@@ -208,13 +270,13 @@ const RegistrasiDokumen = () => {
                 {/* ================= DETAIL DATA ================= */}
 
 
-
                 {/* ================= ADD DATA ================= */}
                 <AddDialog
                     open={openModalAdd}
                     onClose={closeAdd}
+                    title={addMode}
                     fullScreen={fullScreen}
-                    maxWidth={"sm"}
+                    maxWidth="sm"
                 >
                     <FieldSingle Title={'Nama Kegiatan'} />
 
