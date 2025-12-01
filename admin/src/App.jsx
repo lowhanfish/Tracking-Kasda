@@ -3,17 +3,16 @@ import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 // import Login from "./auth/Login.jsx";
 import Dashboard from "./pages/dashboard.jsx";
-import Profile from "./pages/profile.jsx";
+import Profile from "./pages/profile.tsx";
 import Template1 from "./pages/example/template1.jsx";
 import Template2 from "./pages/example/template2.jsx";
 import Documentation from "./pages/example/documentation.jsx";
 import UserGroup from "./pages/master/userGroup/userGroup.jsx";
 import MenuSetting from "./pages/master/menuSetting/menuSetting.jsx";
 
-
-import RegistrasiDokumen from "./pages/tracking/registrasiDokumen.jsx";
-import TrackingDokumen from "./pages/tracking/trackingDokumen.jsx";
-import VerifikasiDokumen from "./pages/tracking/verifikasiDokumen.jsx";
+import RegistrasiDokumen from "./pages/tracking/registrasiDokumen.tsx";
+import TrackingDokumen from "./pages/tracking/trackingDokumen.tsx";
+import VerifikasiDokumen from "./pages/tracking/verifikasiDokumen.tsx";
 
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";

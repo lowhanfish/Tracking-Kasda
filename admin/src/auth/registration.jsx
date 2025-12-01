@@ -17,7 +17,7 @@ import AddData from './registration/AddData.jsx'
 import axios from 'axios';
 import useStorex from '@store/index.js'
 
-import Profile from '@pages/profile.jsx'
+import Profile from '@components/profile.jsx'
 import Loadingx from '../components/Loadingx.jsx';
 
 

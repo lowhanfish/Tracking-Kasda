@@ -26,8 +26,8 @@ const ListDataItems = ({ title, unit, price }: ListDataItemsProps) => {
             </div>
             <div className='dashboardListRight'>
                 <div className='list-text1'>{title}</div>
-                <div style={{ marginTop: 5 }} className='list-text2'>{unit}</div>
-                <div style={{ marginTop: -2 }} className='list-text3'>
+                <div style={{ marginTop: 2 }} className='list-text2'>{unit}</div>
+                <div style={{ marginTop: 0 }} className='list-text3'>
                     <b>{formatRupiah(price)}</b>
                 </div>
                 <div>

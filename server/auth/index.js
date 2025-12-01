@@ -66,7 +66,7 @@ router.get('/', (req, res)=>{
 
 
 router.post('/login', (req, res, next)=>{
-    // console.log(req.body)
+    console.log(req.body)
     // res.json("test")
 
     const result = schema.validate({ username: req.body.username, password: req.body.password });
@@ -82,6 +82,7 @@ router.post('/login', (req, res, next)=>{
 
             biodata.id as bio_id,
             biodata.nama as bio_nama,
+            biodata.nip as nip,
             biodata.gelar_depan as bio_gelar_depan,
             biodata.gelar_belakang as bio_gelar_belakang,
             biodata.tempat_lahir  as bio_tempat_lahir ,
@@ -124,6 +125,7 @@ router.post('/login', (req, res, next)=>{
                     profile : {
                         username : user.username,
                         nama : user.bio_nama,
+                        nip : user.nip,
                         hp : user.hp,
                         email : user.email,
                         id_pengguna : user.id_pengguna,

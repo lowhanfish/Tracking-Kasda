@@ -34,7 +34,7 @@ export const getDataUser = async (req, res) => {
 
 
 export const getUser = async (req, res, filterUnitKerja)=>{
-
+    console.log("Controller getUser di panggil")
     console.log(req.body)
 
     const limit = req.body.dataLimit
@@ -236,6 +236,7 @@ export const addUsersGroup = async (req, res) => {
 
 
 export const getProfile = async(req, res) =>{
+    console.log("Controller getProfile user.js di panggil")
     const nip = await getNIPById(req, res);
     const profile = await getUserDetail(req, res)
     const educations = await getUserEducations(req, res)
@@ -243,7 +244,6 @@ export const getProfile = async(req, res) =>{
     res.send({
         profile : profile.message[0],
         educations : educations.message,
-
     })
 }
 
@@ -278,6 +278,7 @@ export const getNIPById = async (req, res) =>{
 export const getUserDetail = async (req, res)=>{
 
     var nip = req.body.nip
+    console.log(nip)
 
     return new Promise((resolve, reject)=>{
 

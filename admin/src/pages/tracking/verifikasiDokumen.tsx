@@ -46,7 +46,7 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: 
     );
 }
 
-function AddDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
+function RejectDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
         <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -91,7 +91,7 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     );
 }
 
-const RegistrasiDokumen = () => {
+const VerifikasiDokumen = () => {
 
     // ====== ANCHOR ======
     const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
@@ -112,11 +112,11 @@ const RegistrasiDokumen = () => {
 
     // ====== MODAL ADD ======
     const [addMode, setAddMode] = useState("ADD");
-    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [openModalReject, setopenModalReject] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
     // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
-    const openAdd = () => setOpenModalAdd(true);
-    const closeAdd = () => setOpenModalAdd(false);
+    const openAdd = () => setopenModalReject(true);
+    const closeAdd = () => setopenModalReject(false);
     // ====== MODAL ADD ======
 
     return (
@@ -135,8 +135,6 @@ const RegistrasiDokumen = () => {
                 </Grid>
             </div>
             <div className="cardxBody">
-
-
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
                     <button onClick={() => { openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
@@ -167,9 +165,6 @@ const RegistrasiDokumen = () => {
                 </Grid>
 
 
-
-
-
                 <div className='paginContainer'>
                     <Pagination count={10} color="primary" variant="outlined" />
                 </div>
@@ -189,13 +184,18 @@ const RegistrasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
-                                Edit
+                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="success" fullWidth variant="outlined" size="small">
+                                Verifikasi
+                            </Button>
+                        </Grid>
+                        <Grid size={12}>
+                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("Kembalikan"); }} color="warning" fullWidth variant="outlined" size="small">
+                                Kembalikan
                             </Button>
                         </Grid>
                         <Grid size={12}>
                             <Button color="error" fullWidth variant="outlined" size="small">
-                                Remove
+                                Cancel
                             </Button>
                         </Grid>
 
@@ -270,9 +270,9 @@ const RegistrasiDokumen = () => {
                 {/* ================= DETAIL DATA ================= */}
 
 
-                {/* ================= ADD DATA ================= */}
-                <AddDialog
-                    open={openModalAdd}
+                {/* ================= REJECT DATA ================= */}
+                <RejectDialog
+                    open={openModalReject}
                     onClose={closeAdd}
                     title={addMode}
                     fullScreen={fullScreen}
@@ -296,12 +296,12 @@ const RegistrasiDokumen = () => {
                             <BasicSelect Title={'Jenis PPH'} />
                         </Grid>
                     </Grid>
-                </AddDialog>
-                {/* ================= ADD DATA ================= */}
+                </RejectDialog>
+                {/* ================= REJECT DATA ================= */}
 
             </div>
         </div>
     )
 }
 
-export default RegistrasiDokumen
+export default VerifikasiDokumen

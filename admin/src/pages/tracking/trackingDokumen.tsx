@@ -91,7 +91,7 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     );
 }
 
-const RegistrasiDokumen = () => {
+const TrackingDokumen = () => {
 
     // ====== ANCHOR ======
     const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
@@ -304,4 +304,4 @@ const RegistrasiDokumen = () => {
     )
 }
 
-export default RegistrasiDokumen
+export default TrackingDokumen

@@ -79,7 +79,7 @@ export const getMenuSidebar = async (req, res) => {
 
             const dataFinal= buildTree(data)
 
-            console.log(dataFinal)
+            // console.log(dataFinal)
 
             // const data = rows;
             // console.log(data)

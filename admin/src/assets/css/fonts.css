@@ -185,7 +185,7 @@
     font-size: 13px;
     color: var(--color-text-secondary);
     font-weight: 600;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     /* font-family: "Poppins", sans-serif; */
 }
 

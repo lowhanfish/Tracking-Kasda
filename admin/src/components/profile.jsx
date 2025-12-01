@@ -20,7 +20,15 @@ import Photo from '@assets/img/Photo.png';
 import axios from 'axios';
 
 
-const Template1 = ({ biodata }) => {
+const Profile = ({ biodata = "" }) => {
+
+
+    const biodatax = JSON.parse(localStorage.getItem("profile"));
+
+    const biodataz = {
+        id: biodatax._id,
+        nip: biodatax.profile.nip
+    }
 
 
     var data = ''
@@ -28,10 +36,7 @@ const Template1 = ({ biodata }) => {
         data = biodata
         // console.log(biodata)
     } else {
-        data = {
-            id: '',
-            nip: ''
-        }
+        data = biodataz
     }
     // console.log(data)
 
@@ -204,4 +209,4 @@ const Template1 = ({ biodata }) => {
     )
 }
 
-export default Template1
+export default Profile
