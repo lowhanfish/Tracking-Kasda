@@ -23,11 +23,11 @@ import axios from 'axios';
 const Profile = ({ biodata = "" }) => {
 
 
-    const biodatax = JSON.parse(localStorage.getItem("profile"));
+    const biodatax = JSON.parse(localStorage.getItem("profile")).profile;
 
     const biodataz = {
-        id: biodatax._id,
-        nip: biodatax.profile.nip
+        id: biodatax.bio_id,
+        nip: biodatax.nip
     }
 
 

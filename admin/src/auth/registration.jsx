@@ -95,7 +95,7 @@ const Registration = () => {
     };
 
     const selectData = (data) => {
-        // console.log(data)
+        console.log(data)
         const newProfile = { ...profile, data }
         setProfile(newProfile)
     }

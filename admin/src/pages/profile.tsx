@@ -3,8 +3,6 @@ import Profilez from '@components/profile.jsx'
 
 const Profile = () => {
 
-
-
     return (
         <div>
             <Profilez />

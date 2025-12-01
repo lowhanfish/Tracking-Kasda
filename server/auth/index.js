@@ -123,6 +123,7 @@ router.post('/login', (req, res, next)=>{
                     _id: user.id,
                     username : user.username,
                     profile : {
+                        bio_id : user.bio_id,
                         username : user.username,
                         nama : user.bio_nama,
                         nip : user.nip,
