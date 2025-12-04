@@ -130,6 +130,27 @@ const menuConfig = [
           
         ],
       },
+      {
+        title: "Data Config",
+        multiple : true,
+        icon: 'StopIcon',
+        children: [
+          {
+            title: "Master Tahapan",
+            path: "/MasterTahapan",
+            icon: 'FiberManualRecordIcon',
+            multiple : false,
+          },
+          {
+            title: "Master Role",
+            path: "/MasterRole",
+            icon: 'FiberManualRecordIcon',
+            multiple : false,
+          },
+        
+          
+        ],
+      },
     ],
   },
   {

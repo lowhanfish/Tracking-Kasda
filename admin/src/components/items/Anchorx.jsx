@@ -6,7 +6,22 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { Settings } from '@mui/icons-material';
 
-function Anchorx({ index }) {
+// Anchorx Component - Dynamic Menu Builder
+// Props:
+//   - index: Index dari row (number)
+//   - data: Objek data item (optional)
+//   - menuItems: Array of menu items dengan struktur [{ label: 'Detail', onClick: (index, data) => {} }, ...]
+//
+// Contoh penggunaan:
+// const dataItem = { id: 1, uraian: 'Test', status: 'Active' };
+// const menuItems = [
+//   { label: 'Detail', onClick: (index, data) => console.log(data) },
+//   { label: 'Edit', onClick: (index, data) => console.log(data) },
+//   { label: 'Delete', onClick: (index, data) => console.log(data) }
+// ];
+// <Anchorx index={0} data={dataItem} menuItems={menuItems} />
+
+function Anchorx({ index, data = {}, menuItems = [] }) {
     // ====== ANCHOR ====== 
     const [anchorEl, setAnchorEl] = useState(null);
     const [openIndex, setOpenAnchorIndex] = useState(null);
@@ -19,6 +34,11 @@ function Anchorx({ index }) {
     const handleCloseAnchor = () => {
         setAnchorEl(null);
         setOpenAnchorIndex(null);
+    };
+
+    const handleMenuClick = (callback) => {
+        callback(index, data);
+        handleCloseAnchor();
     };
     // ====== ANCHOR ====== 
     return (
@@ -42,9 +62,15 @@ function Anchorx({ index }) {
                     },
                 }}
             >
-                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Detail</MenuItem>
-                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Edit</MenuItem>
-                <MenuItem sx={{ fontSize: 12 }} onClick={handleCloseAnchor}>Delete</MenuItem>
+                {menuItems.map((item, itemIndex) => (
+                    <MenuItem
+                        key={itemIndex}
+                        sx={{ fontSize: 12 }}
+                        onClick={() => handleMenuClick(item.onClick)}
+                    >
+                        {item.label}
+                    </MenuItem>
+                ))}
             </Menu>
         </div>
     )

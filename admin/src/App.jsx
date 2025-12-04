@@ -10,9 +10,14 @@ import Documentation from "./pages/example/documentation.jsx";
 import UserGroup from "./pages/master/userGroup/userGroup.jsx";
 import MenuSetting from "./pages/master/menuSetting/menuSetting.jsx";
 
+import MasterRole from "./pages/master/data/MasterRole.tsx";
+import MasterTahapan from "./pages/master/data/MasterTahapan.tsx";
+
+
 import RegistrasiDokumen from "./pages/tracking/registrasiDokumen.tsx";
 import TrackingDokumen from "./pages/tracking/trackingDokumen.tsx";
 import VerifikasiDokumen from "./pages/tracking/verifikasiDokumen.tsx";
+
 
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";
@@ -83,6 +88,8 @@ function App() {
             <Route path="/userGroup" element={<UserGroup />} />
             <Route path="/MenuSetting" element={<MenuSetting />} />
             <Route path="/Registration" element={<Registration />} />
+            <Route path="/MasterRole" element={<MasterRole />} />
+            <Route path="/MasterTahapan" element={<MasterTahapan />} />
 
             <Route path="/RegistrasiDokumen" element={<RegistrasiDokumen />} />
             <Route path="/TrackingDokumen" element={<TrackingDokumen />} />

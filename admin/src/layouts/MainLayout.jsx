@@ -66,6 +66,10 @@ export default function MainLayout() {
                 return "User groups";
             case "/MenuSetting":
                 return "Menu Setting";
+            case "/MasterRole":
+                return "Master Role";
+            case "/MasterTahapan":
+                return "Master Tahapan";
             case "/RegistrasiDokumen":
                 return "Registrasi SPP-SMP";
             case "/TrackingDokumen":
