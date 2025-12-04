@@ -1,10 +1,5 @@
 import * as React from 'react';
 
-
-
-
-
-
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 
 import { Clear, Add } from '@mui/icons-material';
@@ -17,32 +12,107 @@ import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 
-
+// ====== ADD/EDIT DIALOG ======
+function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }) {
+    return (
+        <Dialog
+            fullWidth={fullScreen}
+            maxWidth={maxWidth}
+            open={open}
+            onClose={onClose}
+            aria-labelledby="responsive-dialog-title"
+        >
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='TextProfileHead shaddowText'>{title} Data</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">
+                    {children}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={onClose}>Cancel</Button>
+                <Button onClick={onSave || onClose} autoFocus>Save</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+// ====== ADD/EDIT DIALOG ======
 
 
 
 const Template1 = () => {
+    // ====== FORM STATE ====== 
+    const [formData, setFormData] = React.useState({
+        // FieldSingle
+        fieldSingle: '',
 
+        // FieldWithButton
+        fieldWithButton: '',
 
+        // FieldAutocomplete
+        fieldAutocomplete: null,
 
+        // FieldDatex
+        fieldDatex: null,
 
-    // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
+        // BasicSelect
+        basicSelect: '',
 
-    const handleClick = (event, index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
+        // Checkboxz (checkbox tanpa label)
+        checkboxz: false,
+
+        // CheckboxzLable (checkbox dengan label)
+        checkboxzLable: false,
+
+        // Extra fields yang mungkin diperlukan
+        customField1: '',
+        customField2: ''
+    });
+
+    // Data untuk BasicSelect - bisa dari API atau static
+    const basicSelectOptions = [
+        { value: 'java', label: 'Java' },
+        { value: 'python', label: 'Python' },
+        { value: 'javascript', label: 'JavaScript' },
+        { value: 'csharp', label: 'C#' },
+        { value: 'php', label: 'PHP' }
+    ];
+
+    const handleInputChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
     };
 
-    const handleClose = (index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: null }));
+    // Handler tambahan untuk autocomplete dan date picker
+    const handleSelectChange = (name, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
-    // ====== ANCHOR ====== 
 
-
+    // Handler untuk checkbox
+    const handleCheckboxChange = (name, checked) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
+        }));
+    };
+    // ====== FORM STATE ====== 
 
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModal] = React.useState(false);
-    // const theme = useTheme();
     const [fullScreen, setFullScreen] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('sm');
 
@@ -52,8 +122,49 @@ const Template1 = () => {
 
     const handleCloseModalAdd = () => {
         setOpenModal(false);
+        // Reset form data
+        setFormData({
+            fieldSingle: '',
+            fieldWithButton: '',
+            fieldAutocomplete: null,
+            fieldDatex: null,
+            basicSelect: '',
+            checkboxz: false,
+            checkboxzLable: false,
+            customField1: '',
+            customField2: ''
+        });
     };
     // ====== MODAL ADD ====== 
+
+    // ====== ANCHOR ACTIONS ====== 
+    const handleDetail = (index, data) => {
+        console.log('Detail data index:', index, 'data:', data);
+    };
+
+    const handleEdit = (index, data) => {
+        console.log('Edit data index:', index, 'data:', data);
+        handleClickopenModalAdd();
+    };
+
+    const handleDelete = (index, data) => {
+        console.log('Delete data index:', index, 'data:', data);
+    };
+
+    // Handler untuk save form
+    const handleSaveForm = () => {
+        console.log('Form Data yang disimpan:', formData);
+        // Di sini Anda bisa melakukan API call atau validasi
+        handleCloseModalAdd();
+    };
+
+    // Array menu items yang dinamis dengan useMemo
+    const menuItems = React.useMemo(() => [
+        { label: 'Detail', onClick: handleDetail },
+        { label: 'Edit', onClick: handleEdit },
+        { label: 'Delete', onClick: handleDelete }
+    ], [handleDetail, handleEdit, handleDelete]);
+    // ====== ANCHOR ACTIONS ====== 
 
     return (
         <div className="cardx">
@@ -100,21 +211,34 @@ const Template1 = () => {
                         </thead>
                         <tbody className="h_body">
                             {
-                                [...Array(10)].map((_, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <Anchorx index={index} />
-                                        </td>
-                                        <td className='center'>{index + 1}</td>
-                                        <td>Galang Aditya</td>
-                                        <td>galang@example.com</td>
-                                        <td>Jakarta</td>
-                                        <td><span className="badge warn">Menunggu</span></td>
-                                    </tr>
-                                ))
+                                [...Array(10)].map((_, index) => {
+                                    // Data item dari tabel
+                                    const dataItem = {
+                                        id: index + 1,
+                                        nama: 'Galang Aditya',
+                                        email: 'galang@example.com',
+                                        kota: 'Jakarta',
+                                        status: 'Menunggu'
+                                    };
 
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <Anchorx
+                                                    index={index}
+                                                    data={dataItem}
+                                                    menuItems={menuItems}
+                                                />
+                                            </td>
+                                            <td className='center'>{index + 1}</td>
+                                            <td>Galang Aditya</td>
+                                            <td>galang@example.com</td>
+                                            <td>Jakarta</td>
+                                            <td><span className="badge warn">Menunggu</span></td>
+                                        </tr>
+                                    );
+                                })
                             }
-
                         </tbody>
                     </table>
                 </div>
@@ -123,65 +247,75 @@ const Template1 = () => {
                     <Pagination count={10} color="primary" variant="outlined" />
                 </div>
 
-
-
-                <Dialog
-                    fullWidth={fullScreen}
-                    maxWidth={maxWidth}
+                {/* MODAL ADD */}
+                <AddDialog
                     open={openModalAdd}
                     onClose={handleCloseModalAdd}
-                    aria-labelledby="responsive-dialog-title"
+                    fullScreen={fullScreen}
+                    maxWidth={maxWidth}
+                    title="Add"
+                    onSave={handleSaveForm}
                 >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add Data</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
+                    <FieldSingle
+                        Title={'FieldSingle'}
+                        name='fieldSingle'
+                        value={formData.fieldSingle}
+                        onChange={handleInputChange}
+                    />
+                    <FieldWithButton
+                        Title={'FieldWithButton'}
+                        name='fieldWithButton'
+                        value={formData.fieldWithButton}
+                        onChange={handleInputChange}
+                    />
 
-                            <FieldSingle Title={'FieldSingle'} />
-                            <FieldWithButton Title={'FieldWithButton'} />
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <FieldAutocomplete
+                                Title={'FieldAutocomplete'}
+                                name='fieldAutocomplete'
+                                value={formData.fieldAutocomplete}
+                                onChange={(e, value) => handleSelectChange('fieldAutocomplete', value)}
+                            />
+                        </Grid>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <FieldDatex
+                                Title={'FieldDatex'}
+                                name='fieldDatex'
+                                value={formData.fieldDatex}
+                                onChange={(date) => handleSelectChange('fieldDatex', date)}
+                            />
+                        </Grid>
+                    </Grid>
 
-                            <Grid container spacing={1}>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <FieldAutocomplete Title={'FieldAutocomplete'} />
-                                </Grid>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <FieldDatex Title={'FieldDatex'} />
-                                </Grid>
-                            </Grid>
+                    <BasicSelect
+                        Title={'BasicSelect'}
+                        name='basicSelect'
+                        value={formData.basicSelect}
+                        onChange={(e) => handleSelectChange('basicSelect', e.target.value)}
+                        options={basicSelectOptions}
+                    />
 
-                            <BasicSelect Title={'BasicSelect'} />
-
-                            <Grid container spacing={1}>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <Checkboxz Title={'Checkboxz Without Lable'} />
-                                </Grid>
-                                <Grid size={{ md: 6, xs: 12 }}>
-                                    <CheckboxzLable Title={'CheckboxzLable With Lable'} />
-                                </Grid>
-                            </Grid>
-
-
-
-
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleCloseModalAdd} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <Checkboxz
+                                Title={'Checkboxz Without Lable'}
+                                name='checkboxz'
+                                checked={formData.checkboxz}
+                                onChange={(e) => handleCheckboxChange('checkboxz', e.target.checked)}
+                            />
+                        </Grid>
+                        <Grid size={{ md: 6, xs: 12 }}>
+                            <CheckboxzLable
+                                Title={'CheckboxzLable With Lable'}
+                                name='checkboxzLable'
+                                checked={formData.checkboxzLable}
+                                onChange={(e) => handleCheckboxChange('checkboxzLable', e.target.checked)}
+                            />
+                        </Grid>
+                    </Grid>
+                </AddDialog>
+                {/* MODAL ADD */}
 
 
 

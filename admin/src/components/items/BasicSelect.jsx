@@ -6,13 +6,22 @@ import MenuItem from '@mui/material/MenuItem';
 import { Selectx, MenuItemx } from '@assets/styling/style';
 
 
+// Data default untuk BasicSelect
+const DEFAULT_OPTIONS = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    { value: 'option4', label: 'Option 4' },
+    { value: 'option5', label: 'Option 5' }
+];
+
 // Definisikan nilai default untuk props opsional
 function BasicSelect({
     Title,
     name = '',
     value = '', // Default value harus diset agar controlled component berfungsi
     onChange = () => { },
-    options = [] // Menerima array opsi: [{ value: '...', label: '...' }]
+    options = DEFAULT_OPTIONS // Menerima array opsi: [{ value: '...', label: '...' }], default ke DEFAULT_OPTIONS
 }) {
 
     // Kumpulan props yang akan diteruskan ke komponen Selectx

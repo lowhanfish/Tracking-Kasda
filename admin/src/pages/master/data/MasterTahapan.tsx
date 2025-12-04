@@ -5,11 +5,6 @@ interface MenuItem {
     onClick: (index: number) => void;
 }
 
-
-
-
-
-
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 
 import { Clear, Add } from '@mui/icons-material';
@@ -23,7 +18,100 @@ import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 import FieldTextArea from '@components/items/FieldTextArea';
 
+// ====== DETAIL DIALOG ======
+function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInputChange }: any) {
+    return (
+        <Dialog
+            fullWidth={fullScreen}
+            maxWidth={maxWidth as any}
+            open={open}
+            onClose={onClose}
+            aria-labelledby="responsive-dialog-title"
+        >
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='TextProfileHead shaddowText'>Detail</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">
+                    <FieldSingle
+                        Title={'Uraian'}
+                        name='uraian'
+                        value={formData.uraian}
+                        onChange={handleInputChange}
+                        disabledx={true}
+                    />
+                    <FieldTextArea
+                        Title={'Keterangan'}
+                        name='keterangan'
+                        value={formData.keterangan}
+                        onChange={handleInputChange}
+                        rows={5}
+                        placeholder={'Masukkan keterangan...'}
+                        disabledx={true}
+                    />
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={onClose}>Cancel</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+// ====== DETAIL DIALOG ======
 
+// ====== ADD/EDIT DIALOG ======
+function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handleInputChange, handleSave }: any) {
+    return (
+        <Dialog
+            fullWidth={fullScreen}
+            maxWidth={maxWidth as any}
+            open={open}
+            onClose={onClose}
+            aria-labelledby="responsive-dialog-title"
+        >
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='TextProfileHead shaddowText'>{title} Data</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">
+                    <FieldSingle
+                        Title={'Uraian'}
+                        name='uraian'
+                        value={formData.uraian}
+                        onChange={handleInputChange}
+                    />
+                    <FieldTextArea
+                        Title={'Keterangan'}
+                        name='keterangan'
+                        value={formData.keterangan}
+                        onChange={handleInputChange}
+                        rows={5}
+                        placeholder={'Masukkan keterangan...'}
+                    />
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={onClose}>Cancel</Button>
+                <Button onClick={handleSave} autoFocus>Save</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+// ====== ADD/EDIT DIALOG ======
 
 
 
@@ -180,98 +268,28 @@ const MasterTahapan = () => {
                     <Pagination count={10} color="primary" variant="outlined" />
                 </div>
 
-
                 {/* MODAL DETAIL */}
-                <Dialog
-                    fullWidth={fullScreen}
-                    maxWidth={maxWidth as any}
+                <DetailDialog
                     open={openModalDetail}
                     onClose={handleCloseModalDetail}
-                    aria-labelledby="responsive-dialog-title"
-                >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Detail</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalDetail} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-                            <FieldSingle
-                                Title={'Uraian'}
-                                name='uraian'
-                                value={formData.uraian}
-                                onChange={handleInputChange}
-                            />
-                            <FieldTextArea
-                                Title={'Keterangan'}
-                                name='keterangan'
-                                value={formData.keterangan}
-                                onChange={handleInputChange}
-                                rows={5}
-                                placeholder={'Masukkan keterangan...'}
-                            />
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalDetail}>
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                    fullScreen={fullScreen}
+                    maxWidth={maxWidth}
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                />
                 {/* MODAL DETAIL */}
 
                 {/* MODAL ADD */}
-                <Dialog
-                    fullWidth={fullScreen}
-                    maxWidth={maxWidth as any}
+                <AddDialog
                     open={openModalAdd}
                     onClose={handleCloseModalAdd}
-                    aria-labelledby="responsive-dialog-title"
-                >
-                    <DialogTitle id="responsive-dialog-title">
-                        <div className='headerModal'>
-                            <div className='headerModalLeft'>Add Data</div>
-                            <div className='headerModalRight'>
-                                <IconButton onClick={handleCloseModalAdd} aria-label="fingerprint">
-                                    <Clear />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText component="div">
-
-                            <FieldSingle
-                                Title={'Uraian'}
-                                name='uraian'
-                                value={formData.uraian}
-                                onChange={handleInputChange}
-                            />
-                            <FieldTextArea
-                                Title={'Keterangan'}
-                                name='keterangan'
-                                value={formData.keterangan}
-                                onChange={handleInputChange}
-                                rows={5}
-                                placeholder={'Masukkan keterangan...'}
-                            />
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleCloseModalAdd}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleSaveData} autoFocus>
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                    fullScreen={fullScreen}
+                    maxWidth={maxWidth}
+                    title="Add"
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                    handleSave={handleSaveData}
+                />
                 {/* MODAL ADD */}
 
 
