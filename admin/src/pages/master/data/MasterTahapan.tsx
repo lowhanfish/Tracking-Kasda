@@ -44,17 +44,25 @@ const MasterTahapan = () => {
     // ====== FORM STATE ====== 
 
 
-
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModalAdd] = React.useState(false);
-    // const theme = useTheme();
+    const [openModalDetail, setOpenModalDetail] = React.useState(false);
     const [fullScreen, setFullScreen] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('sm');
+
 
     const handleClickopenModalAdd = () => {
         setOpenModalAdd(true);
     };
 
+    const handleCloseModalDetail = () => {
+        setOpenModalDetail(false);
+        // Reset form data
+        setFormData({
+            uraian: '',
+            keterangan: ''
+        });
+    };
     const handleCloseModalAdd = () => {
         setOpenModalAdd(false);
         // Reset form data
@@ -66,21 +74,18 @@ const MasterTahapan = () => {
 
     const handleSaveData = () => {
         console.log('Data yang akan disimpan:', formData);
-        // Di sini Anda bisa melakukan API call atau validasi
-        // Contoh: if (formData.uraian && formData.keterangan) { ... }
         handleCloseModalAdd();
     };
 
     // ====== ANCHOR ACTIONS ====== 
     const handleDetail = (index, data) => {
         console.log('Detail data index:', index, 'data:', data);
-        // Lakukan sesuatu untuk melihat detail
+        setOpenModalDetail(true);
     };
 
     const handleEdit = (index, data) => {
         console.log('Edit data index:', index, 'data:', data);
         setOpenModalAdd(true);
-        // Isi form dengan data yang diedit
         setFormData({
             uraian: data.uraian || '',
             keterangan: data.keterangan || ''
@@ -176,7 +181,52 @@ const MasterTahapan = () => {
                 </div>
 
 
+                {/* MODAL DETAIL */}
+                <Dialog
+                    fullWidth={fullScreen}
+                    maxWidth={maxWidth as any}
+                    open={openModalDetail}
+                    onClose={handleCloseModalDetail}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <DialogTitle id="responsive-dialog-title">
+                        <div className='headerModal'>
+                            <div className='headerModalLeft'>Detail</div>
+                            <div className='headerModalRight'>
+                                <IconButton onClick={handleCloseModalDetail} aria-label="fingerprint">
+                                    <Clear />
+                                </IconButton>
+                            </div>
+                        </div>
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText component="div">
 
+                            <FieldSingle
+                                Title={'Uraian'}
+                                name='uraian'
+                                value={formData.uraian}
+                                onChange={handleInputChange}
+                            />
+                            <FieldTextArea
+                                Title={'Keterangan'}
+                                name='keterangan'
+                                value={formData.keterangan}
+                                onChange={handleInputChange}
+                                rows={5}
+                                placeholder={'Masukkan keterangan...'}
+                            />
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={handleCloseModalDetail}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* MODAL DETAIL */}
+
+                {/* MODAL ADD */}
                 <Dialog
                     fullWidth={fullScreen}
                     maxWidth={maxWidth as any}
@@ -211,10 +261,6 @@ const MasterTahapan = () => {
                                 rows={5}
                                 placeholder={'Masukkan keterangan...'}
                             />
-
-
-
-
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -226,6 +272,7 @@ const MasterTahapan = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                {/* MODAL ADD */}
 
 
 
