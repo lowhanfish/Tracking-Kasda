@@ -265,7 +265,7 @@ hr.hrku2 {
 .item-list-container {
     display: flex;
     flex-direction: row;
-    margin-top: 5px;
+    margin-top: 1px;
     padding: 5px 5px 5px 5px;
     border-radius: 5px;
     cursor: pointer;

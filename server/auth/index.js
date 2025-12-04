@@ -46,7 +46,6 @@ const schema = Joi.object({
     }),
 });
 
-
 const respondError422 = (res, next, text)=>{
     res.status(422);
     // const error = new Error(text);
