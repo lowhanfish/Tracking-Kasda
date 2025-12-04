@@ -56,7 +56,13 @@ function Anchorx({ index, data = {}, menuItems = [] }) {
                 anchorEl={openIndex === index ? anchorEl : null}
                 open={openIndex === index}
                 onClose={handleCloseAnchor}
+                disableAutoFocusItem
                 slotProps={{
+                    paper: {
+                        style: {
+                            maxHeight: '300px',
+                        },
+                    },
                     list: {
                         'aria-labelledby': `basic-button-${index}`,
                     },

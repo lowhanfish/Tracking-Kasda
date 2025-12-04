@@ -43,18 +43,6 @@ const MasterTahapan = () => {
     };
     // ====== FORM STATE ====== 
 
-    // ====== ANCHOR ====== 
-    const [anchorEls, setAnchorEls] = React.useState({}); // key = index
-
-    const handleClick = (event, index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
-    };
-
-    const handleClose = (index) => {
-        setAnchorEls(prev => ({ ...prev, [index]: null }));
-    };
-    // ====== ANCHOR ====== 
-
 
 
     // ====== MODAL ADD ====== 
