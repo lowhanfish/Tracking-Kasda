@@ -1,9 +1,9 @@
 import React from 'react'
-import { Fieldx } from '@assets/styling/style'
+import { FieldxTextArea } from '@assets/styling/style'
 
 function FieldTextArea({ Title = "", name = '', value = undefined, onChange = (e) => { }, disabledx = false, rows = 4, placeholder = '' }) {
 
-    // Objek props untuk Fieldx dengan multiline
+    // Objek props untuk FieldxTextArea dengan multiline
     const inputProps = {
         size: 'small',
         fullWidth: true,
@@ -22,14 +22,14 @@ function FieldTextArea({ Title = "", name = '', value = undefined, onChange = (e
         return (
             <div className='inputContainer'>
                 <div className='inputText'>{Title}</div>
-                <Fieldx disabled={disabledx} {...inputProps} />
+                <FieldxTextArea disabled={disabledx} {...inputProps} />
             </div>
         );
     }
 
-    // Jika 'Title' tidak ada, kembalikan hanya elemen Fieldx
+    // Jika 'Title' tidak ada, kembalikan hanya elemen FieldxTextArea
     return (
-        <Fieldx {...inputProps} />
+        <FieldxTextArea {...inputProps} />
     );
 }
 

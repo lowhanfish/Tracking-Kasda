@@ -6,6 +6,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Popper from "@mui/material/Popper";
+import { Height } from "@mui/icons-material";
 
 // Custom ListItem untuk sidebar
 const ListItemSatu = styled(ListItem)(({ theme }) => ({
@@ -66,9 +67,19 @@ const Fieldx = styled(TextField)(({theme})=>({
   borderRadius : 4,
   "& .MuiInputBase-input": {
     fontSize: "13px",   // ukuran teks input
-    padding: "8px 10px" // padding dalam input
+    padding: "8px 8px"  // padding dalam input - seragam dengan Select & Autocomplete
   }
 }));
+
+const FieldxTextArea = styled(TextField)(({theme})=>({
+  backgroundColor :'#fff',
+  borderRadius : 4,
+  "& .MuiInputBase-input": {
+    fontSize: "13px",   // ukuran teks input
+    padding: "0px 0px" // padding khusus untuk textarea
+  }
+}));
+
 const FieldxKamio = styled(TextField)(({theme})=>({
   backgroundColor :'purple',
 }));
@@ -81,6 +92,9 @@ const Selectx = styled(Select)(() => ({
   "& .MuiInputBase-input": {
     fontSize: 13,
     padding: "6px 8px"
+  },
+  "& .MuiSelect-select": {
+    padding: "6px 8px !important"
   }
 }));
 const MenuItemx = styled(MenuItem)(() => ({
@@ -94,6 +108,9 @@ const Autocompletex = styled(Autocomplete)(() => ({
   "& .MuiInputBase-input": {
     fontSize: 13,
     padding: "6px 8px"
+  },
+  "& .MuiAutocomplete-inputRoot": {
+    padding: "6px 0px !important"
   }
 }));
 
@@ -105,5 +122,4 @@ const Popperx = styled(Popper)(() => ({
 }));
 
 
-
-export { ListItemSatu, BootstrapInput, Fieldx, Autocompletex, Popperx, Selectx, MenuItemx, FieldxKamio };
+export { ListItemSatu, BootstrapInput, Fieldx, FieldxTextArea, Autocompletex, Popperx, Selectx, MenuItemx, FieldxKamio };

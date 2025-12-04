@@ -11,6 +11,7 @@ import FieldDatex from '@components/items/FieldDatex';
 import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
+import FieldTextArea from '@components/items/FieldTextArea';
 
 // ====== ADD/EDIT DIALOG ======
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }) {
@@ -51,28 +52,14 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSav
 const Template1 = () => {
     // ====== FORM STATE ====== 
     const [formData, setFormData] = React.useState({
-        // FieldSingle
         fieldSingle: '',
-
-        // FieldWithButton
         fieldWithButton: '',
-
-        // FieldAutocomplete
         fieldAutocomplete: null,
-
-        // FieldDatex
         fieldDatex: null,
-
-        // BasicSelect
         basicSelect: '',
-
-        // Checkboxz (checkbox tanpa label)
+        fieldTextArea: '',
         checkboxz: false,
-
-        // CheckboxzLable (checkbox dengan label)
         checkboxzLable: false,
-
-        // Extra fields yang mungkin diperlukan
         customField1: '',
         customField2: ''
     });
@@ -84,6 +71,16 @@ const Template1 = () => {
         { value: 'javascript', label: 'JavaScript' },
         { value: 'csharp', label: 'C#' },
         { value: 'php', label: 'PHP' }
+    ];
+
+    // Data untuk FieldAutocomplete - bisa dari API atau static
+    const fieldAutocompleteOptions = [
+        { id: 1, label: 'Jakarta', year: 2024 },
+        { id: 2, label: 'Surabaya', year: 2024 },
+        { id: 3, label: 'Bandung', year: 2024 },
+        { id: 4, label: 'Medan', year: 2024 },
+        { id: 5, label: 'Semarang', year: 2024 },
+        { id: 6, label: 'Makassar', year: 2024 }
     ];
 
     const handleInputChange = (e) => {
@@ -129,6 +126,7 @@ const Template1 = () => {
             fieldAutocomplete: null,
             fieldDatex: null,
             basicSelect: '',
+            fieldTextArea: '',
             checkboxz: false,
             checkboxzLable: false,
             customField1: '',
@@ -177,10 +175,7 @@ const Template1 = () => {
                         <FieldSingle />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-
                         <FieldAutocomplete />
-
-
                     </Grid>
                 </Grid>
             </div>
@@ -276,6 +271,8 @@ const Template1 = () => {
                                 name='fieldAutocomplete'
                                 value={formData.fieldAutocomplete}
                                 onChange={(e, value) => handleSelectChange('fieldAutocomplete', value)}
+                                options={fieldAutocompleteOptions}
+                                getOptionLabel={(option) => option?.label || ''}
                             />
                         </Grid>
                         <Grid size={{ md: 6, xs: 12 }}>
@@ -294,6 +291,15 @@ const Template1 = () => {
                         value={formData.basicSelect}
                         onChange={(e) => handleSelectChange('basicSelect', e.target.value)}
                         options={basicSelectOptions}
+                    />
+
+                    <FieldTextArea
+                        Title={'FieldTextArea'}
+                        name='fieldTextArea'
+                        value={formData.fieldTextArea}
+                        onChange={handleInputChange}
+                        rows={4}
+                        placeholder={'Masukkan deskripsi atau catatan di sini...'}
                     />
 
                     <Grid container spacing={1}>
