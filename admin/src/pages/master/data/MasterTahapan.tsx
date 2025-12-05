@@ -1,11 +1,12 @@
-import * as React from 'react';
+import { useState, useEffect, useMemo } from "react";
 
-interface MenuItem {
-    label: string;
-    onClick: (index: number) => void;
-}
+// interface MenuItem {
+//     label: string;
+//     onClick: (index: number) => void;
+// }
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
+import useStorex from "@store/index";
 
 import { Clear, Add } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
@@ -17,6 +18,11 @@ import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 import FieldTextArea from '@components/items/FieldTextArea';
+
+
+
+
+
 
 // ====== DETAIL DIALOG ======
 function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInputChange }: any) {
@@ -40,11 +46,7 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInp
             </DialogTitle>
             <DialogContent>
                 <DialogContentText component="div">
-
-
                     {/* CONTENT HERE */}
-
-
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -106,7 +108,20 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
 
 const MasterTahapan = () => {
     // ====== FORM STATE ====== 
-    const [formData, setFormData] = React.useState({
+
+    const [listData, setListData] = useState([]);
+    const [dataLimit, setDataLimit] = useState(8);
+    const [searchData, setSearchData] = useState("");
+    const [pageFirst, setPageFirst] = useState(1);
+    const [jmlData, setJmlData] = useState(1);
+    const [loadData, setLoadData] = useState(false);
+
+    const token = localStorage.getItem("authToken");
+    var { url } = useStorex();
+
+
+
+    const [formData, setFormData] = useState({
         uraian: '',
         keterangan: ''
     });
@@ -117,15 +132,16 @@ const MasterTahapan = () => {
             ...prev,
             [name]: value
         }));
+
     };
     // ====== FORM STATE ====== 
 
 
     // ====== MODAL ADD ====== 
-    const [openModalAdd, setOpenModalAdd] = React.useState(false);
-    const [openModalDetail, setOpenModalDetail] = React.useState(false);
-    const [fullScreen, setFullScreen] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
+    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [openModalDetail, setOpenModalDetail] = useState(false);
+    const [fullScreen, setFullScreen] = useState(true);
+    const [maxWidth, setMaxWidth] = useState('sm');
 
 
     const handleClickopenModalAdd = () => {
@@ -179,7 +195,7 @@ const MasterTahapan = () => {
     };
 
     // Array menu items yang dinamis dengan useMemo
-    const menuItems = React.useMemo(() => [
+    const menuItems = useMemo(() => [
         { label: 'Detail', onClick: handleDetail },
         { label: 'Edit', onClick: handleEdit },
         { label: 'Delete', onClick: handleDelete }
