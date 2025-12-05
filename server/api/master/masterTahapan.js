@@ -1,11 +1,17 @@
-import {Router} from 'express';
+import { Router } from "express";
+import { add, view } from "../../controller/master/masterTahapan.js";
+
+
+
 const router = Router();
 
 
 
-router.post('/add', (req, res)=>{
-    console.log(req.body)
-    res.send("DARI CONTROLLER MASTER TAHAPAN")
+router.post('/view', (req,res)=>{
+    view(req, res)
+})
+router.post('/add', (req,res)=>{
+    add(req, res)
 })
 
 
@@ -14,4 +20,4 @@ router.post('/add', (req, res)=>{
 
 
 
-export default router;
+export default router

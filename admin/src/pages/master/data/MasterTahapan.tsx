@@ -9,6 +9,7 @@ import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, 
 import useStorex from "@store/index";
 import axios from "axios";
 
+
 import { Clear, Add } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
 import FieldWithButton from '@components/items/FieldWithButton';
@@ -164,17 +165,38 @@ const MasterTahapan = () => {
         });
     };
 
+
+    const viewData = () => {
+        axios.post(url.URL_MASTER_TAHAPAN + '/view', {}, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result.data);
+            setListData(result.data);
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
+
     const addData = () => {
         axios.post(url.URL_MASTER_TAHAPAN + '/add', JSON.stringify(formData), {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `kikensbatara ${token}`
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result.data)
+            viewData();
+            setOpenModalAdd(false);
+            // console.log(result.data)
         }).catch(error => {
             console.log(error);
-        });
+        })
+
+
+
     };
 
     // ====== ANCHOR ACTIONS ====== 
@@ -212,6 +234,12 @@ const MasterTahapan = () => {
     // ====== ANCHOR ACTIONS ======
 
     // ====== MODAL ADD ====== 
+
+
+    useEffect(() => {
+        viewData();
+    }, [])
+
 
     return (
         <div className="cardx">
@@ -253,7 +281,7 @@ const MasterTahapan = () => {
                         </thead>
                         <tbody className="h_body">
                             {
-                                [...Array(10)].map((_, index) => {
+                                listData.map((data, index) => {
                                     // Data item dari tabel
                                     const dataItem = {
                                         id: index + 1,
@@ -272,8 +300,8 @@ const MasterTahapan = () => {
                                                 />
                                             </td>
                                             <td className='center'>{index + 1}</td>
-                                            <td>Verifikasi Dokumen</td>
-                                            <td>-</td>
+                                            <td>{data.uraian}</td>
+                                            <td>{data.keterangan}</td>
                                         </tr>
                                     );
                                 })
@@ -283,7 +311,7 @@ const MasterTahapan = () => {
                 </div>
 
                 <div className='paginContainer'>
-                    <Pagination count={10} color="primary" variant="outlined" />
+                    {/* <Pagination count={10} color="primary" variant="outlined" /> */}
                 </div>
 
                 {/* MODAL DETAIL */}
