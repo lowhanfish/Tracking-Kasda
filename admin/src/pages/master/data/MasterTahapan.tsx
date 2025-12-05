@@ -40,22 +40,11 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInp
             </DialogTitle>
             <DialogContent>
                 <DialogContentText component="div">
-                    <FieldSingle
-                        Title={'Uraian'}
-                        name='uraian'
-                        value={formData.uraian}
-                        onChange={handleInputChange}
-                        disabledx={true}
-                    />
-                    <FieldTextArea
-                        Title={'Keterangan'}
-                        name='keterangan'
-                        value={formData.keterangan}
-                        onChange={handleInputChange}
-                        rows={5}
-                        placeholder={'Masukkan keterangan...'}
-                        disabledx={true}
-                    />
+
+
+                    {/* CONTENT HERE */}
+
+
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -145,7 +134,6 @@ const MasterTahapan = () => {
 
     const handleCloseModalDetail = () => {
         setOpenModalDetail(false);
-        // Reset form data
         setFormData({
             uraian: '',
             keterangan: ''
@@ -153,7 +141,6 @@ const MasterTahapan = () => {
     };
     const handleCloseModalAdd = () => {
         setOpenModalAdd(false);
-        // Reset form data
         setFormData({
             uraian: '',
             keterangan: ''
@@ -166,18 +153,24 @@ const MasterTahapan = () => {
     };
 
     // ====== ANCHOR ACTIONS ====== 
-    const handleDetail = (index, data) => {
-        console.log('Detail data index:', index, 'data:', data);
-        setOpenModalDetail(true);
-    };
 
-    const handleEdit = (index, data) => {
-        console.log('Edit data index:', index, 'data:', data);
-        setOpenModalAdd(true);
+    const selectData = (data) => {
+        console.log(data);
         setFormData({
             uraian: data.uraian || '',
             keterangan: data.keterangan || ''
         });
+    }
+
+
+    const handleDetail = (index, data) => {
+        setOpenModalDetail(true);
+        selectData(data);
+    };
+
+    const handleEdit = (index, data) => {
+        setOpenModalAdd(true);
+        selectData(data);
     };
 
     const handleDelete = (index, data) => {

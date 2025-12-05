@@ -75,7 +75,7 @@ export default function SideBar({ variant, open, onClose }) {
                 <ListItemSatu disablePadding>
                     <ListItemButton
                         component={item.path ? Link : "div"}
-                        to={item.path || ""}
+                        {...(item.path && { to: item.path })}
                         onClick={hasChildren ? () => handleToggle(item.title) : undefined}
                         sx={{ pl: indentLevel }}
                     >
