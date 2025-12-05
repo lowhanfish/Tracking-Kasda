@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo } from "react";
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 import useStorex from "@store/index";
+import axios from "axios";
 
 import { Clear, Add } from '@mui/icons-material';
 import FieldSingle from '@components/items/FieldSingle';
@@ -163,9 +164,17 @@ const MasterTahapan = () => {
         });
     };
 
-    const handleSaveData = () => {
-        console.log('Data yang akan disimpan:', formData);
-        handleCloseModalAdd();
+    const addData = () => {
+        axios.post(url.URL_MASTER_TAHAPAN + '/add', JSON.stringify(formData), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result.data)
+        }).catch(error => {
+            console.log(error);
+        });
     };
 
     // ====== ANCHOR ACTIONS ====== 
@@ -297,7 +306,7 @@ const MasterTahapan = () => {
                     title="Add"
                     formData={formData}
                     handleInputChange={handleInputChange}
-                    handleSave={handleSaveData}
+                    handleSave={addData}
                 />
                 {/* MODAL ADD */}
 
