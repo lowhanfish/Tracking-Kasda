@@ -35,6 +35,9 @@ export const add = (req, res) => {
 
 
 export const edit = (req, res) => {
+
+    console.log(req.body)
+
     // Validasi input
     if (!req.body.id || !req.body.uraian) {
         return res.status(400).json({ message: "ID dan Uraian harus diisi" });

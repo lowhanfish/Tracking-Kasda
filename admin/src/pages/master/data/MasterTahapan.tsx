@@ -124,6 +124,7 @@ const MasterTahapan = () => {
 
 
     const [formData, setFormData] = useState({
+        id: '',
         uraian: '',
         keterangan: ''
     });
@@ -141,9 +142,9 @@ const MasterTahapan = () => {
 
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [titleAdd, setTitleAdd] = useState("Add");
     const [openModalDetail, setOpenModalDetail] = useState(false);
     const [fullScreen, setFullScreen] = useState(true);
-    const [maxWidth, setMaxWidth] = useState('sm');
 
 
     const handleClickopenModalAdd = () => {
@@ -153,6 +154,7 @@ const MasterTahapan = () => {
     const handleCloseModalDetail = () => {
         setOpenModalDetail(false);
         setFormData({
+            id: '',
             uraian: '',
             keterangan: ''
         });
@@ -160,6 +162,7 @@ const MasterTahapan = () => {
     const handleCloseModalAdd = () => {
         setOpenModalAdd(false);
         setFormData({
+            id: '',
             uraian: '',
             keterangan: ''
         });
@@ -181,7 +184,16 @@ const MasterTahapan = () => {
     }
 
     const addData = () => {
-        axios.post(url.URL_MASTER_TAHAPAN + '/add', JSON.stringify(formData), {
+
+        let post_route = "/add"
+
+        if (titleAdd === 'Add') {
+            post_route = "/add";
+        } else if (titleAdd === 'Edit') {
+            post_route = "/edit";
+        }
+
+        axios.post(url.URL_MASTER_TAHAPAN + post_route, JSON.stringify(formData), {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
@@ -203,6 +215,7 @@ const MasterTahapan = () => {
     const selectData = (data) => {
         console.log(data);
         setFormData({
+            id: data.id || 0,
             uraian: data.uraian || '',
             keterangan: data.keterangan || ''
         });
@@ -215,6 +228,7 @@ const MasterTahapan = () => {
     };
 
     const handleEdit = (index, data) => {
+        setTitleAdd("Edit")
         setOpenModalAdd(true);
         selectData(data);
     };
@@ -260,7 +274,7 @@ const MasterTahapan = () => {
 
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={handleClickopenModalAdd} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={() => { handleClickopenModalAdd(); setTitleAdd("Add") }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -294,7 +308,7 @@ const MasterTahapan = () => {
                                             <td>
                                                 <Anchorx
                                                     index={index}
-                                                    data={dataItem}
+                                                    data={data}
                                                     menuItems={menuItems}
                                                 />
                                             </td>
@@ -318,7 +332,7 @@ const MasterTahapan = () => {
                     open={openModalDetail}
                     onClose={handleCloseModalDetail}
                     fullScreen={fullScreen}
-                    maxWidth={maxWidth}
+                    maxWidth="md"
                     formData={formData}
                     handleInputChange={handleInputChange}
                 />
@@ -329,17 +343,13 @@ const MasterTahapan = () => {
                     open={openModalAdd}
                     onClose={handleCloseModalAdd}
                     fullScreen={fullScreen}
-                    maxWidth={maxWidth}
+                    maxWidth="sm"
                     title="Add"
                     formData={formData}
                     handleInputChange={handleInputChange}
                     handleSave={addData}
                 />
                 {/* MODAL ADD */}
-
-
-
-
             </div>
         </div>
     )
