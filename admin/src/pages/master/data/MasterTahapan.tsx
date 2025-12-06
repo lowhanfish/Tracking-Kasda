@@ -20,6 +20,7 @@ import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 import FieldTextArea from '@components/items/FieldTextArea';
+import Loadingx from '@components/Loadingx.jsx';
 
 
 
@@ -116,7 +117,7 @@ const MasterTahapan = () => {
     const [searchData, setSearchData] = useState("");
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
-    const [loadData, setLoadData] = useState(false);
+    const [loadData, setLoadData] = useState(true);
 
     const token = localStorage.getItem("authToken");
     var { url } = useStorex();
@@ -170,20 +171,24 @@ const MasterTahapan = () => {
 
 
     const viewData = () => {
+        setLoadData(true);
         axios.post(url.URL_MASTER_TAHAPAN + '/view', {}, {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result.data);
+            // console.log(result.data);
+            setLoadData(false);
             setListData(result.data);
         }).catch(error => {
+            setLoadData(false);
             console.log(error)
         })
     }
 
     const addData = () => {
+        setLoadData(true);
 
         let post_route = "/add"
 
@@ -201,8 +206,10 @@ const MasterTahapan = () => {
         }).then(result => {
             viewData();
             setOpenModalAdd(false);
+            setLoadData(false);
             // console.log(result.data)
         }).catch(error => {
+            setLoadData(false);
             console.log(error);
         })
 
@@ -234,15 +241,18 @@ const MasterTahapan = () => {
     };
 
     const handleDelete = (index, data) => {
+        setLoadData(true);
         axios.post(url.URL_MASTER_TAHAPAN + "/delete", JSON.stringify(data), {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result);
+            // console.log(result);
+            setLoadData(false);
             viewData();
         }).catch(error => {
+            setLoadData(false);
             console.log(error);
         })
     };
@@ -292,44 +302,54 @@ const MasterTahapan = () => {
                 </div>
 
                 <div className="table-wrap" tabIndex={0}>
-                    <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                        <thead className="h_thead shaddowText">
-                            <tr>
-                                <th style={{ width: '5%' }} scope="col">set</th>
-                                <th style={{ width: '5%' }} scope="col">No</th>
-                                <th style={{ width: '30%' }} scope="col">Uraian</th>
-                                <th style={{ width: '60%' }} scope="col">Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody className="h_body">
-                            {
-                                listData.map((data, index) => {
-                                    // Data item dari tabel
-                                    const dataItem = {
-                                        id: index + 1,
-                                        uraian: 'Verifikasi Dokumen',
-                                        keterangan: '-',
-                                        status: 'Menunggu'
-                                    };
 
-                                    return (
-                                        <tr key={index}>
-                                            <td>
-                                                <Anchorx
-                                                    index={index}
-                                                    data={data}
-                                                    menuItems={menuItems}
-                                                />
-                                            </td>
-                                            <td className='center'>{index + 1}</td>
-                                            <td>{data.uraian}</td>
-                                            <td>{data.keterangan}</td>
-                                        </tr>
-                                    );
-                                })
-                            }
-                        </tbody>
-                    </table>
+                    {
+                        loadData ? (
+                            <Loadingx />
+                        ) : (
+                            <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                <thead className="h_thead shaddowText">
+                                    <tr>
+                                        <th style={{ width: '5%' }} scope="col">set</th>
+                                        <th style={{ width: '5%' }} scope="col">No</th>
+                                        <th style={{ width: '30%' }} scope="col">Uraian</th>
+                                        <th style={{ width: '60%' }} scope="col">Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="h_body">
+                                    {
+                                        listData.map((data, index) => {
+                                            // Data item dari tabel
+                                            const dataItem = {
+                                                id: index + 1,
+                                                uraian: 'Verifikasi Dokumen',
+                                                keterangan: '-',
+                                                status: 'Menunggu'
+                                            };
+
+                                            return (
+                                                <tr key={index}>
+                                                    <td>
+                                                        <Anchorx
+                                                            index={index}
+                                                            data={data}
+                                                            menuItems={menuItems}
+                                                        />
+                                                    </td>
+                                                    <td className='center'>{index + 1}</td>
+                                                    <td>{data.uraian}</td>
+                                                    <td>{data.keterangan}</td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+
+                        )
+                    }
+
+
                 </div>
 
                 <div className='paginContainer'>
