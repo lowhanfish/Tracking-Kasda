@@ -50,7 +50,6 @@ export const GetUnitKerja = async (data, token, url)=>{
     })
 }
 
-
 export const getAllUserGroup = async (token, url) =>{
 
     return new Promise ((resove, reject)=>{
@@ -71,6 +70,24 @@ export const getAllUserGroup = async (token, url) =>{
     })
 
 
+}
+
+
+export const getTahapan = async (token, url, data)=>{
+    return new Promise((resolve, reject) => {
+        axios.post(url, JSON.stringify(data), {
+            headers : {
+                "Content-Type" : 'application/json',
+                "Authorization" : `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result.data)
+            resolve(result.data)
+        }).catch(error => {
+            console.log(error)
+            reject(error)
+        })
+    })
 }
 
 

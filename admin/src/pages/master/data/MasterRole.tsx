@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 
+
+
 // interface MenuItem {
 //     label: string;
 //     onClick: (index: number) => void;
@@ -21,6 +23,7 @@ import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 import FieldTextArea from '@components/items/FieldTextArea';
 import Loadingx from '@components/Loadingx.jsx';
+import { getTahapan } from "@lib/dataFetch";
 
 
 
@@ -62,6 +65,14 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInp
 
 // ====== ADD/EDIT DIALOG ======
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handleInputChange, handleSave }: any) {
+
+    var token = localStorage.getItem("authToken");
+    var { url } = useStorex()
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <Dialog
             fullWidth={fullScreen}
