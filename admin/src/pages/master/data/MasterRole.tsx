@@ -96,6 +96,39 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                         rows={5}
                         placeholder={'Masukkan keterangan...'}
                     />
+
+                    <hr className="hrku2" />
+                    <div>
+                        <div className='inputText' style={{ paddingBottom: 3 }}>
+                            Pilih Tahapan
+                        </div>
+                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                            <thead className="h_thead shaddowText">
+                                <tr>
+                                    <th style={{ width: '5%' }} scope="col">set</th>
+                                    <th style={{ width: '10%' }} scope="col">No</th>
+                                    <th style={{ width: '85%' }} scope="col">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody className="h_body">
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td className='center'>xxxx</td>
+                                    <td>yyyyy</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+
+
+
+
+
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
