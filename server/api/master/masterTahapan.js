@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, view, edit } from "../../controller/master/masterTahapan.js";
+import { add, view, editex, deletex } from "../../controller/master/masterTahapan.js";
 
 
 
@@ -16,7 +16,11 @@ router.post('/add', (req,res)=>{
 })
 router.post('/edit', (req,res)=>{
     console.log("edit masterTahapan di panggil")
-    edit(req, res)
+    editex(req, res)
+})
+router.post('/delete', (req,res)=>{
+    console.log("Delete masterTahapan di panggil")
+    deletex(req, res)
 })
 
 

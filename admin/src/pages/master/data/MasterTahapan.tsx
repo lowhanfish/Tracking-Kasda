@@ -228,14 +228,23 @@ const MasterTahapan = () => {
     };
 
     const handleEdit = (index, data) => {
+        selectData(data);
         setTitleAdd("Edit")
         setOpenModalAdd(true);
-        selectData(data);
     };
 
     const handleDelete = (index, data) => {
-        console.log('Delete data index:', index, 'data:', data);
-        // Lakukan sesuatu untuk delete
+        axios.post(url.URL_MASTER_TAHAPAN + "/delete", JSON.stringify(data), {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result);
+            viewData();
+        }).catch(error => {
+            console.log(error);
+        })
     };
 
     // Array menu items yang dinamis dengan useMemo

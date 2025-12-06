@@ -6,15 +6,11 @@ export const view = (req, res)=>{
     const query = `
         SELECT * FROM master_tahapan
     `
-
     db.query(query, (err, rows)=>{
         if (err){console.log(err)}
         else{res.send(rows)}
     })
-
 }
-
-
 
 export const add = (req, res) => {
    const query = `
@@ -32,12 +28,7 @@ export const add = (req, res) => {
    })
 }
 
-
-
-export const edit = (req, res) => {
-
-    console.log(req.body)
-
+export const editex = (req, res) => {
     // Validasi input
     if (!req.body.id || !req.body.uraian) {
         return res.status(400).json({ message: "ID dan Uraian harus diisi" });
@@ -60,4 +51,29 @@ export const edit = (req, res) => {
             res.status(200).json({ message: "Data updated successfully", data: rows });
         }
     });
+}
+
+
+
+export const deletex = (req, res)=> {
+    // Validasi input
+    if (!req.body.id) {
+        return res.status(400).json({message: "ID harus diisi"});
+    }
+
+    const query = `
+        DELETE FROM master_tahapan
+        WHERE id = ?
+    `
+    const values = [req.body.id];
+
+    db.query(query, values, (err, rows)=>{
+        if (err) {
+            return res.status(500).json({message: "Delete data gagal", error:err});
+        } else if (rows.affectedRows === 0) {
+            return res.status(404).json({message: "Data yang akan dihapus tidak ditemukan"});
+        } else {
+            res.status(200).json({message:"Delete data sukses", data:rows});
+        }
+    })
 }
