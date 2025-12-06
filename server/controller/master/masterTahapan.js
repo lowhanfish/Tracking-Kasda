@@ -1,6 +1,21 @@
 import db from "../../db/mysql/index.js";
 
 
+/*
+    dipanggil di :
+    1. masterJnsPencairan.
+*/
+export const viewbool = (req,res) => {
+    const query = `
+        SELECT * FROM master_tahapan
+    `
+    db.query(query, (err, rows)=>{
+        if (err){console.log(err)}
+        else{res.send(rows)}
+    })
+}
+
+
 
 export const view = (req, res)=>{
     const query = `
