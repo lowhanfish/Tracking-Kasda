@@ -23,9 +23,38 @@ export const add = (req, res) => {
    const values = [req.body.uraian, req.body.keterangan, req.user._id];
    db.query(query, values, (err, rows)=>{
     if (err) {
-        console.log(err)
+        console.log(err);
+        res.status(500);
     }else{
+        res.status(200);
         res.send(rows)
     }
    })
+}
+
+
+
+export const edit = (req, res) => {
+    // Validasi input
+    if (!req.body.id || !req.body.uraian) {
+        return res.status(400).json({ message: "ID dan Uraian harus diisi" });
+    }
+
+    const query = `
+        UPDATE master_tahapan SET 
+        uraian = ?,
+        keterangan = ?
+        WHERE id = ?
+    `;
+
+    const values = [req.body.uraian, req.body.keterangan, req.body.id];
+
+    db.query(query, values, (err, rows) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Error updating data", error: err });
+        } else {
+            res.status(200).json({ message: "Data updated successfully", data: rows });
+        }
+    });
 }
