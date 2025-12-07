@@ -1,16 +1,16 @@
-import db from "../../db/mysql/index";
+import db from "../../db/mysql/index.js";
 
 
 
-const view = (req, res) => {
-
-}
-const add = (req, res) => {
+export const view = (req, res) => {
 
 }
-const editex = (req, res) => {
+export const add = (req, res) => {
 
 }
-const deletex = (req, res) => {
+export const editex = (req, res) => {
+
+}
+export const deletex = (req, res) => {
 
 }

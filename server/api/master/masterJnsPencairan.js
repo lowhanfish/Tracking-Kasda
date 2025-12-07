@@ -2,8 +2,8 @@ import { Router } from 'express';
 const router = Router()
 
 
-import { viewbool } from "../../controller/master/masterTahapan";
-import { view, add, editex, deletex } from "../../controller/master/masterJnsPencairan";
+import { viewbool } from "../../controller/master/masterTahapan.js";
+import { view, add, editex, deletex } from "../../controller/master/masterJnsPencairan.js";
 
 
 router.post('/viewbool', (req, res)=>{

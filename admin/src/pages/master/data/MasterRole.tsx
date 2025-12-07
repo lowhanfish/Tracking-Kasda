@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from "react";
 // }
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
 import useStorex from "@store/index";
 import axios from "axios";
 
@@ -64,14 +65,31 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, formData, handleInp
 // ====== DETAIL DIALOG ======
 
 // ====== ADD/EDIT DIALOG ======
-function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handleInputChange, handleSave }: any) {
+function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handleInputChange, handleSave, tahapanState, setTahapanState }: any) {
+
+    const [listTahapan, setListTahapan] = useState([])
 
     var token = localStorage.getItem("authToken");
-    var { url } = useStorex()
+    var { url } = useStorex();
+    formData.status = true;
+
+    const getLib = async () => {
+        const list = await getTahapan(token, url.URL_MASTER_JNS_PENCAIRAN + "/viewbool", formData);
+        setListTahapan(list);
+    }
 
     useEffect(() => {
+        if (open) {
+            getLib();
+        }
+    }, [open])
 
-    }, [])
+    useEffect(() => {
+        if (listTahapan.length > 0) {
+            const initialState = listTahapan.map(() => ({ statusx: false, urut: 0 }));
+            setTahapanState(initialState);
+        }
+    }, [listTahapan])
 
     return (
         <Dialog
@@ -117,18 +135,46 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                             <thead className="h_thead shaddowText">
                                 <tr>
                                     <th style={{ width: '5%' }} scope="col">set</th>
-                                    <th style={{ width: '10%' }} scope="col">No</th>
-                                    <th style={{ width: '85%' }} scope="col">Keterangan</th>
+                                    <th style={{ width: '20%' }} scope="col">No Urut</th>
+                                    <th style={{ width: '75%' }} scope="col">Tahapan</th>
                                 </tr>
                             </thead>
                             <tbody className="h_body">
-                                <tr>
-                                    <td>
 
-                                    </td>
-                                    <td className='center'>xxxx</td>
-                                    <td>yyyyy</td>
-                                </tr>
+                                {
+                                    listTahapan.map((data, index) => {
+                                        const tahapanItem = tahapanState[index] || { statusx: false, urut: 0, id: data.id };
+                                        return (
+                                            <tr key={index}>
+                                                <td className='center'>
+                                                    <Checkbox
+                                                        checked={tahapanItem.statusx === true}
+                                                        onChange={(e) => {
+                                                            const newState = [...tahapanState];
+                                                            newState[index] = { statusx: e.target.checked, urut: e.target.checked ? tahapanItem.urut : 0, id: data.id };
+                                                            setTahapanState(newState);
+                                                        }}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        value={tahapanItem.statusx === true ? tahapanItem.urut : ''}
+                                                        onChange={(e) => {
+                                                            const newState = [...tahapanState];
+                                                            newState[index] = { statusx: tahapanItem.statusx, urut: parseInt(e.target.value) || 0, id: data.id };
+                                                            setTahapanState(newState);
+                                                        }}
+                                                        style={{ width: '100%' }}
+                                                        disabled={tahapanItem.statusx !== true}
+                                                        placeholder="0"
+                                                    />
+                                                </td>
+                                                <td>{data.uraian}</td>
+                                            </tr>
+                                        );
+                                    })
+                                }
 
                             </tbody>
                         </table>
@@ -136,15 +182,11 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                     </div>
 
 
-
-
-
-
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={onClose}>Cancel</Button>
-                <Button onClick={handleSave} autoFocus>Save</Button>
+                <Button onClick={() => handleSave(tahapanState)} autoFocus>Save</Button>
             </DialogActions>
         </Dialog>
     );
@@ -162,6 +204,7 @@ const MasterRole = () => {
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(true);
+    const [tahapanState, setTahapanState] = useState([]);
 
     const token = localStorage.getItem("authToken");
     var { url } = useStorex();
@@ -171,7 +214,8 @@ const MasterRole = () => {
     const [formData, setFormData] = useState({
         id: '',
         uraian: '',
-        keterangan: ''
+        keterangan: '',
+        statusx: false,
     });
 
     const handleInputChange = (e: any) => {
@@ -201,7 +245,8 @@ const MasterRole = () => {
         setFormData({
             id: '',
             uraian: '',
-            keterangan: ''
+            keterangan: '',
+            statusx: false,
         });
     };
     const handleCloseModalAdd = () => {
@@ -209,7 +254,8 @@ const MasterRole = () => {
         setFormData({
             id: '',
             uraian: '',
-            keterangan: ''
+            keterangan: '',
+            statusx: false,
         });
     };
 
@@ -231,8 +277,11 @@ const MasterRole = () => {
         })
     }
 
-    const addData = () => {
+    const addData = (tahapanData: any) => {
         setLoadData(true);
+
+        console.log('Form Data:', formData);
+        console.log('Tahapan Data:', tahapanData);
 
         let post_route = "/add"
 
@@ -242,20 +291,20 @@ const MasterRole = () => {
             post_route = "/edit";
         }
 
-        axios.post(url.URL_MASTER_TAHAPAN + post_route, JSON.stringify(formData), {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `kikensbatara ${token}`
-            }
-        }).then(result => {
-            viewData();
-            setOpenModalAdd(false);
-            setLoadData(false);
-            // console.log(result.data)
-        }).catch(error => {
-            setLoadData(false);
-            console.log(error);
-        })
+        // axios.post(url.URL_MASTER_TAHAPAN + post_route, JSON.stringify(formData), {
+        //     headers: {
+        //         "Content-Type": 'application/json',
+        //         "Authorization": `kikensbatara ${token}`
+        //     }
+        // }).then(result => {
+        //     viewData();
+        //     setOpenModalAdd(false);
+        //     setLoadData(false);
+        //     // console.log(result.data)
+        // }).catch(error => {
+        //     setLoadData(false);
+        //     console.log(error);
+        // })
 
 
 
@@ -268,7 +317,8 @@ const MasterRole = () => {
         setFormData({
             id: data.id || 0,
             uraian: data.uraian || '',
-            keterangan: data.keterangan || ''
+            keterangan: data.keterangan || '',
+            statusx: data.statusx || false,
         });
     }
 
@@ -421,6 +471,8 @@ const MasterRole = () => {
                     formData={formData}
                     handleInputChange={handleInputChange}
                     handleSave={addData}
+                    tahapanState={tahapanState}
+                    setTahapanState={setTahapanState}
                 />
                 {/* MODAL ADD */}
             </div>

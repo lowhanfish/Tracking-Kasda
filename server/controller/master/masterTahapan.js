@@ -7,7 +7,10 @@ import db from "../../db/mysql/index.js";
 */
 export const viewbool = (req,res) => {
     const query = `
-        SELECT * FROM master_tahapan
+        SELECT 
+        master_tahapan.*,
+        false AS statusx
+        FROM master_tahapan
     `
     db.query(query, (err, rows)=>{
         if (err){console.log(err)}
