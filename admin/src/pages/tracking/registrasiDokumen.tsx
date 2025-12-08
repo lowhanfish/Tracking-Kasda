@@ -149,20 +149,78 @@ const RegistrasiDokumen = () => {
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
                 <Grid container spacing={1}>
-                    {
-                        [...Array(10)].map((data, index) => (
+                    {/* {
+                        [...Array(1)].map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
                                 <div onClick={() => { openSetting(); }}>
                                     <ListDataItems
-                                        title='(LS)-Pembangunan Data Center Kab. Konawe Selatan'
-                                        unit='Dinas Komunikasi Informatika dan Persandian'
-                                        price={120000}
+                                        title='(LS - Non Modal)- Pembayaran Honorarium Non ASN (Juli-September)'
+                                        price={120000000}
                                     />
                                 </div>
 
                             </Grid>
                         ))
-                    }
+                    } */}
+
+                    <Grid size={{ md: 6, xs: 12 }}>
+                        <div onClick={() => { openSetting(); }}>
+
+                            <ListDataItems
+                                unit='Dinas Komunikasi Informatika dan Persandian'
+                                title='(LS - Non Modal)- Pembayaran Honorarium Non ASN (Juli-September)'
+                                price={120000000}
+                            />
+                        </div>
+
+                    </Grid>
+
+                    <Grid size={{ md: 6, xs: 12 }}>
+                        <div onClick={() => { openSetting(); }}>
+
+                            <ListDataItems
+                                unit='Dinas Komunikasi Informatika dan Persandian'
+                                title='(LS - Non Modal)- Pembayaran Perjalanan Dinas Luar Daerah'
+                                price={11000000}
+                            />
+                        </div>
+
+                    </Grid>
+                    <Grid size={{ md: 6, xs: 12 }}>
+                        <div onClick={() => { openSetting(); }}>
+
+                            <ListDataItems
+                                unit='Dinas Komunikasi Informatika dan Persandian'
+                                title='(LS - Non Modal)- Pembayaran Jasa Langganan Listrik'
+                                price={5000000}
+                            />
+                        </div>
+
+                    </Grid>
+                    <Grid size={{ md: 6, xs: 12 }}>
+                        <div onClick={() => { openSetting(); }}>
+
+                            <ListDataItems
+                                unit='Dinas Komunikasi Informatika dan Persandian'
+                                title='(LS - Non Modal)- Pembayaran Jasa Langganan Internet - July'
+                                price={750000}
+                            />
+                        </div>
+
+                    </Grid>
+                    <Grid size={{ md: 6, xs: 12 }}>
+                        <div onClick={() => { openSetting(); }}>
+
+                            <ListDataItems
+                                unit='Dinas Komunikasi Informatika dan Persandian'
+                                title='(LS - Non Modal)- Belanja ATK'
+                                price={350000}
+                            />
+                        </div>
+
+                    </Grid>
+
+
 
                 </Grid>
 

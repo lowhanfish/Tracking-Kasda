@@ -262,13 +262,13 @@ const MasterRole = () => {
 
     const viewData = () => {
         setLoadData(true);
-        axios.post(url.URL_MASTER_TAHAPAN + '/view', {}, {
+        axios.post(url.URL_MASTER_JNS_PENCAIRAN + '/view', {}, {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            // console.log(result.data);
+            console.log(result.data);
             setLoadData(false);
             setListData(result.data);
         }).catch(error => {
@@ -291,20 +291,23 @@ const MasterRole = () => {
             post_route = "/edit";
         }
 
-        // axios.post(url.URL_MASTER_TAHAPAN + post_route, JSON.stringify(formData), {
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //         "Authorization": `kikensbatara ${token}`
-        //     }
-        // }).then(result => {
-        //     viewData();
-        //     setOpenModalAdd(false);
-        //     setLoadData(false);
-        //     // console.log(result.data)
-        // }).catch(error => {
-        //     setLoadData(false);
-        //     console.log(error);
-        // })
+        axios.post(url.URL_MASTER_JNS_PENCAIRAN + post_route, JSON.stringify({
+            formData: formData,
+            tahapanData: tahapanData
+        }), {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            viewData();
+            setOpenModalAdd(false);
+            setLoadData(false);
+            // console.log(result.data)
+        }).catch(error => {
+            setLoadData(false);
+            console.log(error);
+        })
 
 
 
@@ -336,7 +339,7 @@ const MasterRole = () => {
 
     const handleDelete = (index, data) => {
         setLoadData(true);
-        axios.post(url.URL_MASTER_TAHAPAN + "/delete", JSON.stringify(data), {
+        axios.post(url.URL_MASTER_JNS_PENCAIRAN + "/delete", JSON.stringify(data), {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
@@ -411,17 +414,16 @@ const MasterRole = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="h_body">
+
+
+
+
+
                                     {
-                                        listData.map((data, index) => {
-                                            // Data item dari tabel
-                                            const dataItem = {
-                                                id: index + 1,
-                                                uraian: 'Verifikasi Dokumen',
-                                                keterangan: '-',
-                                                status: 'Menunggu'
-                                            };
+                                        Array.isArray(listData) && listData.map((data, index) => {
 
                                             return (
+
                                                 <tr key={index}>
                                                     <td>
                                                         <Anchorx
@@ -431,9 +433,24 @@ const MasterRole = () => {
                                                         />
                                                     </td>
                                                     <td className='center'>{index + 1}</td>
-                                                    <td>{data.uraian}</td>
-                                                    <td>{data.keterangan}</td>
+                                                    <td>
+                                                        <div>{data.uraian}</div>
+                                                        <div>{data.keterangan}</div>
+                                                    </td>
+                                                    <td>
+                                                        <ol>
+
+                                                            {
+                                                                data.list.map((data2, index2) => (
+                                                                    <li key={index2}>{data2.master_tahapan_uraian}</li>
+                                                                ))
+
+                                                            }
+
+                                                        </ol>
+                                                    </td>
                                                 </tr>
+
                                             );
                                         })
                                     }
