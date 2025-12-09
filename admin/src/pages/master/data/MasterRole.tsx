@@ -332,6 +332,7 @@ const MasterRole = () => {
     };
 
     const handleEdit = (index, data) => {
+        console.log(data.list);
         selectData(data);
         setTitleAdd("Edit")
         setOpenModalAdd(true);
@@ -414,16 +415,9 @@ const MasterRole = () => {
                                     </tr>
                                 </thead>
                                 <tbody className="h_body">
-
-
-
-
-
                                     {
                                         Array.isArray(listData) && listData.map((data, index) => {
-
                                             return (
-
                                                 <tr key={index}>
                                                     <td>
                                                         <Anchorx
@@ -439,14 +433,13 @@ const MasterRole = () => {
                                                     </td>
                                                     <td>
                                                         <ol>
-
                                                             {
-                                                                data.list.map((data2, index2) => (
-                                                                    <li key={index2}>{data2.master_tahapan_uraian}</li>
+                                                                data.list && data.list.map((data2, index2) => (
+                                                                    data2.statusx === 1 && (
+                                                                        <li key={data2.id}>{data2.uraian}</li>
+                                                                    )
                                                                 ))
-
                                                             }
-
                                                         </ol>
                                                     </td>
                                                 </tr>
@@ -456,7 +449,6 @@ const MasterRole = () => {
                                     }
                                 </tbody>
                             </table>
-
                         )
                     }
 

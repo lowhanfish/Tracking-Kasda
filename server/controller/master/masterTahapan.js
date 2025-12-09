@@ -8,7 +8,8 @@ import db from "../../db/mysql/index.js";
 export const viewbool = (req,res) => {
     const query = `
         SELECT 
-        master_tahapan.*,
+        master_tahapan.id,
+        master_tahapan.uraian,
         false AS statusx
         FROM master_tahapan
     `
