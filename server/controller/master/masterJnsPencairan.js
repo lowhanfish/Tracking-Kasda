@@ -4,7 +4,7 @@ import db from "../../db/mysql/index.js";
 
 export const view = (req, res) => {
 
-    console.log("view di panggil")
+    // console.log("view di panggil")
     
     const query = `SELECT * FROM master_jns_pencairan`
     db.query(query, async (err, rows)=> {
@@ -18,7 +18,7 @@ export const view = (req, res) => {
             }
             
 
-            console.log(rows);
+            // console.log(rows);
 
             res.status(200)
             res.send(rows)
@@ -28,7 +28,7 @@ export const view = (req, res) => {
 
 }
 export const add = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
 
     const formData = req.body.formData
     const tahapanData = req.body.tahapanData
@@ -36,7 +36,7 @@ export const add = async (req, res) => {
     console.log(insertFormData);
 
     for (let i = 0; i < tahapanData.length; i++) {
-        if (tahapanData[i].id) {
+        if (tahapanData[i].statusx == 1) {
             await insert_master_jns_pencairan_list(tahapanData[i], insertFormData)
         }
     }
@@ -45,7 +45,34 @@ export const add = async (req, res) => {
 }
 
 export const editex = (req, res) => {
-    res.send(200);
+
+    console.log("EDIT masterJnsPencairan di panggil")
+
+    console.log(req.body);
+    const formData = req.body.formData
+
+    const query = `
+        UPDATE master_jns_pencairan SET 
+            uraian = ?,
+            keterangan = ?
+        WHERE id = ?
+    `
+    const values = [formData.uraian, formData.keterangan, formData.id];
+
+    db.query(query, values, (err, rows) => {
+        if (err) {
+            console.log(err);
+            res.status(500);
+            res.send(err);
+        } else {
+            res.status(200).send(rows);
+        }
+    })
+
+  
+
+
+
 }
 
 
@@ -68,8 +95,6 @@ export const deletex = (req, res) => {
             res.send("OK");
         }
     })
-
-
 }
 
 const insert_master_jns_pencairan = (data, req) => {
@@ -153,6 +178,7 @@ const view_master_jns_pencairan_list = (data) => {
         })
     })
 }
+
 
 
 const remove_master_jns_pencairan_list = (data) => {

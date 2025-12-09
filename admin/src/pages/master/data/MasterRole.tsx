@@ -306,25 +306,23 @@ const MasterRole = () => {
             post_route = "/edit";
         }
 
-        // axios.post(url.URL_MASTER_JNS_PENCAIRAN + post_route, JSON.stringify({
-        //     formData: formData,
-        //     tahapanData: tahapanData
-        // }), {
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //         "Authorization": `kikensbatara ${token}`
-        //     }
-        // }).then(result => {
-        //     viewData();
-        //     setOpenModalAdd(false);
-        //     setLoadData(false);
-        //     // console.log(result.data)
-        // }).catch(error => {
-        //     setLoadData(false);
-        //     console.log(error);
-        // })
-
-
+        axios.post(url.URL_MASTER_JNS_PENCAIRAN + post_route, JSON.stringify({
+            formData: formData,
+            tahapanData: tahapanData
+        }), {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            viewData();
+            setOpenModalAdd(false);
+            setLoadData(false);
+            // console.log(result.data)
+        }).catch(error => {
+            setLoadData(false);
+            console.log(error);
+        })
 
     };
 
