@@ -21,11 +21,11 @@ router.post('/add', (req, res)=>{
 })
 
 router.post('/edit', (req, res)=>{
-    
+    editex(req, res);
 })
 
 router.post('/delete', (req, res)=>{
-   
+   deletex(req, res);
 })
 
 

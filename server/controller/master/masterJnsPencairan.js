@@ -47,8 +47,29 @@ export const add = async (req, res) => {
 export const editex = (req, res) => {
     res.send(200);
 }
+
+
 export const deletex = (req, res) => {
-    res.send(200);
+    
+    const query = `
+        DELETE FROM master_jns_pencairan
+        WHERE id = ?
+    `
+    const values = [req.body.id];
+
+    db.query(query, values,  async (err, rows)=> {
+        if (err) {
+            // console.log(err)
+            res.status(500);
+            res.send(err);
+        } else {
+            await remove_master_jns_pencairan_list(req.body);
+            res.status(200);
+            res.send("OK");
+        }
+    })
+
+
 }
 
 const insert_master_jns_pencairan = (data, req) => {
@@ -129,14 +150,28 @@ const view_master_jns_pencairan_list = (data) => {
             } else {
                 resolve(rows);
             }
-
-
-
         })
-
-
-
     })
+}
 
+
+const remove_master_jns_pencairan_list = (data) => {
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+            DELETE FROM master_jns_pencairan_list
+            WHERE master_jns_pencairan_id = ?
+        `
+        const values = [data.id]
+    
+        db.query(query, values, (err, rows)=>{
+            if (err) {
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+        })
+    })
 
 }
