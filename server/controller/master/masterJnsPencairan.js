@@ -105,29 +105,13 @@ const insert_master_jns_pencairan_list = (data, formId) => {
 const view_master_jns_pencairan_list = (data) => {
 
     return new Promise((resolve, reject) => {
-        // const query = `
-        //     SELECT 
-        //     master_jns_pencairan_list.*,
-        //     master_tahapan.uraian as master_tahapan_uraian
-            
-        //     FROM master_jns_pencairan_list
-
-        //     LEFT JOIN master_tahapan
-        //     ON master_tahapan.id = master_jns_pencairan_list.master_tahapan_id
-
-
-        //     WHERE master_jns_pencairan_id = '`+data.id+`'
-        
-        // `
-
         const values = [data.id];
-
         const query = `
             SELECT 
             master_tahapan.id,
             master_tahapan.uraian,
-            IF(master_jns_pencairan_list.master_tahapan_id IS NOT NULL, TRUE, FALSE) as statusx
-
+            IF(master_jns_pencairan_list.master_tahapan_id IS NOT NULL, TRUE, FALSE) as statusx,
+            IFNULL(master_jns_pencairan_list.urut, 0) as urut
 
             FROM master_tahapan
             LEFT JOIN master_jns_pencairan_list
@@ -136,11 +120,7 @@ const view_master_jns_pencairan_list = (data) => {
             master_tahapan.id = master_jns_pencairan_list.master_tahapan_id
             AND
             master_jns_pencairan_list.master_jns_pencairan_id = ?)
-
-        
         `
-
-
         db.query(query, values,(err, rows)=> {
 
             if (err) {

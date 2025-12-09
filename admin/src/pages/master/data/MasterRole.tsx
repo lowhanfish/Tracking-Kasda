@@ -73,9 +73,24 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
     var { url } = useStorex();
     formData.status = true;
 
+    // console.log("=======")
+    // console.log(formData);
+
     const getLib = async () => {
-        const list = await getTahapan(token, url.URL_MASTER_JNS_PENCAIRAN + "/viewbool", formData);
+
+        // console.log(title);
+
+        let list = [];
+
+        if (title === "Add") {
+            list = await getTahapan(token, url.URL_MASTER_JNS_PENCAIRAN + "/viewbool", formData);
+        } else {
+            list = formData.list
+        }
+
+        // console.log(list)
         setListTahapan(list);
+
     }
 
     useEffect(() => {
@@ -85,10 +100,22 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
     }, [open])
 
     useEffect(() => {
-        if (listTahapan.length > 0) {
-            const initialState = listTahapan.map(() => ({ statusx: false, urut: 0 }));
-            setTahapanState(initialState);
+
+        if (title === "Add") {
+            if (listTahapan.length > 0) {
+                const initialState = listTahapan.map(() => ({ statusx: 0, urut: 0 }));
+                setTahapanState(initialState);
+            }
+        } else if (title === "Edit") {
+            if (listTahapan.length > 0 && formData.list && formData.list.length > 0) {
+                const initialState = listTahapan.map((tahapan) => {
+                    const found = formData.list.find(item => item.id === tahapan.id);
+                    return found ? { statusx: found.statusx, urut: found.urut || 0, id: tahapan.id } : { statusx: 0, urut: 0, id: tahapan.id };
+                });
+                setTahapanState(initialState);
+            }
         }
+
     }, [listTahapan])
 
     return (
@@ -148,10 +175,10 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                                             <tr key={index}>
                                                 <td className='center'>
                                                     <Checkbox
-                                                        checked={tahapanItem.statusx === true}
+                                                        checked={tahapanItem.statusx === 1}
                                                         onChange={(e) => {
                                                             const newState = [...tahapanState];
-                                                            newState[index] = { statusx: e.target.checked, urut: e.target.checked ? tahapanItem.urut : 0, id: data.id };
+                                                            newState[index] = { statusx: e.target.checked ? 1 : 0, urut: e.target.checked ? tahapanItem.urut : 0, id: data.id };
                                                             setTahapanState(newState);
                                                         }}
                                                     />
@@ -159,14 +186,14 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                                                 <td>
                                                     <input
                                                         type="number"
-                                                        value={tahapanItem.statusx === true ? tahapanItem.urut : ''}
+                                                        value={tahapanItem.statusx === 1 ? tahapanItem.urut : ''}
                                                         onChange={(e) => {
                                                             const newState = [...tahapanState];
                                                             newState[index] = { statusx: tahapanItem.statusx, urut: parseInt(e.target.value) || 0, id: data.id };
                                                             setTahapanState(newState);
                                                         }}
                                                         style={{ width: '100%' }}
-                                                        disabled={tahapanItem.statusx !== true}
+                                                        disabled={tahapanItem.statusx !== 1}
                                                         placeholder="0"
                                                     />
                                                 </td>
@@ -175,12 +202,9 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, formData, handl
                                         );
                                     })
                                 }
-
                             </tbody>
                         </table>
-
                     </div>
-
 
                 </DialogContentText>
             </DialogContent>
@@ -216,6 +240,7 @@ const MasterRole = () => {
         uraian: '',
         keterangan: '',
         statusx: false,
+        list: [],
     });
 
     const handleInputChange = (e: any) => {
@@ -242,21 +267,11 @@ const MasterRole = () => {
 
     const handleCloseModalDetail = () => {
         setOpenModalDetail(false);
-        setFormData({
-            id: '',
-            uraian: '',
-            keterangan: '',
-            statusx: false,
-        });
+        emptyForm();
     };
     const handleCloseModalAdd = () => {
         setOpenModalAdd(false);
-        setFormData({
-            id: '',
-            uraian: '',
-            keterangan: '',
-            statusx: false,
-        });
+        emptyForm();
     };
 
 
@@ -291,23 +306,23 @@ const MasterRole = () => {
             post_route = "/edit";
         }
 
-        axios.post(url.URL_MASTER_JNS_PENCAIRAN + post_route, JSON.stringify({
-            formData: formData,
-            tahapanData: tahapanData
-        }), {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `kikensbatara ${token}`
-            }
-        }).then(result => {
-            viewData();
-            setOpenModalAdd(false);
-            setLoadData(false);
-            // console.log(result.data)
-        }).catch(error => {
-            setLoadData(false);
-            console.log(error);
-        })
+        // axios.post(url.URL_MASTER_JNS_PENCAIRAN + post_route, JSON.stringify({
+        //     formData: formData,
+        //     tahapanData: tahapanData
+        // }), {
+        //     headers: {
+        //         "Content-Type": 'application/json',
+        //         "Authorization": `kikensbatara ${token}`
+        //     }
+        // }).then(result => {
+        //     viewData();
+        //     setOpenModalAdd(false);
+        //     setLoadData(false);
+        //     // console.log(result.data)
+        // }).catch(error => {
+        //     setLoadData(false);
+        //     console.log(error);
+        // })
 
 
 
@@ -315,13 +330,24 @@ const MasterRole = () => {
 
     // ====== ANCHOR ACTIONS ====== 
 
+    const emptyForm = () => {
+        setFormData({
+            id: '',
+            uraian: '',
+            keterangan: '',
+            statusx: false,
+            list: [],
+        });
+    }
+
     const selectData = (data) => {
-        console.log(data);
+        // console.log(data);
         setFormData({
             id: data.id || 0,
             uraian: data.uraian || '',
             keterangan: data.keterangan || '',
             statusx: data.statusx || false,
+            list: data.list || [],
         });
     }
 
@@ -332,9 +358,9 @@ const MasterRole = () => {
     };
 
     const handleEdit = (index, data) => {
-        console.log(data.list);
+        setTitleAdd("Edit");
+        // console.log(data.list);
         selectData(data);
-        setTitleAdd("Edit")
         setOpenModalAdd(true);
     };
 
@@ -476,7 +502,7 @@ const MasterRole = () => {
                     onClose={handleCloseModalAdd}
                     fullScreen={fullScreen}
                     maxWidth="sm"
-                    title="Add"
+                    title={titleAdd}
                     formData={formData}
                     handleInputChange={handleInputChange}
                     handleSave={addData}

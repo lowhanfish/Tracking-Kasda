@@ -28,7 +28,7 @@ export const getmenuItem = (URL) => {
     }
   }).then((result) => {
     console.log("dari config/menuCinfig")
-    console.log(result.data)
+    // console.log(result.data)
   }).catch(error => {
     console.log(error)
   })
