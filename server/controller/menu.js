@@ -63,7 +63,6 @@ export const getMenuSidebar = async (req, res) => {
 
 
                     if (element.multiple != 1) {
-                        
                         element.view = false;
                         element.add = false;
                         element.update = false;

@@ -50,6 +50,7 @@ export const editex = (req, res) => {
 
     console.log(req.body);
     const formData = req.body.formData
+    const tahapanData = req.body.tahapanData
 
     const query = `
         UPDATE master_jns_pencairan SET 
@@ -59,12 +60,20 @@ export const editex = (req, res) => {
     `
     const values = [formData.uraian, formData.keterangan, formData.id];
 
-    db.query(query, values, (err, rows) => {
+    db.query(query, values, async (err, rows) => {
         if (err) {
             console.log(err);
             res.status(500);
             res.send(err);
         } else {
+
+            await remove_master_jns_pencairan_list(formData);
+            for (let i = 0; i < tahapanData.length; i++) {
+                if (tahapanData[i].statusx == 1) {
+                    await insert_master_jns_pencairan_list(tahapanData[i], formData.id);
+                }
+            }
+
             res.status(200).send(rows);
         }
     })
