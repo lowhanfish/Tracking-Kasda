@@ -452,7 +452,7 @@ const MasterRole = () => {
                                                     </td>
                                                     <td className='center'>{index + 1}</td>
                                                     <td>
-                                                        <div>{data.uraian}</div>
+                                                        <div className="h-body-t1">{data.uraian}</div>
                                                         <div>{data.keterangan}</div>
                                                     </td>
                                                     <td>
