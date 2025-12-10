@@ -1,17 +1,19 @@
 import { Router } from "express";
 const router = Router();
 
+import { view, add, editex, deletex } from "../../controller/master/masterPPN";
+
 router.post("/view", (req, res)=>{
-    res.send("OK")
+    view(req, res)
 })
 router.post("/add", (req, res)=>{
-    res.send("OK")
+     add(req, res)
 })
 router.post("/edite", (req, res)=>{
-    res.send("OK")
+     editex(req, res)
 })
 router.post("/delete", (req, res)=>{
-    res.send("OK")
+     deletex(req, res)
 })
 
 export default router
