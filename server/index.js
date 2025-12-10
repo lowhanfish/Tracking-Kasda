@@ -50,6 +50,10 @@ router.get('/', (req, res) => {
     app.use('/api/masterTahapan', isLoggedIn, masterTahapan)
     import masterJnsPencairan from "./api/master/masterJnsPencairan.js";
     app.use('/api/masterJnsPencairan', isLoggedIn, masterJnsPencairan)
+    import masterPPH from "./api/master/masterPPH.js";
+    app.use('/api/masterPPH', isLoggedIn, masterPPH)
+    import masterPPN from "./api/master/masterPPN.js";
+    app.use('/api/masterPPN', isLoggedIn, masterPPN)
 
 // =============== END YOUR API ==================
 
