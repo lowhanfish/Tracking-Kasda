@@ -68,6 +68,10 @@ export default function MainLayout() {
                 return "Menu Setting";
             case "/MasterRole":
                 return "Master Role";
+            case "/MasterPPN":
+                return "Master PPN";
+            case "/MasterPPH":
+                return "Master PPH";
             case "/MasterTahapan":
                 return "Master Tahapan";
             case "/RegistrasiDokumen":

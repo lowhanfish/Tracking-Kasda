@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { view, add, editex, deletex } from "../../controller/master/masterPPN";
+import { view, add, editex, deletex } from "../../controller/master/masterPPN.js";
 
 router.post("/view", (req, res)=>{
     view(req, res)

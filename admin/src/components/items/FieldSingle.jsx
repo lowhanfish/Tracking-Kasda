@@ -3,7 +3,7 @@ import { Fieldx } from '@assets/styling/style'
 // import FieldxKamio and stylex tidak diperlukan jika tidak digunakan di sini
 
 // Definisikan nilai default untuk props opsional (name, value, onChange)
-function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) => { }, disabledx = false }) {
+function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) => { }, disabledx = false, type = "text" }) {
 
     // Objek props untuk Fieldx. 
     // Jika name, value, atau onChange tidak diset, ia akan menggunakan nilai default-nya.
@@ -13,6 +13,7 @@ function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) 
         // id unik diperlukan untuk aksesibilitas, gunakan name jika ada
         id: name ? `${name}-input` : "outlined-basic",
         variant: "outlined",
+        type: type,
 
         // Meneruskan props opsional (value dan onChange diperlukan untuk controlled input)
         name: name,

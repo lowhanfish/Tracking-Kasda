@@ -1,4 +1,4 @@
-import db from "../../db/mysql/index";
+import db from "../../db/mysql/index.js";
 
 export const view = (req, res) => {
     const query = `
@@ -30,6 +30,7 @@ export const add = (req, res) => {
 
 }
 export const editex = (req, res) => {
+    console.log(req.body)
     const query = `
         UPDATE master_pph SET
         uraian = ?,
@@ -38,10 +39,11 @@ export const editex = (req, res) => {
 
         WHERE id = ?
     `
-    const values = [req.body.uraian, req.body.keterangan, req.body.nilai];
+    const values = [req.body.uraian, req.body.keterangan, req.body.nilai, req.body.id];
 
     db.query(query, values, (err, rows)=> {
         if (err) {
+            console.log(err)
             res.status(500).send(err);
         } else {
             res.status(200).send(rows)

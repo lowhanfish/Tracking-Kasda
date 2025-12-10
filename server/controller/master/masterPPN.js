@@ -1,4 +1,4 @@
-import db from "../../db/mysql/index";
+import db from "../../db/mysql/index.js";
 
 export const view = (req, res) => {
     const query = `
