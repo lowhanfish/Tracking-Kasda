@@ -184,8 +184,20 @@ const menuConfig = [
             multiple : false,
           },
           {
-            title: "Master Role",
+            title: "Master Pencairan",
             path: "/MasterRole",
+            icon: 'FiberManualRecordIcon',
+            multiple : false,
+          },
+          {
+            title: "Master PPN",
+            path: "/MasterPPN",
+            icon: 'FiberManualRecordIcon',
+            multiple : false,
+          },
+          {
+            title: "Master PPH",
+            path: "/MasterPPH",
             icon: 'FiberManualRecordIcon',
             multiple : false,
           },

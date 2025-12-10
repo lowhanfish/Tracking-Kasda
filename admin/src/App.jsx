@@ -12,6 +12,8 @@ import MenuSetting from "./pages/master/menuSetting/menuSetting.jsx";
 
 import MasterRole from "./pages/master/data/MasterRole.tsx";
 import MasterTahapan from "./pages/master/data/MasterTahapan.tsx";
+import MasterPPH from "./pages/master/data/MasterPPH.tsx";
+import MasterPPN from "./pages/master/data/MasterPPN.tsx";
 
 
 import RegistrasiDokumen from "./pages/tracking/registrasiDokumen.tsx";
@@ -88,8 +90,11 @@ function App() {
             <Route path="/userGroup" element={<UserGroup />} />
             <Route path="/MenuSetting" element={<MenuSetting />} />
             <Route path="/Registration" element={<Registration />} />
+
             <Route path="/MasterRole" element={<MasterRole />} />
             <Route path="/MasterTahapan" element={<MasterTahapan />} />
+            <Route path="/MasterPPH" element={<MasterPPH />} />
+            <Route path="/MasterPPN" element={<MasterPPN />} />
 
             <Route path="/RegistrasiDokumen" element={<RegistrasiDokumen />} />
             <Route path="/TrackingDokumen" element={<TrackingDokumen />} />
