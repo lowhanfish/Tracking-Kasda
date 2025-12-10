@@ -38,7 +38,7 @@ export const editex = (req, res) => {
 
         WHERE id = ?
     `
-    const values = [req.body.uraian, req.body.keterangan, req.body.nilai];
+    const values = [req.body.uraian, req.body.keterangan, req.body.nilai, req.body.id];
 
     db.query(query, values, (err, rows)=> {
         if (err) {

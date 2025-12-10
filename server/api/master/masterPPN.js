@@ -9,7 +9,7 @@ router.post("/view", (req, res)=>{
 router.post("/add", (req, res)=>{
      add(req, res)
 })
-router.post("/edite", (req, res)=>{
+router.post("/edit", (req, res)=>{
      editex(req, res)
 })
 router.post("/delete", (req, res)=>{
