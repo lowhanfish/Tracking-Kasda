@@ -19,7 +19,7 @@ export const GetDataGroup = async () =>{
                 'Authorization' : `kikensbatara ${TOKEN}`
             }
         }).then(response =>{
-            console.log(response.data)
+            // console.log(response.data)
             resolve(response.data)
         }).catch(err =>{
             console.log(err)
@@ -72,8 +72,24 @@ export const getAllUserGroup = async (token, url) =>{
 
 }
 
-
 export const getTahapan = async (token, url, data)=>{
+    return new Promise((resolve, reject) => {
+        axios.post(url, JSON.stringify(data), {
+            headers : {
+                "Content-Type" : 'application/json',
+                "Authorization" : `kikensbatara ${token}`
+            }
+        }).then(result => {
+            // console.log(result.data)
+            resolve(result.data)
+        }).catch(error => {
+            console.log(error)
+            reject(error)
+        })
+    })
+}
+
+export const getPOST = async (token, url, data)=>{
     return new Promise((resolve, reject) => {
         axios.post(url, JSON.stringify(data), {
             headers : {
@@ -89,5 +105,3 @@ export const getTahapan = async (token, url, data)=>{
         })
     })
 }
-
-
