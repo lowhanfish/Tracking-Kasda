@@ -32,6 +32,34 @@ export const view = (documents_id) => {
         })
     })
 }
+
+export const add = (ppn, documents_id) => { 
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO ppn
+            (documents_id, master_ppn_id)
+            VALUES
+            (?, ?)
+        `
+        const values = [documents_id, ppn.id];
+
+        db.query(query,values, (err, rows)=>{
+            if (err) {
+                console.log(err);
+                reject({
+                    status : 500,
+                    message : err
+                })
+            } else {
+                resolve({
+                    status : 200,
+                    message : rows
+                })
+            }
+        })
+    })
+}
+
 export const deletex = (documents_id) => {
     return new Promise((resolve, reject) => {
         const query = `

@@ -34,8 +34,31 @@ export const view = (documents_id) => {
 }
 
 
-export const add = () => {
-    
+export const add = (pph, documents_id) => { 
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO pph
+            (documents_id, master_pph_id)
+            VALUES
+            (?, ?)
+        `
+        const values = [documents_id, pph.id];
+
+        db.query(query,values, (err, rows)=>{
+            if (err) {
+                console.log(err);
+                reject({
+                    status : 500,
+                    message : err
+                })
+            } else {
+                resolve({
+                    status : 200,
+                    message : rows
+                })
+            }
+        })
+    })
 }
 
 

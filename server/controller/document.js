@@ -1,7 +1,7 @@
 import db from "../db/mysql/index.js";
-import { view as view_pph, deletex as delete_pph } from "../controller/pph.js";
-import { view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
-
+import { add as add_pph, view as view_pph, deletex as delete_pph } from "../controller/pph.js";
+import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
+import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
 
 export const view = (req, res) => {
@@ -36,11 +36,26 @@ export const add = (req, res) => {
     `;
     const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.user._id];
 
-    db.query(query, values, (err, rows)=>{
+    db.query(query, values, async (err, rows)=>{
         if (err) {
             console.log(err);
             res.status(500).send(err)
         } else {
+
+            const files = req.files
+            for (let i = 0; i < files.length; i++) {
+                await add_files(req, "documents", rows.insertId);
+            }
+
+            const pph = req.body.pph
+            for (let i = 0; i < pph.length; i++) {
+                await add_pph(pph[i], rows.insertId)
+            }
+            const ppn = req.body.ppn
+            for (let i = 0; i < pph.length; i++) {
+                await add_ppn(ppn[i], rows.insertId)
+            }
+
             res.status(200).send(rows)
         }
     })
