@@ -11,7 +11,7 @@ export const view = (req, res) => {
         FROM document
     `
 
-    db.query(async (err, rows)=>{
+    db.query(query, async (err, rows)=>{
         if (err) {
             console.log(err);
             res.status(500).send(err)
@@ -21,24 +21,22 @@ export const view = (req, res) => {
                 rows[i].ppn = await view_ppn(document.id);
                 rows[i].pph = await view_pph(document.id);
             }
-            
             res.status(200).send(rows)
         }
     })
-
-
 }
 
 
 export const add = (req, res) => {
     const query = `
-        SELECT
-        document.*
-        FROM document
-    
-    `
+        INSERT INTO documents
+        (uraian, master_jns_pencairan_id, nilai, createdAt, createdBy)
+        VALUES
+        (?, ?, ?, NOW(), ?)
+    `;
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.user._id];
 
-    db.query((err, rows)=>{
+    db.query(query, values, (err, rows)=>{
         if (err) {
             console.log(err);
             res.status(500).send(err)
