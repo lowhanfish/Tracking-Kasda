@@ -7,8 +7,8 @@ import {add as add_files, deletex as deletex_files, view as view_files } from ".
 export const view = (req, res) => {
     const query = `
         SELECT
-        document.*
-        FROM document
+        documents.*
+        FROM documents
     `
 
     db.query(query, async (err, rows)=>{
@@ -18,8 +18,9 @@ export const view = (req, res) => {
         } else {
             
             for (let i = 0; i < rows.length; i++) {
-                rows[i].ppn = await view_ppn(document.id);
-                rows[i].pph = await view_pph(document.id);
+                rows[i].ppn = await view_ppn(rows[i].id);
+                rows[i].pph = await view_pph(rows[i].id);
+                rows[i].files = await view_files(req, 'documents', rows[i].id);
             }
             res.status(200).send(rows)
         }
@@ -65,8 +66,8 @@ export const add = (req, res) => {
 export const editex = (req, res) => {
     const query = `
         SELECT
-        document.*
-        FROM document
+        documents.*
+        FROM documents
     
     `
 
