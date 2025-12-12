@@ -34,6 +34,12 @@ export const view = (documents_id) => {
 }
 
 
+export const add = () => {
+    
+}
+
+
+
 export const deletex = (documents_id) => {
     return new Promise((resolve, reject) => {
         const query = `
