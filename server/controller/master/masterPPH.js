@@ -1,5 +1,23 @@
 import db from "../../db/mysql/index.js";
 
+export const all = (req, res) => {
+    const query = `
+        SELECT 
+        master_pph.id,
+        master_pph.id as value,
+        master_pph.uraian as label,
+        master_pph.nilai
+
+        FROM master_pph
+    `
+    db.query(query, (err, rows)=> {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(rows)
+        }
+    })
+}
 export const view = (req, res) => {
     const query = `
         SELECT * FROM master_pph

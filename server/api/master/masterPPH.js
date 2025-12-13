@@ -1,8 +1,11 @@
 import { Router } from "express";
 const router = Router();
 
-import { view, add, editex, deletex } from "../../controller/master/masterPPH.js";
+import { all, view, add, editex, deletex } from "../../controller/master/masterPPH.js";
 
+router.post("/", (req, res)=>{
+    all(req, res)
+})
 router.post("/view", (req, res)=>{
     view(req, res)
 })

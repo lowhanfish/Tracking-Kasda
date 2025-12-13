@@ -20,7 +20,7 @@ function BasicSelect({
     Title = '',
     name = '',
     value = '', // Default value harus diset agar controlled component berfungsi
-    onChange = () => { },
+    onChange = (e) => { }, // Terima event parameter
     options = DEFAULT_OPTIONS // Menerima array opsi: [{ value: '...', label: '...' }], default ke DEFAULT_OPTIONS
 }) {
 

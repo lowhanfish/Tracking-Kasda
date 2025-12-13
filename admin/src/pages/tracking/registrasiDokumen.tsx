@@ -16,7 +16,8 @@ import CheckboxzLable from '@components/items/CheckboxLable.jsx';
 import ListDataItems from '@components/ListDataItems';
 import Stepperx from '@components/Stepperx';
 
-
+import { getPOST } from "@lib/dataFetch.js";
+import useStorex from '@store/index';
 
 
 
@@ -94,6 +95,11 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
 
 const RegistrasiDokumen = () => {
 
+
+    const { url } = useStorex();
+    const token = localStorage.getItem('authToken');
+
+
     const [listPPN, setListPPN] = useState([]);
     const [listPPH, setListPPH] = useState([]);
 
@@ -109,6 +115,35 @@ const RegistrasiDokumen = () => {
     const [pph, setPph] = useState([]);
 
 
+    const pushPPH = (event) => {
+        // event.target.value adalah value dari MenuItem
+        const selectedValue = event.target.value;
+        const selectedItem = listPPH.find(item => item.value === selectedValue);
+
+        console.log(selectedItem)
+
+        if (selectedItem) {
+            const newItem = {
+                ...selectedItem,
+                id: Date.now() // Unique ID untuk setiap item
+            };
+            setPph(prev => [...prev, newItem]);
+        }
+    }
+
+    const pushPPN = (event) => {
+        // event.target.value adalah value dari MenuItem
+        const selectedValue = event.target.value;
+        const selectedItem = listPPN.find(item => item.value === selectedValue);
+
+        if (selectedItem) {
+            const newItem = {
+                ...selectedItem,
+                // id: Date.now() // Unique ID untuk setiap item
+            };
+            setPpn(prev => [...prev, newItem]);
+        }
+    }
 
 
     // ====== MODAL SETTING ======
@@ -129,6 +164,19 @@ const RegistrasiDokumen = () => {
     const openAdd = () => setOpenModalAdd(true);
     const closeAdd = () => setOpenModalAdd(false);
     // ====== MODAL ADD ======
+
+
+    const loadDataRef = async () => {
+        const listPPHX = await getPOST(token, url.URL_MASTER_PPH + '/', {});
+        setListPPH(listPPHX);
+        console.log(listPPH)
+    }
+
+
+    useEffect(() => {
+        loadDataRef();
+    }, [])
+
 
     return (
         <div className="cardx">
@@ -311,16 +359,13 @@ const RegistrasiDokumen = () => {
                             Tambah PPN
                         </div>
 
-                        <Grid size={{ md: 11, xs: 12 }}>
-                            <BasicSelect />
+                        <Grid size={{ md: 12, xs: 12 }}>
+                            <BasicSelect
+                                options={listPPN}
+                                onChange={pushPPN}
+                            />
                         </Grid>
-                        <Grid size={{ md: 1, xs: 12 }}>
-                            <div>
-                                <button className='btn md primarySoft shaddow1'>
-                                    <Add sx={{ fontSize: 18 }} />
-                                </button>
-                            </div>
-                        </Grid>
+
                     </Grid>
                     <Grid container spacing={1}>
                         <Grid size={{ md: 12, xs: 12 }}>
@@ -335,22 +380,31 @@ const RegistrasiDokumen = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="h_body">
-                                        <tr>
-                                            <td colSpan={4} className='center'>
-                                                Tidak ada PPN
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className='center'>1.</td>
-                                            <td>PPH-21</td>
-                                            <td>10%</td>
-                                            <td>
-                                                <button className='btn sm danger shaddow1'>
-                                                    <CloseIcon sx={{ fontSize: 18 }} />
-                                                </button>
-                                            </td>
-
-                                        </tr>
+                                        {
+                                            ppn.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan={4} className='center'>
+                                                        Tidak ada PPN
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                ppn.map((item, index) => (
+                                                    <tr key={item.id}>
+                                                        <td className='center'>{index + 1}.</td>
+                                                        <td>{item.label}</td>
+                                                        <td>{item.nilai}</td>
+                                                        <td>
+                                                            <button
+                                                                className='btn sm danger shaddow1'
+                                                                onClick={() => setPpn(prev => prev.filter(p => p.id !== item.id))}
+                                                            >
+                                                                <CloseIcon sx={{ fontSize: 18 }} />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -364,15 +418,11 @@ const RegistrasiDokumen = () => {
                             Tambah PPh
                         </div>
 
-                        <Grid size={{ md: 11, xs: 12 }}>
-                            <BasicSelect />
-                        </Grid>
-                        <Grid size={{ md: 1, xs: 12 }}>
-                            <div>
-                                <button className='btn md primarySoft shaddow1'>
-                                    <Add sx={{ fontSize: 18 }} />
-                                </button>
-                            </div>
+                        <Grid size={{ md: 12, xs: 12 }}>
+                            <BasicSelect
+                                options={listPPH}
+                                onChange={pushPPH}
+                            />
                         </Grid>
                     </Grid>
                     <Grid container spacing={1}>
@@ -388,22 +438,31 @@ const RegistrasiDokumen = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="h_body">
-                                        <tr>
-                                            <td colSpan={4} className='center'>
-                                                Tidak ada PPH
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className='center'>1.</td>
-                                            <td>PPH-21</td>
-                                            <td>10%</td>
-                                            <td>
-                                                <button className='btn sm danger shaddow1'>
-                                                    <CloseIcon sx={{ fontSize: 18 }} />
-                                                </button>
-                                            </td>
-
-                                        </tr>
+                                        {
+                                            pph.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan={4} className='center'>
+                                                        Tidak ada PPH
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                pph.map((item, index) => (
+                                                    <tr key={item.id}>
+                                                        <td className='center'>{index + 1}.</td>
+                                                        <td>{item.label}</td>
+                                                        <td>{item.nilai}%</td>
+                                                        <td>
+                                                            <button
+                                                                className='btn sm danger shaddow1'
+                                                                onClick={() => setPph(prev => prev.filter(p => p.id !== item.id))}
+                                                            >
+                                                                <CloseIcon sx={{ fontSize: 18 }} />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )
+                                        }
                                     </tbody>
                                 </table>
                             </div>
