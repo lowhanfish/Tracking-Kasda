@@ -17,7 +17,7 @@ const DEFAULT_OPTIONS = [
 
 // Definisikan nilai default untuk props opsional
 function BasicSelect({
-    Title,
+    Title = '',
     name = '',
     value = '', // Default value harus diset agar controlled component berfungsi
     onChange = () => { },

@@ -4,6 +4,7 @@ import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, 
 
 import Clear from '@mui/icons-material/Clear';
 import Add from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import FieldSingle from '@components/items/FieldSingle.jsx';
 import FieldWithButton from '@components/items/FieldWithButton.jsx';
 import FieldAutocomplete from '@components/items/FieldAutocomplete.jsx';
@@ -93,12 +94,22 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
 
 const RegistrasiDokumen = () => {
 
-    // ====== ANCHOR ======
-    const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
-    const handleAnchorOpen = (event: any, index: number) => setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
-    const handleAnchorClose = (index: number) => setAnchorEls(prev => ({ ...prev, [index]: null }));
+    const [listPPN, setListPPN] = useState([]);
+    const [listPPH, setListPPH] = useState([]);
 
-    // ====== ANCHOR ======
+    const [formData, setFormData] = useState({
+        id: '',
+        uraian: '',
+        master_jns_pencairan_id: '',
+        nilai: 0,
+    });
+
+    const [file, setFile] = useState(null);
+    const [ppn, setPpn] = useState([]);
+    const [pph, setPph] = useState([]);
+
+
+
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -149,11 +160,12 @@ const RegistrasiDokumen = () => {
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
                 <Grid container spacing={1}>
-                    {/* {
-                        [...Array(1)].map((data, index) => (
+                    {
+                        [...Array(10)].map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
                                 <div onClick={() => { openSetting(); }}>
                                     <ListDataItems
+                                        unit='Dinas Komunikasi Informatika dan Persandian'
                                         title='(LS - Non Modal)- Pembayaran Honorarium Non ASN (Juli-September)'
                                         price={120000000}
                                     />
@@ -161,64 +173,9 @@ const RegistrasiDokumen = () => {
 
                             </Grid>
                         ))
-                    } */}
+                    }
 
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div onClick={() => { openSetting(); }}>
 
-                            <ListDataItems
-                                unit='Dinas Komunikasi Informatika dan Persandian'
-                                title='(LS - Non Modal)- Pembayaran Honorarium Non ASN (Juli-September)'
-                                price={120000000}
-                            />
-                        </div>
-
-                    </Grid>
-
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div onClick={() => { openSetting(); }}>
-
-                            <ListDataItems
-                                unit='Dinas Komunikasi Informatika dan Persandian'
-                                title='(LS - Non Modal)- Pembayaran Perjalanan Dinas Luar Daerah'
-                                price={11000000}
-                            />
-                        </div>
-
-                    </Grid>
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div onClick={() => { openSetting(); }}>
-
-                            <ListDataItems
-                                unit='Dinas Komunikasi Informatika dan Persandian'
-                                title='(LS - Non Modal)- Pembayaran Jasa Langganan Listrik'
-                                price={5000000}
-                            />
-                        </div>
-
-                    </Grid>
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div onClick={() => { openSetting(); }}>
-
-                            <ListDataItems
-                                unit='Dinas Komunikasi Informatika dan Persandian'
-                                title='(LS - Non Modal)- Pembayaran Jasa Langganan Internet - July'
-                                price={750000}
-                            />
-                        </div>
-
-                    </Grid>
-                    <Grid size={{ md: 6, xs: 12 }}>
-                        <div onClick={() => { openSetting(); }}>
-
-                            <ListDataItems
-                                unit='Dinas Komunikasi Informatika dan Persandian'
-                                title='(LS - Non Modal)- Belanja ATK'
-                                price={350000}
-                            />
-                        </div>
-
-                    </Grid>
 
 
 
@@ -346,14 +303,113 @@ const RegistrasiDokumen = () => {
                             <FieldSingle Title={'Besaran Anggaran'} />
                         </Grid>
                     </Grid>
+
+                    <hr className='hrku2' />
+
                     <Grid container spacing={1}>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis PPN'} />
+                        <div className='inputText'>
+                            Tambah PPN
+                        </div>
+
+                        <Grid size={{ md: 11, xs: 12 }}>
+                            <BasicSelect />
                         </Grid>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis PPH'} />
+                        <Grid size={{ md: 1, xs: 12 }}>
+                            <div>
+                                <button className='btn md primarySoft shaddow1'>
+                                    <Add sx={{ fontSize: 18 }} />
+                                </button>
+                            </div>
                         </Grid>
                     </Grid>
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 12, xs: 12 }}>
+                            <div className="table-wrap" style={{ marginTop: 10 }}>
+                                <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                    <thead className="h_thead shaddowText">
+                                        <tr>
+                                            <th style={{ width: '5%' }} scope="col">No</th>
+                                            <th style={{ width: '55%' }} scope="col">Pajak</th>
+                                            <th style={{ width: '35%' }} scope="col">Nilai</th>
+                                            <th style={{ width: '5%' }} scope="col">set</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="h_body">
+                                        <tr>
+                                            <td colSpan={4} className='center'>
+                                                Tidak ada PPN
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='center'>1.</td>
+                                            <td>PPH-21</td>
+                                            <td>10%</td>
+                                            <td>
+                                                <button className='btn sm danger shaddow1'>
+                                                    <CloseIcon sx={{ fontSize: 18 }} />
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <hr className='hrku2' />
+                    <hr className='hrku2' />
+
+                    <Grid container spacing={1}>
+                        <div className='inputText'>
+                            Tambah PPh
+                        </div>
+
+                        <Grid size={{ md: 11, xs: 12 }}>
+                            <BasicSelect />
+                        </Grid>
+                        <Grid size={{ md: 1, xs: 12 }}>
+                            <div>
+                                <button className='btn md primarySoft shaddow1'>
+                                    <Add sx={{ fontSize: 18 }} />
+                                </button>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1}>
+                        <Grid size={{ md: 12, xs: 12 }}>
+                            <div className="table-wrap" style={{ marginTop: 10 }}>
+                                <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                    <thead className="h_thead shaddowText">
+                                        <tr>
+                                            <th style={{ width: '5%' }} scope="col">No</th>
+                                            <th style={{ width: '55%' }} scope="col">Pajak</th>
+                                            <th style={{ width: '35%' }} scope="col">Nilai</th>
+                                            <th style={{ width: '5%' }} scope="col">set</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="h_body">
+                                        <tr>
+                                            <td colSpan={4} className='center'>
+                                                Tidak ada PPH
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='center'>1.</td>
+                                            <td>PPH-21</td>
+                                            <td>10%</td>
+                                            <td>
+                                                <button className='btn sm danger shaddow1'>
+                                                    <CloseIcon sx={{ fontSize: 18 }} />
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <hr className='hrku2' />
                 </AddDialog>
                 {/* ================= ADD DATA ================= */}
 
