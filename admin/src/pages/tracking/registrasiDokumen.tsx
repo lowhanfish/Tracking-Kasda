@@ -687,6 +687,52 @@ const RegistrasiDokumen = () => {
 
                     <hr className='hrku2' />
 
+
+                    {
+                        addMode === "EDIT" && (
+                            <Grid container spacing={1}>
+                                <div className='inputText'>
+                                    FILE LAMPIRAN SAAT INI
+                                </div>
+
+                                <Grid size={{ md: 12, xs: 12 }}>
+                                    <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                        <thead className="h_thead shaddowText">
+                                            <tr>
+                                                <th style={{ width: '5%' }} scope="col">No</th>
+                                                <th style={{ width: '90%' }} scope="col">Nama File</th>
+                                                <th style={{ width: '5%' }} scope="col">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="h_body">
+
+
+                                            <tr>
+                                                <td className='center'>1.</td>
+                                                <td>xxxxx</td>
+                                                <td>
+                                                    <button
+                                                        className='btn sm danger shaddow1'
+                                                    >
+                                                        <CloseIcon sx={{ fontSize: 18 }} />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </Grid>
+                            </Grid>
+                        )
+
+                    }
+
+
+
+
+
+
+                    <hr className='hrku2' />
+
                 </AddDialog>
                 {/* ================= ADD DATA ================= */}
 
