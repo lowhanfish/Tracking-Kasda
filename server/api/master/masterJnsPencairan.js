@@ -4,10 +4,13 @@ const router = Router()
 
 import { viewbool } from "../../controller/master/masterTahapan.js";
 
-import { view, add, editex, deletex } from "../../controller/master/masterJnsPencairan.js";
+import { all, view, add, editex, deletex } from "../../controller/master/masterJnsPencairan.js";
 
 
 
+router.post('/', (req, res)=>{
+    all(req, res)
+})
 router.post('/viewbool', (req, res)=>{
     viewbool(req, res)
 })

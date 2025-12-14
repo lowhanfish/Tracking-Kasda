@@ -5,10 +5,19 @@ import {add as add_files, deletex as deletex_files, view as view_files } from ".
 
 
 export const view = (req, res) => {
+
+    // console.log("View Document dipanggil");
+    // res.send("OK")
+
     const query = `
         SELECT
-        documents.*
+        documents.*,
+        master_jns_pencairan.uraian as uraian_jns_pencairan
         FROM documents
+
+        LEFT JOIN master_jns_pencairan
+        ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+
     `
 
     db.query(query, async (err, rows)=>{
@@ -40,24 +49,44 @@ export const add = (req, res) => {
     db.query(query, values, async (err, rows)=>{
         if (err) {
             console.log(err);
-            res.status(500).send(err)
-        } else {
+            return res.status(500).send(err);
+        }
 
-            const files = req.files
-            for (let i = 0; i < files.length; i++) {
-                await add_files(req, "documents", rows.insertId);
+        try {
+            const documentId = rows.insertId;
+
+            // Handle file uploads (boleh kosong)
+            if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+                await add_files(req, "documents", documentId);
             }
 
-            const pph = req.body.pph
-            for (let i = 0; i < pph.length; i++) {
-                await add_pph(pph[i], rows.insertId)
-            }
-            const ppn = req.body.ppn
-            for (let i = 0; i < pph.length; i++) {
-                await add_ppn(ppn[i], rows.insertId)
+            // Handle PPH data (boleh kosong)
+            if (req.body.pph && Array.isArray(req.body.pph) && req.body.pph.length > 0) {
+                for (let i = 0; i < req.body.pph.length; i++) {
+                    await add_pph(req.body.pph[i], documentId);
+                }
             }
 
-            res.status(200).send(rows)
+            // Handle PPN data (boleh kosong)
+            if (req.body.ppn && Array.isArray(req.body.ppn) && req.body.ppn.length > 0) {
+                for (let i = 0; i < req.body.ppn.length; i++) {
+                    await add_ppn(req.body.ppn[i], documentId);
+                }
+            }
+
+            res.status(201).send({
+                status: 201,
+                message: 'Data berhasil disimpan',
+                insertId: documentId,
+                data: rows
+            });
+        } catch (error) {
+            console.error('Error saat menyimpan data:', error);
+            res.status(500).send({
+                status: 500,
+                message: 'Gagal menyimpan data',
+                error: error.message
+            });
         }
     })
 }

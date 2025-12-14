@@ -97,7 +97,7 @@ export const getPOST = async (token, url, data)=>{
                 "Authorization" : `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result.data)
+            // console.log(result.data)
             resolve(result.data)
         }).catch(error => {
             console.log(error)

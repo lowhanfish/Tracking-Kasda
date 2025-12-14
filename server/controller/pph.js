@@ -8,7 +8,10 @@ export const view = (documents_id) => {
         
         const query = `
             SELECT
-            master_pph.*
+            master_pph.id,
+            master_pph.id as value,
+            master_pph.uraian as label,
+            master_pph.nilai
             FROM pph
             LEFT JOIN master_pph
             ON master_pph.id = pph.master_pph_id
@@ -24,10 +27,7 @@ export const view = (documents_id) => {
                     message : err
                 })
             } else {
-                resolve({
-                    status : 200,
-                    message : rows
-                })
+                resolve(rows)
             }
         })
     })

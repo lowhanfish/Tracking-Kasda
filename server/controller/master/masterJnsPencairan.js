@@ -2,6 +2,30 @@ import db from "../../db/mysql/index.js";
 
 
 
+export const all = (req, res) => {
+
+    console.log("all di panggil")
+    
+    const query = `SELECT 
+    master_jns_pencairan.id,
+    master_jns_pencairan.id as value,
+    master_jns_pencairan.uraian as label
+    FROM master_jns_pencairan
+    `
+    db.query(query, async (err, rows)=> {
+        if (err) {
+            console.log(err)
+            res.status(500);
+            res.send(err);
+        } else {
+            res.status(200)
+            res.send(rows)
+
+        }
+    })
+
+}
+
 export const view = (req, res) => {
 
     // console.log("view di panggil")
@@ -16,8 +40,6 @@ export const view = (req, res) => {
             for (let i = 0; i < rows.length; i++) {
                 rows[i].list = await view_master_jns_pencairan_list(rows[i]);
             }
-            
-
             // console.log(rows);
 
             res.status(200)

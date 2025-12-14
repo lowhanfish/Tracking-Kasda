@@ -28,6 +28,10 @@ const useStorex = create((set) => ({
     URL_MASTER_PPH: `${BASE_URL}api/masterPPH`,
     URL_MASTER_PPN: `${BASE_URL}api/masterPPN`,
 
+    URL_DOCUMENT: `${BASE_URL}api/document`,
+
+
+
     dua: `${BASE_URL}duax`
   },
 

@@ -3,7 +3,31 @@ import { Fieldx } from '@assets/styling/style'
 // import FieldxKamio and stylex tidak diperlukan jika tidak digunakan di sini
 
 // Definisikan nilai default untuk props opsional (name, value, onChange)
-function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) => { }, disabledx = false, type = "text" }) {
+function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) => { }, disabledx = false, type = "text", ...rest }) {
+
+    // Untuk file input, gunakan native HTML input element
+    if (type === 'file') {
+        return (
+            <div className='inputContainer'>
+                {Title && <div className='inputText'>{Title}</div>}
+                <input
+                    type='file'
+                    name={name}
+                    onChange={onChange}
+                    disabled={disabledx}
+                    style={{
+                        width: '100%',
+                        padding: '8px',
+                        borderRadius: '4px',
+                        border: '1px solid #E0E3E7',
+                        backgroundColor: '#F3F6F9',
+                        cursor: disabledx ? 'not-allowed' : 'pointer'
+                    }}
+                    {...rest}
+                />
+            </div>
+        );
+    }
 
     // Objek props untuk Fieldx. 
     // Jika name, value, atau onChange tidak diset, ia akan menggunakan nilai default-nya.
@@ -19,6 +43,7 @@ function FieldSingle({ Title = "", name = '', value = undefined, onChange = (e) 
         name: name,
         value: value,
         onChange: onChange,
+        ...rest  // Spread additional props like accept, multiple, etc.
     };
 
     // Pengecekan: Jika 'Title' didefinisikan (bukan null, undefined, atau string kosong)

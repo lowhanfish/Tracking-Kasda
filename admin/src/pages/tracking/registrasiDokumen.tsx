@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint } from "@mui/material";
 
@@ -48,7 +49,7 @@ function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: 
     );
 }
 
-function AddDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
+function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
         <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -67,7 +68,7 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, children }: any
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={onClose}>Cancel</Button>
-                <Button onClick={onClose} autoFocus>Save</Button>
+                <Button onClick={onSave} autoFocus>Save</Button>
             </DialogActions>
         </Dialog>
     );
@@ -99,9 +100,18 @@ const RegistrasiDokumen = () => {
     const { url } = useStorex();
     const token = localStorage.getItem('authToken');
 
+    const [listData, setListData] = useState([]);
+    const [dataLimit, setDataLimit] = useState(8);
+    const [searchData, setSearchData] = useState('');
+    const [pageFirst, setPageFirst] = useState(1);
+    const [jmlData, setJmlData] = useState(1);
+    const [loadData, setLoadData] = useState(false);
+
+
 
     const [listPPN, setListPPN] = useState([]);
     const [listPPH, setListPPH] = useState([]);
+    const [listJnsPencairan, setListJnsPencairan] = useState([]);
 
     const [formData, setFormData] = useState({
         id: '',
@@ -113,6 +123,9 @@ const RegistrasiDokumen = () => {
     const [file, setFile] = useState(null);
     const [ppn, setPpn] = useState([]);
     const [pph, setPph] = useState([]);
+    const [jnsPencairan, setJnsPencairan] = useState('');
+    const [besaranAnggaran, setBesaranAnggaran] = useState('');
+    const [loading, setLoading] = useState(false);
 
 
     const pushPPH = (event) => {
@@ -125,7 +138,7 @@ const RegistrasiDokumen = () => {
         if (selectedItem) {
             const newItem = {
                 ...selectedItem,
-                id: Date.now() // Unique ID untuk setiap item
+                // id: Date.now() // Unique ID untuk setiap item
             };
             setPph(prev => [...prev, newItem]);
         }
@@ -143,6 +156,103 @@ const RegistrasiDokumen = () => {
             };
             setPpn(prev => [...prev, newItem]);
         }
+    }
+
+    const getValue = (value, name) => {
+
+        // console.log(event)
+
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
+    const saveData = async () => {
+        try {
+            setLoading(true);
+
+            // Membuat FormData untuk mengirim file
+            const formDataToSend = new FormData();
+
+            // Menambahkan formData ke FormData
+            formDataToSend.append('uraian', formData.uraian);
+            formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
+            formDataToSend.append('nilai', formData.nilai.toString());
+
+            // Menambahkan PPN array
+            ppn.forEach((item, index) => {
+                formDataToSend.append(`ppn[${index}][id]`, item.id);
+                formDataToSend.append(`ppn[${index}][label]`, item.label);
+                formDataToSend.append(`ppn[${index}][nilai]`, item.nilai);
+            });
+
+            // Menambahkan PPH array
+            pph.forEach((item, index) => {
+                formDataToSend.append(`pph[${index}][id]`, item.id);
+                formDataToSend.append(`pph[${index}][label]`, item.label);
+                formDataToSend.append(`pph[${index}][nilai]`, item.nilai);
+            });
+
+            // Menambahkan file
+            if (file && Array.isArray(file)) {
+                file.forEach((f, index) => {
+                    formDataToSend.append('files', f);
+                });
+            }
+
+            // Melakukan POST request ke backend
+            const response = await axios.post(
+                `${url.URL_DOCUMENT}/add`,
+                formDataToSend,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+
+            console.log('Response dari server:', response.data);
+
+            // Jika berhasil, tampilkan notifikasi dan tutup modal
+            if (response.status === 200 || response.status === 201) {
+                alert('Data berhasil disimpan!');
+                closeAdd();
+
+                // Reset form
+                setFormData({
+                    id: '',
+                    uraian: '',
+                    master_jns_pencairan_id: '',
+                    nilai: 0,
+                });
+                setPpn([]);
+                setPph([]);
+                setFile(null);
+            }
+        } catch (error) {
+            console.error('Error saat menyimpan data:', error);
+            alert(`Gagal menyimpan data: ${error.response?.data?.message || error.message}`);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleFileUpload = (event: any) => {
+        const files = event.target.files;
+        if (files) {
+            setFile(Array.from(files));
+        }
+    }
+
+    const removeFile = (index: number) => {
+        setFile(prev => {
+            if (Array.isArray(prev)) {
+                return prev.filter((_, i) => i !== index);
+            }
+            return null;
+        });
     }
 
 
@@ -169,7 +279,23 @@ const RegistrasiDokumen = () => {
     const loadDataRef = async () => {
         const listPPHX = await getPOST(token, url.URL_MASTER_PPH + '/', {});
         setListPPH(listPPHX);
-        console.log(listPPH)
+        const listPPNX = await getPOST(token, url.URL_MASTER_PPN + '/', {});
+        setListPPN(listPPNX);
+        const listJnsPencairanx = await getPOST(token, url.URL_MASTER_JNS_PENCAIRAN + '/', {});
+        setListJnsPencairan(listJnsPencairanx);
+        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view',
+
+            {
+                pageFirst: pageFirst,
+                searchData: searchData,
+                dataLimit: dataLimit,
+            }
+
+        );
+
+        setListData(listDatax);
+        console.log(listDatax)
+
     }
 
 
@@ -209,13 +335,13 @@ const RegistrasiDokumen = () => {
                 {/* LIST ITEM - show 2 columns per row on md+ */}
                 <Grid container spacing={1}>
                     {
-                        [...Array(10)].map((data, index) => (
+                        listData.map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
                                 <div onClick={() => { openSetting(); }}>
                                     <ListDataItems
                                         unit='Dinas Komunikasi Informatika dan Persandian'
-                                        title='(LS - Non Modal)- Pembayaran Honorarium Non ASN (Juli-September)'
-                                        price={120000000}
+                                        title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
+                                        price={data.nilai}
                                     />
                                 </div>
 
@@ -340,15 +466,30 @@ const RegistrasiDokumen = () => {
                     title={addMode}
                     fullScreen={fullScreen}
                     maxWidth="sm"
+                    onSave={saveData}
                 >
-                    <FieldSingle Title={'Nama Kegiatan'} />
+                    <FieldSingle
+                        Title={'Nama Kegiatan'}
+                        value={formData.uraian}
+                        onChange={(e) => getValue(e.target.value, 'uraian')}
+                    />
 
                     <Grid container spacing={1}>
                         <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis Pencairan'} />
+                            <BasicSelect
+                                Title='Jenis Pencairan'
+                                options={listJnsPencairan}
+                                value={formData.master_jns_pencairan_id}
+                                onChange={(e) => getValue(e.target.value, 'master_jns_pencairan_id')}
+                            />
                         </Grid>
                         <Grid size={{ md: 6, xs: 12 }}>
-                            <FieldSingle Title={'Besaran Anggaran'} />
+                            <FieldSingle
+                                type='number'
+                                Title={'Besaran Anggaran'}
+                                value={formData.nilai}
+                                onChange={(e) => getValue(e.target.value, 'nilai')}
+                            />
                         </Grid>
                     </Grid>
 
@@ -392,7 +533,7 @@ const RegistrasiDokumen = () => {
                                                     <tr key={item.id}>
                                                         <td className='center'>{index + 1}.</td>
                                                         <td>{item.label}</td>
-                                                        <td>{item.nilai}</td>
+                                                        <td>{item.nilai}%</td>
                                                         <td>
                                                             <button
                                                                 className='btn sm danger shaddow1'
@@ -410,7 +551,7 @@ const RegistrasiDokumen = () => {
                             </div>
                         </Grid>
                     </Grid>
-                    <hr className='hrku2' />
+
                     <hr className='hrku2' />
 
                     <Grid container spacing={1}>
@@ -468,7 +609,65 @@ const RegistrasiDokumen = () => {
                             </div>
                         </Grid>
                     </Grid>
+
                     <hr className='hrku2' />
+
+                    <Grid container spacing={1}>
+                        <div className='inputText'>
+                            Upload File Lampiran (PDF/Gambar)
+                        </div>
+
+                        <Grid size={{ md: 12, xs: 12 }}>
+                            <FieldSingle
+                                type='file'
+                                name='file'
+                                accept='.pdf,image/*'
+                                multiple
+                                onChange={handleFileUpload}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {
+                        file && Array.isArray(file) && file.length > 0 && (
+                            <Grid container spacing={1} style={{ marginTop: 10 }}>
+                                <Grid size={{ md: 12, xs: 12 }}>
+                                    <div className="table-wrap">
+                                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                            <thead className="h_thead shaddowText">
+                                                <tr>
+                                                    <th style={{ width: '5%' }} scope="col">No</th>
+                                                    <th style={{ width: '90%' }} scope="col">Nama File</th>
+                                                    <th style={{ width: '5%' }} scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="h_body">
+                                                {
+                                                    file.map((f: any, index: number) => (
+                                                        <tr key={index}>
+                                                            <td className='center'>{index + 1}.</td>
+                                                            <td>{f.name}</td>
+                                                            <td>
+                                                                <button
+                                                                    className='btn sm danger shaddow1'
+                                                                    onClick={() => removeFile(index)}
+                                                                >
+                                                                    <CloseIcon sx={{ fontSize: 18 }} />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                        )
+                    }
+
+                    <hr className='hrku2' />
+
                 </AddDialog>
                 {/* ================= ADD DATA ================= */}
 
