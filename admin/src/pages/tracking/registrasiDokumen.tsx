@@ -112,6 +112,7 @@ const RegistrasiDokumen = () => {
 
     const [listPPN, setListPPN] = useState([]);
     const [listPPH, setListPPH] = useState([]);
+    const [listFiles, setListFiles] = useState([]);
     const [listJnsPencairan, setListJnsPencairan] = useState([]);
 
     const [formData, setFormData] = useState({
@@ -274,6 +275,7 @@ const RegistrasiDokumen = () => {
 
         setPpn(data.ppn);
         setPph(data.pph);
+        setListFiles(data.files);
         // console.log(data);
     }
 
@@ -705,19 +707,36 @@ const RegistrasiDokumen = () => {
                                             </tr>
                                         </thead>
                                         <tbody className="h_body">
+                                            {
+                                                listFiles.length < 1 ? (
+                                                    <tr>
+                                                        <td colSpan={3} className='center'>
+                                                            Tidak ada file ..
+                                                        </td>
+
+                                                    </tr>
+                                                ) : (
+                                                    listFiles.map((DataFile, indexFile) => (
+                                                        <tr key={indexFile}>
+                                                            <td className='center'>1.</td>
+                                                            <td>
+                                                                <div>
+                                                                    {DataFile.title}
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button
+                                                                    className='btn sm danger shaddow1'
+                                                                >
+                                                                    <CloseIcon sx={{ fontSize: 18 }} />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                )
+                                            }
 
 
-                                            <tr>
-                                                <td className='center'>1.</td>
-                                                <td>xxxxx</td>
-                                                <td>
-                                                    <button
-                                                        className='btn sm danger shaddow1'
-                                                    >
-                                                        <CloseIcon sx={{ fontSize: 18 }} />
-                                                    </button>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </Grid>
