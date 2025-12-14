@@ -63,7 +63,7 @@ export const add = (ppn, documents_id) => {
 export const deletex = (documents_id) => {
     return new Promise((resolve, reject) => {
         const query = `
-            DELETE ppn
+            DELETE FROM ppn
             WHERE ppn.documents_id = ?
         `
         const values = [documents_id];

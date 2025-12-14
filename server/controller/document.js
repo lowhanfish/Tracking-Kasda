@@ -109,3 +109,26 @@ export const editex = (req, res) => {
         }
     })
 }
+
+
+export const deletex = (req, res) => {
+
+    console.log(req.body)
+
+    const query = `
+        DELETE FROM documents
+        WHERE id = ?
+    `
+    const values = [req.body.id];
+
+    db.query(query, values, async (err, rows)=> {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            await delete_pph(req.body.id);
+            await delete_ppn(req.body.id);
+            deletex_files(req, 'documents', req.body.id);
+            res.status(200).send(rows)
+        }
+    })
+}

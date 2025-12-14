@@ -19,7 +19,7 @@ import Stepperx from '@components/Stepperx';
 
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
-
+import SnackBarx from '@components/items/SnackBar';
 
 
 // Small reusable Dialog wrapper for consistency
@@ -96,7 +96,6 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
 
 const RegistrasiDokumen = () => {
 
-
     const { url } = useStorex();
     const token = localStorage.getItem('authToken');
 
@@ -107,7 +106,9 @@ const RegistrasiDokumen = () => {
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
 
-
+    const [activeAlert, SetActiveAlert] = useState(false);
+    const [messageAlert, SetMessageAlert] = useState("");
+    const [colorAlert, SetColorAlert] = useState<'success' | 'error' | 'warning' | 'info'>('success');
 
     const [listPPN, setListPPN] = useState([]);
     const [listPPH, setListPPH] = useState([]);
@@ -126,7 +127,6 @@ const RegistrasiDokumen = () => {
     const [jnsPencairan, setJnsPencairan] = useState('');
     const [besaranAnggaran, setBesaranAnggaran] = useState('');
     const [loading, setLoading] = useState(false);
-
 
     const pushPPH = (event) => {
         // event.target.value adalah value dari MenuItem
@@ -159,13 +159,27 @@ const RegistrasiDokumen = () => {
     }
 
     const getValue = (value, name) => {
-
-        // console.log(event)
-
         setFormData({
             ...formData,
             [name]: value
         })
+    }
+
+    const viewData = async () => {
+
+        setLoading(true);
+        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view',
+            {
+                pageFirst: pageFirst,
+                searchData: searchData,
+                dataLimit: dataLimit,
+            }
+        );
+        setListData(listDatax);
+        setLoading(false);
+        console.log(listDatax)
+
+
     }
 
     const saveData = async () => {
@@ -213,11 +227,12 @@ const RegistrasiDokumen = () => {
                 }
             );
 
-            console.log('Response dari server:', response.data);
+            // console.log('Response dari server:', response.data);
 
             // Jika berhasil, tampilkan notifikasi dan tutup modal
             if (response.status === 200 || response.status === 201) {
-                alert('Data berhasil disimpan!');
+
+                SetAlert("Data berhasil di simpan", "success");
                 closeAdd();
 
                 // Reset form
@@ -233,10 +248,33 @@ const RegistrasiDokumen = () => {
             }
         } catch (error) {
             console.error('Error saat menyimpan data:', error);
-            alert(`Gagal menyimpan data: ${error.response?.data?.message || error.message}`);
+            SetAlert("Gagal menyimpan data..!", "error");
         } finally {
-            setLoading(false);
+            viewData();
         }
+    }
+
+    const removeData = async () => {
+        await getPOST(token, url.URL_DOCUMENT + '/delete', formData);
+        SetAlert("Data berhasil di hapus", "success");
+        viewData();
+        closeSetting();
+    }
+
+    const selectData = (data) => {
+
+        // console.log(data)
+
+        setFormData({
+            id: data.id,
+            uraian: data.uraian,
+            master_jns_pencairan_id: data.master_jns_pencairan_id,
+            nilai: data.nilai,
+        })
+
+        setPpn(data.ppn);
+        setPph(data.pph);
+        // console.log(data);
     }
 
     const handleFileUpload = (event: any) => {
@@ -255,6 +293,14 @@ const RegistrasiDokumen = () => {
         });
     }
 
+    const SetAlert = (message, color) => {
+        SetColorAlert(color)
+        SetMessageAlert(message)
+        SetActiveAlert(true);
+        setTimeout(() => {
+            SetActiveAlert(false);
+        }, 2000);
+    }
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -275,7 +321,6 @@ const RegistrasiDokumen = () => {
     const closeAdd = () => setOpenModalAdd(false);
     // ====== MODAL ADD ======
 
-
     const loadDataRef = async () => {
         const listPPHX = await getPOST(token, url.URL_MASTER_PPH + '/', {});
         setListPPH(listPPHX);
@@ -283,29 +328,16 @@ const RegistrasiDokumen = () => {
         setListPPN(listPPNX);
         const listJnsPencairanx = await getPOST(token, url.URL_MASTER_JNS_PENCAIRAN + '/', {});
         setListJnsPencairan(listJnsPencairanx);
-        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view',
-
-            {
-                pageFirst: pageFirst,
-                searchData: searchData,
-                dataLimit: dataLimit,
-            }
-
-        );
-
-        setListData(listDatax);
-        console.log(listDatax)
-
     }
 
-
     useEffect(() => {
+        viewData();
         loadDataRef();
     }, [])
 
-
     return (
         <div className="cardx">
+
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
@@ -319,9 +351,13 @@ const RegistrasiDokumen = () => {
                     </Grid>
                 </Grid>
             </div>
+
             <div className="cardxBody">
-
-
+                <SnackBarx
+                    active={activeAlert}
+                    message={messageAlert}
+                    color={colorAlert}
+                />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
                     <button onClick={() => { openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
@@ -337,27 +373,17 @@ const RegistrasiDokumen = () => {
                     {
                         listData.map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
-                                <div onClick={() => { openSetting(); }}>
+                                <div onClick={() => { openSetting(); selectData(data); }}>
                                     <ListDataItems
                                         unit='Dinas Komunikasi Informatika dan Persandian'
                                         title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
                                         price={data.nilai}
                                     />
                                 </div>
-
                             </Grid>
                         ))
                     }
-
-
-
-
-
                 </Grid>
-
-
-
-
 
                 <div className='paginContainer'>
                     <Pagination count={10} color="primary" variant="outlined" />
@@ -383,18 +409,11 @@ const RegistrasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button color="error" fullWidth variant="outlined" size="small">
+                            <Button onClick={() => removeData()} color="error" fullWidth variant="outlined" size="small">
                                 Remove
                             </Button>
                         </Grid>
-
-
-
                     </Grid>
-
-
-
-
 
                 </SettingDialog>
                 {/* ================= SETTING DATA ================= */}
