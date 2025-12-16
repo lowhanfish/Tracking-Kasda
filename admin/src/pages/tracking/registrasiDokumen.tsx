@@ -21,7 +21,6 @@ import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 
-
 // Small reusable Dialog wrapper for consistency
 function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -262,21 +261,23 @@ const RegistrasiDokumen = () => {
         closeSetting();
     }
 
+    const removeFileDb = async (index, data) => {
+        await getPOST(token, url.URL_FILES + '/delete', data);
+        const dataDummy = [...listFiles];  // Buat copy array
+        dataDummy.splice(index, 1);
+        setListFiles(dataDummy);  // Sekarang React detect perubahan
+    }
+
     const selectData = (data) => {
-
-        // console.log(data)
-
         setFormData({
             id: data.id,
             uraian: data.uraian,
             master_jns_pencairan_id: data.master_jns_pencairan_id,
             nilai: data.nilai,
         })
-
         setPpn(data.ppn);
         setPph(data.pph);
         setListFiles(data.files);
-        // console.log(data);
     }
 
     const handleFileUpload = (event: any) => {
@@ -478,7 +479,6 @@ const RegistrasiDokumen = () => {
 
                 </DetailDialog>
                 {/* ================= DETAIL DATA ================= */}
-
 
                 {/* ================= ADD DATA ================= */}
                 <AddDialog
@@ -726,6 +726,7 @@ const RegistrasiDokumen = () => {
                                                             </td>
                                                             <td>
                                                                 <button
+                                                                    onClick={() => { removeFileDb(indexFile, DataFile) }}
                                                                     className='btn sm danger shaddow1'
                                                                 >
                                                                     <CloseIcon sx={{ fontSize: 18 }} />

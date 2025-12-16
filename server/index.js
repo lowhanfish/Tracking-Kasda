@@ -54,6 +54,8 @@ router.get('/', (req, res) => {
     app.use('/api/masterPPH', isLoggedIn, masterPPH)
     import masterPPN from "./api/master/masterPPN.js";
     app.use('/api/masterPPN', isLoggedIn, masterPPN)
+    import files from "./api/files.js";
+    app.use('/api/files', isLoggedIn, files)
 
     import document from "./api/document.js";
     app.use('/api/document', isLoggedIn, document)

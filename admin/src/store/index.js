@@ -29,6 +29,7 @@ const useStorex = create((set) => ({
     URL_MASTER_PPN: `${BASE_URL}api/masterPPN`,
 
     URL_DOCUMENT: `${BASE_URL}api/document`,
+    URL_FILES: `${BASE_URL}api/files`,
 
 
 
