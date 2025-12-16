@@ -9,44 +9,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import FieldSingle from '@components/items/FieldSingle.jsx';
 import FieldWithButton from '@components/items/FieldWithButton.jsx';
 import FieldAutocomplete from '@components/items/FieldAutocomplete.jsx';
-import Anchorx from '@components/items/Anchorx.jsx';
-import FieldDatex from '@components/items/FieldDatex.jsx';
 import BasicSelect from '@components/items/BasicSelect.jsx';
-import Checkboxz from '@components/items/Checkboxz.jsx';
-import CheckboxzLable from '@components/items/CheckboxLable.jsx';
 import ListDataItems from '@components/ListDataItems';
 import Stepperx from '@components/Stepperx';
+
+
+
 
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
+import DetailData from '@components/DetailData';
 
-// Small reusable Dialog wrapper for consistency
-function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-    // fullWidth is always helpful for our layout, so pass it as true
-    return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-                <div className='headerModal'>
-                    {/* <div className='headerModalLeft'>{title}</div> */}
-                    <div className='TextProfileHead shaddowText'>{title}</div>
-                    <div className='headerModalRight'>
-                        <IconButton onClick={onClose} aria-label="close">
-                            <Clear />
-                        </IconButton>
-                    </div>
-                </div>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText component="div">{children}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button autoFocus onClick={onClose}>Cancel</Button>
-            </DialogActions>
-        </Dialog>
-    );
-}
+
 
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -66,8 +41,8 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSav
                 <DialogContentText component="div">{children}</DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={onClose}>Cancel</Button>
-                <Button onClick={onSave} autoFocus>Save</Button>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onSave}>Save</Button>
             </DialogActions>
         </Dialog>
     );
@@ -295,14 +270,26 @@ const RegistrasiDokumen = () => {
     }
 
     const selectData = (data) => {
-        setFormData({
+
+        const dataDummy = {
             id: data.id,
             uraian: data.uraian,
             master_jns_pencairan_id: data.master_jns_pencairan_id,
             nilai: data.nilai,
             sub_unit_kerja: data.sub_unit_kerja,
-            master_tahapan_id: tahapanId
-        })
+            master_tahapan_id: tahapanId,
+            sub_unit_kerja_uraian: data.sub_unit_kerja_uraian,
+            uraian_jns_pencairan: data.uraian_jns_pencairan,
+            createdAt: data.createdAt,
+
+        }
+
+        setFormData({ ...dataDummy });
+
+        // setFormData(dataDummy);
+
+
+
         setPpn(data.ppn);
         setPph(data.pph);
         setListFiles(data.files);
@@ -390,7 +377,7 @@ const RegistrasiDokumen = () => {
                 />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={() => { openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
+                    <button onClick={(e) => { e.currentTarget.blur(); openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
@@ -429,7 +416,7 @@ const RegistrasiDokumen = () => {
                 >
                     <Grid container spacing={1}>
                         <Grid size={12}>
-                            <Button onClick={() => { openDetail(); }} fullWidth variant="outlined" size="small">
+                            <Button onClick={(e) => { e.currentTarget.blur(); openDetail(); }} fullWidth variant="outlined" size="small">
                                 Detail
                             </Button>
                         </Grid>
@@ -449,62 +436,16 @@ const RegistrasiDokumen = () => {
                 {/* ================= SETTING DATA ================= */}
 
                 {/* ================= DETAIL DATA ================= */}
-                <DetailDialog
+                <DetailData
                     open={openModalDetail}
                     onClose={closeDetail}
                     fullScreen={fullScreen}
                     maxWidth="sm"
                     title="Detail Data"
-                >
-
-
-                    <div>
-
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Unit Kerja</div>
-                            <div className='TextProfileLeftVal'>Dinas xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Nama Kegiatan</div>
-                            <div className='TextProfileLeftVal'>Pengadaan xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
-                            <div className='TextProfileLeftVal'>Tanggal xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Pagu Anggaran</div>
-                            <div className='TextProfileLeftVal'>xxxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Pajak</div>
-                            <div className='TextProfileLeftVal'>
-                                PPN : 10% - PPH(21) : 1.2%
-                            </div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Total Pencairan</div>
-                            <div className='TextProfileLeftVal'>
-                                Rp.xxx
-                            </div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Di Ajukan Oleh</div>
-                            <div className='TextProfileLeftVal'>xxxxx</div>
-                        </div>
-
-
-                        <div style={{ marginTop: 20 }} className='dashboardContainer'>
-                            <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
-                            <Stepperx />
-                        </div>
-
-
-                    </div>
-
-
-
-                </DetailDialog>
+                    formData={formData}
+                    ppn={ppn}
+                    pph={pph}
+                />
                 {/* ================= DETAIL DATA ================= */}
 
                 {/* ================= ADD DATA ================= */}
