@@ -19,8 +19,6 @@ export const viewbool = (req,res) => {
     })
 }
 
-
-
 export const view = (req, res)=>{
     const query = `
         SELECT * FROM master_tahapan
@@ -72,8 +70,6 @@ export const editex = (req, res) => {
     });
 }
 
-
-
 export const deletex = (req, res)=> {
     // Validasi input
     if (!req.body.id) {
@@ -94,5 +90,11 @@ export const deletex = (req, res)=> {
         } else {
             res.status(200).json({message:"Delete data sukses", data:rows});
         }
+    })
+}
+
+export const viewRelate = (idDoc)=>{
+    return new Promise((resolve, reject) => {
+        
     })
 }

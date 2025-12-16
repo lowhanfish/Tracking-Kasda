@@ -3,6 +3,9 @@ import { add as add_pph, view as view_pph, deletex as delete_pph } from "../cont
 import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
+const db_main = process.env.DB_MAIN
+const db_simpeg = process.env.DB_SIMPEG
+
 
 export const view = (req, res) => {
 
@@ -12,11 +15,16 @@ export const view = (req, res) => {
     const query = `
         SELECT
         documents.*,
-        master_jns_pencairan.uraian as uraian_jns_pencairan
-        FROM documents
+        master_jns_pencairan.uraian as uraian_jns_pencairan,
+        s_unit_kerja.unit_kerja as sub_unit_kerja_uraian
 
-        LEFT JOIN master_jns_pencairan
+        FROM ${db_main}.documents documents
+
+        LEFT JOIN ${db_main}.master_jns_pencairan master_jns_pencairan
         ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+
+        LEFT JOIN ${db_simpeg}.unit_kerja s_unit_kerja
+        ON s_unit_kerja.id = documents.sub_unit_kerja
 
     `
 
@@ -40,11 +48,11 @@ export const view = (req, res) => {
 export const add = (req, res) => {
     const query = `
         INSERT INTO documents
-        (uraian, master_jns_pencairan_id, nilai, createdAt, createdBy)
+        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy)
         VALUES
-        (?, ?, ?, NOW(), ?)
+        (?, ?, ?, ?, NOW(), ?)
     `;
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.user._id];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {

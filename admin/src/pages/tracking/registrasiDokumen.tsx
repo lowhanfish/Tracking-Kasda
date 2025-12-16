@@ -97,6 +97,10 @@ const RegistrasiDokumen = () => {
 
     const { url } = useStorex();
     const token = localStorage.getItem('authToken');
+    const profile = JSON.parse(localStorage.getItem('profile'));
+
+
+
 
     const [listData, setListData] = useState([]);
     const [dataLimit, setDataLimit] = useState(8);
@@ -121,6 +125,7 @@ const RegistrasiDokumen = () => {
         uraian: '',
         master_jns_pencairan_id: '',
         nilai: 0,
+        sub_unit_kerja: profile.profile.sub_unit_kerja_id,
     });
 
     const [file, setFile] = useState(null);
@@ -185,11 +190,14 @@ const RegistrasiDokumen = () => {
     }
 
     const saveData = async () => {
-        var pathx = ''
+        var pathx = '';
+        var sub_unit_kerja: '';
 
         if (addMode === "ADD") {
             pathx = '/add'
+            sub_unit_kerja = profile.profile.sub_unit_kerja_id
         } else {
+            sub_unit_kerja = formData.sub_unit_kerja;
             pathx = '/edit'
         }
 
@@ -204,6 +212,7 @@ const RegistrasiDokumen = () => {
             // Menambahkan formData ke FormData
             formDataToSend.append('id', formData.id);
             formDataToSend.append('uraian', formData.uraian);
+            formDataToSend.append('sub_unit_kerja', sub_unit_kerja);
             formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
             formDataToSend.append('nilai', formData.nilai.toString());
 
@@ -251,6 +260,7 @@ const RegistrasiDokumen = () => {
                 setFormData({
                     id: '',
                     uraian: '',
+                    sub_unit_kerja: profile.profile.sub_unit_kerja_id,
                     master_jns_pencairan_id: '',
                     nilai: 0,
                 });
@@ -281,11 +291,15 @@ const RegistrasiDokumen = () => {
     }
 
     const selectData = (data) => {
+
+
+
         setFormData({
             id: data.id,
             uraian: data.uraian,
             master_jns_pencairan_id: data.master_jns_pencairan_id,
             nilai: data.nilai,
+            sub_unit_kerja: data.sub_unit_kerja,
         })
         setPpn(data.ppn);
         setPph(data.pph);
@@ -389,7 +403,7 @@ const RegistrasiDokumen = () => {
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
                                 <div onClick={() => { openSetting(); selectData(data); }}>
                                     <ListDataItems
-                                        unit='Dinas Komunikasi Informatika dan Persandian'
+                                        unit={data.sub_unit_kerja_uraian}
                                         title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
                                         price={data.nilai}
                                     />
