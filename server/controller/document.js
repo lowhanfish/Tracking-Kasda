@@ -93,18 +93,49 @@ export const add = (req, res) => {
 
 
 export const editex = (req, res) => {
+    console.log("FUNC EDIT REG DOK DI PANGGIL");
+    console.log(req.body)
     const query = `
-        SELECT
-        documents.*
-        FROM documents
-    
-    `
+        UPDATE documents SET
+        uraian = ?,
+        master_jns_pencairan_id = ?,
+        nilai = ?
 
-    db.query((err, rows)=>{
+        WHERE id = ?
+    `
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.id];
+
+    db.query(query, values, async (err, rows)=>{
         if (err) {
             console.log(err);
             res.status(500).send(err)
         } else {
+
+            await delete_pph(req.body.id);
+            await delete_ppn(req.body.id);
+
+            if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+                await add_files(req, "documents", req.body.id);
+            }
+
+            // Handle PPH data (boleh kosong)
+            if (req.body.pph && Array.isArray(req.body.pph) && req.body.pph.length > 0) {
+                for (let i = 0; i < req.body.pph.length; i++) {
+                    await add_pph(req.body.pph[i], req.body.id);
+                }
+            }
+
+            // Handle PPN data (boleh kosong)
+            if (req.body.ppn && Array.isArray(req.body.ppn) && req.body.ppn.length > 0) {
+                for (let i = 0; i < req.body.ppn.length; i++) {
+                    await add_ppn(req.body.ppn[i], req.body.id);
+                }
+            }
+
+
+
+
+
             res.status(200).send(rows)
         }
     })
@@ -113,7 +144,7 @@ export const editex = (req, res) => {
 
 export const deletex = (req, res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
 
     const query = `
         DELETE FROM documents

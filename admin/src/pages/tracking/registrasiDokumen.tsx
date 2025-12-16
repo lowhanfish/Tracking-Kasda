@@ -114,6 +114,8 @@ const RegistrasiDokumen = () => {
     const [listFiles, setListFiles] = useState([]);
     const [listJnsPencairan, setListJnsPencairan] = useState([]);
 
+    const [addMode, setAddMode] = useState("ADD");
+
     const [formData, setFormData] = useState({
         id: '',
         uraian: '',
@@ -183,6 +185,16 @@ const RegistrasiDokumen = () => {
     }
 
     const saveData = async () => {
+        var pathx = ''
+
+        if (addMode === "ADD") {
+            pathx = '/add'
+        } else {
+            pathx = '/edit'
+        }
+
+        console.log(`${url.URL_DOCUMENT}${pathx}`)
+
         try {
             setLoading(true);
 
@@ -190,6 +202,7 @@ const RegistrasiDokumen = () => {
             const formDataToSend = new FormData();
 
             // Menambahkan formData ke FormData
+            formDataToSend.append('id', formData.id);
             formDataToSend.append('uraian', formData.uraian);
             formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
             formDataToSend.append('nilai', formData.nilai.toString());
@@ -217,7 +230,7 @@ const RegistrasiDokumen = () => {
 
             // Melakukan POST request ke backend
             const response = await axios.post(
-                `${url.URL_DOCUMENT}/add`,
+                `${url.URL_DOCUMENT}${pathx}`,
                 formDataToSend,
                 {
                     headers: {
@@ -227,7 +240,6 @@ const RegistrasiDokumen = () => {
                 }
             );
 
-            // console.log('Response dari server:', response.data);
 
             // Jika berhasil, tampilkan notifikasi dan tutup modal
             if (response.status === 200 || response.status === 201) {
@@ -316,7 +328,6 @@ const RegistrasiDokumen = () => {
     const closeDetail = () => setOpenModalDetail(false);
 
     // ====== MODAL ADD ======
-    const [addMode, setAddMode] = useState("ADD");
     const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
     // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
@@ -718,7 +729,7 @@ const RegistrasiDokumen = () => {
                                                 ) : (
                                                     listFiles.map((DataFile, indexFile) => (
                                                         <tr key={indexFile}>
-                                                            <td className='center'>1.</td>
+                                                            <td className='center'>{indexFile + 1}.</td>
                                                             <td>
                                                                 <div>
                                                                     {DataFile.title}

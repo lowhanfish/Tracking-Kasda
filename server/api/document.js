@@ -3,7 +3,7 @@ const router = Router();
 import upload from "../multer/index.js";
 
 
-import { view, add, deletex } from "../controller/document.js";
+import { view, add, editex, deletex } from "../controller/document.js";
 
 router.post("/view", (req, res) => {
     // console.log("VIEW DI PANGGIL");
@@ -27,6 +27,11 @@ router.post("/add", upload.array('files', 10), (req, res) => {
     
     
     
+    router.post("/edit", upload.array('files', 10), (req, res) => {
+        console.log("EDIT REG DOK DI PANGGIL");
+        // console.log(req.body);
+        editex(req, res);
+    })
     router.post("/delete", (req, res) => {
         // console.log("VIEW DI PANGGIL");
         deletex(req, res);
