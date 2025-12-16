@@ -3,7 +3,7 @@ import { add as add_pph, view as view_pph, deletex as delete_pph } from "../cont
 import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
-import { viewRelate } from "../controller/master/masterTahapan.js";
+import { view as view_tracking } from "../controller/tracking.js";
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -37,7 +37,7 @@ export const view = (req, res) => {
         } else {
             
             for (let i = 0; i < rows.length; i++) {
-                rows[i].tracking = await viewRelate(rows[i].id, rows[i].master_jns_pencairan_id);
+                rows[i].tracking = await view_tracking(rows[i].id, rows[i].master_jns_pencairan_id);
                 rows[i].ppn = await view_ppn(rows[i].id);
                 rows[i].pph = await view_pph(rows[i].id);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
