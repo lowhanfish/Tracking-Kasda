@@ -99,7 +99,8 @@ const RegistrasiDokumen = () => {
     const token = localStorage.getItem('authToken');
     const profile = JSON.parse(localStorage.getItem('profile'));
 
-
+    const { tahapan } = useStorex();
+    const tahapanId = tahapan.REGISTRASI_DOK;
 
 
     const [listData, setListData] = useState([]);
@@ -126,13 +127,14 @@ const RegistrasiDokumen = () => {
         master_jns_pencairan_id: '',
         nilai: 0,
         sub_unit_kerja: profile.profile.sub_unit_kerja_id,
+        master_tahapan_id: tahapanId,
     });
 
     const [file, setFile] = useState(null);
     const [ppn, setPpn] = useState([]);
     const [pph, setPph] = useState([]);
-    const [jnsPencairan, setJnsPencairan] = useState('');
-    const [besaranAnggaran, setBesaranAnggaran] = useState('');
+    // const [jnsPencairan, setJnsPencairan] = useState('');
+    // const [besaranAnggaran, setBesaranAnggaran] = useState('');
     const [loading, setLoading] = useState(false);
 
     const pushPPH = (event) => {
@@ -191,7 +193,7 @@ const RegistrasiDokumen = () => {
 
     const saveData = async () => {
         var pathx = '';
-        var sub_unit_kerja: '';
+        var sub_unit_kerja = '';
 
         if (addMode === "ADD") {
             pathx = '/add'
@@ -213,6 +215,7 @@ const RegistrasiDokumen = () => {
             formDataToSend.append('id', formData.id);
             formDataToSend.append('uraian', formData.uraian);
             formDataToSend.append('sub_unit_kerja', sub_unit_kerja);
+            formDataToSend.append('master_tahapan_id', formData.master_tahapan_id);
             formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
             formDataToSend.append('nilai', formData.nilai.toString());
 
@@ -263,6 +266,7 @@ const RegistrasiDokumen = () => {
                     sub_unit_kerja: profile.profile.sub_unit_kerja_id,
                     master_jns_pencairan_id: '',
                     nilai: 0,
+                    master_tahapan_id: tahapanId,
                 });
                 setPpn([]);
                 setPph([]);
@@ -291,15 +295,13 @@ const RegistrasiDokumen = () => {
     }
 
     const selectData = (data) => {
-
-
-
         setFormData({
             id: data.id,
             uraian: data.uraian,
             master_jns_pencairan_id: data.master_jns_pencairan_id,
             nilai: data.nilai,
             sub_unit_kerja: data.sub_unit_kerja,
+            master_tahapan_id: tahapanId
         })
         setPpn(data.ppn);
         setPph(data.pph);
@@ -770,12 +772,6 @@ const RegistrasiDokumen = () => {
                         )
 
                     }
-
-
-
-
-
-
                     <hr className='hrku2' />
 
                 </AddDialog>

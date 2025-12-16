@@ -36,6 +36,19 @@ const useStorex = create((set) => ({
     dua: `${BASE_URL}duax`
   },
 
+  tahapan : {
+    REGISTRASI_DOK : 4,
+    VERIFIKASI_DOK : 5,
+    VERIFIKASI_PAJAK : 6,
+    PENCATATAN_DOK : 15,
+    DISPOSISI_KUASA_BUD : 16,
+    VERIFIKASI_KABAN : 17,
+    PENERBITAN_SP2D : 18,
+    DAFTAR_PENGUJI : 19,
+    PENCAIRAN_BANK : 20,
+
+  },
+
   // State dan fungsi count Anda
   count: 0,
   increment: () => set((state) => ({ count: state.count + 1 })),

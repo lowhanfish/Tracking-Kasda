@@ -3,7 +3,7 @@ import { add as add_pph, view as view_pph, deletex as delete_pph } from "../cont
 import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
-import { view as view_tracking } from "../controller/tracking.js";
+import { view as view_tracking, save as save_tracking } from "../controller/tracking.js";
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -84,6 +84,9 @@ export const add = (req, res) => {
                     await add_ppn(req.body.ppn[i], documentId);
                 }
             }
+
+
+            await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi")
 
             res.status(201).send({
                 status: 201,

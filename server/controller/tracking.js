@@ -44,12 +44,21 @@ export const view = (documents_id, master_jns_pencairan_id, )=>{
 
 
 
-export const save = () => {
-    return new Promise((resolve, reject) => {
-        
+export const save = (req, master_tahapan_id, documents_id, status, keterangan) => {
+
+    return new Promise(async (resolve) => {
+        const jml = await viewLength(master_tahapan_id, documents_id)
+        if (jml <= 0) {
+            await add(req, master_tahapan_id, documents_id, status, keterangan);
+            resolve("OK");
+        } else {
+            await editex(req, master_tahapan_id, documents_id, status, keterangan);
+            resolve("OK");
+        }
     })    
 }
-export const viewLength = (req, master_tahapan_id, documents_id) => {
+
+export const viewLength = (master_tahapan_id, documents_id) => {
     return new Promise((resolve, reject) => {
         const query = `
             SELECT COUNT(*) as count
@@ -84,6 +93,31 @@ export const add = (req, master_tahapan_id, documents_id, status, keterangan) =>
         `
 
         const values = [master_tahapan_id, documents_id, req.user._id, status, keterangan];
+
+        db.query(query, values, (err, rows)=>{
+            if (err) {
+                console.log(err);
+                reject({
+                    status: 500,
+                    message: err
+                });
+            } else {
+                resolve(rows);
+            }
+        })
+    })
+}
+
+export const editex = (req, master_tahapan_id, documents_id, status, keterangan) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE documents_tracking SET
+            status = ?,
+            keterangan = ?
+            WHERE master_tahapan_id = ? AND documents_id = ?
+        `
+
+        const values = [status, master_tahapan_id, documents_id, keterangan];
 
         db.query(query, values, ()=>{
             if (err) {
