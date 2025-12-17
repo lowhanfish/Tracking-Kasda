@@ -4,8 +4,10 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import Clear from '@mui/icons-material/Clear';
 import Stepperx from '@components/Stepperx';
 import formatRupiah from '@lib/format';
+import { formatDate } from '@lib/index';
 
-import ErrorIcon from '@mui/icons-material/Error';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckIcon from '@mui/icons-material/Check';
 
 type IconxProps = {
@@ -13,28 +15,22 @@ type IconxProps = {
 }
 
 const Iconx = ({ statusx }: IconxProps) => {
-
     if (statusx == 0) {
         return (
-            <ErrorIcon sx={{ backgroundColor: '#ff9800', color: 'white', height: 20, width: 20, fontSize: 26 }} />
+            <HourglassTopIcon sx={{ backgroundColor: '#ff9800', color: 'white', width: 26, height: 26, padding: 0.5, fontSize: 26, borderRadius: 50 }} />
         )
     } else if (statusx == 1) {
         return (
-            <ErrorIcon sx={{ backgroundColor: '#357a38', color: 'white', height: 20, width: 20, fontSize: 26 }} />
+            <CheckIcon sx={{ backgroundColor: '#357a38', color: 'white', width: 26, height: 26, padding: 0.5, fontSize: 26, borderRadius: 50 }} />
         )
     } else {
         return (
-            <ErrorIcon sx={{ backgroundColor: '#b22a00', color: 'white', height: 20, width: 20, fontSize: 26 }} />
+            <ErrorOutlineIcon sx={{ backgroundColor: '#b22a00', color: 'white', width: 26, height: 26, padding: 0.5, fontSize: 26, borderRadius: 50 }} />
         )
     }
-
-
 }
 
-
-
-
-function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph }: any) {
+function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     // fullWidth is always helpful for our layout, so pass it as true
     return (
@@ -53,9 +49,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
             <DialogContent>
                 <DialogContentText component="div">
 
-
                     <div>
-
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Unit Kerja</div>
                             <div className='TextProfileLeftVal'>{formData.sub_unit_kerja_uraian || ""}</div>
@@ -72,7 +66,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                         </div>
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
-                            <div className='TextProfileLeftVal'>Tanggal {formData.createdAt}</div>
+                            <div className='TextProfileLeftVal'>Tanggal {formatDate(formData.createdAt)}</div>
                         </div>
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Pagu Anggaran</div>
@@ -106,42 +100,29 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                         </div>
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Di Ajukan Oleh</div>
-                            <div className='TextProfileLeftVal'>xxxxx</div>
+                            <div className='TextProfileLeftVal'>{formData.nama_pengusul ?? ""}</div>
                         </div>
-
 
                         <div style={{ marginTop: 20 }} className='dashboardContainer'>
                             <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
                             {/* <Stepperx /> */}
-
-
                             <div style={{ paddingLeft: 40, paddingRight: 5, height: 389, overflowY: 'auto' }}>
-
                                 <Stepper orientation="vertical">
-
-                                    <Step>
-                                        <StepLabel icon={<CheckIcon sx={{ backgroundColor: '#ff9800', color: 'white', borderRadius: 50, fontSize: 26 }} />}>
-                                            <div className='StepLabel1'>Penerbitan Surat Perintah Pencairan Dana (SP2D)</div>
-                                            <div className='StepLabel2'>Kiken S Batara (4 Sep 2025 - 09:30 WITA)</div>
-                                        </StepLabel>
-                                    </Step>
-
-
-
+                                    {
+                                        tracking.map((data, index) => (
+                                            <Step key={index}>
+                                                <StepLabel icon={<Iconx statusx={data.status} />}>
+                                                    <div className='StepLabel1'>{data.master_tahapan_uraian}</div>
+                                                    <div className='StepLabel2'>{data.nama_pengusul}</div>
+                                                    <div className='StepLabel2'>{`(${data.createdAt || "-:-:-"})`}</div>
+                                                </StepLabel>
+                                            </Step>
+                                        ))
+                                    }
                                 </Stepper>
-
                             </div>
-
-
-
-
-
-
                         </div>
-
-
                     </div>
-
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

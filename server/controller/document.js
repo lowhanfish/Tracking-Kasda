@@ -7,6 +7,7 @@ import { view as view_tracking, save as save_tracking } from "../controller/trac
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
+const db_user = process.env.DB_USER
 
 
 export const view = (req, res) => {
@@ -18,7 +19,8 @@ export const view = (req, res) => {
         SELECT
         documents.*,
         master_jns_pencairan.uraian as uraian_jns_pencairan,
-        s_unit_kerja.unit_kerja as sub_unit_kerja_uraian
+        s_unit_kerja.unit_kerja as sub_unit_kerja_uraian,
+        IFNULL (biodata.nama, "") as nama_pengusul
 
         FROM ${db_main}.documents documents
 
@@ -27,6 +29,12 @@ export const view = (req, res) => {
 
         LEFT JOIN ${db_simpeg}.unit_kerja s_unit_kerja
         ON s_unit_kerja.id = documents.sub_unit_kerja
+
+        LEFT JOIN ${db_user}.users users
+        ON users.id = documents.createdBy
+
+        LEFT JOIN ${db_simpeg}.biodata biodata
+        ON biodata.nip = users.nama_nip
 
     `
 

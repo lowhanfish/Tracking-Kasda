@@ -1,5 +1,9 @@
 import db from "../db/mysql/index.js";
 
+const db_main = process.env.DB_MAIN
+const db_simpeg = process.env.DB_SIMPEG
+const db_user = process.env.DB_USER
+
 export const view = (documents_id, master_jns_pencairan_id, )=>{
     return new Promise((resolve, reject) => {
         const query = `
@@ -10,16 +14,24 @@ export const view = (documents_id, master_jns_pencairan_id, )=>{
             master_jns_pencairan_list.urut,
             master_tahapan.uraian as master_tahapan_uraian,
             IFNULL (documents_tracking.status, 0) as status,
-            IFNULL (documents_tracking.keterangan, '-') as keterangan
+            IFNULL (documents_tracking.keterangan, '-') as keterangan,
+            IFNULL (documents_tracking.createdAT, '') as createdAt,
+            IFNULL (biodata.nama, "") as nama_pengusul
 
-            FROM master_jns_pencairan_list master_jns_pencairan_list
+            FROM ${db_main}.master_jns_pencairan_list master_jns_pencairan_list
             
-            LEFT JOIN master_tahapan master_tahapan
+            LEFT JOIN ${db_main}.master_tahapan master_tahapan
             ON master_tahapan.id = master_jns_pencairan_list.master_tahapan_id
 
-            LEFT JOIN documents_tracking documents_tracking
+            LEFT JOIN ${db_main}.documents_tracking documents_tracking
             ON documents_tracking.master_tahapan_id = master_tahapan.id
             AND documents_tracking.documents_id = ?
+
+            LEFT JOIN ${db_user}.users users
+            ON users.id = documents_tracking.createdBy
+
+            LEFT JOIN ${db_simpeg}.biodata biodata
+            ON biodata.nip = users.nama_nip
 
             WHERE
             master_jns_pencairan_list.master_jns_pencairan_id = ?

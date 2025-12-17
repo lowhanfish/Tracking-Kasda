@@ -15,7 +15,6 @@ import Stepperx from '@components/Stepperx';
 
 
 
-
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
@@ -108,6 +107,7 @@ const RegistrasiDokumen = () => {
     const [file, setFile] = useState(null);
     const [ppn, setPpn] = useState([]);
     const [pph, setPph] = useState([]);
+    const [tracking, setTracking] = useState([]);
     // const [jnsPencairan, setJnsPencairan] = useState('');
     // const [besaranAnggaran, setBesaranAnggaran] = useState('');
     const [loading, setLoading] = useState(false);
@@ -281,6 +281,7 @@ const RegistrasiDokumen = () => {
             sub_unit_kerja_uraian: data.sub_unit_kerja_uraian,
             uraian_jns_pencairan: data.uraian_jns_pencairan,
             createdAt: data.createdAt,
+            nama_pengusul: data.nama_pengusul,
 
         }
 
@@ -293,6 +294,7 @@ const RegistrasiDokumen = () => {
         setPpn(data.ppn);
         setPph(data.pph);
         setListFiles(data.files);
+        setTracking(data.tracking);
     }
 
     const handleFileUpload = (event: any) => {
@@ -445,6 +447,7 @@ const RegistrasiDokumen = () => {
                     formData={formData}
                     ppn={ppn}
                     pph={pph}
+                    tracking={tracking}
                 />
                 {/* ================= DETAIL DATA ================= */}
 
