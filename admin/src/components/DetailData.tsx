@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Stepper, Step, StepLabel, StepContent } from "@mui/material";
 import Clear from '@mui/icons-material/Clear';
@@ -11,6 +11,11 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckIcon from '@mui/icons-material/Check';
 
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import FileData from './FileData';
+
+
+
+
 
 type IconxProps = {
     statusx: number
@@ -35,8 +40,16 @@ const Iconx = ({ statusx }: IconxProps) => {
 function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     // fullWidth is always helpful for our layout, so pass it as true
+
+
+    const [openModal, setOpenModal] = useState(false);
+    const [fullScreen1, setFullScreen1] = useState(false);
+    const openModalFunc = () => setOpenModal(true);
+    const closeModalFunc = () => setOpenModal(false);
+
+
     return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
                     {/* <div className='headerModalLeft'>{title}</div> */}
@@ -109,7 +122,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                         <div className='fileContainer TextProfileLeftContainer' >
 
-                            <div style={{ cursor: 'pointer' }}>
+                            <div style={{ cursor: 'pointer' }} onClick={(e) => { e.currentTarget.blur(); openModalFunc() }} >
                                 <PictureAsPdfIcon sx={{ fontSize: 35 }} />
                             </div>
                             <div style={{ cursor: 'pointer' }}>
@@ -143,6 +156,22 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                         </div>
 
                         <hr className='hrku2' />
+
+
+
+
+                        <FileData
+                            open={openModal}
+                            onClose={closeModalFunc}
+                            title="Detail File"
+                            fullScreen={fullScreen1}
+                            maxWidth="md"
+
+                        />
+
+
+
+
 
                     </div>
                 </DialogContentText>

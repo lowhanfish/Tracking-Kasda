@@ -307,7 +307,7 @@ hr.hrku2 {
 .fileContainer {
     display: flex;
     gap: 10px;
-    color: #6699d3;
+    color: var(--color-primary-soft);
 }
 
 

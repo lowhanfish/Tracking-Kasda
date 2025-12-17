@@ -25,7 +25,7 @@ import DetailData from '@components/DetailData';
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
                     <div className='TextProfileHead shaddowText'>{title} Data</div>
@@ -50,7 +50,7 @@ function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSav
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
                     <div className='headerModalRight'>
