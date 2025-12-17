@@ -10,6 +10,8 @@ import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckIcon from '@mui/icons-material/Check';
 
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+
 type IconxProps = {
     statusx: number
 }
@@ -48,7 +50,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
             </DialogTitle>
             <DialogContent>
                 <DialogContentText component="div">
-
+                    <hr className='hrku2' />
                     <div>
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Unit Kerja</div>
@@ -103,10 +105,27 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                             <div className='TextProfileLeftVal'>{formData.nama_pengusul ?? ""}</div>
                         </div>
 
+                        <hr className='hrku2' />
+
+                        <div className='fileContainer TextProfileLeftContainer' >
+
+                            <div style={{ cursor: 'pointer' }}>
+                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
+                            </div>
+                            <div style={{ cursor: 'pointer' }}>
+                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
+                            </div>
+                            <div style={{ cursor: 'pointer' }}>
+                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
+                            </div>
+                        </div>
+
+                        <hr className='hrku2' />
+
                         <div style={{ marginTop: 20 }} className='dashboardContainer'>
                             <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
                             {/* <Stepperx /> */}
-                            <div style={{ paddingLeft: 40, paddingRight: 5, height: 389, overflowY: 'auto' }}>
+                            <div style={{ paddingLeft: 40, paddingRight: 5, }}>
                                 <Stepper orientation="vertical">
                                     {
                                         tracking.map((data, index) => (
@@ -122,6 +141,9 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                                 </Stepper>
                             </div>
                         </div>
+
+                        <hr className='hrku2' />
+
                     </div>
                 </DialogContentText>
             </DialogContent>
