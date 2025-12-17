@@ -18,14 +18,8 @@ const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave
         }
     }, [file, url.URL_APP]);
 
-    // const filePath = url.URL_APP + "/uploads/" + file.data.file;
-    // const fileType = file.data.type;
-
-    // console.log(filePath)
-
     useEffect(() => {
         if (open) {
-            // Blur any focused element when dialog opens
             const activeElement = document.activeElement as HTMLElement;
             if (activeElement) {
                 activeElement.blur();
@@ -46,7 +40,6 @@ const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave
                 </div>
             </DialogTitle>
             <DialogContent style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden', flex: 1 }}>
-                {/* <DialogContentText component="div"> */}
                 <div style={{ height: '100%', width: '100%', flex: 1 }}>
                     {
                         filePath && (
@@ -59,9 +52,7 @@ const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave
                             )
                         )
                     }
-
                 </div>
-                {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>

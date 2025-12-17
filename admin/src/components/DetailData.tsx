@@ -21,6 +21,7 @@ type IconxProps = {
     statusx: number
 }
 
+// Component untuk menampilkan icon status (pending, success, error)
 const Iconx = ({ statusx }: IconxProps) => {
     if (statusx == 0) {
         return (
@@ -38,17 +39,21 @@ const Iconx = ({ statusx }: IconxProps) => {
 }
 
 function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking, listFiles }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-    // fullWidth is always helpful for our layout, so pass it as true
 
+    // State untuk file yang akan ditampilkan di modal FileData
     const [file, setFile] = useState(null);
 
+    // State untuk modal FileData
     const [openModal, setOpenModal] = useState(false);
     const [fullScreen1, setFullScreen1] = useState(false);
+
+    // Buka modal FileData dengan file yang dipilih
     const openModalFunc = (data) => {
         setFile(data);
         setOpenModal(true);
     };
+
+    // Tutup modal FileData
     const closeModalFunc = () => setOpenModal(false);
 
     useEffect(() => {
@@ -60,9 +65,9 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
-                    {/* <div className='headerModalLeft'>{title}</div> */}
                     <div className='TextProfileHead shaddowText'>{title}</div>
                     <div className='headerModalRight'>
+                        {/* Tombol untuk menutup modal */}
                         <IconButton onClick={onClose} aria-label="close">
                             <Clear />
                         </IconButton>
@@ -128,6 +133,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                         <hr className='hrku2' />
 
+                        {/* Daftar file lampiran yang dapat diklik untuk membuka FileData modal */}
                         <div className='fileContainer TextProfileLeftContainer' >
 
                             {
@@ -144,14 +150,15 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                         <hr className='hrku2' />
 
+                        {/* Stepper untuk menampilkan progres kegiatan */}
                         <div style={{ marginTop: 20 }} className='dashboardContainer'>
                             <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
-                            {/* <Stepperx /> */}
                             <div style={{ paddingLeft: 40, paddingRight: 5, }}>
                                 <Stepper orientation="vertical">
                                     {
                                         tracking.map((data, index) => (
                                             <Step key={index}>
+                                                {/* Icon status berubah berdasarkan nilai status */}
                                                 <StepLabel icon={<Iconx statusx={data.status} />}>
                                                     <div className='StepLabel1'>{data.master_tahapan_uraian}</div>
                                                     <div className='StepLabel2'>{data.nama_pengusul}</div>
