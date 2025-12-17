@@ -448,6 +448,7 @@ const RegistrasiDokumen = () => {
                     ppn={ppn}
                     pph={pph}
                     tracking={tracking}
+                    listFiles={listFiles}
                 />
                 {/* ================= DETAIL DATA ================= */}
 

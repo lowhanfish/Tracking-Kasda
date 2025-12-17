@@ -1,11 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Stepper, Step, StepLabel, StepContent } from "@mui/material";
 import Clear from '@mui/icons-material/Clear';
+import useStorex from '@store/index';
 
 
-const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) => {
 
+const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave, file }: any) => {
 
+    const { url } = useStorex();
+    const [filePath, setFilePath] = useState('');
+    const [fileType, setFileType] = useState('');
+
+    useEffect(() => {
+        if (file && file.file) {
+            setFilePath(url.URL_APP + "uploads/" + file.file);
+            setFileType(file.type || 'application/pdf');
+        }
+    }, [file, url.URL_APP]);
+
+    // const filePath = url.URL_APP + "/uploads/" + file.data.file;
+    // const fileType = file.data.type;
+
+    // console.log(filePath)
 
     useEffect(() => {
         if (open) {
@@ -32,15 +48,23 @@ const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave
             <DialogContent style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden', flex: 1 }}>
                 {/* <DialogContentText component="div"> */}
                 <div style={{ height: '100%', width: '100%', flex: 1 }}>
-                    <object data="https://www.rd.usda.gov/sites/default/files/pdf-sample_0.pdf" type="application/pdf" width="100%" height="100%">
-                        <p>Alternative text - include a link <a href="http://africau.edu/images/default/sample.pdf">to the PDF!</a></p>
-                    </object>
+                    {
+                        filePath && (
+                            fileType === "application/pdf" ? (
+                                <object data={filePath} type="application/pdf" width="100%" height="100%">
+                                    <p>Alternative text - include a link <a href={filePath}>to the PDF!</a></p>
+                                </object>
+                            ) : (
+                                <img style={{ width: "100%", height: "auto" }} src={filePath} alt="" />
+                            )
+                        )
+                    }
+
                 </div>
                 {/* </DialogContentText> */}
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={onSave}>Save</Button>
             </DialogActions>
         </Dialog>
     );

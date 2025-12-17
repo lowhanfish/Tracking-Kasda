@@ -20,6 +20,7 @@ app.use(cors({
   origin : '*'
 }))
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use(checkTokenAndSetUser);
 
 router.get('/', (req, res) => {

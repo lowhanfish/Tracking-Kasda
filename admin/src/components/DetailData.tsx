@@ -37,15 +37,23 @@ const Iconx = ({ statusx }: IconxProps) => {
     }
 }
 
-function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking }: any) {
+function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking, listFiles }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     // fullWidth is always helpful for our layout, so pass it as true
 
+    const [file, setFile] = useState(null);
 
     const [openModal, setOpenModal] = useState(false);
     const [fullScreen1, setFullScreen1] = useState(false);
-    const openModalFunc = () => setOpenModal(true);
+    const openModalFunc = (data) => {
+        setFile(data);
+        setOpenModal(true);
+    };
     const closeModalFunc = () => setOpenModal(false);
+
+    useEffect(() => {
+
+    }, [])
 
 
     return (
@@ -122,15 +130,16 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                         <div className='fileContainer TextProfileLeftContainer' >
 
-                            <div style={{ cursor: 'pointer' }} onClick={(e) => { e.currentTarget.blur(); openModalFunc() }} >
-                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
-                            </div>
-                            <div style={{ cursor: 'pointer' }}>
-                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
-                            </div>
-                            <div style={{ cursor: 'pointer' }}>
-                                <PictureAsPdfIcon sx={{ fontSize: 35 }} />
-                            </div>
+                            {
+                                listFiles.map((data, index) => (
+                                    <div key={index} style={{ cursor: 'pointer' }} onClick={(e) => { e.currentTarget.blur(); openModalFunc(data) }} >
+                                        <PictureAsPdfIcon sx={{ fontSize: 35 }} />
+                                    </div>
+
+                                ))
+                            }
+
+
                         </div>
 
                         <hr className='hrku2' />
@@ -166,6 +175,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                             title="Detail File"
                             fullScreen={fullScreen1}
                             maxWidth="md"
+                            file={file}
 
                         />
 
