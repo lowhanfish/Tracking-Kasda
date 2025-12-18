@@ -4,18 +4,51 @@ import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../cont
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
 import { view as view_tracking, save as save_tracking } from "../controller/tracking.js";
+import dbResolveCondition from "../lib/dbResolveCondition.js";
+
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
 const db_user = process.env.DB_USER
 
 
-export const view = (req, res) => {
+export const view = async (req, res) => {
 
     // console.log("View Document dipanggil");
     // res.send("OK")
 
-    const query = `
+
+    console.log(req.body);
+
+    var filterUnitKerja = ``
+        
+    if (req.body.id_unit_kerja) {
+        filterUnitKerja = `AND (documents.sub_unit_kerja = '`+req.body.id_unit_kerja+`')`
+    } else {
+        filterUnitKerja = ``
+    }
+
+    const data = await viewAllData(req, res, filterUnitKerja)
+    const jml = await viewJmlData(req, res, filterUnitKerja)
+    
+    // console.log(jml[0].jml)
+    res.send({
+        data : data,
+        jml : Math.ceil((jml[0].jml)/req.body.dataLimit),
+    });
+    
+}
+
+
+export const viewAllData = async (req, res, filterUnitKerja)=> {
+
+    const limit = req.body.dataLimit
+    const cari = req.body.searchData
+    const startFrom = (req.body.pageFirst - 1)* limit;
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
         SELECT
         documents.*,
         master_jns_pencairan.uraian as uraian_jns_pencairan,
@@ -36,12 +69,19 @@ export const view = (req, res) => {
         LEFT JOIN ${db_simpeg}.biodata biodata
         ON biodata.nip = users.nama_nip
 
+        WHERE documents.uraian LIKE '%`+cari+`%' 
+        `+filterUnitKerja+`
+
+        LIMIT `+startFrom+`,`+limit+`
+        
     `
 
     db.query(query, async (err, rows)=>{
         if (err) {
             console.log(err);
-            res.status(500).send(err)
+            // res.status(500).send(err)
+            reject(reject);
+
         } else {
             
             for (let i = 0; i < rows.length; i++) {
@@ -50,9 +90,41 @@ export const view = (req, res) => {
                 rows[i].pph = await view_pph(rows[i].id);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
             }
-            res.status(200).send(rows)
+
+            resolve(rows);
+            // res.status(200).send(rows)
         }
     })
+
+    })
+
+}
+export const viewJmlData = async (req, res, filterUnitKerja)=> {
+    const cari = req.body.searchData
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+        SELECT
+        
+        count(documents.id) as jml
+
+        FROM ${db_main}.documents documents
+        WHERE documents.uraian LIKE '%`+cari+`%' 
+        `+filterUnitKerja+`
+        `
+        db.query(query, (err, rows) => {
+            if (err) {
+                console.log(err);
+                reject({
+                    status :500,
+                    message : err
+                })
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+
 }
 
 

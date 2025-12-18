@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint } from "@mui/material";
+import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
 import Clear from '@mui/icons-material/Clear';
 import Add from '@mui/icons-material/Add';
+import Search from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import FieldSingle from '@components/items/FieldSingle.jsx';
 import FieldWithButton from '@components/items/FieldWithButton.jsx';
@@ -17,6 +17,11 @@ import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
+
+import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
+
+import { GetUnitKerja } from "@lib/dataFetch.js";
+import { indexingPage } from '@lib/index.js';
 
 import Swal from 'sweetalert2';
 
@@ -80,6 +85,27 @@ const RegistrasiDokumen = () => {
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
+
+
+    // ====== AUTO COMPLETE ====== 
+
+
+
+    const [APIUnitKerja, setAPIUnitKerja] = useState([])
+    const [valueUnitKerja, setValueUnitKerja] = useState("");
+    const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
+    const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
+
+    const handleDataUnitKerja = async (data) => {
+        const newAPIUnitKerja = await GetUnitKerja(data, token, url);
+        setAPIUnitKerja(newAPIUnitKerja);
+    };
+
+
+    // ====== AUTO COMPLETE ====== 
+
+    // const formDataToSend.append('pageFirst', pageFirst);
+    // formDataToSend.append('jmlData', jmlData);
 
     const [activeAlert, SetActiveAlert] = useState(false);
     const [messageAlert, SetMessageAlert] = useState("");
@@ -149,16 +175,31 @@ const RegistrasiDokumen = () => {
     const viewData = async () => {
 
         setLoading(true);
-        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view',
-            {
-                pageFirst: pageFirst,
-                searchData: searchData,
-                dataLimit: dataLimit,
-            }
-        );
-        setListData(listDatax);
+
+
+        const payload = {
+            pageFirst: pageFirst,
+            searchData: searchData,
+            dataLimit: dataLimit,
+            id_unit_kerja: '',
+        };
+
+        console.log("========", selectedUnitKerja)
+
+        if (selectedUnitKerja) {
+            payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
+        }
+
+
+
+        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
+        setListData(listDatax.data);
+        setJmlData(listDatax.jml);
         setLoading(false);
         console.log(listDatax)
+
+
+        // setListData(res.data);
 
 
     }
@@ -351,6 +392,17 @@ const RegistrasiDokumen = () => {
         });
     };
 
+
+    const cariData = (e) => {
+        setPageFirst(1)
+        viewData();
+    }
+
+    const handlePageChange = (event, value) => {
+        setPageFirst(value); // update halaman aktif
+        viewData();           // fetch data halaman baru
+    };
+
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
     const openSetting = () => setOpenModalSetting(true);
@@ -381,7 +433,7 @@ const RegistrasiDokumen = () => {
     useEffect(() => {
         viewData();
         loadDataRef();
-    }, [])
+    }, [selectedUnitKerja, searchData, pageFirst])
 
     return (
         <div className="cardx">
@@ -389,13 +441,60 @@ const RegistrasiDokumen = () => {
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldWithButton placeholderx={'Cari Data..'} />
+
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldSingle />
+                        <Autocompletex
+                            value={APIUnitKerja.find(opt => opt.id === selectedUnitKerja) || null}
+                            onChange={(event, newValue) => {
+                                setSelectedUnitKerja(newValue); // simpan full object
+                                // getData(); // panggil ulang data
+                            }}
+                            inputValue={inputValueUnitKerja}
+                            onInputChange={(event, newInputValue) => {
+                                setInputValueUnitKerja(newInputValue);
+                                handleDataUnitKerja(newInputValue); // cari data unit kerja sesuai input
+                            }}
+                            size="small"
+                            options={APIUnitKerja}
+                            getOptionLabel={(option: { unit_kerja: string }) => option.unit_kerja || ""}
+                            PopperComponent={Popperx}
+                            renderInput={(params) => <TextField {...params} />}
+                            renderOption={(props, option: { id: string, unit_kerja: string, uraian_instansi: string }) => (
+                                <li {...props} key={option.id}>
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <span style={{ fontWeight: "bold", color: "#1976d2" }}>
+                                            {option.unit_kerja}
+                                        </span>
+                                        <span style={{ fontSize: "10px", color: "#666" }}>
+                                            {option.uraian_instansi}
+                                        </span>
+                                    </div>
+                                </li>
+                            )}
+                        />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldAutocomplete />
+                        <Fieldx
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                            placeholder={"Cari Data"}
+                            value={searchData}
+                            onChange={(e) => {
+                                setSearchData(e.target.value);  // update state
+                                cariData(e.target.value);       // gunakan value terbaru langsung
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton edge="end">
+                                            <Search />
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
                     </Grid>
                 </Grid>
             </div>
@@ -434,7 +533,12 @@ const RegistrasiDokumen = () => {
                 </Grid>
 
                 <div className='paginContainer'>
-                    <Pagination count={10} color="primary" variant="outlined" />
+                    <Pagination
+                        count={jmlData}
+                        page={pageFirst}
+                        onChange={handlePageChange}
+                        color="primary"
+                        variant="outlined" />
                 </div>
 
                 {/* ================= SETTINGDETAIL DATA ================= */}

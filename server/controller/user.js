@@ -34,8 +34,8 @@ export const getDataUser = async (req, res) => {
 
 
 export const getUser = async (req, res, filterUnitKerja)=>{
-    console.log("Controller getUser di panggil")
-    console.log(req.body)
+    // console.log("Controller getUser di panggil")
+    // console.log(req.body)
 
     const limit = req.body.dataLimit
     const cari = req.body.searchData
