@@ -48,7 +48,9 @@ const FileData = ({ open, onClose, fullScreen, maxWidth, title, children, onSave
                                     <p>Alternative text - include a link <a href={filePath}>to the PDF!</a></p>
                                 </object>
                             ) : (
-                                <img style={{ width: "100%", height: "auto" }} src={filePath} alt="" />
+                                <div style={{ width: "100%", height: "100%", overflow: 'scroll' }}>
+                                    <img style={{ width: "100%", height: "auto" }} src={filePath} alt="" />
+                                </div>
                             )
                         )
                     }

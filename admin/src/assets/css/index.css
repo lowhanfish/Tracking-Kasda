@@ -310,10 +310,12 @@ hr.hrku2 {
     color: var(--color-primary-soft);
 }
 
-
-
 .fade-in {
     animation: fadeIn 0.3s ease-in forwards;
+}
+
+.my-swal {
+    z-index: 9999 !important;
 }
 
 @keyframes fadeIn {

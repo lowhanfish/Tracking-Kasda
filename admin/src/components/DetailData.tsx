@@ -13,10 +13,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import FileData from './FileData';
 
-
-
-
-
 type IconxProps = {
     statusx: number
 }
@@ -55,11 +51,6 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
     // Tutup modal FileData
     const closeModalFunc = () => setOpenModal(false);
-
-    useEffect(() => {
-
-    }, [])
-
 
     return (
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -144,8 +135,6 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                                 ))
                             }
-
-
                         </div>
 
                         <hr className='hrku2' />
@@ -173,9 +162,6 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
                         <hr className='hrku2' />
 
-
-
-
                         <FileData
                             open={openModal}
                             onClose={closeModalFunc}
@@ -183,13 +169,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
                             fullScreen={fullScreen1}
                             maxWidth="md"
                             file={file}
-
                         />
-
-
-
-
-
                     </div>
                 </DialogContentText>
             </DialogContent>

@@ -13,14 +13,12 @@ import BasicSelect from '@components/items/BasicSelect.jsx';
 import ListDataItems from '@components/ListDataItems';
 import Stepperx from '@components/Stepperx';
 
-
-
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
 
-
+import Swal from 'sweetalert2';
 
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -75,7 +73,6 @@ const RegistrasiDokumen = () => {
 
     const { tahapan } = useStorex();
     const tahapanId = tahapan.REGISTRASI_DOK;
-
 
     const [listData, setListData] = useState([]);
     const [dataLimit, setDataLimit] = useState(8);
@@ -256,11 +253,34 @@ const RegistrasiDokumen = () => {
     }
 
     const removeData = async () => {
-        await getPOST(token, url.URL_DOCUMENT + '/delete', formData);
-        SetAlert("Data berhasil di hapus", "success");
-        viewData();
-        closeSetting();
-    }
+
+        Swal.fire({
+            title: "Apakah anda yakin",
+            text: "Anda akan menghapus data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, Hapus sekarang!",
+            customClass: {
+                container: 'my-swal'
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await getPOST(token, url.URL_DOCUMENT + '/delete', formData);
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Data berhasil dihapus.",
+                    icon: "success",
+                    customClass: {
+                        container: 'my-swal'
+                    },
+                });
+                viewData();
+                closeSetting();
+            }
+        });
+    };
 
     const removeFileDb = async (index, data) => {
         await getPOST(token, url.URL_FILES + '/delete', data);
@@ -321,6 +341,15 @@ const RegistrasiDokumen = () => {
             SetActiveAlert(false);
         }, 2000);
     }
+
+    const showAlert = (message, icon) => {
+        Swal.fire({
+            title: "Drag me!",
+            // icon: "success",
+            icon: "error",
+            draggable: true
+        });
+    };
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -428,6 +457,9 @@ const RegistrasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
+                            {/* <Button onClick={() => showAlert()} color="error" fullWidth variant="outlined" size="small">
+                                Remove
+                            </Button> */}
                             <Button onClick={() => removeData()} color="error" fullWidth variant="outlined" size="small">
                                 Remove
                             </Button>
@@ -661,7 +693,6 @@ const RegistrasiDokumen = () => {
 
                     <hr className='hrku2' />
 
-
                     {
                         addMode === "EDIT" && (
                             <Grid container spacing={1}>
@@ -708,7 +739,6 @@ const RegistrasiDokumen = () => {
                                                     ))
                                                 )
                                             }
-
 
                                         </tbody>
                                     </table>

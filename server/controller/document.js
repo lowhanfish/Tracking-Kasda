@@ -166,7 +166,7 @@ export const editex = (req, res) => {
 
 export const deletex = (req, res) => {
 
-    // console.log(req.body)
+    console.log(req.body)
 
     const query = `
         DELETE FROM documents

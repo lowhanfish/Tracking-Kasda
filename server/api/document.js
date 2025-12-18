@@ -33,7 +33,7 @@ router.post("/add", upload.array('files', 10), (req, res) => {
         editex(req, res);
     })
     router.post("/delete", (req, res) => {
-        // console.log("VIEW DI PANGGIL");
+        console.log("DELETE DOCUMENT DI PANGGIL");
         deletex(req, res);
     })
     
