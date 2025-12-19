@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
 import Clear from '@mui/icons-material/Clear';
-import Add from '@mui/icons-material/Add';
 import Search from '@mui/icons-material/Search';
 
 import ListDataItems from '@components/ListDataItems';
-
 
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
@@ -15,12 +13,8 @@ import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
 
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
-
 import { GetUnitKerja } from "@lib/dataFetch.js";
-
-
 import Swal from 'sweetalert2';
-
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -57,11 +51,10 @@ const VerifikasiDokumen = () => {
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     // ====== AUTO COMPLETE ====== 
-
-
 
     const [APIUnitKerja, setAPIUnitKerja] = useState([])
     const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
@@ -72,19 +65,9 @@ const VerifikasiDokumen = () => {
         setAPIUnitKerja(newAPIUnitKerja);
     };
 
-
-    // ====== AUTO COMPLETE ====== 
-
-    // const formDataToSend.append('pageFirst', pageFirst);
-    // formDataToSend.append('jmlData', jmlData);
-
     const [activeAlert, SetActiveAlert] = useState(false);
     const [messageAlert, SetMessageAlert] = useState("");
     const [colorAlert, SetColorAlert] = useState<'success' | 'error' | 'warning' | 'info'>('success');
-
-
-    const [listFiles, setListFiles] = useState([]);
-
 
     const [formData, setFormData] = useState({
         id: '',
@@ -95,15 +78,12 @@ const VerifikasiDokumen = () => {
         master_tahapan_id: tahapanId,
     });
 
-
-    const [ppn, setPpn] = useState([]);
-    const [pph, setPph] = useState([]);
-    const [tracking, setTracking] = useState([]);
-    // const [jnsPencairan, setJnsPencairan] = useState('');
-    // const [besaranAnggaran, setBesaranAnggaran] = useState('');
-    const [loading, setLoading] = useState(false);
-
-
+    const getValue = (value, name) => {
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
 
     const viewData = async () => {
 
@@ -123,43 +103,21 @@ const VerifikasiDokumen = () => {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
 
+
+
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
         console.log(listDatax)
+
+
         // setListData(res.data);
+
+
     }
 
-    const removeData = async () => {
 
-        Swal.fire({
-            title: "Apakah anda yakin",
-            text: "Anda akan menghapus data ini?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya, Hapus sekarang!",
-            customClass: {
-                container: 'my-swal'
-            },
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                await getPOST(token, url.URL_DOCUMENT + '/delete', formData);
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Data berhasil dihapus.",
-                    icon: "success",
-                    customClass: {
-                        container: 'my-swal'
-                    },
-                });
-                viewData();
-                closeSetting();
-            }
-        });
-    };
 
 
     const selectData = (data) => {
@@ -182,29 +140,9 @@ const VerifikasiDokumen = () => {
 
         // setFormData(dataDummy);
 
-
-
-        setPpn(data.ppn);
-        setPph(data.pph);
-        setListFiles(data.files);
-        setTracking(data.tracking);
     }
 
-    const handleFileUpload = (event: any) => {
-        const files = event.target.files;
-        if (files) {
-            setFile(Array.from(files));
-        }
-    }
 
-    const removeFile = (index: number) => {
-        setFile(prev => {
-            if (Array.isArray(prev)) {
-                return prev.filter((_, i) => i !== index);
-            }
-            return null;
-        });
-    }
 
     const SetAlert = (message, color) => {
         SetColorAlert(color)
@@ -214,6 +152,15 @@ const VerifikasiDokumen = () => {
             SetActiveAlert(false);
         }, 2000);
     }
+
+    const showAlert = (message, icon) => {
+        Swal.fire({
+            title: "Drag me!",
+            // icon: "success",
+            icon: "error",
+            draggable: true
+        });
+    };
 
 
     const cariData = (e) => {
@@ -245,12 +192,7 @@ const VerifikasiDokumen = () => {
     // ====== MODAL ADD ======
 
     const loadDataRef = async () => {
-        const listPPHX = await getPOST(token, url.URL_MASTER_PPH + '/', {});
-        setListPPH(listPPHX);
-        const listPPNX = await getPOST(token, url.URL_MASTER_PPN + '/', {});
-        setListPPN(listPPNX);
-        const listJnsPencairanx = await getPOST(token, url.URL_MASTER_JNS_PENCAIRAN + '/', {});
-        setListJnsPencairan(listJnsPencairanx);
+
     }
 
     useEffect(() => {
@@ -331,12 +273,7 @@ const VerifikasiDokumen = () => {
                 />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <button onClick={(e) => { e.currentTarget.blur(); openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
-                        <Add sx={{ fontSize: 18 }} />
-                        Add Data
-                    </button>
-                    {/* <button className='btn danger shaddow1'>Add Data</button> <br /> <br />
-                    <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
+
                 </div>
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
@@ -380,7 +317,7 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); }} color="warning" fullWidth variant="outlined" size="small">
+                            <Button onClick={() => { closeSetting(); openAdd(); }} color="warning" fullWidth variant="outlined" size="small">
                                 Edit
                             </Button>
                         </Grid>
@@ -388,7 +325,7 @@ const VerifikasiDokumen = () => {
                             {/* <Button onClick={() => showAlert()} color="error" fullWidth variant="outlined" size="small">
                                 Remove
                             </Button> */}
-                            <Button onClick={() => removeData()} color="error" fullWidth variant="outlined" size="small">
+                            <Button onClick={() => { closeSetting(); }} color="error" fullWidth variant="outlined" size="small">
                                 Remove
                             </Button>
                         </Grid>
@@ -405,12 +342,9 @@ const VerifikasiDokumen = () => {
                     maxWidth="sm"
                     title="Detail Data"
                     formData={formData}
-                    ppn={ppn}
-                    pph={pph}
-                    tracking={tracking}
-                    listFiles={listFiles}
                 />
                 {/* ================= DETAIL DATA ================= */}
+
 
 
             </div>
