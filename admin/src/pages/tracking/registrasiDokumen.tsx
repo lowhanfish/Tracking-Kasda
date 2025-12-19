@@ -433,6 +433,7 @@ const RegistrasiDokumen = () => {
     useEffect(() => {
         viewData();
         loadDataRef();
+        handleDataUnitKerja("");
     }, [selectedUnitKerja, searchData, pageFirst])
 
     return (
