@@ -12,6 +12,7 @@ const db_simpeg = process.env.DB_SIMPEG
 const db_user = process.env.DB_USER
 
 
+
 export const view = async (req, res) => {
 
     // console.log("View Document dipanggil");
@@ -38,7 +39,6 @@ export const view = async (req, res) => {
     });
     
 }
-
 
 export const viewAllData = async (req, res, filterUnitKerja)=> {
 
@@ -125,6 +125,60 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
         })
     })
 
+}
+
+export const viewOne = async (req, res) => {
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+        SELECT
+        documents.*,
+        master_jns_pencairan.uraian as uraian_jns_pencairan,
+        s_unit_kerja.unit_kerja as sub_unit_kerja_uraian,
+        IFNULL (biodata.nama, "") as nama_pengusul
+
+        FROM ${db_main}.documents documents
+
+        LEFT JOIN ${db_main}.master_jns_pencairan master_jns_pencairan
+        ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+
+        LEFT JOIN ${db_simpeg}.unit_kerja s_unit_kerja
+        ON s_unit_kerja.id = documents.sub_unit_kerja
+
+        LEFT JOIN ${db_user}.users users
+        ON users.id = documents.createdBy
+
+        LEFT JOIN ${db_simpeg}.biodata biodata
+        ON biodata.nip = users.nama_nip
+
+        WHERE documents.id = ?
+        
+    `
+
+    const value = [req.body.id];
+
+    db.query(query, async (err, rows)=>{
+        if (err) {
+            console.log(err);
+            // res.status(500).send(err)
+            reject(reject);
+
+        } else {
+            
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].tracking = await view_tracking(rows[i].id, rows[i].master_jns_pencairan_id);
+                rows[i].ppn = await view_ppn(rows[i].id);
+                rows[i].pph = await view_pph(rows[i].id);
+                rows[i].files = await view_files(req, 'documents', rows[i].id);
+            }
+
+            resolve(rows);
+        }
+    })
+
+    })
+    
 }
 
 

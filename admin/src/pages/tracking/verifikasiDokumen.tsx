@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
 import Clear from '@mui/icons-material/Clear';
 import Add from '@mui/icons-material/Add';
 import Search from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import FieldSingle from '@components/items/FieldSingle.jsx';
-import FieldWithButton from '@components/items/FieldWithButton.jsx';
-import FieldAutocomplete from '@components/items/FieldAutocomplete.jsx';
-import BasicSelect from '@components/items/BasicSelect.jsx';
+
 import ListDataItems from '@components/ListDataItems';
-import Stepperx from '@components/Stepperx';
+
 
 import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
@@ -21,34 +17,10 @@ import DetailData from '@components/DetailData';
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 
 import { GetUnitKerja } from "@lib/dataFetch.js";
-import { indexingPage } from '@lib/index.js';
+
 
 import Swal from 'sweetalert2';
 
-function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-    return (
-        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-                <div className='headerModal'>
-                    <div className='TextProfileHead shaddowText'>{title} Data</div>
-                    <div className='headerModalRight'>
-                        <IconButton onClick={onClose} aria-label="close">
-                            <Clear />
-                        </IconButton>
-                    </div>
-                </div>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText component="div">{children}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={onSave}>Save</Button>
-            </DialogActions>
-        </Dialog>
-    );
-}
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -92,7 +64,6 @@ const VerifikasiDokumen = () => {
 
 
     const [APIUnitKerja, setAPIUnitKerja] = useState([])
-    const [valueUnitKerja, setValueUnitKerja] = useState("");
     const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
     const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
 
@@ -111,12 +82,9 @@ const VerifikasiDokumen = () => {
     const [messageAlert, SetMessageAlert] = useState("");
     const [colorAlert, SetColorAlert] = useState<'success' | 'error' | 'warning' | 'info'>('success');
 
-    const [listPPN, setListPPN] = useState([]);
-    const [listPPH, setListPPH] = useState([]);
-    const [listFiles, setListFiles] = useState([]);
-    const [listJnsPencairan, setListJnsPencairan] = useState([]);
 
-    const [addMode, setAddMode] = useState("ADD");
+    const [listFiles, setListFiles] = useState([]);
+
 
     const [formData, setFormData] = useState({
         id: '',
@@ -127,7 +95,7 @@ const VerifikasiDokumen = () => {
         master_tahapan_id: tahapanId,
     });
 
-    const [file, setFile] = useState(null);
+
     const [ppn, setPpn] = useState([]);
     const [pph, setPph] = useState([]);
     const [tracking, setTracking] = useState([]);
@@ -135,42 +103,7 @@ const VerifikasiDokumen = () => {
     // const [besaranAnggaran, setBesaranAnggaran] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const pushPPH = (event) => {
-        // event.target.value adalah value dari MenuItem
-        const selectedValue = event.target.value;
-        const selectedItem = listPPH.find(item => item.value === selectedValue);
 
-        console.log(selectedItem)
-
-        if (selectedItem) {
-            const newItem = {
-                ...selectedItem,
-                // id: Date.now() // Unique ID untuk setiap item
-            };
-            setPph(prev => [...prev, newItem]);
-        }
-    }
-
-    const pushPPN = (event) => {
-        // event.target.value adalah value dari MenuItem
-        const selectedValue = event.target.value;
-        const selectedItem = listPPN.find(item => item.value === selectedValue);
-
-        if (selectedItem) {
-            const newItem = {
-                ...selectedItem,
-                // id: Date.now() // Unique ID untuk setiap item
-            };
-            setPpn(prev => [...prev, newItem]);
-        }
-    }
-
-    const getValue = (value, name) => {
-        setFormData({
-            ...formData,
-            [name]: value
-        })
-    }
 
     const viewData = async () => {
 
@@ -190,107 +123,12 @@ const VerifikasiDokumen = () => {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
 
-
-
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
         console.log(listDatax)
-
-
         // setListData(res.data);
-
-
-    }
-
-    const saveData = async () => {
-        var pathx = '';
-        var sub_unit_kerja = '';
-
-        if (addMode === "ADD") {
-            pathx = '/add'
-            sub_unit_kerja = profile.profile.sub_unit_kerja_id
-        } else {
-            sub_unit_kerja = formData.sub_unit_kerja;
-            pathx = '/edit'
-        }
-
-        console.log(`${url.URL_DOCUMENT}${pathx}`)
-
-        try {
-            setLoading(true);
-
-            // Membuat FormData untuk mengirim file
-            const formDataToSend = new FormData();
-
-            // Menambahkan formData ke FormData
-            formDataToSend.append('id', formData.id);
-            formDataToSend.append('uraian', formData.uraian);
-            formDataToSend.append('sub_unit_kerja', sub_unit_kerja);
-            formDataToSend.append('master_tahapan_id', formData.master_tahapan_id);
-            formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
-            formDataToSend.append('nilai', formData.nilai.toString());
-
-            // Menambahkan PPN array
-            ppn.forEach((item, index) => {
-                formDataToSend.append(`ppn[${index}][id]`, item.id);
-                formDataToSend.append(`ppn[${index}][label]`, item.label);
-                formDataToSend.append(`ppn[${index}][nilai]`, item.nilai);
-            });
-
-            // Menambahkan PPH array
-            pph.forEach((item, index) => {
-                formDataToSend.append(`pph[${index}][id]`, item.id);
-                formDataToSend.append(`pph[${index}][label]`, item.label);
-                formDataToSend.append(`pph[${index}][nilai]`, item.nilai);
-            });
-
-            // Menambahkan file
-            if (file && Array.isArray(file)) {
-                file.forEach((f, index) => {
-                    formDataToSend.append('files', f);
-                });
-            }
-
-            // Melakukan POST request ke backend
-            const response = await axios.post(
-                `${url.URL_DOCUMENT}${pathx}`,
-                formDataToSend,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            );
-
-
-            // Jika berhasil, tampilkan notifikasi dan tutup modal
-            if (response.status === 200 || response.status === 201) {
-
-                SetAlert("Data berhasil di simpan", "success");
-                closeAdd();
-
-                // Reset form
-                setFormData({
-                    id: '',
-                    uraian: '',
-                    sub_unit_kerja: profile.profile.sub_unit_kerja_id,
-                    master_jns_pencairan_id: '',
-                    nilai: 0,
-                    master_tahapan_id: tahapanId,
-                });
-                setPpn([]);
-                setPph([]);
-                setFile(null);
-            }
-        } catch (error) {
-            console.error('Error saat menyimpan data:', error);
-            SetAlert("Gagal menyimpan data..!", "error");
-        } finally {
-            viewData();
-        }
     }
 
     const removeData = async () => {
@@ -323,12 +161,6 @@ const VerifikasiDokumen = () => {
         });
     };
 
-    const removeFileDb = async (index, data) => {
-        await getPOST(token, url.URL_FILES + '/delete', data);
-        const dataDummy = [...listFiles];  // Buat copy array
-        dataDummy.splice(index, 1);
-        setListFiles(dataDummy);  // Sekarang React detect perubahan
-    }
 
     const selectData = (data) => {
 
@@ -382,15 +214,6 @@ const VerifikasiDokumen = () => {
             SetActiveAlert(false);
         }, 2000);
     }
-
-    const showAlert = (message, icon) => {
-        Swal.fire({
-            title: "Drag me!",
-            // icon: "success",
-            icon: "error",
-            draggable: true
-        });
-    };
 
 
     const cariData = (e) => {
@@ -557,7 +380,7 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
+                            <Button onClick={() => { closeSetting(); }} color="warning" fullWidth variant="outlined" size="small">
                                 Edit
                             </Button>
                         </Grid>
@@ -589,273 +412,6 @@ const VerifikasiDokumen = () => {
                 />
                 {/* ================= DETAIL DATA ================= */}
 
-                {/* ================= ADD DATA ================= */}
-                <AddDialog
-                    open={openModalAdd}
-                    onClose={closeAdd}
-                    title={addMode}
-                    fullScreen={fullScreen}
-                    maxWidth="sm"
-                    onSave={saveData}
-                >
-                    <FieldSingle
-                        Title={'Nama Kegiatan'}
-                        value={formData.uraian}
-                        onChange={(e) => getValue(e.target.value, 'uraian')}
-                    />
-
-                    <Grid container spacing={1}>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect
-                                Title='Jenis Pencairan'
-                                options={listJnsPencairan}
-                                value={formData.master_jns_pencairan_id}
-                                onChange={(e) => getValue(e.target.value, 'master_jns_pencairan_id')}
-                            />
-                        </Grid>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <FieldSingle
-                                type='number'
-                                Title={'Besaran Anggaran'}
-                                value={formData.nilai}
-                                onChange={(e) => getValue(e.target.value, 'nilai')}
-                            />
-                        </Grid>
-                    </Grid>
-
-                    <hr className='hrku2' />
-
-                    <Grid container spacing={1}>
-                        <div className='inputText'>
-                            Tambah PPN
-                        </div>
-
-                        <Grid size={{ md: 12, xs: 12 }}>
-                            <BasicSelect
-                                options={listPPN}
-                                onChange={pushPPN}
-                            />
-                        </Grid>
-
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid size={{ md: 12, xs: 12 }}>
-                            <div className="table-wrap" style={{ marginTop: 10 }}>
-                                <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                                    <thead className="h_thead shaddowText">
-                                        <tr>
-                                            <th style={{ width: '5%' }} scope="col">No</th>
-                                            <th style={{ width: '55%' }} scope="col">Pajak</th>
-                                            <th style={{ width: '35%' }} scope="col">Nilai</th>
-                                            <th style={{ width: '5%' }} scope="col">set</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="h_body">
-                                        {
-                                            ppn.length === 0 ? (
-                                                <tr>
-                                                    <td colSpan={4} className='center'>
-                                                        Tidak ada PPN
-                                                    </td>
-                                                </tr>
-                                            ) : (
-                                                ppn.map((item, index) => (
-                                                    <tr key={item.id}>
-                                                        <td className='center'>{index + 1}.</td>
-                                                        <td>{item.label}</td>
-                                                        <td>{item.nilai}%</td>
-                                                        <td>
-                                                            <button
-                                                                className='btn sm danger shaddow1'
-                                                                onClick={() => setPpn(prev => prev.filter(p => p.id !== item.id))}
-                                                            >
-                                                                <CloseIcon sx={{ fontSize: 18 }} />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            )
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </Grid>
-                    </Grid>
-
-                    <hr className='hrku2' />
-
-                    <Grid container spacing={1}>
-                        <div className='inputText'>
-                            Tambah PPh
-                        </div>
-
-                        <Grid size={{ md: 12, xs: 12 }}>
-                            <BasicSelect
-                                options={listPPH}
-                                onChange={pushPPH}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid size={{ md: 12, xs: 12 }}>
-                            <div className="table-wrap" style={{ marginTop: 10 }}>
-                                <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                                    <thead className="h_thead shaddowText">
-                                        <tr>
-                                            <th style={{ width: '5%' }} scope="col">No</th>
-                                            <th style={{ width: '55%' }} scope="col">Pajak</th>
-                                            <th style={{ width: '35%' }} scope="col">Nilai</th>
-                                            <th style={{ width: '5%' }} scope="col">set</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="h_body">
-                                        {
-                                            pph.length === 0 ? (
-                                                <tr>
-                                                    <td colSpan={4} className='center'>
-                                                        Tidak ada PPH
-                                                    </td>
-                                                </tr>
-                                            ) : (
-                                                pph.map((item, index) => (
-                                                    <tr key={item.id}>
-                                                        <td className='center'>{index + 1}.</td>
-                                                        <td>{item.label}</td>
-                                                        <td>{item.nilai}%</td>
-                                                        <td>
-                                                            <button
-                                                                className='btn sm danger shaddow1'
-                                                                onClick={() => setPph(prev => prev.filter(p => p.id !== item.id))}
-                                                            >
-                                                                <CloseIcon sx={{ fontSize: 18 }} />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                            )
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </Grid>
-                    </Grid>
-
-                    <hr className='hrku2' />
-
-                    <Grid container spacing={1}>
-                        <div className='inputText'>
-                            Upload File Lampiran (PDF/Gambar)
-                        </div>
-
-                        <Grid size={{ md: 12, xs: 12 }}>
-                            <FieldSingle
-                                type='file'
-                                name='file'
-                                accept='.pdf,image/*'
-                                multiple
-                                onChange={handleFileUpload}
-                            />
-                        </Grid>
-                    </Grid>
-
-                    {
-                        file && Array.isArray(file) && file.length > 0 && (
-                            <Grid container spacing={1} style={{ marginTop: 10 }}>
-                                <Grid size={{ md: 12, xs: 12 }}>
-                                    <div className="table-wrap">
-                                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                                            <thead className="h_thead shaddowText">
-                                                <tr>
-                                                    <th style={{ width: '5%' }} scope="col">No</th>
-                                                    <th style={{ width: '90%' }} scope="col">Nama File</th>
-                                                    <th style={{ width: '5%' }} scope="col">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="h_body">
-                                                {
-                                                    file.map((f: any, index: number) => (
-                                                        <tr key={index}>
-                                                            <td className='center'>{index + 1}.</td>
-                                                            <td>{f.name}</td>
-                                                            <td>
-                                                                <button
-                                                                    className='btn sm danger shaddow1'
-                                                                    onClick={() => removeFile(index)}
-                                                                >
-                                                                    <CloseIcon sx={{ fontSize: 18 }} />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        )
-                    }
-
-                    <hr className='hrku2' />
-
-                    {
-                        addMode === "EDIT" && (
-                            <Grid container spacing={1}>
-                                <div className='inputText'>
-                                    FILE LAMPIRAN SAAT INI
-                                </div>
-
-                                <Grid size={{ md: 12, xs: 12 }}>
-                                    <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                                        <thead className="h_thead shaddowText">
-                                            <tr>
-                                                <th style={{ width: '5%' }} scope="col">No</th>
-                                                <th style={{ width: '90%' }} scope="col">Nama File</th>
-                                                <th style={{ width: '5%' }} scope="col">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="h_body">
-                                            {
-                                                listFiles.length < 1 ? (
-                                                    <tr>
-                                                        <td colSpan={3} className='center'>
-                                                            Tidak ada file ..
-                                                        </td>
-
-                                                    </tr>
-                                                ) : (
-                                                    listFiles.map((DataFile, indexFile) => (
-                                                        <tr key={indexFile}>
-                                                            <td className='center'>{indexFile + 1}.</td>
-                                                            <td>
-                                                                <div>
-                                                                    {DataFile.title}
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <button
-                                                                    onClick={() => { removeFileDb(indexFile, DataFile) }}
-                                                                    className='btn sm danger shaddow1'
-                                                                >
-                                                                    <CloseIcon sx={{ fontSize: 18 }} />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                )
-                                            }
-
-                                        </tbody>
-                                    </table>
-                                </Grid>
-                            </Grid>
-                        )
-
-                    }
-                    <hr className='hrku2' />
-
-                </AddDialog>
-                {/* ================= ADD DATA ================= */}
 
             </div>
         </div>
