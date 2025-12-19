@@ -582,10 +582,6 @@ const RegistrasiDokumen = () => {
                     maxWidth="sm"
                     title="Detail Data"
                     formData={formData}
-                    ppn={ppn}
-                    pph={pph}
-                    tracking={tracking}
-                    listFiles={listFiles}
                 />
                 {/* ================= DETAIL DATA ================= */}
 

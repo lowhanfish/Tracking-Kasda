@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Stepper, Step, StepLabel, StepContent } from "@mui/material";
 import Clear from '@mui/icons-material/Clear';
-import Stepperx from '@components/Stepperx';
 import formatRupiah from '@lib/format';
 import { formatDate } from '@lib/index';
 
@@ -12,6 +11,11 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import FileData from './FileData';
+
+import axios from 'axios';
+import useStorex from '@store/index';
+
+
 
 type IconxProps = {
     statusx: number
@@ -34,10 +38,19 @@ const Iconx = ({ statusx }: IconxProps) => {
     }
 }
 
-function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn, pph, tracking, listFiles }: any) {
+function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: any) {
+
+
+    const { url } = useStorex();
+    const token = localStorage.getItem("authToken");
+
 
     // State untuk file yang akan ditampilkan di modal FileData
     const [file, setFile] = useState(null);
+    const [ppn, setPpn] = useState([]);
+    const [pph, setPph] = useState([]);
+    const [listFiles, setListFiles] = useState([]);
+    const [tracking, setTracking] = useState([]);
 
     // State untuk modal FileData
     const [openModal, setOpenModal] = useState(false);
@@ -51,6 +64,30 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData, ppn,
 
     // Tutup modal FileData
     const closeModalFunc = () => setOpenModal(false);
+
+    const viewOne = () => {
+        axios.post(url.URL_DOCUMENT + "/viewOne", JSON.stringify({ id: formData.id }), {
+            headers: {
+                'Authorization': `kikensbatara ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }).then(result => {
+            console.log(result.data[0]);
+            const finalResult = result.data[0];
+            setPpn(finalResult.ppn);
+            setPph(finalResult.pph);
+            setListFiles(finalResult.files);
+            setTracking(finalResult.tracking);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    useEffect(() => {
+        if (open) {
+            viewOne();
+        }
+    }, [open])
 
     return (
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">

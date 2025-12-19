@@ -85,7 +85,6 @@ export const viewAllData = async (req, res, filterUnitKerja)=> {
         } else {
             
             for (let i = 0; i < rows.length; i++) {
-                rows[i].tracking = await view_tracking(rows[i].id, rows[i].master_jns_pencairan_id);
                 rows[i].ppn = await view_ppn(rows[i].id);
                 rows[i].pph = await view_pph(rows[i].id);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
@@ -129,7 +128,7 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 
 export const viewOne = async (req, res) => {
 
-    return new Promise((resolve, reject) => {
+
         
         const query = `
         SELECT
@@ -156,13 +155,13 @@ export const viewOne = async (req, res) => {
         
     `
 
-    const value = [req.body.id];
+    const values = [req.body.id];
 
-    db.query(query, async (err, rows)=>{
+    db.query(query,values, async (err, rows)=>{
         if (err) {
             console.log(err);
             // res.status(500).send(err)
-            reject(reject);
+            res.status(500).send(err);
 
         } else {
             
@@ -173,9 +172,9 @@ export const viewOne = async (req, res) => {
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
             }
 
-            resolve(rows);
+            res.status(200).send(rows);
         }
-    })
+
 
     })
     
