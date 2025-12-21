@@ -53,6 +53,7 @@ const VerifikasiDokumen = () => {
     const [loadData, setLoadData] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [listTahapan, setListTahapan] = useState([])
 
     // ====== AUTO COMPLETE ====== 
 
@@ -78,17 +79,10 @@ const VerifikasiDokumen = () => {
         master_tahapan_id: tahapanId,
     });
 
-    const getValue = (value, name) => {
-        setFormData({
-            ...formData,
-            [name]: value
-        })
-    }
 
     const viewData = async () => {
 
         setLoading(true);
-
 
         const payload = {
             pageFirst: pageFirst,
@@ -97,28 +91,18 @@ const VerifikasiDokumen = () => {
             id_unit_kerja: '',
         };
 
-        console.log("========", selectedUnitKerja)
+        // console.log("========", selectedUnitKerja)
 
         if (selectedUnitKerja) {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
 
-
-
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        console.log(listDatax)
-
-
-        // setListData(res.data);
-
-
+        // console.log(listDatax)
     }
-
-
-
 
     const selectData = (data) => {
 
@@ -137,12 +121,7 @@ const VerifikasiDokumen = () => {
         }
 
         setFormData({ ...dataDummy });
-
-        // setFormData(dataDummy);
-
     }
-
-
 
     const SetAlert = (message, color) => {
         SetColorAlert(color)
@@ -161,7 +140,6 @@ const VerifikasiDokumen = () => {
             draggable: true
         });
     };
-
 
     const cariData = (e) => {
         setPageFirst(1)
@@ -184,15 +162,15 @@ const VerifikasiDokumen = () => {
     const closeDetail = () => setOpenModalDetail(false);
 
     // ====== MODAL ADD ======
-    const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
     // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
-    const openAdd = () => setOpenModalAdd(true);
-    const closeAdd = () => setOpenModalAdd(false);
     // ====== MODAL ADD ======
 
     const loadDataRef = async () => {
-
+        const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {});
+        // console.log("===========")
+        // console.log(listTahapanx)
+        setListTahapan(listTahapanx);
     }
 
     useEffect(() => {
@@ -273,6 +251,19 @@ const VerifikasiDokumen = () => {
                 />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
+                    <Grid>
+
+                    </Grid>
+                    {
+                        listTahapan.map((data, index) => (
+                            <button key={index} className='btnNav'>
+                                <span>{data.uraian}</span>
+                                <span className='font-badge-number'> (12)</span>
+                            </button>
+
+                        ))
+                    }
+
 
                 </div>
 
@@ -317,7 +308,7 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); openAdd(); }} color="warning" fullWidth variant="outlined" size="small">
+                            <Button onClick={() => { closeSetting(); }} color="warning" fullWidth variant="outlined" size="small">
                                 Edit
                             </Button>
                         </Grid>
@@ -344,8 +335,6 @@ const VerifikasiDokumen = () => {
                     formData={formData}
                 />
                 {/* ================= DETAIL DATA ================= */}
-
-
 
             </div>
         </div>

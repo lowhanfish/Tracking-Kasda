@@ -120,3 +120,8 @@
 .bg-row-3 {
     background-color: var(--color-background-row3);
 }
+
+.font-badge-number {
+    color: var(--color-border);
+    font-family: "SUSE", sans-serif;
+}

@@ -148,3 +148,33 @@
 .btnIcon:active {
     background-color: #cacaca;
 }
+
+
+
+
+
+.btnNav {
+    background-color: var(--color-white);
+    border-color: var(--color-background-row1);
+    border-width: 0.5px;
+    padding: 5px 15px 5px 15px;
+    color: var(--color-text-primary);
+    font-weight: 550;
+    font-size: 12px;
+    border: 1px solid var(--color-background-row1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btnNav:hover {
+    background-color: var(--color-primary-soft) !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-white) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btnNav:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}

@@ -4,6 +4,7 @@ import upload from "../multer/index.js";
 
 
 import { view, viewOne, add, editex, deletex } from "../controller/document.js";
+import { viewTahapanByDocument } from "../controller/master/masterTahapan.js";
 
 router.post("/view", (req, res) => {
     // console.log("VIEW DI PANGGIL");
@@ -36,6 +37,11 @@ router.post("/add", upload.array('files', 10), (req, res) => {
     router.post("/delete", (req, res) => {
         console.log("DELETE DOCUMENT DI PANGGIL");
         deletex(req, res);
+    })
+
+
+    router.post('/viewTahapanByDocument', (req, res)=>{
+        viewTahapanByDocument(req, res);
     })
     
     

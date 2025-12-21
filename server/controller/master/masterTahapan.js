@@ -93,3 +93,23 @@ export const deletex = (req, res)=> {
     })
 }
 
+/*
+Di panggil di :
+Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
+- API/documents
+*/
+export const viewTahapanByDocument = (req, res)=>{
+
+    const query = `
+        SELECT * FROM master_tahapan
+    `
+    db.query(query, (err, rows)=>{
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(rows);
+        }
+    })
+
+
+}

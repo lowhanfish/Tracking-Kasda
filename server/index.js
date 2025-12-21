@@ -60,6 +60,8 @@ router.get('/', (req, res) => {
 
     import document from "./api/document.js";
     app.use('/api/document', isLoggedIn, document)
+    import verication from "./api/verication.js";
+    app.use('/api/verication', isLoggedIn, verication)
 
 // =============== END YOUR API ==================
 

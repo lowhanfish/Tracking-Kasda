@@ -180,7 +180,6 @@ export const viewOne = async (req, res) => {
     
 }
 
-
 export const add = (req, res) => {
     const query = `
         INSERT INTO documents
@@ -287,7 +286,6 @@ export const editex = (req, res) => {
         }
     })
 }
-
 
 export const deletex = (req, res) => {
 
