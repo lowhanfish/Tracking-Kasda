@@ -47,16 +47,17 @@ export const viewAllData = (req, res, filterUnitKerja)=>{
     
             FROM ${main}.documents documents
 
+            JOIN documents_tracking
+            ON (documents_tracking.documents_id = documents.id AND documents_tracking.master_tahapan_id = ?)
+
             WHERE documents.uraian LIKE '%`+cari+`%' 
             `+filterUnitKerja+`
 
             LIMIT `+startFrom+`,`+limit+`
     
-           
-    
         `
     
-        const values = [6];
+        const values = [req.body.master_tahapan_id];
     
         db.query(query, values, (err, rows)=>{
             if (err) {
@@ -124,6 +125,7 @@ export const verification = (req, res)=>{
 
 
 }
+
 export const reject = (req, res)=>{
     res.status(200).send("OK");
 }
@@ -145,13 +147,12 @@ export const getAllStep = (req, res) => {
         (
             SELECT COUNT(*) 
             FROM documents_tracking
-            
-           
 
+            JOIN documents
+            ON documents.id = documents_tracking.documents_id
+            
             WHERE documents_tracking.master_tahapan_id = master_tahapan.id
            
-
-
         ) as total
 
 

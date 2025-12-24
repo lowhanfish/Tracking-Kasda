@@ -174,22 +174,25 @@ const VerifikasiDokumen = () => {
         })
     }
 
-
     const loadDataRef = async () => {
         const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {});
         handleSetTahapanActive(listTahapanx[0].id, listTahapanx[0].uraian)
         console.log("===========")
         console.log(listTahapanx)
         setListTahapan(listTahapanx);
+
     }
 
+    // Ambil data tahapan hanya sekali saat mount
     useEffect(() => {
-        viewData();
         loadDataRef();
         handleDataUnitKerja("");
-        // testData();
-    }, [selectedUnitKerja, searchData, pageFirst])
-    // }, [])
+    }, []);
+
+    // Panggil viewData setiap kali tahapanActive, selectedUnitKerja, searchData, atau pageFirst berubah
+    useEffect(() => {
+        viewData();
+    }, [tahapanActive, selectedUnitKerja, searchData, pageFirst]);
 
     return (
         <div className="cardx">
@@ -265,7 +268,7 @@ const VerifikasiDokumen = () => {
                 <div className='btnContainer'>
                     {
                         listTahapan.map((data, index) => (
-                            <button onClick={() => { handleSetTahapanActive(data.id, data.uraian) }} key={index} className=''>
+                            <button onClick={() => { handleSetTahapanActive(data.id, data.uraian); viewData() }} key={index} className=''>
                                 <span className='h_notif1'>{data.uraian}</span>
                                 {
                                     data.total > 0 && (
