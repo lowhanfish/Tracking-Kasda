@@ -36,25 +36,70 @@ export const view = (req, res)=>{
 }
 
 export const verification = (req, res)=>{
-    res.status(200).send("OK");
+    const query = `
+        UPDATE documents_tracking
+        SET 
+        status = ?,
+        keterangan = ?
+        WHERE
+        master_tahapan_id = ?  AND documents_id = ? 
+
+    `
+    const values = [req.body.status, req.body.keterangan, req.body.master_tahapan_id, req.body.id];
+
+
+    db.query(query, values, (err, rows)=> {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(rows)
+        }
+    })
+
+
+
 }
 export const reject = (req, res)=>{
     res.status(200).send("OK");
 }
 
 
-export const getAllBarStep = () => {
+
+
+/*
+Di panggil di :
+Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
+- API/documents
+*/
+
+export const getAllStep = (req, res) => {
     const query = `
-    
+        SELECT 
+        master_tahapan.*,
+
+        (
+            SELECT COUNT(*) 
+            FROM documents_tracking
+            
+           
+
+            WHERE documents_tracking.master_tahapan_id = master_tahapan.id
+           
+
+
+        ) as total
+
+
+        FROM master_tahapan
+
+
     `
-
-    const values = [];
-
-    db.query(query, values, (err, rows)=> {
+    db.query(query, (err, rows)=>{
         if (err) {
+            console.log(err);
             res.status(500).send(err);
         } else {
-            res.status(200).send(rows)
+            res.status(200).send(rows);
         }
     })
 

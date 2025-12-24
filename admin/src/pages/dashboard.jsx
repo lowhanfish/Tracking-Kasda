@@ -22,10 +22,19 @@ import BarChartx from '@components/chart/BarChartx';
 
 
 
+
+
+
 import ListData from '@components/ListDataUser';
 import ListImage from '@components/ListImage';
 import Stepperx from '../components/Stepperx';
 import LineChartx from '../components/chart/LineChartx';
+import axios from "axios";
+import useStorex from "@store/index";
+import ListDocumentByLimit from "@components/ListDocumentByLimit";
+
+
+
 
 
 function srcset(image, size, rows = 1, cols = 1) {
@@ -44,6 +53,9 @@ const Template1 = () => {
 
     const token = localStorage.getItem('authToken');
     // console.log("myToken : ", token)
+
+
+
 
     // ====== ANCHOR ====== 
     const [anchorEls, setAnchorEls] = React.useState({}); // key = index
@@ -97,7 +109,7 @@ const Template1 = () => {
             </div>
             <div className="cardxBody">
 
-                <Grid container spacing={1} sx={{ marginTop: 2 }}>
+                <Grid container spacing={2} sx={{ marginTop: 2 }}>
                     <Grid size={{ md: 3, xs: 12 }}>
                         <div className='barContainer shaddow1'>
                             <div className='barLeft cyant1'>
@@ -178,12 +190,7 @@ const Template1 = () => {
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='dashboardContainer shaddow1'>
                             <div className='dashboardTitle'>List Pengajuan</div>
-                            <ListData />
-                            <ListData />
-                            <ListData />
-                            <ListData />
-                            <ListData />
-                            <ListData />
+                            <ListDocumentByLimit />
                         </div>
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>

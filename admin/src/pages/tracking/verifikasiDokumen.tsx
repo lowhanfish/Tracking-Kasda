@@ -182,8 +182,8 @@ const VerifikasiDokumen = () => {
 
     const loadDataRef = async () => {
         const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {});
-        // console.log("===========")
-        // console.log(listTahapanx)
+        console.log("===========")
+        console.log(listTahapanx)
         setListTahapan(listTahapanx);
     }
 
@@ -273,7 +273,7 @@ const VerifikasiDokumen = () => {
                         listTahapan.map((data, index) => (
                             <button key={index} className='btnNav'>
                                 <span>{data.uraian}</span>
-                                <span className='font-badge-number'> (12)</span>
+                                <span className='font-badge-number'> ({data.total})</span>
                             </button>
 
                         ))
