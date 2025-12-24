@@ -12,10 +12,10 @@ export const view = (req, res)=>{
 
         FROM ${main}.documents documents
 
-        JOIN ${main}.master_jns_pencairan master_jns_pencairan
+        LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
         ON documents.master_jns_pencairan_id = master_jns_pencairan.id
 
-        JOIN ${main}.master_jns_pencairan_list master_jns_pencairan_list
+        LEFT JOIN ${main}.master_jns_pencairan_list master_jns_pencairan_list
         ON master_jns_pencairan_list.master_jns_pencairan_id = master_jns_pencairan.id
 
         WHERE master_jns_pencairan_list.id = ?
@@ -40,4 +40,23 @@ export const verification = (req, res)=>{
 }
 export const reject = (req, res)=>{
     res.status(200).send("OK");
+}
+
+
+export const getAllBarStep = () => {
+    const query = `
+    
+    `
+
+    const values = [];
+
+    db.query(query, values, (err, rows)=> {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(rows)
+        }
+    })
+
+
 }
