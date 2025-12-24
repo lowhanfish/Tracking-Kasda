@@ -211,6 +211,11 @@ hr.hrku2 {
     border-radius: 5px;
 }
 
+hr.hrku3 {
+    border: 2px solid var(--color-background-row2);
+    border-radius: 5px;
+}
+
 .dashboardContainer {
     background-color: #f9f9f9;
     padding-bottom: 20px;

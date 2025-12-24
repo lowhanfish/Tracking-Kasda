@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
@@ -134,6 +134,8 @@ const RegistrasiDokumen = () => {
     // const [jnsPencairan, setJnsPencairan] = useState('');
     // const [besaranAnggaran, setBesaranAnggaran] = useState('');
     const [loading, setLoading] = useState(false);
+
+    // Flag to prevent double call on initial mount
 
     const pushPPH = (event) => {
         // event.target.value adalah value dari MenuItem

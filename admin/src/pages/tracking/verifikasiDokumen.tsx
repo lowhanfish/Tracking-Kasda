@@ -53,6 +53,11 @@ const VerifikasiDokumen = () => {
     const [loadData, setLoadData] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [tahapanActive, setTahapanActive] = useState({
+        id: 0,
+        uraian: '',
+    });
+
     const [listTahapan, setListTahapan] = useState([])
 
     // ====== AUTO COMPLETE ====== 
@@ -88,6 +93,7 @@ const VerifikasiDokumen = () => {
             pageFirst: pageFirst,
             searchData: searchData,
             dataLimit: dataLimit,
+            master_tahapan_id: tahapanActive.id,
             id_unit_kerja: '',
         };
 
@@ -97,7 +103,8 @@ const VerifikasiDokumen = () => {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
 
-        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
+        const listDatax = await getPOST(token, url.URL_VERIFICATION + '/view', payload);
+
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
@@ -123,15 +130,6 @@ const VerifikasiDokumen = () => {
         setFormData({ ...dataDummy });
     }
 
-    const SetAlert = (message, color) => {
-        SetColorAlert(color)
-        SetMessageAlert(message)
-        SetActiveAlert(true);
-        setTimeout(() => {
-            SetActiveAlert(false);
-        }, 2000);
-    }
-
     const showAlert = (message, icon) => {
         Swal.fire({
             title: "Drag me!",
@@ -152,18 +150,6 @@ const VerifikasiDokumen = () => {
     };
 
 
-    const testData = () => {
-        axios.post(url.URL_VERIFICATION + "/view", JSON.stringify({ id: 4 }), {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `kikensbatara ${token}`
-            }
-        }).then(result => {
-            console.log(result)
-        }).catch(error => {
-            console.log(error)
-        })
-    }
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -180,8 +166,18 @@ const VerifikasiDokumen = () => {
     // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
     // ====== MODAL ADD ======
 
+
+    const handleSetTahapanActive = (id, uraian) => {
+        setTahapanActive({
+            id: id,
+            uraian: uraian
+        })
+    }
+
+
     const loadDataRef = async () => {
         const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {});
+        handleSetTahapanActive(listTahapanx[0].id, listTahapanx[0].uraian)
         console.log("===========")
         console.log(listTahapanx)
         setListTahapan(listTahapanx);
@@ -191,8 +187,9 @@ const VerifikasiDokumen = () => {
         viewData();
         loadDataRef();
         handleDataUnitKerja("");
-        testData();
+        // testData();
     }, [selectedUnitKerja, searchData, pageFirst])
+    // }, [])
 
     return (
         <div className="cardx">
@@ -266,21 +263,24 @@ const VerifikasiDokumen = () => {
                 />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
                 <div className='btnContainer'>
-                    <Grid>
-
-                    </Grid>
                     {
                         listTahapan.map((data, index) => (
-                            <button key={index} className='btnNav'>
-                                <span>{data.uraian}</span>
-                                <span className='font-badge-number'> ({data.total})</span>
+                            <button onClick={() => { handleSetTahapanActive(data.id, data.uraian) }} key={index} className=''>
+                                <span className='h_notif1'>{data.uraian}</span>
+                                {
+                                    data.total > 0 && (
+                                        <span className='h_notif'> ({data.total})</span>
+                                    )
+                                }
                             </button>
-
                         ))
                     }
-
-
                 </div>
+                <span className='TextProfileHead1 shaddowText'>
+                    {tahapanActive.uraian}
+
+                </span>
+                <hr className='hrku2' />
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
                 <Grid container spacing={1}>

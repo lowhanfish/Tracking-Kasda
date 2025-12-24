@@ -5,34 +5,99 @@ const simpeg = process.env.DB_SIMPEG;
 const egov = process.env.DB_USER;
 
 
-export const view = (req, res)=>{
-    const query = `
-        SELECT 
-        documents.* 
+export const view = async (req, res)=>{
 
-        FROM ${main}.documents documents
+    console.log("view route verivication dipanggil");
+    console.log(req.body);
+    console.log("========")
 
-        LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
-        ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+    var filterUnitKerja = ``
+        
+    if (req.body.id_unit_kerja) {
+        filterUnitKerja = `AND (documents.sub_unit_kerja = '`+req.body.id_unit_kerja+`')`
+    } else {
+        filterUnitKerja = ``
+    }
 
-        LEFT JOIN ${main}.master_jns_pencairan_list master_jns_pencairan_list
-        ON master_jns_pencairan_list.master_jns_pencairan_id = master_jns_pencairan.id
+    const data = await viewAllData(req, res,filterUnitKerja);
+    const jml = await viewJmlData(req, res, filterUnitKerja)
 
-        WHERE master_jns_pencairan_list.id = ?
 
-    `
 
-    const values = [6];
+    res.send({
+        data : data,
+        jml : 5,
+    });
+}
 
-    db.query(query, values, (err, rows)=>{
-        if (err) {
-            console.log(err)
-            res.status(500).send(err);
-        } else {
-            res.status(200).send(rows);
-        }
+export const viewAllData = (req, res, filterUnitKerja)=>{
+
+
+    const limit = req.body.dataLimit
+    const cari = req.body.searchData
+    const startFrom = (req.body.pageFirst - 1)* limit;
+
+
+    return new Promise((resolve, reject) => {
+        
+
+        const query = `
+            SELECT 
+            documents.* 
+    
+            FROM ${main}.documents documents
+
+            WHERE documents.uraian LIKE '%`+cari+`%' 
+            `+filterUnitKerja+`
+
+            LIMIT `+startFrom+`,`+limit+`
+    
+           
+    
+        `
+    
+        const values = [6];
+    
+        db.query(query, values, (err, rows)=>{
+            if (err) {
+                reject(err)
+            } else {
+                resolve(rows)
+            }
+    
+        })
+
 
     })
+
+}
+
+export const viewJmlData = async (req, res, filterUnitKerja)=> {
+    const cari = req.body.searchData
+    return new Promise((resolve, reject)=>{
+
+        const query = `
+        SELECT
+        
+        count(documents.id) as jml
+
+        FROM ${main}.documents documents
+        WHERE documents.uraian LIKE '%`+cari+`%' 
+        `+filterUnitKerja+`
+        `
+        db.query(query, (err, rows) => {
+            if (err) {
+                console.log(err);
+                reject({
+                    status :500,
+                    message : err
+                })
+            } else {
+                resolve(rows)
+            }
+        })
+    })
+
 }
 
 export const verification = (req, res)=>{

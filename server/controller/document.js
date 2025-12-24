@@ -19,7 +19,9 @@ export const view = async (req, res) => {
     // res.send("OK")
 
 
+    console.log("view route register dokumen dipanggil");
     console.log(req.body);
+    console.log("========")
 
     var filterUnitKerja = ``
         
@@ -286,6 +288,7 @@ export const editex = (req, res) => {
         }
     })
 }
+
 
 export const deletex = (req, res) => {
 
