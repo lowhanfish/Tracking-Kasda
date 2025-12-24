@@ -151,6 +151,20 @@ const VerifikasiDokumen = () => {
         viewData();           // fetch data halaman baru
     };
 
+
+    const testData = () => {
+        axios.post(url.URL_VERIFICATION + "/view", JSON.stringify({ id: 4 }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result)
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
     const openSetting = () => setOpenModalSetting(true);
@@ -177,6 +191,7 @@ const VerifikasiDokumen = () => {
         viewData();
         loadDataRef();
         handleDataUnitKerja("");
+        testData();
     }, [selectedUnitKerja, searchData, pageFirst])
 
     return (
