@@ -4,7 +4,7 @@ import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../cont
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
 import { view as view_tracking, save as save_tracking, deletex as deletex_tracking } from "../controller/tracking.js";
-import { removeFile } from "../lib/removeFile.js";
+import { removeFile } from "../lib/fileRef.js";
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
