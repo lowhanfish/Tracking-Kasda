@@ -5,6 +5,9 @@ import {add as add_files, deletex as deletex_files, view as view_files } from ".
 
 import { view as view_tracking, save as save_tracking, deletex as deletex_tracking } from "../controller/tracking.js";
 import { removeFile } from "../lib/fileRef.js";
+import { FirstStep, NumNextStep } from "../lib/getStep.js";
+
+
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -180,7 +183,8 @@ export const viewOne = async (req, res) => {
     
 }
 
-export const add = (req, res) => {
+export const add = async (req, res) => {
+
     const query = `
         INSERT INTO documents
         (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy)
@@ -218,7 +222,20 @@ export const add = (req, res) => {
             }
 
 
-            await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi")
+            // console.log(req.body);
+            const FirstStepx = await FirstStep(req.body.master_jns_pencairan_id)
+            const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
+            console.log("====================")
+            console.log("FirstStepx", FirstStepx);
+            console.log("numNextStep", numNextStep);
+            console.log("==================== CLEAR")
+
+
+            await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi");
+            
+            if (numNextStep) {
+                await save_tracking(req, numNextStep, rows.insertId, 0, "Dokumen sedang diverifikasi");
+            }
 
             res.status(201).send({
                 status: 201,

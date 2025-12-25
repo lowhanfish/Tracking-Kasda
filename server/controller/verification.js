@@ -155,7 +155,7 @@ export const getAllStep = (req, res) => {
             JOIN documents
             ON documents.id = documents_tracking.documents_id
             
-            WHERE documents_tracking.master_tahapan_id = master_tahapan.id
+            WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = 0
            
         ) as total
 

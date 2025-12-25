@@ -1,24 +1,50 @@
 import db from "../db/mysql/index.js";
 
 
-export const NumNextStep = async (master_jns_pencairan) => {
-    const datax = await getSteps(master_jns_pencairan)
-    const dataindex = datax.findIndex(item => item.urut === master_jns_pencairan)
-    return dataindex
+export const NumNextStep = async (master_jns_pencairan, currentData) => {
+
+    console.log("currentData :"+ currentData)
+    console.log("master_jns_pencairan :"+ master_jns_pencairan)
+    const datax = await getSteps(master_jns_pencairan);
+
+    console.log("datax = ")
+    console.log(datax);
+
+
+    const dataLength = datax.length;
+    console.log("dataLength : ", dataLength)
+
+    const dataindex = datax.findIndex(item => item.master_tahapan_id == currentData);
+    console.log("Current dataindex : "+ dataindex);
+
+    if (dataindex < (dataLength-1)) {
+        console.log("masuk tambah")
+        return datax[dataindex+1].master_tahapan_id       
+    } else {
+        return false
+    }
 }
-export const NumBackStep = async (master_jns_pencairan) => {
-    const datax = await getSteps(master_jns_pencairan)
-    const dataindex = datax.findIndex(item => item.urut === master_jns_pencairan)
-    return dataindex
+export const NumBackStep = async (master_jns_pencairan, currentData) => {
+    const datax = await getSteps(master_jns_pencairan);
+    const dataindex = datax.findIndex(item => item.urut == currentData);
+    if (dataindex > 0) {
+        return datax[dataindex-1].master_tahapan_id       
+    } else {
+        return false
+    }
 }
 
+export const FirstStep = async (master_jns_pencairan, currentData) => {
+    const datax = await getSteps(master_jns_pencairan);
+    return datax[0].master_tahapan_id
+}
 
 const getSteps = (master_jns_pencairan) => {
 
     return new Promise((resolve, reject) => {
         
         const query = `
-            SELECT id FROM master_jns_pencairan_list
+            SELECT master_tahapan_id FROM master_jns_pencairan_list
             WHERE master_jns_pencairan_list.master_jns_pencairan_id = ?
         `;
     
