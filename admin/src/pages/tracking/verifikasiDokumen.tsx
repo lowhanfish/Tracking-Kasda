@@ -105,6 +105,7 @@ const VerifikasiDokumen = () => {
             dataLimit: dataLimit,
             master_tahapan_id: tahapanActive.id,
             id_unit_kerja: '',
+            status: filterStatus,
         };
 
         // console.log("========", selectedUnitKerja)
@@ -185,7 +186,9 @@ const VerifikasiDokumen = () => {
     }
 
     const loadDataRef = async () => {
-        const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {});
+        const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {
+            status: filterStatus,
+        });
         handleSetTahapanActive(listTahapanx[0].id, listTahapanx[0].uraian)
         console.log("===========")
         console.log(listTahapanx)
@@ -195,14 +198,23 @@ const VerifikasiDokumen = () => {
 
     // Ambil data tahapan hanya sekali saat mount
     useEffect(() => {
-        loadDataRef();
         handleDataUnitKerja("");
     }, []);
+
+
+
+    // Panggil loadDataRef setiap kali filterStatus berubah
+    useEffect(() => {
+        loadDataRef();
+    }, [filterStatus]);
 
     // Panggil viewData setiap kali tahapanActive, selectedUnitKerja, searchData, atau pageFirst berubah
     useEffect(() => {
         viewData();
     }, [tahapanActive, selectedUnitKerja, searchData, pageFirst]);
+
+
+
 
     return (
         <div className="cardx">

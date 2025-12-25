@@ -8,8 +8,8 @@ const egov = process.env.DB_USER;
 export const view = async (req, res)=>{
 
     console.log("view route verivication dipanggil");
-    console.log(req.body);
-    console.log("========")
+    // console.log(req.body);
+    // console.log("========")
 
     var filterUnitKerja = ``
         
@@ -144,6 +144,11 @@ Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
 */
 
 export const getAllStep = (req, res) => {
+
+    console.log("getAllStep verifivation.js dipanggil");
+    console.log(req.body);
+
+
     const query = `
         SELECT 
         master_tahapan.*,
@@ -155,16 +160,15 @@ export const getAllStep = (req, res) => {
             JOIN documents
             ON documents.id = documents_tracking.documents_id
             
-            WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = 0
+            WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = ?
            
         ) as total
-
-
         FROM master_tahapan
-
-
     `
-    db.query(query, (err, rows)=>{
+    const values = [req.body.status]
+
+
+    db.query(query, values, (err, rows)=>{
         if (err) {
             console.log(err);
             res.status(500).send(err);
