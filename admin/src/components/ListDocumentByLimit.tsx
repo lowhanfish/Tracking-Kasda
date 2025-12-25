@@ -50,7 +50,7 @@ const ListDocumentByLimit = ({ limit }: ListDocumentByLimitProps) => {
 
     return (
         <div>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                 <ListDataItems
                     title='Contoh Title'
                     unit="Unit Kerja"

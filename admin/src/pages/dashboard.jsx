@@ -188,7 +188,7 @@ const Template1 = () => {
                 <hr className='hrku1' />
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
-                        <div className='dashboardContainer shaddow1'>
+                        <div className='dashboardContainer shaddow1' style={{ paddingRight: 10 }}>
                             <div className='dashboardTitle'>List Pengajuan</div>
                             <ListDocumentByLimit />
                         </div>
