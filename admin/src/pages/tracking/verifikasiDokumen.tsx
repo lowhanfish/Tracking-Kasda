@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
+
+
 import Clear from '@mui/icons-material/Clear';
 import Search from '@mui/icons-material/Search';
 
@@ -11,6 +13,7 @@ import { getPOST } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
+import BasicSelect from '@components/items/BasicSelect';
 
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { GetUnitKerja } from "@lib/dataFetch.js";
@@ -84,6 +87,11 @@ const VerifikasiDokumen = () => {
         master_tahapan_id: tahapanId,
     });
 
+    const OptionsFilter = [
+        { value: 0, label: "Proses" },
+        { value: 1, label: "Diterima" },
+        { value: 2, label: "Dikembalikan" },
+    ]
 
     const viewData = async () => {
 
@@ -200,7 +208,7 @@ const VerifikasiDokumen = () => {
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
-
+                        <BasicSelect options={OptionsFilter as any} />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
                         <Autocompletex
@@ -326,8 +334,8 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); }} color="warning" fullWidth variant="outlined" size="small">
-                                Edit
+                            <Button onClick={() => { closeSetting(); }} color="success" fullWidth variant="outlined" size="small">
+                                Approve
                             </Button>
                         </Grid>
                         <Grid size={12}>
@@ -335,7 +343,7 @@ const VerifikasiDokumen = () => {
                                 Remove
                             </Button> */}
                             <Button onClick={() => { closeSetting(); }} color="error" fullWidth variant="outlined" size="small">
-                                Remove
+                                Reject
                             </Button>
                         </Grid>
                     </Grid>
