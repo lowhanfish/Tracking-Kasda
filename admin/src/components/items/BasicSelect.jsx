@@ -15,13 +15,13 @@ const DEFAULT_OPTIONS = [
     { value: 'option5', label: 'Option 5' }
 ];
 
-// Definisikan nilai default untuk props opsional
+
 function BasicSelect({
     Title = '',
     name = '',
-    value = '', // Default value harus diset agar controlled component berfungsi
-    onChange = (e) => { }, // Terima event parameter
-    options = DEFAULT_OPTIONS // Menerima array opsi: [{ value: '...', label: '...' }], default ke DEFAULT_OPTIONS
+    value = undefined, // value bisa string atau number
+    onChange = (e) => { },
+    options = DEFAULT_OPTIONS
 }) {
 
     // Kumpulan props yang akan diteruskan ke komponen Selectx
@@ -31,7 +31,7 @@ function BasicSelect({
         id: name ? `${name}-select` : "basic-select-id",
         variant: "outlined",
         name: name,
-        value: value,
+        value: value === undefined ? '' : String(value), // pastikan value ke Selectx adalah string
         onChange: onChange,
         labelId: name ? `${name}-label` : "basic-select-label"
     };

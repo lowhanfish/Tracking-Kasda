@@ -87,6 +87,8 @@ const VerifikasiDokumen = () => {
         master_tahapan_id: tahapanId,
     });
 
+    const [filterStatus, setFilterStatus] = useState(0);
+
     const OptionsFilter = [
         { value: 0, label: "Proses" },
         { value: 1, label: "Diterima" },
@@ -208,7 +210,11 @@ const VerifikasiDokumen = () => {
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <BasicSelect options={OptionsFilter as any} />
+                        <BasicSelect
+                            value={filterStatus}
+                            options={OptionsFilter as any}
+                            onChange={e => setFilterStatus(e.target.value)}
+                        />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
                         <Autocompletex
