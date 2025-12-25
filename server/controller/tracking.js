@@ -54,8 +54,6 @@ export const view = (documents_id, master_jns_pencairan_id, )=>{
     })
 }
 
-
-
 export const save = (req, master_tahapan_id, documents_id, status, keterangan) => {
 
     return new Promise(async (resolve) => {
@@ -92,7 +90,6 @@ export const viewLength = (master_tahapan_id, documents_id) => {
         });
     });
 }
-
 
 export const add = (req, master_tahapan_id, documents_id, status, keterangan) => {
     return new Promise((resolve, reject) => {
@@ -142,5 +139,23 @@ export const editex = (req, master_tahapan_id, documents_id, status, keterangan)
                 resolve(rows);
             }
         })
+    })
+}
+
+export const deletex = (documents_id) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+                DELETE FROM documents_tracking
+                WHERE documents_tracking.documents_id = ?
+        `;
+
+        const values = [documents_id];
+        db.query(query, values, (err, rows)=> {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
     })
 }

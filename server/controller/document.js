@@ -3,8 +3,8 @@ import { add as add_pph, view as view_pph, deletex as delete_pph } from "../cont
 import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
-import { view as view_tracking, save as save_tracking } from "../controller/tracking.js";
-import dbResolveCondition from "../lib/dbResolveCondition.js";
+import { view as view_tracking, save as save_tracking, deletex as deletex_tracking } from "../controller/tracking.js";
+
 
 
 const db_main = process.env.DB_MAIN
@@ -20,8 +20,8 @@ export const view = async (req, res) => {
 
 
     console.log("view route register dokumen dipanggil");
-    console.log(req.body);
-    console.log("========")
+    // console.log(req.body);
+    // console.log("========")
 
     var filterUnitKerja = ``
         
@@ -100,6 +100,7 @@ export const viewAllData = async (req, res, filterUnitKerja)=> {
     })
 
 }
+
 export const viewJmlData = async (req, res, filterUnitKerja)=> {
     const cari = req.body.searchData
     return new Promise((resolve, reject)=>{
@@ -239,10 +240,9 @@ export const add = (req, res) => {
     })
 }
 
-
 export const editex = (req, res) => {
     console.log("FUNC EDIT REG DOK DI PANGGIL");
-    console.log(req.body)
+    // console.log(req.body)
     const query = `
         UPDATE documents SET
         uraian = ?,
@@ -289,10 +289,9 @@ export const editex = (req, res) => {
     })
 }
 
-
 export const deletex = (req, res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
 
     const query = `
         DELETE FROM documents
@@ -306,6 +305,7 @@ export const deletex = (req, res) => {
         } else {
             await delete_pph(req.body.id);
             await delete_ppn(req.body.id);
+            await deletex_tracking(req.body.id);
             deletex_files(req, 'documents', req.body.id);
             res.status(200).send(rows)
         }

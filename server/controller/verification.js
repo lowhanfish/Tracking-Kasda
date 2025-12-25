@@ -43,12 +43,16 @@ export const viewAllData = (req, res, filterUnitKerja)=>{
 
         const query = `
             SELECT 
-            documents.* 
+            documents.* ,
+            master_jns_pencairan.uraian as uraian_jns_pencairan
     
             FROM ${main}.documents documents
 
             JOIN documents_tracking
             ON (documents_tracking.documents_id = documents.id AND documents_tracking.master_tahapan_id = ?)
+
+            LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
+            ON documents.master_jns_pencairan_id = master_jns_pencairan.id
 
             WHERE documents.uraian LIKE '%`+cari+`%' 
             `+filterUnitKerja+`
