@@ -54,7 +54,7 @@ export const viewAllData = (req, res, filterUnitKerja)=>{
             LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
             ON documents.master_jns_pencairan_id = master_jns_pencairan.id
 
-            WHERE documents.uraian LIKE '%`+cari+`%' 
+            WHERE documents.uraian LIKE '%`+cari+`%'
             `+filterUnitKerja+`
 
             LIMIT `+startFrom+`,`+limit+`

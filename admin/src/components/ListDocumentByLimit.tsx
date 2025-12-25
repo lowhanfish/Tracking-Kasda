@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import useStorex from '@store/index'
 import axios from 'axios'
+import ListDataItems from './ListDataItems'
 
 
 
@@ -49,7 +50,38 @@ const ListDocumentByLimit = ({ limit }: ListDocumentByLimitProps) => {
 
     return (
         <div>
-            <h1>Components Active</h1>
+            <div>
+                <ListDataItems
+                    title='Contoh Title'
+                    unit="Unit Kerja"
+                    price={2500000}
+
+                />
+                <ListDataItems
+                    title='Contoh Title'
+                    unit="Unit Kerja"
+                    price={2500000}
+
+                />
+                <ListDataItems
+                    title='Contoh Title'
+                    unit="Unit Kerja"
+                    price={2500000}
+
+                />
+                <ListDataItems
+                    title='Contoh Title'
+                    unit="Unit Kerja"
+                    price={2500000}
+
+                />
+                <ListDataItems
+                    title='Contoh Title'
+                    unit="Unit Kerja"
+                    price={2500000}
+
+                />
+            </div>
 
             {/* {
                 loading ? (
