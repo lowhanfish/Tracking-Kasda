@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
-
+import CloseIcon from '@mui/icons-material/Close';
 
 
 import Clear from '@mui/icons-material/Clear';
@@ -53,6 +53,16 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, val
         }
     }
 
+    const removeFile = (index: number) => {
+        setFile(prev => {
+            if (Array.isArray(prev)) {
+                return prev.filter((_, i) => i !== index);
+            }
+            return null;
+        });
+    }
+
+
     return (
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
@@ -90,6 +100,44 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, val
                             onChange={handleFileUpload}
                         />
                     </Grid>
+
+                    {
+                        file && Array.isArray(file) && file.length > 0 && (
+                            <Grid size={{ md: 12, xs: 12 }} container spacing={1} style={{ marginTop: 10 }}>
+                                <Grid size={{ md: 12, xs: 12 }}>
+                                    <div className="table-wrap" style={{ width: '100%' }}>
+                                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                                            <thead className="h_thead shaddowText">
+                                                <tr>
+                                                    <th style={{ width: '5%' }} scope="col">No</th>
+                                                    <th style={{ width: '90%' }} scope="col">Nama File</th>
+                                                    <th style={{ width: '5%' }} scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="h_body">
+                                                {
+                                                    file.map((f: any, index: number) => (
+                                                        <tr key={index}>
+                                                            <td className='center'>{index + 1}.</td>
+                                                            <td>{f.name}</td>
+                                                            <td>
+                                                                <button
+                                                                    className='btn sm danger shaddow1'
+                                                                    onClick={() => removeFile(index)}
+                                                                >
+                                                                    <CloseIcon sx={{ fontSize: 18 }} />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                        )
+                    }
 
                 </Grid>
 
