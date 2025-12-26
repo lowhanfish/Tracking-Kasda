@@ -14,6 +14,7 @@ import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
 import BasicSelect from '@components/items/BasicSelect';
+import FieldSingle from '@components/items/FieldSingle.jsx';
 
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { GetUnitKerja } from "@lib/dataFetch.js";
@@ -42,6 +43,16 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
 
 function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, value, onChange }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
+
+    const [file, setFile] = useState(null);
+
+    const handleFileUpload = (event: any) => {
+        const files = event.target.files;
+        if (files) {
+            setFile(Array.from(files));
+        }
+    }
+
     return (
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
@@ -56,12 +67,33 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, val
             </DialogTitle>
             <DialogContent sx={{ mt: 2 }}>
                 {/* Gunakan value dan onChange yang dipassing dari parent */}
-                <LexicalEditor
-                    label="Catatan / Keterangan Approve"
-                    value={value}
-                    onChange={onChange}
-                    placeholder="Tulis alasan atau catatan verifikasi di sini..."
-                />
+
+
+                <Grid container spacing={1}>
+                    <Grid size={{ md: 12, xl: 12 }}>
+                        <LexicalEditor
+                            label="Catatan / Keterangan Approve"
+                            value={value}
+                            onChange={onChange}
+                            placeholder="Tulis alasan atau catatan verifikasi di sini..."
+                        />
+                    </Grid>
+
+
+                    <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: -3 }}>
+                        <FieldSingle
+                            Title='Pilih Lampiran Jika ada'
+                            type='file'
+                            name='file'
+                            accept='.pdf,image/*'
+                            multiple
+                            onChange={handleFileUpload}
+                        />
+                    </Grid>
+
+                </Grid>
+
+
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>

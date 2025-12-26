@@ -59,7 +59,8 @@ const QuillEditor = ({
                     variant="body2"
                     sx={{ mb: 1, fontWeight: 500, color: error ? 'error.main' : 'text.primary' }}
                 >
-                    {label}
+                    <div className='inputText'>{label}</div>
+                    {/* {label} */}
                 </Typography>
             )}
 
