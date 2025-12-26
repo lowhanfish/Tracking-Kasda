@@ -65,48 +65,7 @@ const menuConfig = [
             icon: 'StopIcon',
             multiple : false,
           },
-          {
-            title: "Verifikasi Pajak",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Pencatatan",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Disposisi Kuasa BUD",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Verifikasi Kaban",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Penerbitan SP2D",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Daftar Penguji",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
-          {
-            title: "Pencairan Bank",
-            path: "/VerifikasiDokumen",
-            icon: 'StopIcon',
-            multiple : false,
-          },
+          
           {
             title: "Tracking",
             path: "/TrackingDokumen",

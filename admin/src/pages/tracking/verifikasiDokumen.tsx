@@ -18,6 +18,7 @@ import BasicSelect from '@components/items/BasicSelect';
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { GetUnitKerja } from "@lib/dataFetch.js";
 import Swal from 'sweetalert2';
+import LexicalEditor from '@components/items/LexicalEditor';
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -35,6 +36,35 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
             <DialogContent>
                 <DialogContentText component="div">{children}</DialogContentText>
             </DialogContent>
+        </Dialog>
+    );
+}
+
+function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave }: any) {
+    // fullScreen => Dialog.fullScreen (boolean)
+    return (
+        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">
+                <div className='headerModal'>
+                    <div className='TextProfileHead shaddowText'>{title} Data</div>
+                    <div className='headerModalRight'>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <Clear />
+                        </IconButton>
+                    </div>
+                </div>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText component="div">
+                    <div>
+                        <LexicalEditor />
+                    </div>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onSave}>Save</Button>
+            </DialogActions>
         </Dialog>
     );
 }
@@ -122,6 +152,10 @@ const VerifikasiDokumen = () => {
         // console.log(listDatax)
     }
 
+    const approveData = () => {
+        alert("approve data")
+    }
+
     const selectData = (data) => {
 
         const dataDummy = {
@@ -166,6 +200,11 @@ const VerifikasiDokumen = () => {
     const [openModalSetting, setOpenModalSetting] = useState(false);
     const openSetting = () => setOpenModalSetting(true);
     const closeSetting = () => setOpenModalSetting(false);
+
+    // ====== MODAL APPROVE ======
+    const [openModalApprove, setOpenModalApprove] = useState(false);
+    const openApprove = () => setOpenModalApprove(true);
+    const closeApprove = () => setOpenModalApprove(false);
 
     // ====== MODAL DETAIL ======
     const [openModalDetail, setOpenModalDetail] = useState(false);
@@ -352,7 +391,7 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); }} color="success" fullWidth variant="outlined" size="small">
+                            <Button onClick={(e) => { e.currentTarget.blur(); closeSetting(); openApprove(); }} color="success" fullWidth variant="outlined" size="small">
                                 Approve
                             </Button>
                         </Grid>
@@ -368,6 +407,20 @@ const VerifikasiDokumen = () => {
 
                 </SettingDialog>
                 {/* ================= SETTING DATA ================= */}
+
+                {/* ================= APPROVE DATA ================= */}
+
+                <ApproveDialog
+                    open={openModalApprove}
+                    onClose={closeApprove}
+                    fullScreen={fullScreen}
+                    maxWidth="sm"
+                    title="Approve"
+                    onSave={approveData}
+                />
+
+
+                {/* ================= APPROVE DATA ================= */}
 
                 {/* ================= DETAIL DATA ================= */}
                 <DetailData

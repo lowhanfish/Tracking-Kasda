@@ -188,13 +188,13 @@ const Template1 = () => {
                 <hr className='hrku1' />
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
-                        <div className='dashboardContainer shaddow1' style={{ paddingRight: 10 }}>
+                        <div className='dashboardContainer shaddow1' style={{ paddingRight: 10, height: '450px', overflow: 'auto' }}>
                             <div className='dashboardTitle'>List Pengajuan</div>
                             <ListDocumentByLimit />
                         </div>
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>
-                        <div className='dashboardContainer shaddow1'>
+                        <div className='dashboardContainer shaddow1' style={{ height: '450px', overflow: 'auto' }}>
                             <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
                             <Stepperx />
                         </div>
@@ -206,7 +206,7 @@ const Template1 = () => {
 
 
             </div>
-        </div>
+        </div >
     )
 }
 
