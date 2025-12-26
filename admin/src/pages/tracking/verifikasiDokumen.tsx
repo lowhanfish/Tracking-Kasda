@@ -261,7 +261,7 @@ const VerifikasiDokumen = () => {
             // Send to verification approve endpoint
             const res = await axios.post(`${url.URL_VERIFICATION}/approve`, formDataToSend, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `kikensbatara ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });

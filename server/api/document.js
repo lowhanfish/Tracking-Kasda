@@ -25,24 +25,24 @@ router.post("/add", upload.array('files', 10), (req, res) => {
         //     path: file.path,
         //     url: `/uploads/${file.filename}`
         // }));
-    })
+})
     
     
     
-    router.post("/edit", upload.array('files', 10), (req, res) => {
-        console.log("EDIT REG DOK DI PANGGIL");
-        // console.log(req.body);
-        editex(req, res);
-    })
-    router.post("/delete", (req, res) => {
-        console.log("DELETE DOCUMENT DI PANGGIL");
-        deletex(req, res);
-    })
+router.post("/edit", upload.array('files', 10), (req, res) => {
+    console.log("EDIT REG DOK DI PANGGIL");
+    // console.log(req.body);
+    editex(req, res);
+})
+router.post("/delete", (req, res) => {
+    console.log("DELETE DOCUMENT DI PANGGIL");
+    deletex(req, res);
+})
 
 
-    router.post('/viewTahapanByDocument', (req, res)=>{
-        getAllStep(req, res);
-    })
-    
-    
-    export default router;
+router.post('/viewTahapanByDocument', (req, res)=>{
+    getAllStep(req, res);
+})
+
+
+export default router;

@@ -105,7 +105,7 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 
 }
 
-export const verification = (req, res)=>{
+export const approve = (req, res)=>{
     const query = `
         UPDATE documents_tracking
         SET 
