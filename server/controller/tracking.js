@@ -67,6 +67,34 @@ export const save = (req, master_tahapan_id, documents_id, status, keterangan) =
         }
     })    
 }
+export const saveHistory = (req, master_tahapan_id, documents_id, status, keterangan) => {
+
+   return new Promise((resolve, reject) => {
+
+    const query = `
+            INSERT 
+            INTO documents_history
+            (master_tahapan_id, documents_id, createdBy, status, keterangan, createdAt)
+            VALUES
+            (?, ?, ?, ?, ?, NOW())
+        `
+
+        const values = [master_tahapan_id, documents_id, req.user._id, status, keterangan];
+
+        db.query(query, values, (err, rows)=>{
+            if (err) {
+                console.log(err);
+                reject({
+                    status: 500,
+                    message: err
+                });
+            } else {
+                resolve(rows);
+            }
+        })
+    
+   })
+}
 
 export const viewLength = (master_tahapan_id, documents_id) => {
     return new Promise((resolve, reject) => {

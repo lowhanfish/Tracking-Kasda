@@ -5,6 +5,10 @@ const simpeg = process.env.DB_SIMPEG;
 const egov = process.env.DB_USER;
 
 
+import { saveHistory, save as SaveTracking } from "../controller/tracking.js";
+import { FirstStep, NumNextStep } from "../lib/getStep.js";
+
+
 export const view = async (req, res)=>{
 
     console.log("view route verivication dipanggil");
@@ -105,7 +109,17 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 
 }
 
-export const approve = (req, res)=>{
+export const approve = async (req, res)=>{
+    console.log(req.body);
+
+    const FirstStepx = await FirstStep(req.body.master_jns_pencairan_id)
+    const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
+
+
+    console.log("FirstStepx: ",FirstStepx)
+    console.log("numNextStep: ",numNextStep)
+
+
     const query = `
         UPDATE documents_tracking
         SET 
@@ -113,20 +127,20 @@ export const approve = (req, res)=>{
         keterangan = ?
         WHERE
         master_tahapan_id = ?  AND documents_id = ? 
-
     `
-    const values = [req.body.status, req.body.keterangan, req.body.master_tahapan_id, req.body.id];
-
+    const values = [req.body.status, req.body.catatan, req.body.master_tahapan_id, req.body.id];
 
     db.query(query, values, (err, rows)=> {
         if (err) {
             res.status(500).send(err)
         } else {
+            SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
+            saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
             res.status(200).send(rows)
         }
     })
 
-
+    // res.send("OK")
 
 }
 

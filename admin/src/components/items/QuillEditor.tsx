@@ -56,11 +56,12 @@ const QuillEditor = ({
         <Box sx={{ mb: 3 }}>
             {label && (
                 <Typography
+                    component="div"
+                    className="inputText"
                     variant="body2"
                     sx={{ mb: 1, fontWeight: 500, color: error ? 'error.main' : 'text.primary' }}
                 >
-                    <div className='inputText'>{label}</div>
-                    {/* {label} */}
+                    {label}
                 </Typography>
             )}
 

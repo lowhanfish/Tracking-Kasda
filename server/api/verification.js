@@ -19,7 +19,14 @@ router.post('/approve', upload.array('files', 10) ,(req, res)=> {
     //         url: `/uploads/${file.filename}`
     //     }));
 
+
+
     approve(req, res)
+
+
+    // console.log(filesData)
+    // console.log(req.body);
+    // res.send("OK")
 })
 router.post('/reject', (req, res)=>{
     reject(req, res)

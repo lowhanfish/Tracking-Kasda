@@ -245,7 +245,9 @@ const VerifikasiDokumen = () => {
         const formDataToSend = new FormData();
         formDataToSend.append('id', formData.id);
         formDataToSend.append('catatan', approveComment);
-        formDataToSend.append('status', 'approved');
+        formDataToSend.append('status', "1");
+        formDataToSend.append('master_tahapan_id', tahapanActive.id.toString());
+        formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
 
         try {
             // attach files if any
