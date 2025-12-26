@@ -145,7 +145,7 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, val
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button variant="contained" color="success" onClick={onSave}>Save & Approve</Button>
+                <Button variant="contained" color="success" onClick={() => onSave(file)}>Save & Approve</Button>
             </DialogActions>
         </Dialog>
     );
@@ -236,27 +236,58 @@ const VerifikasiDokumen = () => {
         // console.log(listDatax)
     }
 
-    const approveData = async () => {
+    const approveData = async (files: any) => {
         if (!approveComment || approveComment === '<p><br></p>') {
             alert("Mohon isi catatan persetujuan");
             return;
         }
+        // Build FormData similar to saveData in RegistrasiDokumen
+        const formDataToSend = new FormData();
+        formDataToSend.append('id', formData.id);
+        formDataToSend.append('catatan', approveComment);
+        formDataToSend.append('status', 'approved');
 
-        // Contoh payload untuk dikirim ke API
-        const payload = {
-            id: formData.id,
-            catatan: approveComment,
-            status: 'approved'
-        };
+        try {
+            // attach files if any
+            if (files && Array.isArray(files)) {
+                files.forEach((f, idx) => {
+                    formDataToSend.append('files', f);
+                });
+            }
+            // If ApproveDialog passed files via onSave, it will be provided as argument
+            // But here we expect caller to pass files when invoking approveData(files)
+            // If no files provided, this will simply skip adding attachments.
+            // (The caller passes files array; see ApproveDialog invocation change.)
+            // Send to verification approve endpoint
+            const res = await axios.post(`${url.URL_VERIFICATION}/approve`, formDataToSend, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
-        console.log("Mengirim Data:", payload);
-        // Jalankan axios.post Anda di sini...
-
-        // Setelah sukses:
-        closeApprove();
-        setApproveComment(''); // Reset editor
-        viewData(); // Refresh list
+            if (res.status === 200 || res.status === 201) {
+                SetAlert('Data berhasil disetujui', 'success');
+                closeApprove();
+                setApproveComment('');
+                viewData();
+            } else {
+                SetAlert('Gagal menyetujui data', 'error');
+            }
+        } catch (err) {
+            console.error('Approve error', err);
+            SetAlert('Terjadi kesalahan saat menyetujui', 'error');
+        }
     };
+
+    const SetAlert = (message, color) => {
+        SetColorAlert(color)
+        SetMessageAlert(message)
+        SetActiveAlert(true);
+        setTimeout(() => {
+            SetActiveAlert(false);
+        }, 2000);
+    }
 
     const selectData = (data) => {
 
