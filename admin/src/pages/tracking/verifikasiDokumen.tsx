@@ -18,7 +18,7 @@ import BasicSelect from '@components/items/BasicSelect';
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { GetUnitKerja } from "@lib/dataFetch.js";
 import Swal from 'sweetalert2';
-import LexicalEditor from '@components/items/LexicalEditor';
+import LexicalEditor from '@components/items/QuillEditor';
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -40,7 +40,7 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     );
 }
 
-function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave }: any) {
+function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, value, onChange }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
         <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
@@ -54,22 +54,26 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave }: a
                     </div>
                 </div>
             </DialogTitle>
-            <DialogContent>
-                <DialogContentText component="div">
-                    <div>
-                        <LexicalEditor />
-                    </div>
-                </DialogContentText>
+            <DialogContent sx={{ mt: 2 }}>
+                {/* Gunakan value dan onChange yang dipassing dari parent */}
+                <LexicalEditor
+                    label="Catatan / Keterangan Approve"
+                    value={value}
+                    onChange={onChange}
+                    placeholder="Tulis alasan atau catatan verifikasi di sini..."
+                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={onSave}>Save</Button>
+                <Button variant="contained" color="success" onClick={onSave}>Save & Approve</Button>
             </DialogActions>
         </Dialog>
     );
 }
 
 const VerifikasiDokumen = () => {
+
+    const [approveComment, setApproveComment] = useState('');
 
     const { url } = useStorex();
     const token = localStorage.getItem('authToken');
@@ -152,9 +156,27 @@ const VerifikasiDokumen = () => {
         // console.log(listDatax)
     }
 
-    const approveData = () => {
-        alert("approve data")
-    }
+    const approveData = async () => {
+        if (!approveComment || approveComment === '<p><br></p>') {
+            alert("Mohon isi catatan persetujuan");
+            return;
+        }
+
+        // Contoh payload untuk dikirim ke API
+        const payload = {
+            id: formData.id,
+            catatan: approveComment,
+            status: 'approved'
+        };
+
+        console.log("Mengirim Data:", payload);
+        // Jalankan axios.post Anda di sini...
+
+        // Setelah sukses:
+        closeApprove();
+        setApproveComment(''); // Reset editor
+        viewData(); // Refresh list
+    };
 
     const selectData = (data) => {
 
@@ -417,6 +439,9 @@ const VerifikasiDokumen = () => {
                     maxWidth="sm"
                     title="Approve"
                     onSave={approveData}
+                    // Tambahkan ini:
+                    value={approveComment}
+                    onChange={setApproveComment}
                 />
 
 

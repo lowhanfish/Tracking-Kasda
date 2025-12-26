@@ -8,6 +8,7 @@ import './assets/css/button.css'
 import './assets/css/modal.css'
 import './assets/css/input.css'
 import './assets/css/stepper.css'
+import './assets/css/lexical.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
