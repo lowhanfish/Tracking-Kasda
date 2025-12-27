@@ -46,7 +46,7 @@ export default function SideBar({ variant, open, onClose }) {
 
 
     const { url } = useStorex()
-    getmenuItem(url.URL_MENU + '/getMenuSidebar');
+    // getmenuItem(url.URL_MENU + '/getMenuSidebar');
 
     // Toggle menu expand/collapse
     const handleToggle = (title) => {

@@ -123,7 +123,7 @@ const VerifikasiDokumen = () => {
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        // console.log(listDatax)
+        console.log(listDatax)
     }
 
     const approveData = async (files: any) => {
@@ -391,6 +391,7 @@ const VerifikasiDokumen = () => {
                                         unit={data.sub_unit_kerja_uraian}
                                         title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
                                         price={data.nilai}
+                                        status={data.status_tracking}
                                     />
                                 </div>
                             </Grid>
@@ -427,9 +428,6 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            {/* <Button onClick={() => showAlert()} color="error" fullWidth variant="outlined" size="small">
-                                Remove
-                            </Button> */}
                             <Button onClick={(e) => { e.currentTarget.blur(); setApprovePath('reject'); closeSetting(); openApprove(); }} color="error" fullWidth variant="outlined" size="small">
                                 Reject
                             </Button>

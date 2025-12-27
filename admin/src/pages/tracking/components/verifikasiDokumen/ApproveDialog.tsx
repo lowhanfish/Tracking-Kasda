@@ -1,24 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
+import { Button, Dialog, Grid, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
 
 import Clear from '@mui/icons-material/Clear';
-import Search from '@mui/icons-material/Search';
-
-import ListDataItems from '@components/ListDataItems';
-
-import { getPOST } from "@lib/dataFetch.js";
-import useStorex from '@store/index';
-import SnackBarx from '@components/items/SnackBar';
-import DetailData from '@components/DetailData';
-import BasicSelect from '@components/items/BasicSelect';
 import FieldSingle from '@components/items/FieldSingle.jsx';
-
-import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
-import { GetUnitKerja } from "@lib/dataFetch.js";
-import Swal from 'sweetalert2';
 import LexicalEditor from '@components/items/QuillEditor';
 
 function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, value, onChange, approvePath }: any) {
@@ -126,15 +112,10 @@ function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, val
             <DialogActions>
                 <Button onClick={onClose}>Cancel</Button>
 
-
-
                 <Button variant="contained" color={approvePath === `approve` ? `success` : `error`} onClick={() => onSave(file)}>
                     Save &
                     {approvePath === `approve` ? ' Approve' : ' Reject'}
                 </Button>
-
-
-
 
             </DialogActions>
         </Dialog>

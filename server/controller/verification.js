@@ -49,6 +49,7 @@ export const viewAllData = (req, res, filterUnitKerja)=>{
         const query = `
             SELECT 
             documents.* ,
+            documents_tracking.status as status_tracking,
             master_jns_pencairan.uraian as uraian_jns_pencairan
     
             FROM ${main}.documents documents
