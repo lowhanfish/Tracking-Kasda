@@ -14,12 +14,11 @@ import useStorex from '@store/index';
 import SnackBarx from '@components/items/SnackBar';
 import DetailData from '@components/DetailData';
 import BasicSelect from '@components/items/BasicSelect';
-import FieldSingle from '@components/items/FieldSingle.jsx';
-
-import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { GetUnitKerja } from "@lib/dataFetch.js";
+import ApproveDialog from './components/verifikasiDokumen/ApproveDialog';
 import Swal from 'sweetalert2';
-import LexicalEditor from '@components/items/QuillEditor';
+import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
+
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
@@ -37,116 +36,6 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
             <DialogContent>
                 <DialogContentText component="div">{children}</DialogContentText>
             </DialogContent>
-        </Dialog>
-    );
-}
-
-function ApproveDialog({ open, onClose, fullScreen, maxWidth, title, onSave, value, onChange }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-
-    const [file, setFile] = useState(null);
-
-    const handleFileUpload = (event: any) => {
-        const files = event.target.files;
-        if (files) {
-            setFile(Array.from(files));
-        }
-    }
-
-    const removeFile = (index: number) => {
-        setFile(prev => {
-            if (Array.isArray(prev)) {
-                return prev.filter((_, i) => i !== index);
-            }
-            return null;
-        });
-    }
-
-
-    return (
-        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-                <div className='headerModal'>
-                    <div className='TextProfileHead shaddowText'>{title} Data</div>
-                    <div className='headerModalRight'>
-                        <IconButton onClick={onClose} aria-label="close">
-                            <Clear />
-                        </IconButton>
-                    </div>
-                </div>
-            </DialogTitle>
-            <DialogContent sx={{ mt: 2 }}>
-                {/* Gunakan value dan onChange yang dipassing dari parent */}
-
-
-                <Grid container spacing={1}>
-                    <Grid size={{ md: 12, xl: 12 }}>
-                        <LexicalEditor
-                            label="Catatan / Keterangan Approve"
-                            value={value}
-                            onChange={onChange}
-                            placeholder="Tulis alasan atau catatan verifikasi di sini..."
-                        />
-                    </Grid>
-
-
-                    <Grid size={{ md: 12, xs: 12 }} sx={{ marginTop: -3 }}>
-                        <FieldSingle
-                            Title='Pilih Lampiran Jika ada'
-                            type='file'
-                            name='file'
-                            accept='.pdf,image/*'
-                            multiple
-                            onChange={handleFileUpload}
-                        />
-                    </Grid>
-
-                    {
-                        file && Array.isArray(file) && file.length > 0 && (
-                            <Grid size={{ md: 12, xs: 12 }} container spacing={1} style={{ marginTop: 10 }}>
-                                <Grid size={{ md: 12, xs: 12 }}>
-                                    <div className="table-wrap" style={{ width: '100%' }}>
-                                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
-                                            <thead className="h_thead shaddowText">
-                                                <tr>
-                                                    <th style={{ width: '5%' }} scope="col">No</th>
-                                                    <th style={{ width: '90%' }} scope="col">Nama File</th>
-                                                    <th style={{ width: '5%' }} scope="col">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="h_body">
-                                                {
-                                                    file.map((f: any, index: number) => (
-                                                        <tr key={index}>
-                                                            <td className='center'>{index + 1}.</td>
-                                                            <td>{f.name}</td>
-                                                            <td>
-                                                                <button
-                                                                    className='btn sm danger shaddow1'
-                                                                    onClick={() => removeFile(index)}
-                                                                >
-                                                                    <CloseIcon sx={{ fontSize: 18 }} />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    ))
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        )
-                    }
-
-                </Grid>
-
-
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button variant="contained" color="success" onClick={() => onSave(file)}>Save & Approve</Button>
-            </DialogActions>
         </Dialog>
     );
 }
@@ -169,6 +58,7 @@ const VerifikasiDokumen = () => {
     const [jmlData, setJmlData] = useState(1);
     const [loadData, setLoadData] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [approvePath, setApprovePath] = useState("approve")
 
     const [tahapanActive, setTahapanActive] = useState({
         id: 0,
@@ -237,6 +127,15 @@ const VerifikasiDokumen = () => {
     }
 
     const approveData = async (files: any) => {
+        var status = '0';
+
+        if (approvePath === 'approve') {
+            status = '1'
+        } else {
+            status = '2'
+        }
+
+
         if (!approveComment || approveComment === '<p><br></p>') {
             alert("Mohon isi catatan persetujuan");
             return;
@@ -245,9 +144,10 @@ const VerifikasiDokumen = () => {
         const formDataToSend = new FormData();
         formDataToSend.append('id', formData.id);
         formDataToSend.append('catatan', approveComment);
-        formDataToSend.append('status', "1");
+        formDataToSend.append('status', status);
         formDataToSend.append('master_tahapan_id', tahapanActive.id.toString());
         formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
+        formDataToSend.append('approvePath', approvePath);
 
         try {
             // attach files if any
@@ -269,7 +169,13 @@ const VerifikasiDokumen = () => {
             });
 
             if (res.status === 200 || res.status === 201) {
-                SetAlert('Data berhasil disetujui', 'success');
+
+                if (approvePath === 'approve') {
+                    SetAlert('Data berhasil disetujui', 'success');
+                } else {
+                    SetAlert('Data berhasil dikembalikan', 'warning');
+                }
+
                 closeApprove();
                 setApproveComment('');
                 loadDataRef();
@@ -311,15 +217,6 @@ const VerifikasiDokumen = () => {
         setFormData({ ...dataDummy });
     }
 
-    const showAlert = (message, icon) => {
-        Swal.fire({
-            title: "Drag me!",
-            // icon: "success",
-            icon: "error",
-            draggable: true
-        });
-    };
-
     const cariData = (e) => {
         setPageFirst(1)
         viewData();
@@ -329,8 +226,6 @@ const VerifikasiDokumen = () => {
         setPageFirst(value); // update halaman aktif
         viewData();           // fetch data halaman baru
     };
-
-
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -527,7 +422,7 @@ const VerifikasiDokumen = () => {
                             </Button>
                         </Grid>
                         <Grid size={12}>
-                            <Button onClick={(e) => { e.currentTarget.blur(); closeSetting(); openApprove(); }} color="success" fullWidth variant="outlined" size="small">
+                            <Button onClick={(e) => { e.currentTarget.blur(); setApprovePath('approve'); closeSetting(); openApprove(); }} color="success" fullWidth variant="outlined" size="small">
                                 Approve
                             </Button>
                         </Grid>
@@ -535,7 +430,7 @@ const VerifikasiDokumen = () => {
                             {/* <Button onClick={() => showAlert()} color="error" fullWidth variant="outlined" size="small">
                                 Remove
                             </Button> */}
-                            <Button onClick={() => { closeSetting(); }} color="error" fullWidth variant="outlined" size="small">
+                            <Button onClick={(e) => { e.currentTarget.blur(); setApprovePath('reject'); closeSetting(); openApprove(); }} color="error" fullWidth variant="outlined" size="small">
                                 Reject
                             </Button>
                         </Grid>
@@ -551,11 +446,12 @@ const VerifikasiDokumen = () => {
                     onClose={closeApprove}
                     fullScreen={fullScreen}
                     maxWidth="sm"
-                    title="Approve"
+                    title={approvePath === `approve` ? 'Approve' : 'Reject'}
                     onSave={approveData}
                     // Tambahkan ini:
                     value={approveComment}
                     onChange={setApproveComment}
+                    approvePath={approvePath}
                 />
 
 

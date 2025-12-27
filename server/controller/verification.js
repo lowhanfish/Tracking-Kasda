@@ -113,13 +113,11 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 export const approve = async (req, res)=>{
     console.log(req.body);
 
+
+
+
     const FirstStepx = req.body.master_tahapan_id
     const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
-
-
-    // console.log("FirstStepx: ",FirstStepx)
-    // console.log("numNextStep: ",numNextStep)
-
 
     const query = `
         UPDATE documents_tracking
@@ -143,7 +141,9 @@ export const approve = async (req, res)=>{
                 await add_files(req, "documents_tracking", id_tracking);
             }
 
-            SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
+            if (req.body.approvePath === 'approve') {
+                SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
+            }
             saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
             res.status(200).send(rows)
         }
