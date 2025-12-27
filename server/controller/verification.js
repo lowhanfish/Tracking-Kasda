@@ -5,8 +5,9 @@ const simpeg = process.env.DB_SIMPEG;
 const egov = process.env.DB_USER;
 
 
-import { saveHistory, save as SaveTracking } from "../controller/tracking.js";
+import { saveHistory, save as SaveTracking, getID } from "../controller/tracking.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
+import {add as add_files} from "../controller/files.js";
 
 
 export const view = async (req, res)=>{
@@ -112,12 +113,12 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 export const approve = async (req, res)=>{
     console.log(req.body);
 
-    const FirstStepx = await FirstStep(req.body.master_jns_pencairan_id)
+    const FirstStepx = req.body.master_tahapan_id
     const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
 
 
-    console.log("FirstStepx: ",FirstStepx)
-    console.log("numNextStep: ",numNextStep)
+    // console.log("FirstStepx: ",FirstStepx)
+    // console.log("numNextStep: ",numNextStep)
 
 
     const query = `
@@ -130,10 +131,18 @@ export const approve = async (req, res)=>{
     `
     const values = [req.body.status, req.body.catatan, req.body.master_tahapan_id, req.body.id];
 
-    db.query(query, values, (err, rows)=> {
+    db.query(query, values, async (err, rows)=> {
         if (err) {
             res.status(500).send(err)
         } else {
+
+            let id_tracking =  await getID (req.body.master_tahapan_id, req.body.id);
+            console.log("ID TRACKING ========== ",id_tracking)
+
+            if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+                await add_files(req, "documents_tracking", id_tracking);
+            }
+
             SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
             saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
             res.status(200).send(rows)

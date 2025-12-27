@@ -272,6 +272,7 @@ const VerifikasiDokumen = () => {
                 SetAlert('Data berhasil disetujui', 'success');
                 closeApprove();
                 setApproveComment('');
+                loadDataRef();
                 viewData();
             } else {
                 SetAlert('Gagal menyetujui data', 'error');
@@ -364,8 +365,8 @@ const VerifikasiDokumen = () => {
             status: filterStatus,
         });
         handleSetTahapanActive(listTahapanx[0].id, listTahapanx[0].uraian)
-        console.log("===========")
-        console.log(listTahapanx)
+        // console.log("===========")
+        // console.log(listTahapanx)
         setListTahapan(listTahapanx);
 
     }

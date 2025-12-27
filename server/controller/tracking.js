@@ -156,7 +156,7 @@ export const editex = (req, master_tahapan_id, documents_id, status, keterangan)
 
         const values = [status, master_tahapan_id, documents_id, keterangan];
 
-        db.query(query, values, ()=>{
+        db.query(query, values, (err, rows)=>{
             if (err) {
                 console.log(err);
                 reject({
@@ -185,5 +185,30 @@ export const deletex = (documents_id) => {
                 resolve(rows);
             }
         });
+    })
+}
+
+
+export const getID = (master_tahapan_id, documents_id) => {
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+            SELECT id FROM documents_tracking
+            WHERE master_tahapan_id = ? AND documents_id = ?
+        `;
+
+        const values = [master_tahapan_id, documents_id];
+
+        db.query(query, values, (err, rows) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(rows[0].id)
+            }
+        })
+
+
+
+
     })
 }
