@@ -39,6 +39,13 @@ export const FirstStep = async (master_jns_pencairan, currentData) => {
     return datax[0].master_tahapan_id
 }
 
+export const LastStep = async (master_jns_pencairan, currentData) => {
+    const datax = await getSteps(master_jns_pencairan);
+    const lastData = datax.length - 1
+    const lastStep = datax[lastData].master_tahapan_id
+    return lastStep;
+}
+
 const getSteps = (master_jns_pencairan) => {
 
     return new Promise((resolve, reject) => {

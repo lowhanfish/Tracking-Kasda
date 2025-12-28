@@ -6,7 +6,7 @@ const egov = process.env.DB_USER;
 
 
 import { saveHistory, save as SaveTracking, getID } from "../controller/tracking.js";
-import { FirstStep, NumNextStep } from "../lib/getStep.js";
+import { FirstStep, NumNextStep, LastStep } from "../lib/getStep.js";
 import {add as add_files} from "../controller/files.js";
 import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 
@@ -112,13 +112,17 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 }
 
 export const approve = async (req, res)=>{
-    console.log(req.body);
+    // console.log(req.body);
 
 
 
 
-    const FirstStepx = req.body.master_tahapan_id
+    const FirstStepx = parseInt(req.body.master_tahapan_id)
     const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
+    const LastStepx = await LastStep(req.body.master_jns_pencairan_id, FirstStepx);
+
+    // console.log("FirstStep : ", FirstStepx);
+    // console.log("LastStep : ", LastStepx);
 
     const query = `
         UPDATE documents_tracking
@@ -136,7 +140,7 @@ export const approve = async (req, res)=>{
         } else {
 
             let id_tracking =  await getID (req.body.master_tahapan_id, req.body.id);
-            console.log("ID TRACKING ========== ",id_tracking)
+            // console.log("ID TRACKING ========== ",id_tracking)
 
             if (req.files && Array.isArray(req.files) && req.files.length > 0) {
                 await add_files(req, "documents_tracking", id_tracking);
@@ -145,8 +149,14 @@ export const approve = async (req, res)=>{
             if (req.body.approvePath === 'approve') {
                 SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
                 await canUpdate(req.body.id, 0);
+
+                if (FirstStepx == LastStepx) {
+                    // console.log("============= HARUSNYA SUDAH FINAL ==========")
+                    await dummyStatus(req.body.id, 1);
+                }
+
             }else{
-                console.log("di reject kan? ========")
+                // console.log("di reject kan? ========")
                 await dummyStatus(req.body.id, 2);
                 await canUpdate(req.body.id, 1);
             }
@@ -175,7 +185,7 @@ Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
 export const getAllStep = (req, res) => {
 
     console.log("getAllStep verifivation.js dipanggil");
-    console.log(req.body);
+    // console.log(req.body);
 
 
     const query = `
