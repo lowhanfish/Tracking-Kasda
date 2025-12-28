@@ -100,7 +100,9 @@ const Dashboard = () => {
             total: dataBar.total,
         });
 
-        console.log(data);
+        const dataPie = await getPOST(token, url.URL_DASHBOARD + '/pie_status', formData);
+        setPieStatus(dataPie);
+        console.log(dataPie);
     }
 
 
@@ -188,8 +190,8 @@ const Dashboard = () => {
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='chartContainer shaddow1'>
-                            <div className='dashboardTitle'>Status</div>
-                            <PieChartx />
+                            <div className='dashboardTitle'>Status Verifikasi</div>
+                            <PieChartx datax={pieStatus} />
                         </div>
                     </Grid>
                 </Grid>
