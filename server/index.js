@@ -58,6 +58,8 @@ router.get('/', (req, res) => {
     import files from "./api/files.js";
     app.use('/api/files', isLoggedIn, files)
 
+    import dashboard from "./api/dashboard.js";
+    app.use('/api/dashboard', isLoggedIn, dashboard)
     import document from "./api/document.js";
     app.use('/api/document', isLoggedIn, document)
     import verification from "./api/verification.js";

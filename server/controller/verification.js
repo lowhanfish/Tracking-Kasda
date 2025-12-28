@@ -114,9 +114,6 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 export const approve = async (req, res)=>{
     // console.log(req.body);
 
-
-
-
     const FirstStepx = parseInt(req.body.master_tahapan_id)
     const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
     const LastStepx = await LastStep(req.body.master_jns_pencairan_id, FirstStepx);
