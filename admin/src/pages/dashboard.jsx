@@ -140,7 +140,7 @@ const Dashboard = () => {
             master_jns_pencairan_id: master_jns_pencairan_id
         });
 
-        console.log(listProgressx)
+        // console.log(listProgressx)
         setProgress(listProgressx)
     }
 
@@ -159,13 +159,13 @@ const Dashboard = () => {
             <div className="cardxHeader gradientPurpleBlue">
                 <Grid container spacing={2}>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldWithButton placeholderx={'Cari Data..'} />
+                        <span className="titleBarHeader shaddowText">Dashboard</span>
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldSingle />
+                        {/* <FieldSingle /> */}
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldAutocomplete />
+                        {/* <FieldAutocomplete /> */}
                     </Grid>
                 </Grid>
             </div>

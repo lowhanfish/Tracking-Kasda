@@ -139,9 +139,6 @@ export const approve = async (req, res)=>{
             let id_tracking =  await getID (req.body.master_tahapan_id, req.body.id);
             // console.log("ID TRACKING ========== ",id_tracking)
 
-            if (req.files && Array.isArray(req.files) && req.files.length > 0) {
-                await add_files(req, "documents_tracking", id_tracking);
-            }
 
             if (req.body.approvePath === 'approve') {
                 SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
@@ -157,7 +154,14 @@ export const approve = async (req, res)=>{
                 await dummyStatus(req.body.id, 2);
                 await canUpdate(req.body.id, 1);
             }
-            saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
+
+
+           
+            const idHistory = await saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
+            if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+                await add_files(req, "documents_history", idHistory);
+            }
+            
             res.status(200).send(rows)
         }
     })

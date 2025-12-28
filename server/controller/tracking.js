@@ -1,4 +1,6 @@
 import db from "../db/mysql/index.js";
+import {view as view_files } from "../controller/files.js";
+
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -13,6 +15,7 @@ export const view = (documents_id, master_jns_pencairan_id, )=>{
             master_jns_pencairan_list.master_tahapan_id,
             master_jns_pencairan_list.urut,
             master_tahapan.uraian as master_tahapan_uraian,
+            IFNULL (documents_tracking.documents_id, 0) as documents_id,
             IFNULL (documents_tracking.status, 0) as status,
             IFNULL (documents_tracking.keterangan, '-') as keterangan,
             IFNULL (documents_tracking.createdAT, '') as createdAt,
@@ -89,7 +92,7 @@ export const saveHistory = (req, master_tahapan_id, documents_id, status, ketera
                     message: err
                 });
             } else {
-                resolve(rows);
+                resolve(rows.insertId);
             }
         })
     
@@ -234,9 +237,11 @@ export const updateAllReject = (documents_id) => {
 
 export const getHistory = (req, res) => {
     const query = `
-        SELECT documents_history.* 
+        SELECT 
+        documents_history.*
         FROM 
-        documents_history
+        ${db_main}.documents_history documents_history
+
         WHERE 
         documents_history.documents_id = ? AND 
         documents_history.master_tahapan_id = ?
@@ -244,10 +249,18 @@ export const getHistory = (req, res) => {
 
     const values = [req.body.documents_id, req.body.master_tahapan_id];
 
-    db.query(query, values, (err, rows)=> {
+    db.query(query, values, async (err, rows)=> {
         if (err) {
             res.status(500).send(err)
         } else {
+
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].files = await view_files(req, 'documents_history', rows[i].id);
+            }
+
+
+
+
             res.status(200).send(rows)
         }
     });

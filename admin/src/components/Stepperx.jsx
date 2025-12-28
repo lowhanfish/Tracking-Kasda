@@ -1,18 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Stepper, Step, StepLabel, StepContent, Typography, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton } from '@mui/material';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import Clear from '@mui/icons-material/Clear';
+import { getPOST } from "@lib/dataFetch";
+import useStorex from '@store/index';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import FileData from './FileData';
 
-const DetailTracking = ({ open, handleClose, title, listHistory }) => {
+const DetailTracking = ({ open, handleClose, title, listHistory, data }) => {
+
+    const [file, setFile] = useState(null);
+
+    const [openModal, setOpenModal] = useState(false);
+    const [fullScreen1, setFullScreen1] = useState(false);
+
+    // Buka modal FileData dengan file yang dipilih
+    const openModalFunc = (data) => {
+        setFile(data);
+        setOpenModal(true);
+    };
+
+    const closeModalFunc = () => setOpenModal(false);
+
+
+
+
+
+
+    console.log(data);
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>
                 <div className='headerModal'>
                     <div className='TextProfileHead shaddowText'>{title}</div>
                     <div className='headerModalRight'>
-                        {/* Tombol untuk menutup modal */}
                         <IconButton onClick={handleClose} aria-label="close">
                             <Clear />
                         </IconButton>
@@ -20,13 +43,68 @@ const DetailTracking = ({ open, handleClose, title, listHistory }) => {
                 </div>
             </DialogTitle>
             <DialogContent>
-                <div>
-                    <div />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+
+
+                    {
+
+                        data.map((data, index) => (
+
+                            <div key={index} className='list_history'>
+                                <div className='StepLabel1' dangerouslySetInnerHTML={{ __html: data.keterangan }} />
+                                <div className='StepLabel2 list_history_file'>asdasdasdasdas</div>
+                                <div className='StepLabel2'>{`(${data.createdAt || "-:-:-"})`}</div>
+
+                                {
+                                    data.files.length > 0 && (
+
+
+
+                                        <div className='list_history_file'>
+
+                                            {
+                                                data.files.map((data1, index1) => (
+                                                    <div key={index1} style={{ cursor: 'pointer' }} onClick={(e) => { e.currentTarget.blur(); openModalFunc(data1) }} >
+                                                        <PictureAsPdfIcon sx={{ fontSize: 35 }} />
+                                                    </div>
+
+                                                ))
+
+                                            }
+
+
+                                        </div>
+
+                                    )
+                                }
+                            </div>
+
+                        ))
+
+                    }
+
+
+
+
                 </div>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Close</Button>
             </DialogActions>
+
+
+            <FileData
+                open={openModal}
+                onClose={closeModalFunc}
+                title="Detail File"
+                fullScreen={fullScreen1}
+                maxWidth="md"
+                file={file}
+            />
+
+
+
         </Dialog>
     );
 };
@@ -52,20 +130,38 @@ const Iconx = ({ statusx }) => {
 
 const StaticStepper = ({ progress = [] }) => {
 
+    const token = localStorage.getItem('authToken');
+    const { url } = useStorex();
+
+    // console.log(progress)
+
     const [titleDetailTracking, setTitleDetailTracking] = useState("");
     const [listHistory, setListHistory] = useState([]);
 
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState(null);
 
-    const handleOpen = (item) => {
-        setSelected(item);
-        setOpen(true);
+    const handleOpen = async (item) => {
+        if (item.status === 1 || item.status === 2) {
+            setSelected(item);
+            await loadData(item.documents_id, item.master_tahapan_id)
+            setOpen(true);
+        }
     };
     const handleClose = () => {
         setOpen(false);
-        setSelected(null);
+        // setSelected(null);
     };
+
+    const loadData = async (id, master_tahapan_id) => {
+        const data = await getPOST(token, url.URL_VERIFICATION + '/getHistory', {
+            documents_id: id,
+            master_tahapan_id: master_tahapan_id
+        });
+        console.log(data)
+
+        setListHistory(Array.isArray(data) ? data : []);
+    }
 
     return (
         <>
@@ -89,6 +185,7 @@ const StaticStepper = ({ progress = [] }) => {
                                 <div className='StepLabel1'>{data.master_tahapan_uraian}</div>
                                 <div className='StepLabel2'>{data.nama_pengusul}</div>
                                 <div className='StepLabel2'>{`(${data.createdAt || "-:-:-"})`}</div>
+
                             </StepLabel>
                         </Step>
                     ))}
@@ -100,7 +197,9 @@ const StaticStepper = ({ progress = [] }) => {
                 open={open}
                 handleClose={handleClose}
                 title={titleDetailTracking}
+                data={listHistory}
             />
+
 
 
         </>

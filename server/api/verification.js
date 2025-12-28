@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {view, approve, reject} from "../controller/verification.js"
+import {getHistory } from "../controller/tracking.js";
 
 import upload from "../multer/index.js";
 const router = Router();
@@ -31,6 +32,10 @@ router.post('/approve', upload.array('files', 10) ,(req, res)=> {
 })
 router.post('/reject', (req, res)=>{
     reject(req, res)
+})
+
+router.post('/getHistory', (req, res)=>{
+    getHistory(req, res)
 })
 
 

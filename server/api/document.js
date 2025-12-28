@@ -6,6 +6,7 @@ import upload from "../multer/index.js";
 import { view, viewOne, add, editex, deletex } from "../controller/document.js";
 import {getAllStepByAccess } from "../controller/verification.js";
 
+
 router.post("/view", (req, res) => {
     // console.log("VIEW DI PANGGIL");
     view(req, res);
@@ -34,6 +35,11 @@ router.post("/edit", upload.array('files', 10), (req, res) => {
     // console.log(req.body);
     editex(req, res);
 })
+router.post("/delete", (req, res) => {
+    console.log("DELETE DOCUMENT DI PANGGIL");
+    deletex(req, res);
+})
+
 router.post("/delete", (req, res) => {
     console.log("DELETE DOCUMENT DI PANGGIL");
     deletex(req, res);
