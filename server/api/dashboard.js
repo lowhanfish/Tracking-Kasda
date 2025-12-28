@@ -1,18 +1,21 @@
 import { Router } from "express";
+import { bar, frekwensi_pengajuan, pie_status, time_series_history } from "../controller/dashboard";
+
+
 const router = Router();
 
 
 router.post("/bar", (req, res)=>{
-    res.send("OK")
+    bar(req, res);
 })
 router.post("/frekwensi_pengajuan", (req, res)=>{
-    res.send("OK")
+    frekwensi_pengajuan(req, res);
 })
 router.post("/pie_status", (req, res)=>{
-    res.send("OK")
+    pie_status(req, res);
 })
 router.post("/time_series_history", (req, res)=>{
-    res.send("OK")
+    time_series_history(req, res);
 })
 
 
