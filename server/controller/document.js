@@ -131,9 +131,6 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 }
 
 export const viewOne = async (req, res) => {
-
-
-        
         const query = `
         SELECT
         documents.*,
@@ -156,7 +153,6 @@ export const viewOne = async (req, res) => {
         ON biodata.nip = users.nama_nip
 
         WHERE documents.id = ?
-        
     `
 
     const values = [req.body.id];

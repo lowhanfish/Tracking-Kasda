@@ -57,6 +57,8 @@ const chartSetting = {
 
 export default function HorizontalBars({ valuex }) {
     return (
+
+
         <BarChart
             dataset={valuex}
             yAxis={[{ scaleType: 'band', dataKey: 'title', width: 150, }]}

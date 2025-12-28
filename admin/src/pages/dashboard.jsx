@@ -29,6 +29,7 @@ import useStorex from "@store/index";
 import ListDocumentByLimit from "@components/ListDocumentByLimit";
 import { getPOST } from "@lib/dataFetch";
 import HorizontalBars from "@components/chart/HorizontalBars";
+import ListDataItemsDashboard from "@components/ListDataItemsDashboard";
 
 
 
@@ -89,6 +90,9 @@ const Dashboard = () => {
     const [prosesUsulan, setProsesUsulan] = useState([]);
     const [timeSeriesHistory, setTimeSeriesHistory] = useState([]);
 
+    const [listDocument, setListDocument] = useState([]);
+    const [progress, setProgress] = useState([]);
+
     const [formData, setFormData] = useState({
         tahun: 2025,
         unit_kerja: '',
@@ -108,15 +112,36 @@ const Dashboard = () => {
         const dataPie = await getPOST(token, url.URL_DASHBOARD + '/pie_status', formData);
         setPieStatus(dataPie);
 
-        const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewProgreessAllDocument', {
+        const listTahapanx = await getPOST(token, url.URL_DASHBOARD + '/frekwensi_pengajuan', {
             status: 0,
             unit_kerja: formData.unit_kerja,
             tahun: formData.tahun,
         });
-
         setProsesUsulan(listTahapanx)
 
-        console.log(listTahapanx);
+
+        const listDocumentx = await getPOST(token, url.URL_DASHBOARD + '/list_documents', {
+            limit: 8,
+            unit_kerja: formData.unit_kerja,
+            tahun: formData.tahun,
+        });
+        setListDocument(listDocumentx);
+        // console.log("============")
+        // console.log(listDocumentx);
+        getProgresPengajuan(listDocumentx[0].id, listDocumentx[0].master_jns_pencairan_id);
+
+    }
+
+    const getProgresPengajuan = async (id, master_jns_pencairan_id) => {
+
+        console.log(id)
+        const listProgressx = await getPOST(token, url.URL_DASHBOARD + '/progres_pengajuan', {
+            id: id,
+            master_jns_pencairan_id: master_jns_pencairan_id
+        });
+
+        console.log(listProgressx)
+        setProgress(listProgressx)
     }
 
 
@@ -125,6 +150,7 @@ const Dashboard = () => {
     useEffect(() => {
         getLoadData();
     }, [])
+
 
 
 
@@ -229,14 +255,34 @@ const Dashboard = () => {
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='dashboardContainer shaddow1' style={{ paddingRight: 10, height: '450px', overflow: 'auto' }}>
-                            <div className='dashboardTitle'>List Pengajuan</div>
-                            <ListDocumentByLimit />
+                            <div className='dashboardTitle'>List Pengajuan Terakhir</div>
+                            {
+                                listDocument.map((data, index) => (
+                                    <div key={index} onClick={() => { getProgresPengajuan(data.id, data.master_jns_pencairan_id); }}>
+                                        <ListDataItemsDashboard
+                                            title={data.uraian}
+                                            unit={data.sub_unit_kerja}
+                                            price={data.nilai}
+                                            status={data.status_temp}
+                                        />
+                                    </div>
+                                ))
+
+
+                            }
                         </div>
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='dashboardContainer shaddow1' style={{ height: '450px', overflow: 'auto' }}>
-                            <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
-                            <Stepperx />
+                            <div className='dashboardTitle'>Progres Pengajuan</div>
+
+                            <div style={{ paddingLeft: 40, paddingRight: 5, height: 389, overflowY: 'auto' }}>
+                                <Stepperx
+                                    progress={progress}
+                                />
+
+                            </div>
+
                         </div>
                     </Grid>
                 </Grid>

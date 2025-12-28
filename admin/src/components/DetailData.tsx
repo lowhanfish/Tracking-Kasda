@@ -14,7 +14,7 @@ import FileData from './FileData';
 
 import axios from 'axios';
 import useStorex from '@store/index';
-
+import Stepperx from '../components/Stepperx';
 
 
 type IconxProps = {
@@ -180,11 +180,14 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
                         <div style={{ marginTop: 20 }} className='dashboardContainer'>
                             <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
                             <div style={{ paddingLeft: 40, paddingRight: 5, }}>
-                                <Stepper orientation="vertical">
+
+                                <Stepperx
+                                    progress={tracking}
+                                />
+                                {/* <Stepper orientation="vertical">
                                     {
                                         tracking.map((data, index) => (
                                             <Step key={index}>
-                                                {/* Icon status berubah berdasarkan nilai status */}
                                                 <StepLabel icon={<Iconx statusx={data.status} />}>
                                                     <div className='StepLabel1'>{data.master_tahapan_uraian}</div>
                                                     <div className='StepLabel2'>{data.nama_pengusul}</div>
@@ -193,7 +196,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
                                             </Step>
                                         ))
                                     }
-                                </Stepper>
+                                </Stepper> */}
                             </div>
                         </div>
 

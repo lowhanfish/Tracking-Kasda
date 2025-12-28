@@ -1,4 +1,8 @@
 import db from '../db/mysql/index.js'
+const main = process.env.DB_MAIN;
+const simpeg = process.env.DB_SIMPEG;
+const egov = process.env.DB_USER;
+import { view as view_tracking} from "../controller/tracking.js";
 
 export const bar = (req, res)=> {
 
@@ -65,16 +69,37 @@ export const pie_status = async (req, res)=> {
 
     res.send(data);
 
-
-
 }
-export const time_series_history = (req, res)=> {
-        const query = `
-        
-        `;
-        const values = [];
+export const list_documents = (req, res)=> {
+
+        var filter_sub_unit_kerja = ''
+
+        if (req.body.unit_kerja) {
+            filter_sub_unit_kerja = `WHERE  documents.sub_unit_kerja = `+req.body.unit_kerja+``
+        } else {
+            filter_sub_unit_kerja = ''
+        }
+
+
+         const query = `
+            SELECT 
+            documents.* ,
+            master_jns_pencairan.uraian as uraian_jns_pencairan
+    
+            FROM ${main}.documents documents
+
+            LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
+            ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+
+            ${filter_sub_unit_kerja}
+            LIMIT `+req.body.limit+`
+    
+        `
+    
+        const values = [req.body.master_tahapan_id];
         db.query(query, values, (err, rows)=> {
             if (err) {
+                console.log(err);
                 res.status(500).send(err);    
             } else {
                 res.status(200).send(rows);
@@ -82,7 +107,15 @@ export const time_series_history = (req, res)=> {
         })
 }
 
+export const getProgressByIdDoc = async (req, res)=> {
+    // console.log(req.body);
 
+    // res.send("Dari getProgressByIdDoc")
+    const data = await view_tracking(req.body.id, req.body.master_jns_pencairan_id);
+    res.send(data);
+
+
+}
 
 const getCountDataByStatus = (req, statusx) => {
     return new Promise((resolve, reject) => {
@@ -105,3 +138,6 @@ const getCountDataByStatus = (req, statusx) => {
 
     })
 }
+
+
+
