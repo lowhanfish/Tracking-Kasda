@@ -188,7 +188,6 @@ export const deletex = (documents_id) => {
     })
 }
 
-
 export const getID = (master_tahapan_id, documents_id) => {
     return new Promise((resolve, reject) => {
         
@@ -210,5 +209,25 @@ export const getID = (master_tahapan_id, documents_id) => {
 
 
 
+    })
+}
+
+export const updateAllReject = (documents_id) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE documents_tracking
+            SET
+            status = 0
+            WHERE
+            documents_id = ? AND status = 2
+        `
+        const values = [documents_id];
+        db.query(query, values, (err, rows)=> {
+            if (err) {
+                reject (err);
+            } else {
+                resolve(rows);
+            }
+        })
     })
 }

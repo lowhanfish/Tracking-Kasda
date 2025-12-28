@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {view, approve, reject} from "../controller/verification.js"
+
 import upload from "../multer/index.js";
 const router = Router();
 

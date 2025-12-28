@@ -125,6 +125,7 @@ const RegistrasiDokumen = () => {
         nilai: 0,
         sub_unit_kerja: profile.profile.sub_unit_kerja_id,
         master_tahapan_id: tahapanId,
+        status_update: 0,
     });
 
     const [file, setFile] = useState(null);
@@ -282,6 +283,7 @@ const RegistrasiDokumen = () => {
                     master_jns_pencairan_id: '',
                     nilai: 0,
                     master_tahapan_id: tahapanId,
+                    status_update: 0,
                 });
                 setPpn([]);
                 setPph([]);
@@ -345,7 +347,7 @@ const RegistrasiDokumen = () => {
             uraian_jns_pencairan: data.uraian_jns_pencairan,
             createdAt: data.createdAt,
             nama_pengusul: data.nama_pengusul,
-
+            status_update: data.status_update,
         }
 
         setFormData({ ...dataDummy });
@@ -528,6 +530,7 @@ const RegistrasiDokumen = () => {
                                         unit={data.sub_unit_kerja_uraian}
                                         title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
                                         price={data.nilai}
+                                        status={data.status_temp}
                                     />
                                 </div>
                             </Grid>
@@ -558,19 +561,25 @@ const RegistrasiDokumen = () => {
                                 Detail
                             </Button>
                         </Grid>
-                        <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
-                                Edit
-                            </Button>
-                        </Grid>
-                        <Grid size={12}>
-                            {/* <Button onClick={() => showAlert()} color="error" fullWidth variant="outlined" size="small">
-                                Remove
-                            </Button> */}
-                            <Button onClick={() => removeData()} color="error" fullWidth variant="outlined" size="small">
-                                Remove
-                            </Button>
-                        </Grid>
+
+                        {
+                            formData.status_update == 1 && (
+                                <>
+                                    <Grid size={12}>
+                                        <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
+                                            Edit
+                                        </Button>
+                                    </Grid>
+                                    <Grid size={12}>
+                                        <Button onClick={() => removeData()} color="error" fullWidth variant="outlined" size="small">
+                                            Remove
+                                        </Button>
+                                    </Grid>
+                                </>
+
+                            )
+                        }
+
                     </Grid>
 
                 </SettingDialog>

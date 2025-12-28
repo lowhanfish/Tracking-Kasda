@@ -3,7 +3,8 @@ import { add as add_pph, view as view_pph, deletex as delete_pph } from "../cont
 import { add as add_ppn, view as view_ppn, deletex as delete_ppn } from "../controller/ppn.js";
 import {add as add_files, deletex as deletex_files, view as view_files } from "../controller/files.js";
 
-import { view as view_tracking, save as save_tracking, deletex as deletex_tracking } from "../controller/tracking.js";
+import { view as view_tracking, save as save_tracking, deletex as deletex_tracking, updateAllReject } from "../controller/tracking.js";
+import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 import { removeFile } from "../lib/fileRef.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
 
@@ -275,6 +276,10 @@ export const editex = (req, res) => {
 
             await delete_pph(req.body.id);
             await delete_ppn(req.body.id);
+
+            await updateAllReject(req.body.id);
+            await dummyStatus(req.body.id, 0);
+            await canUpdate(req.body.id, 1);
 
             if (req.files && Array.isArray(req.files) && req.files.length > 0) {
                 await add_files(req, "documents", req.body.id);

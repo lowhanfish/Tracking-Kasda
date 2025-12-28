@@ -8,7 +8,7 @@ const egov = process.env.DB_USER;
 import { saveHistory, save as SaveTracking, getID } from "../controller/tracking.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
 import {add as add_files} from "../controller/files.js";
-
+import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 
 export const view = async (req, res)=>{
 
@@ -144,6 +144,11 @@ export const approve = async (req, res)=>{
 
             if (req.body.approvePath === 'approve') {
                 SaveTracking(req, numNextStep, req.body.id, 0, "Dokumen sedang diverifikasi")
+                await canUpdate(req.body.id, 0);
+            }else{
+                console.log("di reject kan? ========")
+                await dummyStatus(req.body.id, 2);
+                await canUpdate(req.body.id, 1);
             }
             saveHistory(req, req.body.master_tahapan_id, req.body.id, req.body.status, req.body.catatan)
             res.status(200).send(rows)

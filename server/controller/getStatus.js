@@ -3,10 +3,15 @@ import db from "../db/mysql/index.js";
 
 
 
-export const canUpdate = ()=> {
+export const canUpdate = (documents_id, statusx)=> {
     return new Promise((resolve, reject) => {
-        const query = ``;
-        const values = [];
+        const query = `
+            UPDATE documents
+            SET
+            status_update = ?
+            WHERE id =?
+        `;
+        const values = [statusx, documents_id];
         db.query(query, values, (err, rows)=> {
             if (err){
                 reject(err)
@@ -18,10 +23,15 @@ export const canUpdate = ()=> {
 }
 
 
-export const dummyStatus = () => {
+export const dummyStatus = (documents_id, statusx) => {
     return new Promise((resolve, reject) => {
-        const query = ``;
-        const values = [];
+        const query = `
+            UPDATE documents
+            SET
+            status_temp = ?
+            WHERE id =?
+        `;
+        const values = [statusx, documents_id];
         db.query(query, values, (err, rows)=> {
             if (err){
                 reject(err)
@@ -31,3 +41,6 @@ export const dummyStatus = () => {
         })
     })
 }
+
+
+

@@ -259,11 +259,17 @@ const VerifikasiDokumen = () => {
         const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewTahapanByDocument', {
             status: filterStatus,
         });
-        handleSetTahapanActive(listTahapanx[0].id, listTahapanx[0].uraian)
-        // console.log("===========")
-        // console.log(listTahapanx)
         setListTahapan(listTahapanx);
+        return listTahapanx;
+    }
 
+    const loadTahapan = async () => {
+        const list = await loadDataRef();
+        if (Array.isArray(list) && list.length > 0) {
+            handleSetTahapanActive(list[0].id, list[0].uraian);
+        } else {
+            setTahapanActive({ id: 0, uraian: '' });
+        }
     }
 
     // Ambil data tahapan hanya sekali saat mount
@@ -275,7 +281,7 @@ const VerifikasiDokumen = () => {
 
     // Panggil loadDataRef setiap kali filterStatus berubah
     useEffect(() => {
-        loadDataRef();
+        loadTahapan();
     }, [filterStatus]);
 
     // Panggil viewData setiap kali tahapanActive, selectedUnitKerja, searchData, atau pageFirst berubah
