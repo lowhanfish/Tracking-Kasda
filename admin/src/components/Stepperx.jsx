@@ -5,7 +5,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import Clear from '@mui/icons-material/Clear';
 
-const DetailTracking = ({ open, handleClose, title }) => {
+const DetailTracking = ({ open, handleClose, title, listHistory }) => {
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>
@@ -52,9 +52,8 @@ const Iconx = ({ statusx }) => {
 
 const StaticStepper = ({ progress = [] }) => {
 
-
     const [titleDetailTracking, setTitleDetailTracking] = useState("");
-
+    const [listHistory, setListHistory] = useState([]);
 
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState(null);

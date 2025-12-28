@@ -231,3 +231,25 @@ export const updateAllReject = (documents_id) => {
         })
     })
 }
+
+export const getHistory = (req, res) => {
+    const query = `
+        SELECT documents_history.* 
+        FROM 
+        documents_history
+        WHERE 
+        documents_history.documents_id = ? AND 
+        documents_history.master_tahapan_id = ?
+    `;
+
+    const values = [req.body.documents_id, req.body.master_tahapan_id];
+
+    db.query(query, values, (err, rows)=> {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.status(200).send(rows)
+        }
+    });
+
+}
