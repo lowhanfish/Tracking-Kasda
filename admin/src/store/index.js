@@ -30,6 +30,7 @@ const useStorex = create((set) => ({
 
     URL_DOCUMENT: `${BASE_URL}api/document`,
     URL_VERIFICATION: `${BASE_URL}api/verification`,
+    URL_DASHBOARD: `${BASE_URL}api/dashboard`,
     URL_FILES: `${BASE_URL}api/files`,
 
 

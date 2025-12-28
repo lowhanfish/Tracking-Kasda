@@ -17,14 +17,6 @@ import Anchorx from '@components/items/Anchorx';
 import PieChartx from '@components/chart/PieChartx';
 import BarChartx from '@components/chart/BarChartx';
 
-
-
-
-
-
-
-
-
 import ListData from '@components/ListDataUser';
 import ListImage from '@components/ListImage';
 import Stepperx from '../components/Stepperx';
@@ -32,7 +24,7 @@ import LineChartx from '../components/chart/LineChartx';
 import axios from "axios";
 import useStorex from "@store/index";
 import ListDocumentByLimit from "@components/ListDocumentByLimit";
-
+import { getPOST } from "@lib/dataFetch";
 
 
 
@@ -46,16 +38,14 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 
+const Dashboard = () => {
 
-
-
-const Template1 = () => {
+    // const d = new Date();
+    // let year = d.getFullYear();
 
     const token = localStorage.getItem('authToken');
+    const { url } = useStorex();
     // console.log("myToken : ", token)
-
-
-
 
     // ====== ANCHOR ====== 
     const [anchorEls, setAnchorEls] = React.useState({}); // key = index
@@ -67,8 +57,6 @@ const Template1 = () => {
         setAnchorEls(prev => ({ ...prev, [index]: null }));
     };
     // ====== ANCHOR ====== 
-
-
 
     // ====== MODAL ADD ====== 
     const [openModalAdd, setOpenModal] = React.useState(false);
@@ -85,9 +73,41 @@ const Template1 = () => {
     };
     // ====== MODAL ADD ====== 
 
+
+    const [listBar, setListBar] = useState({
+        approve: 0,
+        proceess: 0,
+        reject: 0,
+        total: 0,
+    });
+    const [frekwensiPengajuan, setFrekwensiPengajuan] = useState([]);
+    const [pieStatus, setPieStatus] = useState([]);
+    const [timeSeriesHistory, setTimeSeriesHistory] = useState([]);
+
+    const [formData, setFormData] = useState({
+        tahun: 2025,
+        unit_kerja: '',
+    })
+
+
+    const getLoadData = async () => {
+        // console.log(token);
+        const dataBar = await getPOST(token, url.URL_DASHBOARD + '/bar', formData);
+        setListBar({
+            approve: dataBar.approve,
+            proceess: dataBar.proceess,
+            reject: dataBar.reject,
+            total: dataBar.total,
+        });
+
+        console.log(data);
+    }
+
+
+
+
     useEffect(() => {
-
-
+        getLoadData();
     }, [])
 
 
@@ -117,7 +137,7 @@ const Template1 = () => {
                                 <div className='barLeftText shaddowText'>Jml Pengajuan</div>
                             </div>
                             <div className='barRight cyant11'>
-                                <span className='barRightText shaddowText'>100</span>
+                                <span className='barRightText shaddowText'>{listBar.total}</span>
                             </div>
                         </div>
                     </Grid>
@@ -128,7 +148,7 @@ const Template1 = () => {
                                 <div className='barLeftText shaddowText'>Proccess</div>
                             </div>
                             <div className='barRight bluex11'>
-                                <span className='barRightText shaddowText'>100</span>
+                                <span className='barRightText shaddowText'>{listBar.proceess}</span>
                             </div>
                         </div>
                     </Grid>
@@ -140,7 +160,7 @@ const Template1 = () => {
                                 <div className='barLeftText shaddowText'>Success</div>
                             </div>
                             <div className='barRight purpleLight11'>
-                                <span className='barRightText shaddowText'>100</span>
+                                <span className='barRightText shaddowText'>{listBar.approve}</span>
                             </div>
                         </div>
                     </Grid>
@@ -151,7 +171,7 @@ const Template1 = () => {
                                 <div className='barLeftText shaddowText'>Reject</div>
                             </div>
                             <div className='barRight purple11'>
-                                <span className='barRightText shaddowText'>100</span>
+                                <span className='barRightText shaddowText'>{listBar.reject}</span>
                             </div>
                         </div>
                     </Grid>
@@ -210,4 +230,4 @@ const Template1 = () => {
     )
 }
 
-export default Template1
+export default Dashboard

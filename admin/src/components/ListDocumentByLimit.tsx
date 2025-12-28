@@ -44,7 +44,7 @@ const ListDocumentByLimit = ({ limit }: ListDocumentByLimitProps) => {
 
 
     useEffect(() => {
-        getListData();
+        // getListData();
     }, [])
 
 

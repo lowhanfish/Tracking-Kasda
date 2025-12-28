@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { bar, frekwensi_pengajuan, pie_status, time_series_history } from "../controller/dashboard";
+import { bar, frekwensi_pengajuan, pie_status, time_series_history } from "../controller/dashboard.js";
 
 
 const router = Router();
@@ -7,6 +7,9 @@ const router = Router();
 
 router.post("/bar", (req, res)=>{
     bar(req, res);
+    // console.log(req.body)
+    // res.send("OK")
+
 })
 router.post("/frekwensi_pengajuan", (req, res)=>{
     frekwensi_pengajuan(req, res);
