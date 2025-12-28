@@ -17,6 +17,9 @@ import Anchorx from '@components/items/Anchorx';
 import PieChartx from '@components/chart/PieChartx';
 import BarChartx from '@components/chart/BarChartx';
 
+
+HorizontalBars
+
 import ListData from '@components/ListDataUser';
 import ListImage from '@components/ListImage';
 import Stepperx from '../components/Stepperx';
@@ -25,6 +28,7 @@ import axios from "axios";
 import useStorex from "@store/index";
 import ListDocumentByLimit from "@components/ListDocumentByLimit";
 import { getPOST } from "@lib/dataFetch";
+import HorizontalBars from "@components/chart/HorizontalBars";
 
 
 
@@ -82,6 +86,7 @@ const Dashboard = () => {
     });
     const [frekwensiPengajuan, setFrekwensiPengajuan] = useState([]);
     const [pieStatus, setPieStatus] = useState([]);
+    const [prosesUsulan, setProsesUsulan] = useState([]);
     const [timeSeriesHistory, setTimeSeriesHistory] = useState([]);
 
     const [formData, setFormData] = useState({
@@ -102,7 +107,16 @@ const Dashboard = () => {
 
         const dataPie = await getPOST(token, url.URL_DASHBOARD + '/pie_status', formData);
         setPieStatus(dataPie);
-        console.log(dataPie);
+
+        const listTahapanx = await getPOST(token, url.URL_DOCUMENT + '/viewProgreessAllDocument', {
+            status: 0,
+            unit_kerja: formData.unit_kerja,
+            tahun: formData.tahun,
+        });
+
+        setProsesUsulan(listTahapanx)
+
+        console.log(listTahapanx);
     }
 
 
@@ -184,8 +198,12 @@ const Dashboard = () => {
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 6, xs: 12 }}>
                         <div className='chartContainer shaddow1'>
-                            <div className='dashboardTitle'>Frekwensi Pengajuan</div>
-                            <BarChartx />
+                            <div className='dashboardTitle'>Proses Usulan</div>
+                            {/* <BarChartx /> */}
+                            <HorizontalBars
+                                valuex={prosesUsulan}
+
+                            />
                         </div>
                     </Grid>
                     <Grid size={{ md: 6, xs: 12 }}>

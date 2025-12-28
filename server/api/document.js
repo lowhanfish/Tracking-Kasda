@@ -4,7 +4,7 @@ import upload from "../multer/index.js";
 
 
 import { view, viewOne, add, editex, deletex } from "../controller/document.js";
-import { getAllStep } from "../controller/verification.js";
+import { getAllStep, getAllStepByAccess } from "../controller/verification.js";
 
 router.post("/view", (req, res) => {
     // console.log("VIEW DI PANGGIL");
@@ -41,6 +41,9 @@ router.post("/delete", (req, res) => {
 
 
 router.post('/viewTahapanByDocument', (req, res)=>{
+    getAllStepByAccess(req, res);
+})
+router.post('/viewProgreessAllDocument', (req, res)=>{
     getAllStep(req, res);
 })
 

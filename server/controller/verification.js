@@ -179,7 +179,7 @@ Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
 - API/documents
 */
 
-export const getAllStep = (req, res) => {
+export const getAllStepByAccess = (req, res) => {
 
     console.log("getAllStep verifivation.js dipanggil");
     // console.log(req.body);
@@ -199,6 +199,42 @@ export const getAllStep = (req, res) => {
             WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = ?
            
         ) as total
+        FROM master_tahapan
+    `
+    const values = [req.body.status]
+
+
+    db.query(query, values, (err, rows)=>{
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(rows);
+        }
+    })
+
+
+}
+export const getAllStep = (req, res) => {
+
+    console.log("getAllStep verifivation.js dipanggil");
+    // console.log(req.body);
+
+
+    const query = `
+        SELECT 
+        master_tahapan.uraian as title,
+
+        (
+            SELECT COUNT(*) 
+            FROM documents_tracking
+
+            JOIN documents
+            ON documents.id = documents_tracking.documents_id
+            
+            WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = ?
+           
+        ) as value
         FROM master_tahapan
     `
     const values = [req.body.status]
