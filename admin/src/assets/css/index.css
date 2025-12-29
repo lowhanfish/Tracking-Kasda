@@ -30,6 +30,18 @@ body,
     padding-right: 20%;
 }
 
+.singlePageContainer-1 {
+    display: flex;
+    flex: 1;
+    height: 100% !important;
+    flex-direction: column;
+    /* background-color: #6699d3; */
+    /* justify-content: center; */
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 5%;
+}
+
 .singlePageTextContainer {
     /* background-color: blueviolet; */
 }
@@ -381,6 +393,12 @@ hr.hrku3 {
 
         padding-left: 10%;
         padding-right: 10%;
+    }
+
+    .singlePageContainer-1 {
+
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
 }

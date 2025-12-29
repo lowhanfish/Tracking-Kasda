@@ -24,6 +24,8 @@ import VerifikasiDokumen from "./pages/tracking/verifikasiDokumen.tsx";
 import Login from "./auth/login.jsx";
 import Registration from "./auth/registration.jsx";
 import Home from "./auth/home.jsx";
+import TrackingProgress from "@auth/TrackingProgress.jsx";
+
 
 
 const PublicRoute = () => {
@@ -63,6 +65,7 @@ function App() {
         <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/TrackingProgress" element={<TrackingProgress />} />
             <Route path="/" element={<Home />} />
           </Route>
         </Route>

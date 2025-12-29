@@ -240,7 +240,7 @@ const Dashboard = () => {
                     </Grid>
                 </Grid>
 
-                <hr className='hrku1' />
+                {/* <hr className='hrku1' />
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>
                     <Grid size={{ md: 12, xs: 12 }}>
                         <div className='chartContainer shaddow1' style={{ paddingBottom: 30 }}>
@@ -249,7 +249,7 @@ const Dashboard = () => {
                         </div>
                     </Grid>
 
-                </Grid>
+                </Grid> */}
 
                 <hr className='hrku1' />
                 <Grid container spacing={2} sx={{ marginTop: 3 }}>

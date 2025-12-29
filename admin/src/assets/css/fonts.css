@@ -46,6 +46,15 @@
     text-shadow: 1px 1px 1px #00000077;
 }
 
+.orLogin {
+    font-size: 14px;
+    display: flex;
+    /* background-color: aqua; */
+    align-items: center;
+    justify-content: center;
+    color: #828282;
+}
+
 
 
 .inputText {

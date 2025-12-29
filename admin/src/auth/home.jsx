@@ -42,7 +42,11 @@ function Home() {
                                 <a className='h_Home4' href="https://github.com/lowhanfish/temp_react">https://github.com/lowhanfish/temp_react</a>
                             </div> */}
                             <div>
-                                <Button onClick={() => navigate('/Login')} sx={{ marginTop: 2, backgroundColor: 'rgba(0, 106, 255, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Login</Button>
+                                <Button onClick={() => navigate('/Login')} sx={{ marginTop: 2, marginBottom: 1, backgroundColor: 'rgba(0, 106, 255, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Login Admin</Button>
+                            </div>
+                            <div className='orLogin'>--- atau ---</div>
+                            <div>
+                                <Button onClick={() => navigate('/Login')} sx={{ marginTop: 1, backgroundColor: 'rgba(182, 58, 231, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Tracking Progress Usulan</Button>
                             </div>
 
                         </div>
