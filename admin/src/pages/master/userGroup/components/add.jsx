@@ -14,8 +14,9 @@ import useStorex from '@store/index.js';
 
 
 function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
-    var pathx = ''
+    // var pathx = ''
     var pathMenux = ''
+    var pathMenuxTahapan = ''
 
 
 
@@ -101,7 +102,10 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
     const getDataMenu = () => {
 
-        console.log("UNTUK MENU : ", url.URL_MENU + pathMenux)
+        // console.log("UNTUK MENU : ", url.URL_MENU + pathMenux)
+
+
+
 
         axios.post(url.URL_MENU + pathMenux, JSON.stringify(formx), {
             headers: {
@@ -118,7 +122,15 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
     const getTahapan = () => {
-        axios.post(url.URL_MASTER_TAHAPAN + '/viewAccessUser', JSON.stringify({}), {
+
+        const payload = {}
+
+        if (typeEvent === "EDIT") {
+            payload.id = formx.id
+        }
+
+
+        axios.post(url.URL_MASTER_TAHAPAN + pathMenuxTahapan, JSON.stringify(payload), {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
@@ -169,13 +181,15 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         if (typeEvent === 'ADD') {
             setPathy("/add");
             // setPathMenux('/viewMenu')
-            pathx = "/add"
+            // pathx = "/add"
             pathMenux = "/viewMenu"
+            pathMenuxTahapan = "/viewAccessUser"
         } else if (typeEvent === 'EDIT') {
             setPathy("/update")
             // setPathMenux('/viewUpdateMenu')
-            pathx = "/update"
+            // pathx = "/update"
             pathMenux = "/viewUpdateMenu"
+            pathMenuxTahapan = "/viewAccessUserEdit"
 
 
             // console.log(formx)

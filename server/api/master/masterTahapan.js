@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, view, editex, deletex, viewAccessUser } from "../../controller/master/masterTahapan.js";
+import { add, view, editex, deletex, viewAccessUser, viewAccessUserEdit } from "../../controller/master/masterTahapan.js";
 
 
 
@@ -12,6 +12,9 @@ router.post('/view', (req,res)=>{
 })
 router.post('/viewAccessUser', (req,res)=>{
     viewAccessUser(req, res)
+})
+router.post('/viewAccessUserEdit', (req,res)=>{
+    viewAccessUserEdit(req, res)
 })
 
 

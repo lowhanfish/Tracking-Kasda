@@ -40,6 +40,26 @@ export const viewAccessUser = (req, res)=>{
         else{res.send(rows)}
     })
 }
+export const viewAccessUserEdit = (req, res)=>{
+
+    // console.log("Hy ini dari viewAccessUserEdit")
+    // console.log(req.body);
+
+    const query = `
+        SELECT 
+        master_tahapan.*,
+        IFNULL(access_tahapan.status, 0) as status
+
+        FROM master_tahapan
+        LEFT JOIN access_tahapan
+        ON access_tahapan.group_id = ? AND access_tahapan.master_tahapan_id = master_tahapan.id
+    `
+    const values = [req.body.id]
+    db.query(query, values, (err, rows)=>{
+        if (err){console.log(err)}
+        else{res.send(rows)}
+    })
+}
 
 export const add = (req, res) => {
    const query = `

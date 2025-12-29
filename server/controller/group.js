@@ -2,6 +2,8 @@ import db from "../db/mysql/index.js";
 import dbCondition from "../lib/dbCondition.js";
 import dbResolveCondition from "../lib/dbResolveCondition.js";
 
+import {addx as addTahapan} from '../controller/access_tahapan.js'
+
 export const viewGet = (req, res)=>{
     const query = `SELECT * FROM \`group\``
     db.query(query,(err, rows)=>{
@@ -17,10 +19,17 @@ export const view = (req, res)=>{
 }
 
 export const add = async (req, res)=> {
+
+    // console.log(req.body)
+    
     const arr = normalizeArray(req.body.array)
+    
     const addx = await addGroup(req, res);
     await addAccess(arr, req, res, addx.message.insertId);
+    await addTahapan(req.body.listTahapan, addx.message.insertId)
+    
     res.send(addx);
+    // res.send("OK")
 }
 
 export const update = async(req, res) =>{
