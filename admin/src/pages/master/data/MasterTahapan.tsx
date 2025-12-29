@@ -183,7 +183,7 @@ const MasterTahapan = () => {
             setListData(result.data);
         }).catch(error => {
             setLoadData(false);
-            console.log(error)
+            // console.log(error)
         })
     }
 
@@ -210,7 +210,7 @@ const MasterTahapan = () => {
             // console.log(result.data)
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
 
 
@@ -220,7 +220,7 @@ const MasterTahapan = () => {
     // ====== ANCHOR ACTIONS ====== 
 
     const selectData = (data) => {
-        console.log(data);
+        // console.log(data);
         setFormData({
             id: data.id || 0,
             uraian: data.uraian || '',
@@ -253,7 +253,7 @@ const MasterTahapan = () => {
             viewData();
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
     };
 

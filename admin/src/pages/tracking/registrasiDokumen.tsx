@@ -144,7 +144,7 @@ const RegistrasiDokumen = () => {
         const selectedValue = event.target.value;
         const selectedItem = listPPH.find(item => item.value === selectedValue);
 
-        console.log(selectedItem)
+        // console.log(selectedItem)
 
         if (selectedItem) {
             const newItem = {
@@ -188,7 +188,7 @@ const RegistrasiDokumen = () => {
             id_unit_kerja: '',
         };
 
-        console.log("========", selectedUnitKerja)
+        // console.log("========", selectedUnitKerja)
 
         if (selectedUnitKerja) {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
@@ -200,7 +200,7 @@ const RegistrasiDokumen = () => {
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        console.log(listDatax)
+        // console.log(listDatax)
 
 
         // setListData(res.data);
@@ -220,7 +220,7 @@ const RegistrasiDokumen = () => {
             pathx = '/edit'
         }
 
-        console.log(`${url.URL_DOCUMENT}${pathx}`)
+        // console.log(`${url.URL_DOCUMENT}${pathx}`)
 
         try {
             setLoading(true);

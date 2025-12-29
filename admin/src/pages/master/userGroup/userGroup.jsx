@@ -55,7 +55,7 @@ const userGroup = () => {
             // console.log(response);
             setListData(response.data);
         }).catch(error => {
-            console.log(error);
+            // console.log(error);
         })
     }
 
@@ -72,11 +72,6 @@ const userGroup = () => {
             console.log(error)
         })
     }
-
-
-
-
-
 
 
     // ====== ANCHOR ====== 

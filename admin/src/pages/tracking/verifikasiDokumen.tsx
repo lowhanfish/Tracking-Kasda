@@ -123,7 +123,7 @@ const VerifikasiDokumen = () => {
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        console.log(listDatax)
+        // console.log(listDatax)
     }
 
     const approveData = async (files: any) => {

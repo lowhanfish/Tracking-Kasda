@@ -283,20 +283,20 @@ const MasterRole = () => {
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result.data);
+            // console.log(result.data);
             setLoadData(false);
             setListData(result.data);
         }).catch(error => {
             setLoadData(false);
-            console.log(error)
+            // console.log(error)
         })
     }
 
     const addData = (tahapanData: any) => {
         setLoadData(true);
 
-        console.log('Form Data:', formData);
-        console.log('Tahapan Data:', tahapanData);
+        // console.log('Form Data:', formData);
+        // console.log('Tahapan Data:', tahapanData);
 
         let post_route = "/add"
 
@@ -321,7 +321,7 @@ const MasterRole = () => {
             // console.log(result.data)
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
 
     };
@@ -375,7 +375,7 @@ const MasterRole = () => {
             viewData();
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
     };
 

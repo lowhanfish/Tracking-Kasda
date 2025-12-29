@@ -41,17 +41,47 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         }));
     };
 
+    // Fungsi untuk menangani perubahan checkbox
+    const handleCheckboxChange = (id) => {
+        // 1. Ambil list lama, lalu buat salinan barunya (map)
+        const newList = listTahapan.map((item) => {
+
+            // 2. Cek: Apakah ini item yang sedang diklik?
+            if (item.id === id) {
+
+                // 3. Tentukan status baru (kebalikan dari yang sekarang)
+                let statusBaru;
+                if (item.status === 1) {
+                    statusBaru = 0;
+                } else {
+                    statusBaru = 1;
+                }
+
+                // 4. Kembalikan item dengan status yang sudah diubah
+                return { ...item, status: statusBaru };
+            }
+
+            // 5. Jika ID tidak cocok, biarkan item apa adanya
+            return item;
+        });
+
+        // 6. Update state dengan list yang sudah dimodifikasi
+        setListTahapan(newList);
+    };
+
 
 
 
     const getHandle = () => {
 
+        // console.log(listTahapan)
         // console.log(listMenu)
         // console.log(pathx)
         console.log("PATH : ", url.URL_GROUP + pathy)
         axios.post(url.URL_GROUP + pathy, JSON.stringify({
             data: form,
-            array: listMenu
+            array: listMenu,
+            listTahapan: listTahapan,
         }), {
             headers: {
                 'Content-Type': 'application/json',
@@ -88,18 +118,20 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
     const getTahapan = () => {
-        axios.post(url.URL_MASTER_TAHAPAN + '/view', JSON.stringify({}), {
+        axios.post(url.URL_MASTER_TAHAPAN + '/viewAccessUser', JSON.stringify({}), {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            // console.log(result)
+            console.log(result.data)
             setListTahapan(result.data);
         }).catch(error => {
             console.log(error)
         })
     }
+
+
 
 
 
@@ -309,7 +341,12 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                                         <tr className='tablex3' key={index}>
                                             <td className='text-center'>{index + 1}.</td>
                                             <td>{data.uraian}</td>
-                                            <td className='center'><input type="checkbox"></input></td>
+                                            <td className='center'>
+                                                <input type="checkbox"
+                                                    checked={data.status === 1}
+                                                    onChange={() => handleCheckboxChange(data.id)}
+                                                />
+                                            </td>
                                         </tr>
 
                                     ))

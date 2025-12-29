@@ -60,13 +60,13 @@ const Profile = ({ biodata = "" }) => {
                     'Content-Type': 'application/json'
                 }
             }).then(result => {
-                console.log(result.data)
+                // console.log(result.data)
                 var datax = result.data.profile
                 setProfilex(datax)
                 setListEducations(result.data.educations)
                 // console.log(profilex)
             }).catch(error => {
-                console.log(error)
+                // console.log(error)
             })
     }
 

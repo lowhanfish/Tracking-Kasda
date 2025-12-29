@@ -134,7 +134,7 @@ const Dashboard = () => {
 
     const getProgresPengajuan = async (id, master_jns_pencairan_id) => {
 
-        console.log(id)
+        // console.log(id)
         const listProgressx = await getPOST(token, url.URL_DASHBOARD + '/progres_pengajuan', {
             id: id,
             master_jns_pencairan_id: master_jns_pencairan_id

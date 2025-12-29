@@ -114,7 +114,7 @@ const TrackingDokumen = () => {
             id_unit_kerja: '',
         };
 
-        console.log("========", selectedUnitKerja)
+        // console.log("========", selectedUnitKerja)
 
         if (selectedUnitKerja) {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
@@ -126,7 +126,7 @@ const TrackingDokumen = () => {
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        console.log(listDatax)
+        // console.log(listDatax)
 
 
         // setListData(res.data);

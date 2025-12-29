@@ -30,7 +30,10 @@ export const view = (req, res)=>{
 }
 export const viewAccessUser = (req, res)=>{
     const query = `
-        SELECT * FROM master_tahapan
+        SELECT 
+        master_tahapan.*,
+        0 as status 
+        FROM master_tahapan
     `
     db.query(query, (err, rows)=>{
         if (err){console.log(err)}

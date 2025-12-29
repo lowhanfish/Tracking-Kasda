@@ -114,10 +114,10 @@ function MenuSetting() {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             setMenu(response.data)
         }).catch((error) => {
-            console.log(error)
+            // console.log(error)
         })
     };
 
@@ -128,10 +128,10 @@ function MenuSetting() {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
             getData()
         }).catch((error) => {
-            console.log(error)
+            // console.log(error)
         })
     }
 

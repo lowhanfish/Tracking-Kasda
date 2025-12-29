@@ -45,7 +45,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
     const token = localStorage.getItem("authToken");
 
     const curentURL = window.location.origin;
-    console.log(curentURL)
+    // console.log(curentURL)
 
 
     // State untuk file yang akan ditampilkan di modal FileData
@@ -75,14 +75,14 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
                 'Content-Type': 'application/json'
             }
         }).then(result => {
-            console.log(result.data[0]);
+            // console.log(result.data[0]);
             const finalResult = result.data[0];
             setPpn(finalResult.ppn);
             setPph(finalResult.pph);
             setListFiles(finalResult.files);
             setTracking(finalResult.tracking);
         }).catch(error => {
-            console.log(error);
+            // console.log(error);
         })
     }
 

@@ -29,7 +29,7 @@ const DetailTracking = ({ open, handleClose, title, listHistory, data }) => {
 
 
 
-    console.log(data);
+    // console.log(data);
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
             <DialogTitle>
@@ -158,7 +158,7 @@ const StaticStepper = ({ progress = [] }) => {
             documents_id: id,
             master_tahapan_id: master_tahapan_id
         });
-        console.log(data)
+        // console.log(data)
 
         setListHistory(Array.isArray(data) ? data : []);
     }

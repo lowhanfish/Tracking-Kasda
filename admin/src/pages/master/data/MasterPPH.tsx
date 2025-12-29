@@ -185,7 +185,7 @@ const MasterPPH = () => {
             setListData(result.data);
         }).catch(error => {
             setLoadData(false);
-            console.log(error)
+            // console.log(error)
         })
     }
 
@@ -212,7 +212,7 @@ const MasterPPH = () => {
             // console.log(result.data)
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
 
 
@@ -232,7 +232,7 @@ const MasterPPH = () => {
     // ====== ANCHOR ACTIONS ====== 
 
     const selectData = (data) => {
-        console.log(data);
+        // console.log(data);
         setFormData({
             id: data.id || 0,
             uraian: data.uraian || '',
@@ -266,7 +266,7 @@ const MasterPPH = () => {
             viewData();
         }).catch(error => {
             setLoadData(false);
-            console.log(error);
+            // console.log(error);
         })
     };
 
