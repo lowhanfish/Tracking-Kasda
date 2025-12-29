@@ -1,80 +1,31 @@
-import React, { useState, useEffect } from 'react';
-
-import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint } from "@mui/material";
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton, Breakpoint, Menu, MenuItem, InputAdornment, TextField } from "@mui/material";
 
 import Clear from '@mui/icons-material/Clear';
-import Add from '@mui/icons-material/Add';
-import FieldSingle from '@components/items/FieldSingle.jsx';
-import FieldWithButton from '@components/items/FieldWithButton.jsx';
-import FieldAutocomplete from '@components/items/FieldAutocomplete.jsx';
-import Anchorx from '@components/items/Anchorx.jsx';
-import FieldDatex from '@components/items/FieldDatex.jsx';
-import BasicSelect from '@components/items/BasicSelect.jsx';
-import Checkboxz from '@components/items/Checkboxz.jsx';
-import CheckboxzLable from '@components/items/CheckboxLable.jsx';
+
+import Search from '@mui/icons-material/Search';
+
+
 import ListDataItems from '@components/ListDataItems';
-import Stepperx from '@components/Stepperx';
+
+import { getPOST } from "@lib/dataFetch.js";
+import useStorex from '@store/index';
+import SnackBarx from '@components/items/SnackBar';
+import DetailData from '@components/DetailData';
+
+import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
+
+import { GetUnitKerja } from "@lib/dataFetch.js";
 
 
 
 
-
-// Small reusable Dialog wrapper for consistency
-function DetailDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-    // fullWidth is always helpful for our layout, so pass it as true
-    return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-                <div className='headerModal'>
-                    {/* <div className='headerModalLeft'>{title}</div> */}
-                    <div className='TextProfileHead shaddowText'>{title}</div>
-                    <div className='headerModalRight'>
-                        <IconButton onClick={onClose} aria-label="close">
-                            <Clear />
-                        </IconButton>
-                    </div>
-                </div>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText component="div">{children}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button autoFocus onClick={onClose}>Cancel</Button>
-            </DialogActions>
-        </Dialog>
-    );
-}
-
-function AddDialog({ open, onClose, fullScreen, maxWidth, title, children }: any) {
-    // fullScreen => Dialog.fullScreen (boolean)
-    return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-                <div className='headerModal'>
-                    <div className='TextProfileHead shaddowText'>{title} Data</div>
-                    <div className='headerModalRight'>
-                        <IconButton onClick={onClose} aria-label="close">
-                            <Clear />
-                        </IconButton>
-                    </div>
-                </div>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText component="div">{children}</DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button autoFocus onClick={onClose}>Cancel</Button>
-                <Button onClick={onClose} autoFocus>Save</Button>
-            </DialogActions>
-        </Dialog>
-    );
-}
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
     // fullScreen => Dialog.fullScreen (boolean)
     return (
-        <Dialog fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
+        <Dialog disableAutoFocus disableEnforceFocus fullScreen={fullScreen} fullWidth maxWidth={maxWidth} open={open} onClose={onClose} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 <div className='headerModal'>
                     <div className='headerModalRight'>
@@ -93,12 +44,130 @@ function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
 
 const TrackingDokumen = () => {
 
-    // ====== ANCHOR ======
-    const [anchorEls, setAnchorEls] = React.useState<Record<number, HTMLElement | null>>({});
-    const handleAnchorOpen = (event: any, index: number) => setAnchorEls(prev => ({ ...prev, [index]: event.currentTarget }));
-    const handleAnchorClose = (index: number) => setAnchorEls(prev => ({ ...prev, [index]: null }));
+    const { url } = useStorex();
+    const token = localStorage.getItem('authToken');
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
-    // ====== ANCHOR ======
+    const { tahapan } = useStorex();
+    const tahapanId = tahapan.REGISTRASI_DOK;
+
+    const [listData, setListData] = useState([]);
+    const [dataLimit, setDataLimit] = useState(8);
+    const [searchData, setSearchData] = useState('');
+    const [pageFirst, setPageFirst] = useState(1);
+    const [jmlData, setJmlData] = useState(1);
+
+
+    // ====== AUTO COMPLETE ====== 
+
+
+
+    const [APIUnitKerja, setAPIUnitKerja] = useState([])
+    const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
+    const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
+
+    const handleDataUnitKerja = async (data) => {
+        const newAPIUnitKerja = await GetUnitKerja(data, token, url);
+        setAPIUnitKerja(newAPIUnitKerja);
+    };
+
+
+    // ====== AUTO COMPLETE ====== 
+
+    // const formDataToSend.append('pageFirst', pageFirst);
+    // formDataToSend.append('jmlData', jmlData);
+
+    const [activeAlert, SetActiveAlert] = useState(false);
+    const [messageAlert, SetMessageAlert] = useState("");
+    const [colorAlert, SetColorAlert] = useState<'success' | 'error' | 'warning' | 'info'>('success');
+
+
+
+
+    const [formData, setFormData] = useState({
+        id: '',
+        uraian: '',
+        master_jns_pencairan_id: '',
+        nilai: 0,
+        sub_unit_kerja: profile.profile.sub_unit_kerja_id,
+        master_tahapan_id: tahapanId,
+        status_update: 0,
+    });
+
+    // const [jnsPencairan, setJnsPencairan] = useState('');
+    // const [besaranAnggaran, setBesaranAnggaran] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    // Flag to prevent double call on initial mount
+
+
+    const viewData = async () => {
+
+        setLoading(true);
+
+
+        const payload = {
+            pageFirst: pageFirst,
+            searchData: searchData,
+            dataLimit: dataLimit,
+            id_unit_kerja: '',
+        };
+
+        console.log("========", selectedUnitKerja)
+
+        if (selectedUnitKerja) {
+            payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
+        }
+
+
+
+        const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
+        setListData(listDatax.data);
+        setJmlData(listDatax.jml);
+        setLoading(false);
+        console.log(listDatax)
+
+
+        // setListData(res.data);
+
+
+    }
+
+
+    const selectData = (data) => {
+
+        const dataDummy = {
+            id: data.id,
+            uraian: data.uraian,
+            master_jns_pencairan_id: data.master_jns_pencairan_id,
+            nilai: data.nilai,
+            sub_unit_kerja: data.sub_unit_kerja,
+            master_tahapan_id: tahapanId,
+            sub_unit_kerja_uraian: data.sub_unit_kerja_uraian,
+            uraian_jns_pencairan: data.uraian_jns_pencairan,
+            createdAt: data.createdAt,
+            nama_pengusul: data.nama_pengusul,
+            status_update: data.status_update,
+        }
+
+        setFormData({ ...dataDummy });
+
+        // setFormData(dataDummy);
+
+    }
+
+
+
+
+    const cariData = (e) => {
+        setPageFirst(1)
+        viewData();
+    }
+
+    const handlePageChange = (event, value) => {
+        setPageFirst(value); // update halaman aktif
+        viewData();           // fetch data halaman baru
+    };
 
     // ====== MODAL SETTING ======
     const [openModalSetting, setOpenModalSetting] = useState(false);
@@ -111,67 +180,115 @@ const TrackingDokumen = () => {
     const closeDetail = () => setOpenModalDetail(false);
 
     // ====== MODAL ADD ======
-    const [addMode, setAddMode] = useState("ADD");
-    const [openModalAdd, setOpenModalAdd] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
     // const [maxWidth, setMaxWidth] = useState<Breakpoint | false>('md');
-    const openAdd = () => setOpenModalAdd(true);
-    const closeAdd = () => setOpenModalAdd(false);
     // ====== MODAL ADD ======
+
+
+
+    useEffect(() => {
+        viewData();
+        handleDataUnitKerja("");
+    }, [selectedUnitKerja, searchData, pageFirst])
 
     return (
         <div className="cardx">
+
             <div className="cardxHeader">
                 <Grid container spacing={1}>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldWithButton placeholderx={'Cari Data..'} />
+
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldSingle />
+                        <Autocompletex
+                            value={APIUnitKerja.find(opt => opt.id === selectedUnitKerja) || null}
+                            onChange={(event, newValue) => {
+                                setSelectedUnitKerja(newValue); // simpan full object
+                                // getData(); // panggil ulang data
+                            }}
+                            inputValue={inputValueUnitKerja}
+                            onInputChange={(event, newInputValue) => {
+                                setInputValueUnitKerja(newInputValue);
+                                handleDataUnitKerja(newInputValue); // cari data unit kerja sesuai input
+                            }}
+                            size="small"
+                            options={APIUnitKerja}
+                            getOptionLabel={(option: { unit_kerja: string }) => option.unit_kerja || ""}
+                            PopperComponent={Popperx}
+                            renderInput={(params) => <TextField {...params} />}
+                            renderOption={(props, option: { id: string, unit_kerja: string, uraian_instansi: string }) => (
+                                <li {...props} key={option.id}>
+                                    <div style={{ display: "flex", flexDirection: "column" }}>
+                                        <span style={{ fontWeight: "bold", color: "#1976d2" }}>
+                                            {option.unit_kerja}
+                                        </span>
+                                        <span style={{ fontSize: "10px", color: "#666" }}>
+                                            {option.uraian_instansi}
+                                        </span>
+                                    </div>
+                                </li>
+                            )}
+                        />
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <FieldAutocomplete />
+                        <Fieldx
+                            fullWidth
+                            variant="outlined"
+                            size="small"
+                            placeholder={"Cari Data"}
+                            value={searchData}
+                            onChange={(e) => {
+                                setSearchData(e.target.value);  // update state
+                                cariData(e.target.value);       // gunakan value terbaru langsung
+                            }}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton edge="end">
+                                            <Search />
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
                     </Grid>
                 </Grid>
             </div>
+
             <div className="cardxBody">
-
-
+                <SnackBarx
+                    active={activeAlert}
+                    message={messageAlert}
+                    color={colorAlert}
+                />
                 {/* <Button className='btnAdd' variant="contained" size="small">Small</Button> */}
-                <div className='btnContainer'>
-                    <button onClick={() => { openAdd(); setAddMode("ADD"); }} className='btn md primarySoft shaddow1 width150'>
-                        <Add sx={{ fontSize: 18 }} />
-                        Add Data
-                    </button>
-                    {/* <button className='btn danger shaddow1'>Add Data</button> <br /> <br />
-                    <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
-                </div>
+                <hr className='hrku2' />
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
                 <Grid container spacing={1}>
                     {
-                        [...Array(10)].map((data, index) => (
+                        listData.map((data, index) => (
                             <Grid size={{ md: 6, xs: 12 }} key={index}>
-                                <div onClick={() => { openSetting(); }}>
+                                <div onClick={() => { openSetting(); selectData(data); }}>
                                     <ListDataItems
-                                        title='(LS)-Pembangunan Data Center Kab. Konawe Selatan'
-                                        unit='Dinas Komunikasi Informatika dan Persandian'
-                                        price={120000}
+                                        unit={data.sub_unit_kerja_uraian}
+                                        title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
+                                        price={data.nilai}
+                                        status={data.status_temp}
                                     />
                                 </div>
-
                             </Grid>
                         ))
                     }
-
                 </Grid>
 
-
-
-
-
                 <div className='paginContainer'>
-                    <Pagination count={10} color="primary" variant="outlined" />
+                    <Pagination
+                        count={jmlData}
+                        page={pageFirst}
+                        onChange={handlePageChange}
+                        color="primary"
+                        variant="outlined" />
                 </div>
 
                 {/* ================= SETTINGDETAIL DATA ================= */}
@@ -184,121 +301,26 @@ const TrackingDokumen = () => {
                 >
                     <Grid container spacing={1}>
                         <Grid size={12}>
-                            <Button onClick={() => { openDetail(); }} fullWidth variant="outlined" size="small">
+                            <Button onClick={(e) => { e.currentTarget.blur(); openDetail(); }} fullWidth variant="outlined" size="small">
                                 Detail
                             </Button>
                         </Grid>
-                        <Grid size={12}>
-                            <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
-                                Edit
-                            </Button>
-                        </Grid>
-                        <Grid size={12}>
-                            <Button color="error" fullWidth variant="outlined" size="small">
-                                Remove
-                            </Button>
-                        </Grid>
-
-
 
                     </Grid>
-
-
-
-
 
                 </SettingDialog>
                 {/* ================= SETTING DATA ================= */}
 
                 {/* ================= DETAIL DATA ================= */}
-                <DetailDialog
+                <DetailData
                     open={openModalDetail}
                     onClose={closeDetail}
                     fullScreen={fullScreen}
                     maxWidth="sm"
                     title="Detail Data"
-                >
-
-
-                    <div>
-
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Unit Kerja</div>
-                            <div className='TextProfileLeftVal'>Dinas xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Nama Kegiatan</div>
-                            <div className='TextProfileLeftVal'>Pengadaan xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
-                            <div className='TextProfileLeftVal'>Tanggal xxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Pagu Anggaran</div>
-                            <div className='TextProfileLeftVal'>xxxxx</div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Pajak</div>
-                            <div className='TextProfileLeftVal'>
-                                PPN : 10% - PPH(21) : 1.2%
-                            </div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Total Pencairan</div>
-                            <div className='TextProfileLeftVal'>
-                                Rp.xxx
-                            </div>
-                        </div>
-                        <div className='TextProfileLeftContainer'>
-                            <div className='TextProfileLeftTitle'>Di Ajukan Oleh</div>
-                            <div className='TextProfileLeftVal'>xxxxx</div>
-                        </div>
-
-
-                        <div style={{ marginTop: 20 }} className='dashboardContainer'>
-                            <div className='dashboardTitle'>Progres Kegiatan Terahir</div>
-                            <Stepperx />
-                        </div>
-
-
-                    </div>
-
-
-
-                </DetailDialog>
+                    formData={formData}
+                />
                 {/* ================= DETAIL DATA ================= */}
-
-
-                {/* ================= ADD DATA ================= */}
-                <AddDialog
-                    open={openModalAdd}
-                    onClose={closeAdd}
-                    title={addMode}
-                    fullScreen={fullScreen}
-                    maxWidth="sm"
-                >
-                    <FieldSingle Title={'Nama Kegiatan'} />
-
-                    <Grid container spacing={1}>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis Pencairan'} />
-                        </Grid>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <FieldSingle Title={'Besaran Anggaran'} />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis PPN'} />
-                        </Grid>
-                        <Grid size={{ md: 6, xs: 12 }}>
-                            <BasicSelect Title={'Jenis PPH'} />
-                        </Grid>
-                    </Grid>
-                </AddDialog>
-                {/* ================= ADD DATA ================= */}
-
             </div>
         </div>
     )
