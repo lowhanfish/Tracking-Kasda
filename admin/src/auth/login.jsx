@@ -74,7 +74,7 @@ export default function Login() {
 
 
 
-            <div style={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: '100%' }}>
+            <div className="loginFormx">
                 <Paper sx={{ p: 4, width: 300, backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
                     <Typography variant="h6" mb={2}>Login</Typography>
                     <img src={Logox} alt="No image" style={{ width: '100%', height: "auto", display: "block", opacity: '0.95' }} />

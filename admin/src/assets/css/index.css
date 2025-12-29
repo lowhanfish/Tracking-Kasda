@@ -13,10 +13,12 @@ body,
     /* flex: 1; */
     height: 100%;
     width: 100%;
-    background-image: url("../img/bg.png");
+    background-image: url("../img/bg.jpg");
     background-size: cover;
     padding-top: 3%;
     padding-bottom: 1%;
+    position: relative;
+    overflow: scroll;
 }
 
 .singlePageContainer {
@@ -117,7 +119,8 @@ body,
 
 .glassFrame {
     /* background-color: rgba(255, 255, 255, 0.217); */
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.214);
     /* background-color: rgba(255, 255, 255, 0.098); */
     /* filter: blur(0.5px); */
 
@@ -382,7 +385,13 @@ hr.hrku3 {
 }
 
 
-
+.loginFormx {
+    /* display: 'flex', justifyContent: "center", alignItems: 'center', height: '100%' */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
 
 
 
@@ -410,11 +419,18 @@ hr.hrku3 {
 @media only screen and (max-width: 900px) {
     .singlePageContainerRight {
         display: block;
-        margin-top: -5%;
+        margin-top: 5%;
     }
 }
 
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    .loginFormx {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+
+}
 
 /* @media only screen and (max-width: 430px) {
     .singlePageContainerRight {
