@@ -9,6 +9,7 @@ import Youtubex from '../assets/img/youtube.png';
 import Logox from '../assets/img/logox.png';
 import useStorex from '@store/index';
 import axios from 'axios';
+import Stepperx from '@components/Stepperx';
 
 
 
@@ -80,18 +81,28 @@ function TrackingProgress() {
 
                             {
                                 listData.map((data, index) => (
-                                    <div style={{ marginTop: 10 }}>
-                                        <div className='TextProfileLeftContainer'>
-                                            <div className='TextProfileLeftTitle'>Unit Kerja Pengusul</div>
-                                            <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.unit_kerja_uraian}</div>
+                                    <div key={index} style={{ marginTop: 10 }} className='poppinsx'>
+                                        <div>
+                                            <div className='TextProfileLeftContainer'>
+                                                <div className='TextProfileLeftTitle'>Unit Kerja Pengusul</div>
+                                                <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.unit_kerja_uraian}</div>
+                                            </div>
+                                            <div className='TextProfileLeftContainer'>
+                                                <div className='TextProfileLeftTitle'>Nama Kegiatan</div>
+                                                <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.uraian}</div>
+                                            </div>
+                                            <div className='TextProfileLeftContainer'>
+                                                <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
+                                                <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.createdAt}</div>
+                                            </div>
+
                                         </div>
-                                        <div className='TextProfileLeftContainer'>
-                                            <div className='TextProfileLeftTitle'>Nama Kegiatan</div>
-                                            <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.uraian}</div>
-                                        </div>
-                                        <div className='TextProfileLeftContainer'>
-                                            <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
-                                            <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.createdAt}</div>
+
+                                        <hr className='hrku2' />
+                                        <div style={{ paddingLeft: 20, paddingRight: 5, }}>
+                                            <Stepperx
+                                                progress={data.tracking}
+                                            />
                                         </div>
 
                                     </div>
@@ -99,7 +110,7 @@ function TrackingProgress() {
                                 ))
                             }
 
-
+                            <hr className='hrku2' />
 
                         </div>
                     </div>

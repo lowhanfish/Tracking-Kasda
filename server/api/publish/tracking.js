@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import db from '../../db/mysql/index.js'
-import { getProgressByIdDoc } from "../../controller/dashboard.js";
+import { view as viewTracking } from "../../controller/tracking.js";
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -41,9 +41,11 @@ router.post('/', (req, res)=> {
             res.status(500).send(err);
         } else {
 
-            // for (let i = 0; i < rows.length; i++) {
-            //     rows[i].tracking = await getProgressByIdDoc(rows[i].id, rows[i].master_jns_pencairan_id)
-            // }
+            
+            for (let i = 0; i < rows.length; i++) {
+
+                rows[i].tracking = await viewTracking(rows[i].id, rows[i].master_jns_pencairan_id)
+            }
 
             res.status(200).send(rows);
         }
