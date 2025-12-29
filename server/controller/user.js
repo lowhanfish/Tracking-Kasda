@@ -235,6 +235,8 @@ export const addUsersGroup = async (req, res) => {
 
 
 
+
+
 export const getProfile = async(req, res) =>{
     console.log("Controller getProfile user.js di panggil")
     const nip = await getNIPById(req, res);

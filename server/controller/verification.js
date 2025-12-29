@@ -9,6 +9,8 @@ import { saveHistory, save as SaveTracking, getID } from "../controller/tracking
 import { FirstStep, NumNextStep, LastStep } from "../lib/getStep.js";
 import {add as add_files} from "../controller/files.js";
 import { dummyStatus, canUpdate } from "../controller/getStatus.js";
+import { sendEmailByDocId } from "../lib/sendEmail.js";
+
 
 export const view = async (req, res)=>{
 
@@ -114,6 +116,21 @@ export const viewJmlData = async (req, res, filterUnitKerja)=> {
 export const approve = async (req, res)=>{
     // console.log(req.body);
 
+    // if (req.body.approvePath === 'approve') {
+                
+    // } else{
+
+    //     const judul = "PENGEMBALIAN DOKUMEN USULAN"
+    //     const status_text = 'sayangnya kami kembalikan..'
+    //     const full_text = `
+    //         <div><b>Dengan Alasan :</b></div>
+    //         <div>
+    //             ${req.body.catatan}
+    //         </div>
+    //     `
+    //     sendEmailByDocId(req.body.id, judul, status_text, full_text)
+    // }
+
     const FirstStepx = parseInt(req.body.master_tahapan_id)
     const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
     const LastStepx = await LastStep(req.body.master_jns_pencairan_id, FirstStepx);
@@ -147,10 +164,46 @@ export const approve = async (req, res)=>{
                 if (FirstStepx == LastStepx) {
                     // console.log("============= HARUSNYA SUDAH FINAL ==========")
                     await dummyStatus(req.body.id, 1);
+
+
+
+
+                    const judul = "TAHAPAN USULAN TELAH SELESAI"
+                    const status_text = 'Telah diverifikasi'
+                    const full_text = `
+                        <div>
+                            <div><b>Good job... 👍</b></div>
+                            Semua tahapan verifikasi terkait usulan anda telah selesai.
+                        </div>
+                    `
+                    sendEmailByDocId(req.body.id, judul, status_text, full_text)
+
+
+
+
+
                 }
 
             }else{
                 // console.log("di reject kan? ========")
+
+
+
+
+                const judul = "PENGEMBALIAN DOKUMEN USULAN"
+                const status_text = 'sayangnya kami kembalikan..'
+                const full_text = `
+                    <div><b>Dengan Alasan :</b></div>
+                    <div>
+                        ${req.body.catatan}
+                    </div>
+                `
+                sendEmailByDocId(req.body.id, judul, status_text, full_text)
+
+
+
+
+
                 await dummyStatus(req.body.id, 2);
                 await canUpdate(req.body.id, 1);
             }
