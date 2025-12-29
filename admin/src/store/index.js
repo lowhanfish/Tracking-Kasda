@@ -33,7 +33,7 @@ const useStorex = create((set) => ({
     URL_DASHBOARD: `${BASE_URL}api/dashboard`,
     URL_FILES: `${BASE_URL}api/files`,
 
-
+    URL_PUBLISH_TRACKING: `${BASE_URL}api/publish_tracking`,
 
     dua: `${BASE_URL}duax`
   },

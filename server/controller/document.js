@@ -8,7 +8,7 @@ import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 import { removeFile } from "../lib/fileRef.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
 
-
+import uniqid from "uniqid";
 
 const db_main = process.env.DB_MAIN
 const db_simpeg = process.env.DB_SIMPEG
@@ -184,11 +184,11 @@ export const add = async (req, res) => {
 
     const query = `
         INSERT INTO documents
-        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy)
+        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy, code)
         VALUES
-        (?, ?, ?, ?, NOW(), ?)
+        (?, ?, ?, ?, NOW(), ?, ?)
     `;
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id, uniqid()];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {

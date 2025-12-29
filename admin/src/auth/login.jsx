@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, TextField, Box, Typography, Paper, Alert } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
 
 import Logox from '@assets/img/logox.png';
@@ -70,6 +71,9 @@ export default function Login() {
 
     return (
         <div className="singlePage">
+
+
+
             <div style={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: '100%' }}>
                 <Paper sx={{ p: 4, width: 300, backgroundColor: 'rgba(255, 255, 255, 0.23)' }}>
                     <Typography variant="h6" mb={2}>Login</Typography>
@@ -108,6 +112,6 @@ export default function Login() {
                     </Box>
                 </Paper>
             </div>
-        </div>
+        </div >
     );
 }

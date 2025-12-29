@@ -68,6 +68,15 @@ router.get('/', (req, res) => {
 // =============== END YOUR API ==================
 
 
+// =============== YOUR API PUBLIC ==================
+
+  import publish_tracking from "./api/publish/tracking.js";
+  app.use('/api/publish_tracking', publish_tracking)
+
+// =============== END YOUR API PUBLIC ==================
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

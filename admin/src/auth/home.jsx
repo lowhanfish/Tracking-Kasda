@@ -44,9 +44,9 @@ function Home() {
                             <div>
                                 <Button onClick={() => navigate('/Login')} sx={{ marginTop: 2, marginBottom: 1, backgroundColor: 'rgba(0, 106, 255, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Login Admin</Button>
                             </div>
-                            <div className='orLogin'>--- atau ---</div>
+                            <div className='orLogin'></div>
                             <div>
-                                <Button onClick={() => navigate('/Login')} sx={{ marginTop: 1, backgroundColor: 'rgba(182, 58, 231, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Tracking Progress Usulan</Button>
+                                <Button onClick={() => navigate('/TrackingProgress')} sx={{ marginTop: 1, backgroundColor: 'rgba(182, 58, 231, 0.38)' }} startIcon={<Login />} fullWidth variant="contained">Tracking Progress Usulan</Button>
                             </div>
 
                         </div>

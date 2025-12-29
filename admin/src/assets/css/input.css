@@ -34,3 +34,56 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: bold;
     /* perkecil huruf */
 }
+
+
+/* Container Utama */
+.input-groupx {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* Jarak antara input dan button */
+    max-width: 100%;
+}
+
+/* Styling Input Field */
+.input-fieldx {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    margin-top: 8px;
+}
+
+/* Efek saat input diklik */
+.input-fieldx:focus {
+    border-color: #1976d2;
+    /* Warna biru MUI */
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Styling Button */
+.submit-btnx {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    /* Agar tulisan tombol tidak turun ke bawah */
+    transition: background-color 0.2s;
+}
+
+.submit-btnx:hover {
+    background-color: #1565c0;
+}
+
+.submit-btnx:active {
+    transform: translateY(1px);
+}
