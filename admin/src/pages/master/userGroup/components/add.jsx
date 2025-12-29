@@ -31,6 +31,8 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         access_unit: 0,
     })
 
+    const [listTahapan, setListTahapan] = useState([])
+
 
     const handleForm = (field) => (e) => {
         setForm(prevForm => ({
@@ -80,6 +82,21 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
             setListMenu(response.data)
             // console.log(response)
         }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+
+    const getTahapan = () => {
+        axios.post(url.URL_MASTER_TAHAPAN + '/view', JSON.stringify({}), {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            // console.log(result)
+            setListTahapan(result.data);
+        }).catch(error => {
             console.log(error)
         })
     }
@@ -144,6 +161,7 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
 
         getDataMenu();
+        getTahapan();
 
     }, [])
 
@@ -185,9 +203,10 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                         </Selectx>
                     </div>
 
-
+                    <hr className='hrku3' />
 
                     <div className="table-wrap" tabIndex="0">
+                        <div className='inputText'>Akses Menu</div>
                         <table className="tabelku shaddow2" style={{ width: '100%' }}>
                             <thead className="h_thead shaddowText">
                                 <tr>
@@ -268,6 +287,33 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
                                 }
 
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr className='hrku3' />
+
+                    <div className="table-wrap" tabIndex="0">
+                        <div className='inputText'>Akses Verifikasi</div>
+                        <table className="tabelku shaddow2" style={{ width: '100%' }}>
+                            <thead className="h_thead shaddowText">
+                                <tr>
+                                    <th style={{ width: '10%' }} scope="col">No</th>
+                                    <th style={{ width: '85%' }} scope="col">Title</th>
+                                    <th style={{ width: '5%' }} scope="col">access</th>
+                                </tr>
+                            </thead>
+                            <tbody className="h_body">
+                                {
+                                    listTahapan.map((data, index) => (
+                                        <tr className='tablex3' key={index}>
+                                            <td className='text-center'>{index + 1}.</td>
+                                            <td>{data.uraian}</td>
+                                            <td className='center'><input type="checkbox"></input></td>
+                                        </tr>
+
+                                    ))
+                                }
                             </tbody>
                         </table>
                     </div>

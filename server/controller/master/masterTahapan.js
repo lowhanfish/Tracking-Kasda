@@ -28,6 +28,15 @@ export const view = (req, res)=>{
         else{res.send(rows)}
     })
 }
+export const viewAccessUser = (req, res)=>{
+    const query = `
+        SELECT * FROM master_tahapan
+    `
+    db.query(query, (err, rows)=>{
+        if (err){console.log(err)}
+        else{res.send(rows)}
+    })
+}
 
 export const add = (req, res) => {
    const query = `

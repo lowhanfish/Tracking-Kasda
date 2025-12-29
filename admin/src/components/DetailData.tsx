@@ -44,6 +44,9 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
     const { url } = useStorex();
     const token = localStorage.getItem("authToken");
 
+    const curentURL = window.location.origin;
+    console.log(curentURL)
+
 
     // State untuk file yang akan ditampilkan di modal FileData
     const [file, setFile] = useState(null);
@@ -105,7 +108,10 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
             <DialogContent>
                 <DialogContentText component="div">
                     <hr className='hrku2' />
+                    <div className='TextProfileLeftTitle'>Kode Kegiatan : {formData.code || ""}</div>
+                    <hr className='hrku3' />
                     <div>
+
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Unit Kerja</div>
                             <div className='TextProfileLeftVal'>{formData.sub_unit_kerja_uraian || ""}</div>

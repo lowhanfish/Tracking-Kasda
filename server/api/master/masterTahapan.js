@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, view, editex, deletex } from "../../controller/master/masterTahapan.js";
+import { add, view, editex, deletex, viewAccessUser } from "../../controller/master/masterTahapan.js";
 
 
 
@@ -10,6 +10,11 @@ const router = Router();
 router.post('/view', (req,res)=>{
     view(req, res)
 })
+router.post('/viewAccessUser', (req,res)=>{
+    viewAccessUser(req, res)
+})
+
+
 router.post('/add', (req,res)=>{
     console.log("add masterTahapan di panggil")
     add(req, res)

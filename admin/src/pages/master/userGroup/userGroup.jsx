@@ -145,6 +145,7 @@ const userGroup = () => {
                     </button>
                 </div>
 
+
                 <div className="table-wrap" tabIndex="0">
                     <table className="tabelku shaddow2" style={{ width: '100%' }}>
                         <thead className="h_thead shaddowText">
@@ -220,9 +221,6 @@ const userGroup = () => {
                 >
                     <Addx handleCloseModalAdd={handleCloseModalAdd} typeEvent={typeEvent} formx={form} getData={getData} />
                 </Dialog>
-
-
-
 
             </div>
         </div>

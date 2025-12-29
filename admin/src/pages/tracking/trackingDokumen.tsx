@@ -92,6 +92,7 @@ const TrackingDokumen = () => {
         sub_unit_kerja: profile.profile.sub_unit_kerja_id,
         master_tahapan_id: tahapanId,
         status_update: 0,
+        code: '',
     });
 
     // const [jnsPencairan, setJnsPencairan] = useState('');
@@ -148,6 +149,7 @@ const TrackingDokumen = () => {
             createdAt: data.createdAt,
             nama_pengusul: data.nama_pengusul,
             status_update: data.status_update,
+            code: data.code
         }
 
         setFormData({ ...dataDummy });

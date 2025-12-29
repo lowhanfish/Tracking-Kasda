@@ -211,7 +211,7 @@ const VerifikasiDokumen = () => {
             uraian_jns_pencairan: data.uraian_jns_pencairan,
             createdAt: data.createdAt,
             nama_pengusul: data.nama_pengusul,
-
+            code: data.code,
         }
 
         setFormData({ ...dataDummy });

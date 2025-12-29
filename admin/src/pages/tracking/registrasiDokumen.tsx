@@ -126,6 +126,7 @@ const RegistrasiDokumen = () => {
         sub_unit_kerja: profile.profile.sub_unit_kerja_id,
         master_tahapan_id: tahapanId,
         status_update: 0,
+        code: '',
     });
 
     const [file, setFile] = useState(null);
@@ -284,6 +285,7 @@ const RegistrasiDokumen = () => {
                     nilai: 0,
                     master_tahapan_id: tahapanId,
                     status_update: 0,
+                    code: '',
                 });
                 setPpn([]);
                 setPph([]);
@@ -348,6 +350,7 @@ const RegistrasiDokumen = () => {
             createdAt: data.createdAt,
             nama_pengusul: data.nama_pengusul,
             status_update: data.status_update,
+            code: data.code
         }
 
         setFormData({ ...dataDummy });
