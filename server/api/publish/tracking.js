@@ -19,6 +19,7 @@ router.post('/', (req, res)=> {
         documents.id,
         documents.master_jns_pencairan_id,
         documents.uraian,
+        documents.no,
         documents.createdAt,
         unit_kerja.unit_kerja as unit_kerja_uraian
 

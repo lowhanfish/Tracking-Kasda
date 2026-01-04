@@ -139,6 +139,7 @@ const RegistrasiDokumen = () => {
         master_tahapan_id: tahapanId,
         status_update: 0,
         code: '',
+        no: '',
     });
 
     const [file, setFile] = useState(null);
@@ -247,6 +248,7 @@ const RegistrasiDokumen = () => {
             formDataToSend.append('master_tahapan_id', formData.master_tahapan_id);
             formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
             formDataToSend.append('nilai', formData.nilai.toString());
+            formDataToSend.append('no', formData.no);
 
             // Menambahkan PPN array
             ppn.forEach((item, index) => {
@@ -298,6 +300,7 @@ const RegistrasiDokumen = () => {
                     master_tahapan_id: tahapanId,
                     status_update: 0,
                     code: '',
+                    no: '',
                 });
                 setPpn([]);
                 setPph([]);
@@ -352,6 +355,8 @@ const RegistrasiDokumen = () => {
 
     const selectData = (data) => {
 
+        console.log(data);
+
         const dataDummy = {
             id: data.id,
             uraian: data.uraian,
@@ -364,7 +369,8 @@ const RegistrasiDokumen = () => {
             createdAt: data.createdAt,
             nama_pengusul: data.nama_pengusul,
             status_update: data.status_update,
-            code: data.code
+            code: data.code,
+            no: data.no,
         }
 
         setFormData({ ...dataDummy });
@@ -667,6 +673,14 @@ const RegistrasiDokumen = () => {
                                             onChange={(e) => getValue(e.target.value, 'nilai')}
                                         />
                                     </Grid>
+                                </Grid>
+
+                                <Grid>
+                                    <FieldSingle
+                                        Title={'Nomor SPP/SPM'}
+                                        value={formData.no}
+                                        onChange={(e) => getValue(e.target.value, 'no')}
+                                    />
                                 </Grid>
 
                                 {/* <hr className='hrku2' />

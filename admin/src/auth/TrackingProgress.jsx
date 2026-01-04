@@ -92,6 +92,10 @@ function TrackingProgress() {
                                                 <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.uraian}</div>
                                             </div>
                                             <div className='TextProfileLeftContainer'>
+                                                <div className='TextProfileLeftTitle'>No. SPP/SPM</div>
+                                                <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.no}</div>
+                                            </div>
+                                            <div className='TextProfileLeftContainer'>
                                                 <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
                                                 <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.createdAt}</div>
                                             </div>

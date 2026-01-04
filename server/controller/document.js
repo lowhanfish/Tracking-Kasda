@@ -184,11 +184,11 @@ export const add = async (req, res) => {
 
     const query = `
         INSERT INTO documents
-        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy, code)
+        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy, code, no)
         VALUES
-        (?, ?, ?, ?, NOW(), ?, ?)
+        (?, ?, ?, ?, NOW(), ?, ?, ?)
     `;
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id, uniqid()];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id, uniqid(), req.body.no];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {
@@ -258,11 +258,12 @@ export const editex = (req, res) => {
         UPDATE documents SET
         uraian = ?,
         master_jns_pencairan_id = ?,
-        nilai = ?
+        nilai = ?,
+        no = ?
 
         WHERE id = ?
     `
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.id];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.id];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {

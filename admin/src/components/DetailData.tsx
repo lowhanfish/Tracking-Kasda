@@ -127,6 +127,10 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
 
                         </div>
                         <div className='TextProfileLeftContainer'>
+                            <div className='TextProfileLeftTitle'>No. SPP/SPM</div>
+                            <div className='TextProfileLeftVal'>{formData.no}</div>
+                        </div>
+                        <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Tanggal Pengajuan</div>
                             <div className='TextProfileLeftVal'>Tanggal {formatDate(formData.createdAt)}</div>
                         </div>
