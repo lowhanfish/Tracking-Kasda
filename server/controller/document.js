@@ -176,6 +176,7 @@ export const viewOne = async (req, res) => {
                 rows[i].ppn = await view_ppn(rows[i].id);
                 rows[i].pph = await view_pph(rows[i].id);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
+                rows[i].pengusulObj = await getBiodataByNIP(rows[i].pengusul);
             }
 
             res.status(200).send(rows);

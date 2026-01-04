@@ -196,7 +196,7 @@ const RegistrasiDokumen = () => {
         }
 
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
-        console.log(listDatax);
+        // console.log(listDatax);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);

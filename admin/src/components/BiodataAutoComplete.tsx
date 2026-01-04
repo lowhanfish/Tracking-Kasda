@@ -23,7 +23,7 @@ const BiodataAutoComplete = ({ selectedBiodata, setSelectedBiodata, selectedUnit
             sub_unit_kerja: selectedUnitKerjaForm ? selectedUnitKerjaForm.id : profile.profile.sub_unit_kerja_id,
         }
         const newAPIBiodata = await GetBIODATA(datax, token, url);
-        console.log(newAPIBiodata)
+        // console.log(newAPIBiodata)
         setAPIBiodata(newAPIBiodata);
     };
 

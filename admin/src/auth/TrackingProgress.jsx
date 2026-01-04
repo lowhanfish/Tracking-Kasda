@@ -100,6 +100,11 @@ function TrackingProgress() {
                                                 <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.createdAt}</div>
                                             </div>
 
+                                            <div className='TextProfileLeftContainer'>
+                                                <div className='TextProfileLeftTitle'>Nama Pengusul</div>
+                                                <div className='TextProfileLeftVal' style={{ paddingTop: 3 }}>{data.pengusulObj ? data.pengusulObj.nama : ""}</div>
+                                            </div>
+
                                         </div>
 
                                         <hr className='hrku2' />

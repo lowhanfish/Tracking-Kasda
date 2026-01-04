@@ -51,7 +51,7 @@ export const GetUnitKerja = async (data, token, url)=>{
 }
 export const GetBIODATA = async (data, token, url)=>{
 
-    console.log(data);
+    // console.log(data);
     
     return new Promise((resolve, reject) => {
 

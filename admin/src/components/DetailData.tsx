@@ -54,6 +54,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
     const [pph, setPph] = useState([]);
     const [listFiles, setListFiles] = useState([]);
     const [tracking, setTracking] = useState([]);
+    const [pengusulx, setPengusulx] = useState(null);
 
     // State untuk modal FileData
     const [openModal, setOpenModal] = useState(false);
@@ -75,12 +76,16 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
                 'Content-Type': 'application/json'
             }
         }).then(result => {
-            // console.log(result.data[0]);
+            console.log(result.data[0]);
             const finalResult = result.data[0];
             setPpn(finalResult.ppn);
             setPph(finalResult.pph);
             setListFiles(finalResult.files);
             setTracking(finalResult.tracking);
+            setPengusulx(finalResult.pengusulObj);
+
+            console.log(finalResult)
+
         }).catch(error => {
             // console.log(error);
         })
@@ -166,7 +171,7 @@ function DetailData({ open, onClose, fullScreen, maxWidth, title, formData }: an
                         </div>
                         <div className='TextProfileLeftContainer'>
                             <div className='TextProfileLeftTitle'>Di Ajukan Oleh</div>
-                            <div className='TextProfileLeftVal'>{formData.nama_pengusul ?? ""}</div>
+                            <div className='TextProfileLeftVal'>{pengusulx ? pengusulx.nama : ""}</div>
                         </div>
 
                         <hr className='hrku2' />
