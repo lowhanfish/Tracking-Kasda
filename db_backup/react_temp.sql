@@ -11,7 +11,7 @@
  Target Server Version : 110802 (11.8.2-MariaDB)
  File Encoding         : 65001
 
- Date: 29/12/2025 21:56:01
+ Date: 05/01/2026 00:04:44
 */
 
 SET NAMES utf8mb4;
@@ -32,24 +32,26 @@ CREATE TABLE `access` (
   `createdAt` timestamp NULL DEFAULT NULL,
   `createdBy` varchar(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of access
 -- ----------------------------
 BEGIN;
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (3, 20, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (4, 21, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (5, 26, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (6, 27, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (7, 28, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (8, 29, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (9, 30, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
-INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (10, 31, 10, 1, 1, 1, 1, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
 INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (131, 20, 21, 1, 0, 0, 0, '2025-10-24 19:05:20', 'i33wtesojro8e65d');
 INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (132, 21, 21, 1, 1, 1, 1, '2025-10-24 19:05:20', 'i33wtesojro8e65d');
 INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (133, 31, 21, 1, 0, 0, 0, '2025-10-24 19:05:20', 'i33wtesojro8e65d');
 INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (134, 20, 22, 1, 0, 0, 0, '2025-11-25 21:15:49', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (135, 20, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (136, 21, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (137, 26, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (138, 27, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (139, 28, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (140, 29, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (141, 30, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (142, 31, 23, 1, 1, 1, 1, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (143, 20, 24, 1, 1, 1, 1, '2026-01-04 23:47:40', 'i33wtesojro8e65d');
+INSERT INTO `access` (`id`, `menu_id`, `group_id`, `view`, `add`, `update`, `remove`, `createdAt`, `createdBy`) VALUES (144, 21, 24, 1, 1, 1, 1, '2026-01-04 23:47:40', 'i33wtesojro8e65d');
 COMMIT;
 
 -- ----------------------------
@@ -63,12 +65,31 @@ CREATE TABLE `access_tahapan` (
   `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of access_tahapan
 -- ----------------------------
 BEGIN;
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (10, 23, 4, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (11, 23, 5, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (12, 23, 6, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (13, 23, 15, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (14, 23, 16, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (15, 23, 17, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (16, 23, 18, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (17, 23, 19, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (18, 23, 20, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (19, 24, 4, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (20, 24, 5, 1);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (21, 24, 6, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (22, 24, 15, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (23, 24, 16, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (24, 24, 17, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (25, 24, 18, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (26, 24, 19, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (27, 24, 20, 0);
+INSERT INTO `access_tahapan` (`id`, `group_id`, `master_tahapan_id`, `status`) VALUES (28, 24, 24, 0);
 COMMIT;
 
 -- ----------------------------
@@ -79,11 +100,14 @@ CREATE TABLE `documents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(50) DEFAULT NULL,
   `uraian` text DEFAULT NULL,
+  `no` varchar(100) DEFAULT NULL COMMENT 'Nomor SPP/SPM',
   `master_jns_pencairan_id` int(11) DEFAULT NULL COMMENT 'diambil dari tabel master_jns_pencairan',
   `nilai` float DEFAULT NULL,
+  `pengusul` varchar(50) DEFAULT NULL,
   `sub_unit_kerja` varchar(50) DEFAULT NULL,
   `status_temp` tinyint(4) DEFAULT 0 COMMENT '0=proses, 1=diterima 2=dikembalikan, ini temporari saja, status yang sebenarnya ada di tracking doc',
   `status_update` tinyint(4) DEFAULT 1 COMMENT '0= gak bisa update, 1 = bisa update',
+  `master_tag_id` int(11) DEFAULT NULL,
   `createdAt` varchar(255) DEFAULT NULL,
   `createdBy` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -92,16 +116,18 @@ CREATE TABLE `documents` (
   KEY `sub_unit_kerja` (`sub_unit_kerja`) USING BTREE,
   KEY `status_temp` (`status_temp`) USING BTREE,
   KEY `code` (`code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of documents
 -- ----------------------------
 BEGIN;
-INSERT INTO `documents` (`id`, `code`, `uraian`, `master_jns_pencairan_id`, `nilai`, `sub_unit_kerja`, `status_temp`, `status_update`, `createdAt`, `createdBy`) VALUES (34, 'vwert234', 'Belanja Pengadaan GPU (Graphics Processing Unit)', 12, 47000000, 'EtTbFb6EzYZt9mMJL', 2, 1, '2025-12-28 11:58:49', 'i33wtesojro8e65d');
-INSERT INTO `documents` (`id`, `code`, `uraian`, `master_jns_pencairan_id`, `nilai`, `sub_unit_kerja`, `status_temp`, `status_update`, `createdAt`, `createdBy`) VALUES (35, 'asdfa0rte', 'Belanja Pengadaan Intel Core i7 14700F Gigabyte Z790 ', 12, 21480000, 'EtTbFb6EzYZt9mMJL', 1, 0, '2025-12-28 11:59:54', 'i33wtesojro8e65d');
-INSERT INTO `documents` (`id`, `code`, `uraian`, `master_jns_pencairan_id`, `nilai`, `sub_unit_kerja`, `status_temp`, `status_update`, `createdAt`, `createdBy`) VALUES (36, 'dafasdfty', 'Pembayaran Gaji dan Tunjangan Bulan November', 12, 47000000, 'EtTbFb6EzYZt9mMJL', 0, 1, '2025-12-28 12:01:10', 'i33wtesojro8e65d');
-INSERT INTO `documents` (`id`, `code`, `uraian`, `master_jns_pencairan_id`, `nilai`, `sub_unit_kerja`, `status_temp`, `status_update`, `createdAt`, `createdBy`) VALUES (37, 'poyljqdh7', 'Hibah PWI', 13, 50000000, 'EtTbFb6EzYZt9mMJL', 0, 1, '2025-12-28 12:01:50', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (34, 'vwert234', 'Belanja Pengadaan GPU (Graphics Processing Unit)', '123/321', 12, 47000000, '198011192008031001', 'EtTbFb6EzYZt9mMJL', 0, 1, NULL, '2025-12-28 11:58:49', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (35, 'asdfa0rte', 'Belanja Pengadaan Intel Core i7 14700F Gigabyte Z790 ', '234/432', 12, 21480000, NULL, 'EtTbFb6EzYZt9mMJL', 1, 0, NULL, '2025-12-28 11:59:54', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (36, 'dafasdfty', 'Pembayaran Gaji dan Tunjangan Bulan November', '345/543', 12, 47000000, NULL, 'EtTbFb6EzYZt9mMJL', 0, 0, NULL, '2025-12-28 12:01:10', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (37, 'poyljqdh7', 'Hibah PWI', '456/654', 13, 50000000, '199807022022031010', 'EtTbFb6EzYZt9mMJL', 0, 1, NULL, '2025-12-28 12:01:50', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (39, '460u41hkdmjtk4zei', 'Contoh 2', '567/765', 9, 15000000, NULL, 'EtTbFb6EzYZt9mMJL', 1, 0, NULL, '2025-12-31 13:10:18', 'i33wtesojro8e65d');
+INSERT INTO `documents` (`id`, `code`, `uraian`, `no`, `master_jns_pencairan_id`, `nilai`, `pengusul`, `sub_unit_kerja`, `status_temp`, `status_update`, `master_tag_id`, `createdAt`, `createdBy`) VALUES (45, '460u4i21mjzutn4w', 'Hibah PWI xxxxxxxx', '456/654', 13, 50000000, '198511202014061001', 'EtTbFb6EzYZt9mMJL', 2, 1, NULL, '2026-01-04 22:56:02', 'i33wtesojro8e65d');
 COMMIT;
 
 -- ----------------------------
@@ -119,7 +145,7 @@ CREATE TABLE `documents_history` (
   PRIMARY KEY (`id`),
   KEY `documents_id` (`documents_id`) USING BTREE,
   KEY `master_tahapan_id` (`master_tahapan_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of documents_history
@@ -139,6 +165,17 @@ INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `cre
 INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (46, 6, 34, 'i33wtesojro8e65d', 2, '<p>Entah&nbsp;apa&nbsp;yang&nbsp;harus&nbsp;saya&nbsp;katakan</p>', '2025-12-29 00:27:12');
 INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (47, 6, 34, 'i33wtesojro8e65d', 2, '<p>Dan&nbsp;untuk&nbsp;kesekian&nbsp;kalinya&nbsp;di&nbsp;reject</p>', '2025-12-29 00:28:50');
 INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (48, 20, 35, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-29 21:54:13');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (49, 5, 39, 'i33wtesojro8e65d', 2, '<p>Kurang&nbsp;ganteng</p>', '2025-12-31 13:10:28');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (50, 5, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:43');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (51, 6, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:49');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (52, 16, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:55');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (53, 17, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:13');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (54, 18, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:30');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (55, 19, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:35');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (56, 20, 39, 'i33wtesojro8e65d', 1, '<p>Okeee</p>', '2025-12-31 13:15:44');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (57, 5, 36, 'i33wtesojro8e65d', 1, '<p>yah&nbsp;okelah</p>', '2026-01-04 13:12:05');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (58, 5, 45, 'i33wtesojro8e65d', 2, '<p>Ini&nbsp;hanya&nbsp;test&nbsp;ya?</p>', '2026-01-04 23:13:23');
+INSERT INTO `documents_history` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (59, 5, 45, 'i33wtesojro8e65d', 2, '<p>jelek</p>', '2026-01-04 23:39:16');
 COMMIT;
 
 -- ----------------------------
@@ -156,7 +193,7 @@ CREATE TABLE `documents_tracking` (
   PRIMARY KEY (`id`),
   KEY `documents_id` (`documents_id`) USING BTREE,
   KEY `master_tahapan_id` (`master_tahapan_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of documents_tracking
@@ -167,10 +204,10 @@ INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `cr
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (28, 4, 35, 'i33wtesojro8e65d', 1, 'Dokumen telah diregistrasi', '2025-12-28 11:59:54');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (29, 5, 35, 'i33wtesojro8e65d', 1, '<p>Di&nbsp;proses&nbsp;selanjutnya.</p>', '2025-12-28 12:04:19');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (30, 4, 36, 'i33wtesojro8e65d', 1, 'Dokumen telah diregistrasi', '2025-12-28 12:01:10');
-INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (31, 5, 36, 'i33wtesojro8e65d', 0, 'Dokumen sedang diverifikasi', '2025-12-28 12:01:10');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (31, 5, 36, 'i33wtesojro8e65d', 1, '<p>yah&nbsp;okelah</p>', '2026-01-04 13:12:05');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (32, 4, 37, 'i33wtesojro8e65d', 1, 'Dokumen telah diregistrasi', '2025-12-28 12:01:50');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (33, 5, 37, 'i33wtesojro8e65d', 0, 'Dokumen sedang diverifikasi', '2025-12-28 12:01:50');
-INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (34, 6, 34, 'i33wtesojro8e65d', 2, '<p>Dan&nbsp;untuk&nbsp;kesekian&nbsp;kalinya&nbsp;di&nbsp;reject</p>', '2025-12-29 00:28:50');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (34, 6, 34, 'i33wtesojro8e65d', 0, '<p>Dan&nbsp;untuk&nbsp;kesekian&nbsp;kalinya&nbsp;di&nbsp;reject</p>', '2026-01-04 23:09:24');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (35, 6, 35, 'i33wtesojro8e65d', 1, '<p>Di&nbsp;proses&nbsp;selanjutnya.</p>', '2025-12-28 12:04:25');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (36, 15, 35, 'i33wtesojro8e65d', 1, '<p>Di&nbsp;proses&nbsp;selanjutnya.</p>', '2025-12-28 12:04:32');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (37, 16, 35, 'i33wtesojro8e65d', 1, '<p>Di&nbsp;proses&nbsp;selanjutnya.</p>', '2025-12-28 12:04:36');
@@ -179,6 +216,18 @@ INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `cr
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (40, 19, 35, 'i33wtesojro8e65d', 1, '<p>Di&nbsp;proses&nbsp;selanjutnya.</p>', '2025-12-28 12:04:51');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (41, 20, 35, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-29 21:54:13');
 INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (42, 0, 35, 'i33wtesojro8e65d', 0, 'Dokumen sedang diverifikasi', '2025-12-28 12:05:09');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (45, 4, 39, 'i33wtesojro8e65d', 1, 'Dokumen telah diregistrasi', '2025-12-31 13:10:18');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (46, 5, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:43');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (47, 6, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:49');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (48, 16, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:14:55');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (49, 17, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:13');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (50, 18, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:30');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (51, 19, 39, 'i33wtesojro8e65d', 1, '<p>-</p>', '2025-12-31 13:15:35');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (52, 20, 39, 'i33wtesojro8e65d', 1, '<p>Okeee</p>', '2025-12-31 13:15:44');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (53, 0, 39, 'i33wtesojro8e65d', 0, 'Dokumen sedang diverifikasi', '2025-12-31 13:15:44');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (58, 6, 36, 'i33wtesojro8e65d', 0, 'Dokumen sedang diverifikasi', '2026-01-04 13:12:05');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (65, 4, 45, 'i33wtesojro8e65d', 1, 'Dokumen telah diregistrasi', '2026-01-04 22:56:02');
+INSERT INTO `documents_tracking` (`id`, `master_tahapan_id`, `documents_id`, `createdBy`, `status`, `keterangan`, `createdAt`) VALUES (66, 5, 45, 'i33wtesojro8e65d', 2, '<p>jelek</p>', '2026-01-04 23:39:16');
 COMMIT;
 
 -- ----------------------------
@@ -195,7 +244,7 @@ CREATE TABLE `file_ref` (
   PRIMARY KEY (`id`),
   KEY `db_name` (`db_name`) USING BTREE,
   KEY `ref_id` (`ref_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of file_ref
@@ -208,6 +257,7 @@ INSERT INTO `file_ref` (`id`, `title`, `file`, `type`, `db_name`, `ref_id`) VALU
 INSERT INTO `file_ref` (`id`, `title`, `file`, `type`, `db_name`, `ref_id`) VALUES (45, 'ahmer_cv.pdf', 'ahmer_cv-1766894510028-490147210.pdf', 'application/pdf', 'documents', 37);
 INSERT INTO `file_ref` (`id`, `title`, `file`, `type`, `db_name`, `ref_id`) VALUES (50, 'CertificateOfCompletion_Learning the JavaScript Language.pdf', 'CertificateOfCompletion_Learning the JavaScript Language-1766939330120-667850480.pdf', 'application/pdf', 'documents_history', 47);
 INSERT INTO `file_ref` (`id`, `title`, `file`, `type`, `db_name`, `ref_id`) VALUES (51, '9961bad9-ee30-434e-932d-4f6b259916f8.png', '9961bad9-ee30-434e-932d-4f6b259916f8-1766939330120-392479162.png', 'image/png', 'documents_history', 47);
+INSERT INTO `file_ref` (`id`, `title`, `file`, `type`, `db_name`, `ref_id`) VALUES (52, 'd779fd10da404c24a4c9d2fee85684ff.jpg', 'd779fd10da404c24a4c9d2fee85684ff-1767157818419-765340951.jpg', 'image/jpeg', 'documents', 39);
 COMMIT;
 
 -- ----------------------------
@@ -221,15 +271,16 @@ CREATE TABLE `group` (
   `createdAt` timestamp NULL DEFAULT NULL,
   `createdBy` varchar(35) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of group
 -- ----------------------------
 BEGIN;
-INSERT INTO `group` (`id`, `title`, `access_unit`, `createdAt`, `createdBy`) VALUES (10, 'Administrator', 2, '2025-09-23 18:27:07', 'i33wtesojro8e65d');
 INSERT INTO `group` (`id`, `title`, `access_unit`, `createdAt`, `createdBy`) VALUES (21, 'OPD', 0, '2025-10-24 19:05:20', 'i33wtesojro8e65d');
 INSERT INTO `group` (`id`, `title`, `access_unit`, `createdAt`, `createdBy`) VALUES (22, 'No Access', 0, '2025-11-25 21:15:49', 'i33wtesojro8e65d');
+INSERT INTO `group` (`id`, `title`, `access_unit`, `createdAt`, `createdBy`) VALUES (23, 'Administrator', 0, '2025-12-30 03:58:28', 'i33wtesojro8e65d');
+INSERT INTO `group` (`id`, `title`, `access_unit`, `createdAt`, `createdBy`) VALUES (24, 'Verifikator', 0, '2026-01-04 23:47:40', 'i33wtesojro8e65d');
 COMMIT;
 
 -- ----------------------------
@@ -407,6 +458,27 @@ INSERT INTO `master_ppn` (`id`, `uraian`, `keterangan`, `nilai`, `createdAt`, `c
 COMMIT;
 
 -- ----------------------------
+-- Table structure for master_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `master_tag`;
+CREATE TABLE `master_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uraian` varchar(255) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT '0 = tidak aktif, 1 = Aktif',
+  `createdBy` varchar(50) DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of master_tag
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
 -- Table structure for master_tahapan
 -- ----------------------------
 DROP TABLE IF EXISTS `master_tahapan`;
@@ -418,7 +490,7 @@ CREATE TABLE `master_tahapan` (
   `createdBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of master_tahapan
@@ -433,6 +505,7 @@ INSERT INTO `master_tahapan` (`id`, `uraian`, `keterangan`, `createdAt`, `create
 INSERT INTO `master_tahapan` (`id`, `uraian`, `keterangan`, `createdAt`, `createdBy`) VALUES (18, 'Penerbitan SP2D', 'Penerbitan Surat Perintah Pencairan Dana (SP2D), yaitu dokumen perintah resmi dari BUD kepada Bank Daerah untuk mencairkan atau mentransfer sejumlah dana dari Rekening Kas Umum Daerah (RKUD) ke rekening pihak yang berhak (OPD atau pihak ketiga).', '2025-12-10 18:35:08', 'i33wtesojro8e65d');
 INSERT INTO `master_tahapan` (`id`, `uraian`, `keterangan`, `createdAt`, `createdBy`) VALUES (19, 'Daftar Penguji', 'Proses penyusunan daftar atau rekapitulasi dokumen yang telah terbit SP2D-nya. Daftar ini digunakan sebagai laporan pengujian (verifikasi) akhir sebelum eksekusi pembayaran dilakukan oleh Bank, memastikan akurasi data.', '2025-12-10 18:35:21', 'i33wtesojro8e65d');
 INSERT INTO `master_tahapan` (`id`, `uraian`, `keterangan`, `createdAt`, `createdBy`) VALUES (20, 'Pencairan Bank', 'Eksekusi perintah pencairan atau transfer dana oleh Bank Daerah berdasarkan SP2D yang diterima. Dana secara fisik dipindahkan dari Rekening Kas Umum Daerah (RKUD) ke rekening penerima yang sah.', '2025-12-10 18:39:20', 'i33wtesojro8e65d');
+INSERT INTO `master_tahapan` (`id`, `uraian`, `keterangan`, `createdAt`, `createdBy`) VALUES (24, 'Resepsionis', '-', '2025-12-31 13:16:46', 'i33wtesojro8e65d');
 COMMIT;
 
 -- ----------------------------
@@ -480,7 +553,7 @@ CREATE TABLE `pph` (
   `master_pph_id` int(11) DEFAULT NULL COMMENT 'diambil dari tabel master_pph',
   PRIMARY KEY (`id`),
   KEY `documents_id` (`documents_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of pph
@@ -489,8 +562,9 @@ BEGIN;
 INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (33, 35, 3);
 INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (34, 36, 3);
 INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (35, 36, 4);
-INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (36, 37, 3);
-INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (39, 34, 3);
+INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (47, 34, 3);
+INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (48, 37, 3);
+INSERT INTO `pph` (`id`, `documents_id`, `master_pph_id`) VALUES (49, 45, 3);
 COMMIT;
 
 -- ----------------------------
@@ -503,15 +577,16 @@ CREATE TABLE `ppn` (
   `master_ppn_id` int(11) DEFAULT NULL COMMENT 'diambil dari tabel master_ppn',
   PRIMARY KEY (`id`),
   KEY `documents_id` (`documents_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of ppn
 -- ----------------------------
 BEGIN;
 INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (33, 35, 3);
-INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (34, 37, 3);
-INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (37, 34, 3);
+INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (45, 34, 3);
+INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (46, 37, 3);
+INSERT INTO `ppn` (`id`, `documents_id`, `master_ppn_id`) VALUES (47, 45, 3);
 COMMIT;
 
 -- ----------------------------
@@ -555,7 +630,7 @@ CREATE TABLE `users_group` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `users_group` (`id`, `user_id`, `group_id`) VALUES (14, 'i33wtesojro8e65d', 10);
-INSERT INTO `users_group` (`id`, `user_id`, `group_id`) VALUES (15, '5rhptobbm2hmritp', 21);
+INSERT INTO `users_group` (`id`, `user_id`, `group_id`) VALUES (15, '5rhptobbm2hmritp', 24);
 INSERT INTO `users_group` (`id`, `user_id`, `group_id`) VALUES (16, '3lqn324kdulty2y9q1', 21);
 COMMIT;
 
