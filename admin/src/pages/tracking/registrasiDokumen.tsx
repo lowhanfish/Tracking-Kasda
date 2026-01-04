@@ -669,7 +669,7 @@ const RegistrasiDokumen = () => {
                                     </Grid>
                                 </Grid>
 
-                                <hr className='hrku2' />
+                                {/* <hr className='hrku2' />
 
                                 <Grid container spacing={1}>
                                     <div className='inputText'>
@@ -784,7 +784,7 @@ const RegistrasiDokumen = () => {
                                             </table>
                                         </div>
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
 
                                 <hr className='hrku2' />
 

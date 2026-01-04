@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Folder from '@assets/img/icon/icons8-folder-100.png';
 import Approve from '@assets/img/icon/icons8-check-all-100.png';
-import Reject from '@assets/img/icon/icons8-beanie-96.png';
+import Reject from '@assets/img/icon/delete.png';
 import formatRupiah from '@lib/format.js'
 
 type ListDataItemsProps = {
