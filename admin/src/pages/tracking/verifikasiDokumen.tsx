@@ -18,6 +18,7 @@ import { GetUnitKerja } from "@lib/dataFetch.js";
 import ApproveDialog from './components/verifikasiDokumen/ApproveDialog';
 import Swal from 'sweetalert2';
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
+import Loadingr from '@components/Loading';
 
 
 function SettingDialog({ open, onClose, fullScreen, maxWidth, children }: any) {
@@ -56,8 +57,8 @@ const VerifikasiDokumen = () => {
     const [searchData, setSearchData] = useState('');
     const [pageFirst, setPageFirst] = useState(1);
     const [jmlData, setJmlData] = useState(1);
-    const [loadData, setLoadData] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [loadingForm, setLoadingForm] = useState(false);
     const [approvePath, setApprovePath] = useState("approve")
 
     const [tahapanActive, setTahapanActive] = useState({
@@ -151,16 +152,13 @@ const VerifikasiDokumen = () => {
 
         try {
             // attach files if any
+            setLoadingForm(true);
             if (files && Array.isArray(files)) {
                 files.forEach((f, idx) => {
                     formDataToSend.append('files', f);
                 });
             }
-            // If ApproveDialog passed files via onSave, it will be provided as argument
-            // But here we expect caller to pass files when invoking approveData(files)
-            // If no files provided, this will simply skip adding attachments.
-            // (The caller passes files array; see ApproveDialog invocation change.)
-            // Send to verification approve endpoint
+
             const res = await axios.post(`${url.URL_VERIFICATION}/approve`, formDataToSend, {
                 headers: {
                     'Authorization': `kikensbatara ${token}`,
@@ -183,9 +181,11 @@ const VerifikasiDokumen = () => {
             } else {
                 SetAlert('Gagal menyetujui data', 'error');
             }
+            setLoadingForm(false);
         } catch (err) {
             console.error('Approve error', err);
             SetAlert('Terjadi kesalahan saat menyetujui', 'error');
+            setLoadingForm(false);
         }
     };
 
@@ -387,25 +387,39 @@ const VerifikasiDokumen = () => {
                 </span>
                 <hr className='hrku2' />
 
-                {/* LIST ITEM - show 2 columns per row on md+ */}
-                <Grid container spacing={1}>
-                    {
-                        listData.map((data, index) => (
-                            <Grid size={{ md: 6, xs: 12 }} key={index}>
-                                <div onClick={() => { openSetting(); selectData(data); }}>
-                                    <ListDataItems
-                                        unit={data.sub_unit_kerja_uraian}
-                                        title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
-                                        price={data.nilai}
-                                        status={data.status_tracking}
-                                    />
-                                </div>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
+
+                {
+                    loading ? (
+                        <div>
+                            <Loadingr text='Sedang Memuat Data..' />
+                        </div>
+                    ) : (
+
+                        <Grid container spacing={1}>
+                            {
+                                listData.map((data, index) => (
+                                    <Grid size={{ md: 6, xs: 12 }} key={index}>
+                                        <div onClick={() => { openSetting(); selectData(data); }}>
+                                            <ListDataItems
+                                                unit={data.sub_unit_kerja_uraian}
+                                                title={`${data.uraian_jns_pencairan} - ${data.uraian} `}
+                                                price={data.nilai}
+                                                status={data.status_tracking}
+                                            />
+                                        </div>
+                                    </Grid>
+                                ))
+                            }
+                        </Grid>
+                    )
+                }
+
+
+
+
 
                 <div className='paginContainer'>
+
                     <Pagination
                         count={jmlData}
                         page={pageFirst}
@@ -456,6 +470,7 @@ const VerifikasiDokumen = () => {
                     value={approveComment}
                     onChange={setApproveComment}
                     approvePath={approvePath}
+                    loadingForm={loadingForm}
                 />
 
 

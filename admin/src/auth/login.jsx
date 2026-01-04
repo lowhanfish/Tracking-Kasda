@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import Logox from '@assets/img/logox.png';
 import useStorex from "@store";
 import axios from "axios";
+import Loadingr from "@components/Loading";
+
+
+
 
 export default function Login() {
     const navigate = useNavigate();
@@ -85,31 +89,42 @@ export default function Login() {
                         </Alert>
                     )}
 
-                    <Box component="form" onSubmit={handleLogin} sx={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 3 }}>
-                        <TextField
-                            name="username"
-                            value={form.username}
-                            onChange={handleForm}
-                            label="Email"
-                            fullWidth
-                        />
-                        <TextField
-                            name="password"
-                            value={form.password}
-                            onChange={handleForm}
-                            label="Password"
-                            type="password"
-                            fullWidth
-                        />
-                        <Button
-                            {...(loadingx && { disabled: true })}
-                            type="submit"
-                            sx={{ backgroundColor: 'rgba(7, 123, 211, 0.34)' }}
-                            variant="contained"
-                        >
-                            Login
-                        </Button>
-                    </Box>
+                    {
+                        loadingx ? (
+                            <div style={{ paddingBottom: 50 }}>
+                                <Loadingr text="Sabar yaaa..!" />
+                            </div>
+
+                        ) : (
+                            <Box component="form" onSubmit={handleLogin} sx={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 3 }}>
+                                <TextField
+                                    name="username"
+                                    value={form.username}
+                                    onChange={handleForm}
+                                    label="Email"
+                                    fullWidth
+                                />
+                                <TextField
+                                    name="password"
+                                    value={form.password}
+                                    onChange={handleForm}
+                                    label="Password"
+                                    type="password"
+                                    fullWidth
+                                />
+                                <Button
+                                    {...(loadingx && { disabled: true })}
+                                    type="submit"
+                                    sx={{ backgroundColor: 'rgba(7, 123, 211, 0.34)' }}
+                                    variant="contained"
+                                >
+                                    Login
+                                </Button>
+                            </Box>
+
+                        )
+                    }
+
                 </Paper>
             </div>
         </div >

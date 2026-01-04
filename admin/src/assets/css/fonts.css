@@ -270,6 +270,14 @@
     font-family: "SUSE", sans-serif;
 }
 
+.loadingSubText {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    /* font-family: "Poppins", sans-serif; */
+    font-family: "SUSE", sans-serif;
+}
+
 .h-body-t1 {
     font-size: 15px;
     font-weight: 600;
