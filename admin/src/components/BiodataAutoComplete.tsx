@@ -2,61 +2,67 @@ import React, { useState, useEffect } from 'react'
 
 import { Fieldx, Autocompletex, Popperx } from '@assets/styling/style'
 import { TextField } from "@mui/material";
-import { GetUnitKerja } from "@lib/dataFetch.js";
+import { GetBIODATA } from "@lib/dataFetch.js";
 import useStorex from '@store/index';
 
 
 
-const UnitKerjaAutoComplete = ({ selectedUnitKerja, setSelectedUnitKerja, objectData = false }: any) => {
+const BiodataAutoComplete = ({ selectedBiodata, setSelectedBiodata, selectedUnitKerjaForm }: any) => {
 
-    const [APIUnitKerja, setAPIUnitKerja] = useState([]);
-    const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
+    const [APIBiodata, setAPIBiodata] = useState([]);
+    const [inputValueBiodata, setInputValueBiodata] = useState('');
+
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
     const { url } = useStorex()
     const token = localStorage.getItem("authToken");
 
-    const handleDataUnitKerja = async (data) => {
-        const newAPIUnitKerja = await GetUnitKerja(data, token, url);
-        setAPIUnitKerja(newAPIUnitKerja);
+    const handleDataBiodata = async (data) => {
+        const datax = {
+            nama: data,
+            sub_unit_kerja: selectedUnitKerjaForm ? selectedUnitKerjaForm.id : profile.profile.sub_unit_kerja_id,
+        }
+        const newAPIBiodata = await GetBIODATA(datax, token, url);
+        console.log(newAPIBiodata)
+        setAPIBiodata(newAPIBiodata);
     };
 
     useEffect(() => {
-        handleDataUnitKerja("");
-    }, [selectedUnitKerja])
+        handleDataBiodata('');
+    }, [selectedBiodata, selectedUnitKerjaForm])
 
-    // Sinkronkan inputValue dengan selectedUnitKerja saat dipilih
     useEffect(() => {
-        if (selectedUnitKerja?.unit_kerja) {
-            setInputValueUnitKerja(selectedUnitKerja.unit_kerja);
+        if (selectedBiodata?.nama) {
+            setInputValueBiodata(selectedBiodata.nama);
         }
-    }, [selectedUnitKerja]);
+    }, [selectedBiodata]);
 
     return (
         <>
             <Autocompletex
-                value={selectedUnitKerja || null}
+                value={selectedBiodata || null}
                 onChange={(event, newValue) => {
-                    setSelectedUnitKerja(newValue);
-                    setInputValueUnitKerja(newValue?.unit_kerja || '');
+                    setSelectedBiodata(newValue);
+                    setInputValueBiodata(newValue?.nama || '');
                 }}
-                inputValue={inputValueUnitKerja}
+                inputValue={inputValueBiodata}
                 onInputChange={(event, newInputValue) => {
-                    setInputValueUnitKerja(newInputValue);
-                    handleDataUnitKerja(newInputValue);
+                    setInputValueBiodata(newInputValue);
+                    handleDataBiodata(newInputValue);
                 }}
                 size="small"
-                options={APIUnitKerja}
-                getOptionLabel={(option: { unit_kerja: string }) => option.unit_kerja || ""}
+                options={APIBiodata}
+                getOptionLabel={(option: { nama: string }) => option.nama || ""}
                 PopperComponent={Popperx}
                 renderInput={(params) => <TextField {...params} />}
-                renderOption={(props, option: { id: string, unit_kerja: string, uraian_instansi: string }) => (
+                renderOption={(props, option: { id: string, nama: string, nip: string }) => (
                     <li {...props} key={option.id}>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <span style={{ fontWeight: "bold", color: "#1976d2" }}>
-                                {option.unit_kerja}
+                                {option.nama}
                             </span>
                             <span style={{ fontSize: "10px", color: "#666" }}>
-                                {option.uraian_instansi}
+                                NIP. {option.nip}
                             </span>
                         </div>
                     </li>

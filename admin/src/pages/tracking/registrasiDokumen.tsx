@@ -26,6 +26,8 @@ import { indexingPage } from '@lib/index.js';
 import Swal from 'sweetalert2';
 import Loadingr from '@components/Loading';
 import UnitKerjaAutoComplete from '@components/UnitKerjaAutoComplete';
+import BiodataAutoComplete from '@components/BiodataAutoComplete';
+
 
 
 
@@ -103,6 +105,7 @@ const RegistrasiDokumen = () => {
     // ====== AUTO COMPLETE ====== 
     const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
     const [selectedUnitKerjaForm, setSelectedUnitKerjaForm] = useState(null);
+    const [selectedBiodataForm, setSelectedBiodataForm] = useState(null);
 
     // ====== AUTO COMPLETE ====== 
 
@@ -127,6 +130,7 @@ const RegistrasiDokumen = () => {
         status_update: 0,
         code: '',
         no: '',
+        pengusul: '',
     });
 
     const [file, setFile] = useState(null);
@@ -204,6 +208,9 @@ const RegistrasiDokumen = () => {
 
         var pathx = '';
         var sub_unit_kerja = selectedUnitKerjaForm.id;
+        var pengusul = selectedBiodataForm.nip;
+
+        // console.log(pengusul)
 
         if (addMode === "ADD") {
             pathx = '/add'
@@ -229,6 +236,7 @@ const RegistrasiDokumen = () => {
             formDataToSend.append('master_jns_pencairan_id', formData.master_jns_pencairan_id);
             formDataToSend.append('nilai', formData.nilai.toString());
             formDataToSend.append('no', formData.no);
+            formDataToSend.append('pengusul', pengusul);
 
             // Menambahkan PPN array
             ppn.forEach((item, index) => {
@@ -327,6 +335,7 @@ const RegistrasiDokumen = () => {
             status_update: 0,
             code: '',
             no: '',
+            pengusul: '',
         });
         setPpn([]);
         setPph([]);
@@ -359,6 +368,7 @@ const RegistrasiDokumen = () => {
             status_update: data.status_update,
             code: data.code,
             no: data.no,
+            pengusul: data.pengusul,
         }
 
         setFormData({ ...dataDummy });
@@ -370,6 +380,7 @@ const RegistrasiDokumen = () => {
         setListFiles(data.files);
         setTracking(data.tracking);
         setSelectedUnitKerjaForm(data.sub_unit_kerja_obj);
+        setSelectedBiodataForm(data.pengusulObj);
     }
 
     const handleFileUpload = (event: any) => {
@@ -616,11 +627,12 @@ const RegistrasiDokumen = () => {
                                         setSelectedUnitKerja={setSelectedUnitKerjaForm}
                                     />
                                 </Grid>
-                                <Grid>
-                                    <FieldSingle
-                                        Title={'Nama Kontak yang dapat dihubungi'}
-                                        value={formData.no}
-                                        onChange={(e) => getValue(e.target.value, 'no')}
+                                <Grid sx={{ paddingBottom: 0.5 }}>
+                                    <div className='inputText'>Nama Kontak yang dapat dihubungi</div>
+                                    <BiodataAutoComplete
+                                        selectedBiodata={selectedBiodataForm}
+                                        setSelectedBiodata={setSelectedBiodataForm}
+                                        selectedUnitKerjaForm={selectedUnitKerjaForm}
                                     />
                                 </Grid>
 

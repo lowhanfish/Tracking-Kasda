@@ -8,6 +8,7 @@ import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 import { removeFile } from "../lib/fileRef.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
 import { getUnitById } from "./master/unitKerja.js";
+import { getBiodataByNIP } from "./master/biodata.js";
 
 
 
@@ -95,6 +96,7 @@ export const viewAllData = async (req, res, filterUnitKerja)=> {
                 rows[i].pph = await view_pph(rows[i].id);
                 rows[i].sub_unit_kerja_obj = await getUnitById(rows[i].sub_unit_kerja);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
+                rows[i].pengusulObj = await getBiodataByNIP(rows[i].pengusul);
             }
 
             resolve(rows);
@@ -186,13 +188,16 @@ export const viewOne = async (req, res) => {
 
 export const add = async (req, res) => {
 
+
+    console.log(req.body)
+
     const query = `
         INSERT INTO documents
-        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, createdAt, createdBy, code, no)
+        (uraian, master_jns_pencairan_id, nilai, sub_unit_kerja, no, pengusul, createdAt, createdBy, code)
         VALUES
-        (?, ?, ?, ?, NOW(), ?, ?, ?)
+        (?, ?, ?, ?,?, ? , NOW(), ?, ?)
     `;
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.user._id, uniqid(), req.body.no];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.sub_unit_kerja, req.body.no, req.body.pengusul, req.user._id, uniqid()];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {
@@ -226,10 +231,10 @@ export const add = async (req, res) => {
             // console.log(req.body);
             const FirstStepx = await FirstStep(req.body.master_jns_pencairan_id)
             const numNextStep = await NumNextStep(req.body.master_jns_pencairan_id, FirstStepx);
-            console.log("====================")
-            console.log("FirstStepx", FirstStepx);
-            console.log("numNextStep", numNextStep);
-            console.log("==================== CLEAR")
+            // console.log("====================")
+            // console.log("FirstStepx", FirstStepx);
+            // console.log("numNextStep", numNextStep);
+            // console.log("==================== CLEAR")
 
 
             await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi");
@@ -264,10 +269,11 @@ export const editex = (req, res) => {
         master_jns_pencairan_id = ?,
         nilai = ?,
         no = ?,
-        sub_unit_kerja = ?
+        sub_unit_kerja = ?,
+        pengusul = ?
         WHERE id = ?
     `
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.sub_unit_kerja, req.body.id];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.sub_unit_kerja, req.body.pengusul, req.body.id];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {

@@ -22,6 +22,7 @@ const useStorex = create((set) => ({
     URL_USER: `${BASE_URL}api/user`,
 
     URL_UNIT_KERJA: `${BASE_URL}api/unitKerja`,
+    URL_BIODATA: `${BASE_URL}api/biodata`,
     URL_MASTER_TAHAPAN: `${BASE_URL}api/masterTahapan`,
     URL_MASTER_JNS_PENCAIRAN: `${BASE_URL}api/masterJnsPencairan`,
 

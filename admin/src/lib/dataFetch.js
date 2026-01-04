@@ -49,6 +49,31 @@ export const GetUnitKerja = async (data, token, url)=>{
 
     })
 }
+export const GetBIODATA = async (data, token, url)=>{
+
+    console.log(data);
+    
+    return new Promise((resolve, reject) => {
+
+        axios.post(url.URL_BIODATA+"/getByName", JSON.stringify({
+        // axios.post(url.URL_UNIT_KERJA+"/", JSON.stringify({
+            nama : data.nama,
+            sub_unit_kerja : data.sub_unit_kerja,
+        }),
+        {
+            headers: {
+                'Authorization': `kikensbatara ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            resolve(response.data)
+        }).catch(error => {
+            console.log(error)
+            resolve(error)
+        })
+
+    })
+}
 
 export const getAllUserGroup = async (token, url) =>{
 

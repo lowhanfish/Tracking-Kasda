@@ -47,6 +47,8 @@ router.get('/', (req, res) => {
 
     import unitKerja from "./api/master/unitKerja.js";
     app.use('/api/unitKerja', isLoggedIn, unitKerja)
+    import biodata from "./api/master/biodata.js";
+    app.use('/api/biodata', isLoggedIn, biodata)
     import masterTahapan from "./api/master/masterTahapan.js";
     app.use('/api/masterTahapan', isLoggedIn, masterTahapan)
     import masterJnsPencairan from "./api/master/masterJnsPencairan.js";
