@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Button, Dialog, Grid, DialogActions, DialogContent, DialogContentText, DialogTitle, Pagination, IconButton } from "@mui/material";
 
@@ -12,6 +12,9 @@ import BasicSelect from '@components/items/BasicSelect';
 import Checkboxz from '@components/items/Checkboxz';
 import CheckboxzLable from '@components/items/CheckboxLable';
 import FieldTextArea from '@components/items/FieldTextArea';
+import UnitKerjaAutoComplete from '@components/UnitKerjaAutoComplete';
+
+
 
 // ====== ADD/EDIT DIALOG ======
 function AddDialog({ open, onClose, fullScreen, maxWidth, title, children, onSave }) {
@@ -164,6 +167,10 @@ const Template1 = () => {
     ], [handleDetail, handleEdit, handleDelete]);
     // ====== ANCHOR ACTIONS ====== 
 
+
+    const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
+
+
     return (
         <div className="cardx">
             <div className="cardxHeader">
@@ -263,6 +270,15 @@ const Template1 = () => {
                         value={formData.fieldWithButton}
                         onChange={handleInputChange}
                     />
+
+                    <Grid sx={{ paddingBottom: 0.5 }}>
+                        <div className='inputText'>Pilih Unit Kerja</div>
+                        <h1>{JSON.stringify(selectedUnitKerja)}</h1>
+                        <UnitKerjaAutoComplete
+                            selectedUnitKerja={selectedUnitKerja}
+                            setSelectedUnitKerja={setSelectedUnitKerja}
+                        />
+                    </Grid>
 
                     <Grid container spacing={1}>
                         <Grid size={{ md: 6, xs: 12 }}>

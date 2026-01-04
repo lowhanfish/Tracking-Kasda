@@ -25,6 +25,7 @@ import { indexingPage } from '@lib/index.js';
 
 import Swal from 'sweetalert2';
 import Loadingr from '@components/Loading';
+import UnitKerjaAutoComplete from '@components/UnitKerjaAutoComplete';
 
 
 
@@ -100,24 +101,9 @@ const RegistrasiDokumen = () => {
 
 
     // ====== AUTO COMPLETE ====== 
-
-
-
-    const [APIUnitKerja, setAPIUnitKerja] = useState([])
-    const [valueUnitKerja, setValueUnitKerja] = useState("");
-    const [inputValueUnitKerja, setInputValueUnitKerja] = useState('');
     const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
 
-    const handleDataUnitKerja = async (data) => {
-        const newAPIUnitKerja = await GetUnitKerja(data, token, url);
-        setAPIUnitKerja(newAPIUnitKerja);
-    };
-
-
     // ====== AUTO COMPLETE ====== 
-
-    // const formDataToSend.append('pageFirst', pageFirst);
-    // formDataToSend.append('jmlData', jmlData);
 
     const [activeAlert, SetActiveAlert] = useState(false);
     const [messageAlert, SetMessageAlert] = useState("");
@@ -200,24 +186,14 @@ const RegistrasiDokumen = () => {
             id_unit_kerja: '',
         };
 
-        // console.log("========", selectedUnitKerja)
-
         if (selectedUnitKerja) {
             payload.id_unit_kerja = selectedUnitKerja.id; // pakai id dari object
         }
-
-
 
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
-        // console.log(listDatax)
-
-
-        // setListData(res.data);
-
-
     }
 
     const saveData = async () => {
@@ -355,7 +331,7 @@ const RegistrasiDokumen = () => {
 
     const selectData = (data) => {
 
-        console.log(data);
+        // console.log(data);
 
         const dataDummy = {
             id: data.id,
@@ -376,8 +352,6 @@ const RegistrasiDokumen = () => {
         setFormData({ ...dataDummy });
 
         // setFormData(dataDummy);
-
-
 
         setPpn(data.ppn);
         setPph(data.pph);
@@ -419,7 +393,6 @@ const RegistrasiDokumen = () => {
         });
     };
 
-
     const cariData = (e) => {
         setPageFirst(1)
         viewData();
@@ -460,7 +433,7 @@ const RegistrasiDokumen = () => {
     useEffect(() => {
         viewData();
         loadDataRef();
-        handleDataUnitKerja("");
+        // handleDataUnitKerja("");
     }, [selectedUnitKerja, searchData, pageFirst])
 
     return (
@@ -472,35 +445,12 @@ const RegistrasiDokumen = () => {
 
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
-                        <Autocompletex
-                            value={APIUnitKerja.find(opt => opt.id === selectedUnitKerja) || null}
-                            onChange={(event, newValue) => {
-                                setSelectedUnitKerja(newValue); // simpan full object
-                                // getData(); // panggil ulang data
-                            }}
-                            inputValue={inputValueUnitKerja}
-                            onInputChange={(event, newInputValue) => {
-                                setInputValueUnitKerja(newInputValue);
-                                handleDataUnitKerja(newInputValue); // cari data unit kerja sesuai input
-                            }}
-                            size="small"
-                            options={APIUnitKerja}
-                            getOptionLabel={(option: { unit_kerja: string }) => option.unit_kerja || ""}
-                            PopperComponent={Popperx}
-                            renderInput={(params) => <TextField {...params} />}
-                            renderOption={(props, option: { id: string, unit_kerja: string, uraian_instansi: string }) => (
-                                <li {...props} key={option.id}>
-                                    <div style={{ display: "flex", flexDirection: "column" }}>
-                                        <span style={{ fontWeight: "bold", color: "#1976d2" }}>
-                                            {option.unit_kerja}
-                                        </span>
-                                        <span style={{ fontSize: "10px", color: "#666" }}>
-                                            {option.uraian_instansi}
-                                        </span>
-                                    </div>
-                                </li>
-                            )}
+
+                        <UnitKerjaAutoComplete
+                            selectedUnitKerja={selectedUnitKerja}
+                            setSelectedUnitKerja={setSelectedUnitKerja}
                         />
+
                     </Grid>
                     <Grid size={{ md: 4, xs: 12 }}>
                         <Fieldx
@@ -539,8 +489,6 @@ const RegistrasiDokumen = () => {
                         <Add sx={{ fontSize: 18 }} />
                         Add Data
                     </button>
-                    {/* <button className='btn danger shaddow1'>Add Data</button> <br /> <br />
-                    <button className='btn lg warning fullWidth shaddow2'>Add Data</button> */}
                 </div>
 
                 {/* LIST ITEM - show 2 columns per row on md+ */}
@@ -569,7 +517,6 @@ const RegistrasiDokumen = () => {
                             }
                         </Grid>
                     )
-
                 }
 
 
@@ -649,6 +596,20 @@ const RegistrasiDokumen = () => {
                             </div>
                         ) : (
                             <div>
+                                <Grid>
+                                    <FieldSingle
+                                        Title={'Unit Kerja Pengusul'}
+                                        value={formData.no}
+                                        onChange={(e) => getValue(e.target.value, 'no')}
+                                    />
+                                </Grid>
+                                <Grid>
+                                    <FieldSingle
+                                        Title={'Nama Kontak yang dapat dihubungi'}
+                                        value={formData.no}
+                                        onChange={(e) => getValue(e.target.value, 'no')}
+                                    />
+                                </Grid>
 
                                 <FieldSingle
                                     Title={'Nama Kegiatan'}
@@ -682,6 +643,7 @@ const RegistrasiDokumen = () => {
                                         onChange={(e) => getValue(e.target.value, 'no')}
                                     />
                                 </Grid>
+
 
                                 {/* <hr className='hrku2' />
 
