@@ -238,6 +238,10 @@ Fungsi ini peruntukan untuk list tahapan berdasarkan role akses verifikasi
 
 export const getAllStepByAccess = (req, res) => {
 
+    // console.log(req.user.profile.level)
+
+
+
     console.log("getAllStep verifivation.js dipanggil");
     // console.log(req.body);
 
@@ -245,6 +249,7 @@ export const getAllStepByAccess = (req, res) => {
     const query = `
         SELECT 
         master_tahapan.*,
+        access_tahapan.status,
 
         (
             SELECT COUNT(*) 
@@ -256,9 +261,16 @@ export const getAllStepByAccess = (req, res) => {
             WHERE documents_tracking.master_tahapan_id = master_tahapan.id AND documents_tracking.status = ?
            
         ) as total
+
         FROM master_tahapan
+
+        LEFT JOIN access_tahapan
+        ON access_tahapan.master_tahapan_id = master_tahapan.id AND access_tahapan.group_id = ?
+
+
+
     `
-    const values = [req.body.status]
+    const values = [req.body.status, req.user.profile.level]
 
 
     db.query(query, values, (err, rows)=>{
@@ -266,7 +278,17 @@ export const getAllStepByAccess = (req, res) => {
             console.log(err);
             res.status(500).send(err);
         } else {
-            res.status(200).send(rows);
+            var data = []
+
+            rows.forEach(element => {
+                if (element.status === 1) {
+                    data.push(element)
+                }
+            });
+
+
+
+            res.status(200).send(data);
         }
     })
 

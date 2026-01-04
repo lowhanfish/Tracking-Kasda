@@ -101,9 +101,7 @@ const VerifikasiDokumen = () => {
     ]
 
     const viewData = async () => {
-
         setLoading(true);
-
         const payload = {
             pageFirst: pageFirst,
             searchData: searchData,
@@ -135,8 +133,6 @@ const VerifikasiDokumen = () => {
         } else {
             status = '2'
         }
-
-
         if (!approveComment || approveComment === '<p><br></p>') {
             alert("Mohon isi catatan persetujuan");
             return;
