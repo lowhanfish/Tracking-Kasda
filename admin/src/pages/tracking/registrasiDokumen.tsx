@@ -102,6 +102,7 @@ const RegistrasiDokumen = () => {
 
     // ====== AUTO COMPLETE ====== 
     const [selectedUnitKerja, setSelectedUnitKerja] = useState(null);
+    const [selectedUnitKerjaForm, setSelectedUnitKerjaForm] = useState(null);
 
     // ====== AUTO COMPLETE ====== 
 
@@ -191,6 +192,7 @@ const RegistrasiDokumen = () => {
         }
 
         const listDatax = await getPOST(token, url.URL_DOCUMENT + '/view', payload);
+        console.log(listDatax);
         setListData(listDatax.data);
         setJmlData(listDatax.jml);
         setLoading(false);
@@ -198,14 +200,16 @@ const RegistrasiDokumen = () => {
 
     const saveData = async () => {
 
+        // console.log(selectedUnitKerjaForm.id);
+
         var pathx = '';
-        var sub_unit_kerja = '';
+        var sub_unit_kerja = selectedUnitKerjaForm.id;
 
         if (addMode === "ADD") {
             pathx = '/add'
-            sub_unit_kerja = profile.profile.sub_unit_kerja_id
+            // sub_unit_kerja = selectedUnitKerjaForm.id
         } else {
-            sub_unit_kerja = formData.sub_unit_kerja;
+            // sub_unit_kerja = formData.sub_unit_kerja;
             pathx = '/edit'
         }
 
@@ -267,20 +271,7 @@ const RegistrasiDokumen = () => {
                 closeAdd();
 
                 // Reset form
-                setFormData({
-                    id: '',
-                    uraian: '',
-                    sub_unit_kerja: profile.profile.sub_unit_kerja_id,
-                    master_jns_pencairan_id: '',
-                    nilai: 0,
-                    master_tahapan_id: tahapanId,
-                    status_update: 0,
-                    code: '',
-                    no: '',
-                });
-                setPpn([]);
-                setPph([]);
-                setFile(null);
+                emptyData();
             }
         } catch (error) {
             console.error('Error saat menyimpan data:', error);
@@ -290,6 +281,8 @@ const RegistrasiDokumen = () => {
             viewData();
             setLoadingForm(false);
         }
+
+
     }
 
     const removeData = async () => {
@@ -321,6 +314,25 @@ const RegistrasiDokumen = () => {
             }
         });
     };
+
+
+    const emptyData = () => {
+        setFormData({
+            id: '',
+            uraian: '',
+            sub_unit_kerja: profile.profile.sub_unit_kerja_id,
+            master_jns_pencairan_id: '',
+            nilai: 0,
+            master_tahapan_id: tahapanId,
+            status_update: 0,
+            code: '',
+            no: '',
+        });
+        setPpn([]);
+        setPph([]);
+        setFile(null);
+        setSelectedUnitKerjaForm(null);
+    }
 
     const removeFileDb = async (index, data) => {
         await getPOST(token, url.URL_FILES + '/delete', data);
@@ -357,6 +369,7 @@ const RegistrasiDokumen = () => {
         setPph(data.pph);
         setListFiles(data.files);
         setTracking(data.tracking);
+        setSelectedUnitKerjaForm(data.sub_unit_kerja_obj);
     }
 
     const handleFileUpload = (event: any) => {
@@ -548,7 +561,7 @@ const RegistrasiDokumen = () => {
                             formData.status_update == 1 && (
                                 <>
                                     <Grid size={12}>
-                                        <Button onClick={() => { closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
+                                        <Button onClick={(e) => { e.currentTarget.blur(); closeSetting(); openAdd(); setAddMode("EDIT"); }} color="warning" fullWidth variant="outlined" size="small">
                                             Edit
                                         </Button>
                                     </Grid>
@@ -596,11 +609,11 @@ const RegistrasiDokumen = () => {
                             </div>
                         ) : (
                             <div>
-                                <Grid>
-                                    <FieldSingle
-                                        Title={'Unit Kerja Pengusul'}
-                                        value={formData.no}
-                                        onChange={(e) => getValue(e.target.value, 'no')}
+                                <Grid sx={{ paddingBottom: 0.5 }}>
+                                    <div className='inputText'>Pilih Unit Kerja Pengusul</div>
+                                    <UnitKerjaAutoComplete
+                                        selectedUnitKerja={selectedUnitKerjaForm}
+                                        setSelectedUnitKerja={setSelectedUnitKerjaForm}
                                     />
                                 </Grid>
                                 <Grid>

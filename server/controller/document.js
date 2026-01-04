@@ -7,6 +7,9 @@ import { view as view_tracking, save as save_tracking, deletex as deletex_tracki
 import { dummyStatus, canUpdate } from "../controller/getStatus.js";
 import { removeFile } from "../lib/fileRef.js";
 import { FirstStep, NumNextStep } from "../lib/getStep.js";
+import { getUnitById } from "./master/unitKerja.js";
+
+
 
 import uniqid from "uniqid";
 
@@ -90,6 +93,7 @@ export const viewAllData = async (req, res, filterUnitKerja)=> {
             for (let i = 0; i < rows.length; i++) {
                 rows[i].ppn = await view_ppn(rows[i].id);
                 rows[i].pph = await view_pph(rows[i].id);
+                rows[i].sub_unit_kerja_obj = await getUnitById(rows[i].sub_unit_kerja);
                 rows[i].files = await view_files(req, 'documents', rows[i].id);
             }
 
@@ -259,10 +263,11 @@ export const editex = (req, res) => {
         uraian = ?,
         master_jns_pencairan_id = ?,
         nilai = ?,
-        no = ?
+        no = ?,
+        sub_unit_kerja = ?
         WHERE id = ?
     `
-    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.id];
+    const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.sub_unit_kerja, req.body.id];
 
     db.query(query, values, async (err, rows)=>{
         if (err) {
