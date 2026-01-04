@@ -130,6 +130,60 @@ export const sendEmailByDocId = async (documents_id, judul, status_text, full_te
 }
 
 
+export const sendEmailByDocIdNIP = async (documents_id, judul, status_text, full_text)=> {
+
+
+        
+        const query = `
+          SELECT
+
+          documents.id,
+          documents.uraian,
+          biodata.email as email,
+          biodata.nama as nama
+
+          FROM ${main}.documents documents
+
+          LEFT JOIN ${simpeg}.biodata biodata
+          ON documents.pengusul = biodata.nip
+
+          WHERE documents.id = ?
+        `;
+    
+        const values = [documents_id];
+    
+        db.query(query, values, async (err, rows)=>{
+          if (err) {
+            console.log(err)
+          } else {
+
+            const to = rows[0].email;
+            const subject = judul;
+            const text = `
+              <h2>Hello ${rows[0].nama} 👋</h2>
+              <p>Pengajuan anda terkait "<b>${rows[0].uraian}</b>" ${status_text}</p>
+              
+              <div>${full_text}</div>
+              <div>Untuk lebih lengkapnya silahkan buka aplikasi e-tracking anda pada alamat https://e-tracking.konaweselatankab.go.id/TrackingDokumen</div>
+              <br/>
+              
+              <div><i>Mohon untuk tidak membalas pesan otomatis ini...</i></div>
+              <div><b>Hormat Kami, BKAD KAB. KONAWE SELATAN 🙏</b></div>
+            `
+
+
+            sendEmailHtml(to, subject, text)
+          }
+          
+        })
+ 
+
+
+
+
+}
+
+
 
 
 

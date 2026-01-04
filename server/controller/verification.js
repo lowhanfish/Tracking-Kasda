@@ -9,7 +9,7 @@ import { saveHistory, save as SaveTracking, getID } from "../controller/tracking
 import { FirstStep, NumNextStep, LastStep } from "../lib/getStep.js";
 import {add as add_files} from "../controller/files.js";
 import { dummyStatus, canUpdate } from "../controller/getStatus.js";
-import { sendEmailByDocId } from "../lib/sendEmail.js";
+import { sendEmailByDocIdNIP } from "../lib/sendEmail.js";
 
 
 export const view = async (req, res)=>{
@@ -176,7 +176,7 @@ export const approve = async (req, res)=>{
                             Semua tahapan verifikasi terkait usulan anda telah selesai.
                         </div>
                     `
-                    sendEmailByDocId(req.body.id, judul, status_text, full_text)
+                    sendEmailByDocIdNIP(req.body.id, judul, status_text, full_text)
 
 
 
@@ -198,7 +198,7 @@ export const approve = async (req, res)=>{
                         ${req.body.catatan}
                     </div>
                 `
-                sendEmailByDocId(req.body.id, judul, status_text, full_text)
+                sendEmailByDocIdNIP(req.body.id, judul, status_text, full_text)
 
 
 
