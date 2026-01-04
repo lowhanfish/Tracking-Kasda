@@ -260,7 +260,6 @@ export const editex = (req, res) => {
         master_jns_pencairan_id = ?,
         nilai = ?,
         no = ?
-
         WHERE id = ?
     `
     const values = [req.body.uraian, req.body.master_jns_pencairan_id, req.body.nilai, req.body.no, req.body.id];

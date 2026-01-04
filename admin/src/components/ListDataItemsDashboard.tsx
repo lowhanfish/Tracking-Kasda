@@ -34,7 +34,11 @@ const ListDataItemsDashboard = ({ title, unit, price, status = 0 }: ListDataItem
                 <div style={{ marginTop: 2 }} className='list-text2'>{unit}</div>
                 <div style={{ marginTop: 0 }} className='list-text3'>
                     <b>{formatRupiah(price)}</b>
-                    <span className="badge warn">Menunggu</span>
+                    <span className={'badge ' + (status === 0 ? 'warn' : status === 1 ? 'ok' : 'danger')}>
+                        {
+                            status === 0 ? 'Process' : status == 1 ? 'Approved' : 'Rejected'
+                        }
+                    </span>
                 </div>
 
             </div>
