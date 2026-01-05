@@ -1,4 +1,3 @@
-
 import db from "../db/mysql/index.js";
 import buildTree from "../lib/buildTree.js";
 import buildTreeAccess from "../lib/buildTreeAccess.js";
