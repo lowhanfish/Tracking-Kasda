@@ -21,11 +21,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import StopIcon from "@mui/icons-material/Stop";
 
 import { ListItemSatu } from "@assets/styling/style.js";
-import menuConfig, { getmenuItem } from "@configs/menuConfig";
+// import menuConfig, { getmenuItem } from "@configs/menuConfig";
 import stylex from "@assets/styling/stylex.js";
 import KopImage from '@assets/img/kop.png';
 
 import useStorex from '@store/index.js'
+import axios from "axios";
 
 const DRAWER_WIDTH = 240;
 
@@ -57,6 +58,7 @@ export default function SideBar({ variant, open, onClose }) {
     };
 
     // Dapatkan style text berdasarkan level menu
+
     const getTextStyle = (level) => {
         if (level === 1) return stylex.sideBarText1;
         if (level === 2) return stylex.sideBarText2;
@@ -114,9 +116,32 @@ export default function SideBar({ variant, open, onClose }) {
         localStorage.removeItem("profile");
     };
 
+
+    const token = localStorage.getItem("authToken");
+    const [AllMenu, SetAllMenu] = useState([])
+
+
+    const getViewMenu = () => {
+        axios.post(url.URL_MENU + "/getMenuSidebar", JSON.stringify({ id: '' }), {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `kikensbatara ${token}`
+            }
+        }).then(result => {
+            console.log(result);
+            SetAllMenu(result.data)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+
+
+
+
     useEffect(() => {
 
-
+        getViewMenu();
     }, [])
 
     return (
@@ -148,7 +173,8 @@ export default function SideBar({ variant, open, onClose }) {
                 </Box>
 
                 {/* Menu Items */}
-                <List>{renderMenu(menuConfig)}</List>
+                {/* <List>{renderMenu(menuConfig)}</List> */}
+                <List>{renderMenu(AllMenu)}</List>
 
                 {/* Logout Button */}
                 <List sx={{ marginTop: -2 }}>

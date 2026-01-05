@@ -1,128 +1,60 @@
 
 import db from "../db/mysql/index.js";
 import buildTree from "../lib/buildTree.js";
+import buildTreeAccess from "../lib/buildTreeAccess.js";
 
 import dbResolveCondition from "../lib/dbResolveCondition.js"
-
-
-// export const getMenuSidebar = (req, res) =>{
-
-//     console.log(req.user.profile.level)
-
-//     const query = `
-//         SELECT * 
-//         FROM users_group
-
-//     `
-//     db.query(query, (err, rows)=>{
-//         if (err) {
-//         console.log(err);
-//         res.status(500);
-//         res.send(err);
-//     } else {
-//         res.status(200);
-//         res.send(rows);
-//     }
-//     })
-// }
-
 
 export const getMenuSidebar = async (req, res) => {
 
     const level = req.user.profile.level;
+    // const level = 23;
     console.log(level)
 
     const query = `
         SELECT 
-        menu.*
+        menu.*,
+        IFNULL(access.view, 0) as viewx,
+        IFNULL(access.add, 0) as addx,
+        IFNULL(access.update, 0) as updatex,
+        IFNULL(access.remove, 0) as removex
 
-        FROM access
+        FROM menu
 
-        LEFT JOIN menu
-        ON menu.id = access.menu_id
-
-        WHERE access.group_id = ${level}
-
+        LEFT JOIN access
+        ON menu.id = access.menu_id AND access.group_id = ${level}
     `
 
     db.query(query, async (err, rows)=>{
         if (err) {
-            res.status(400)
+            res.status(400).send(err);
             console.log(err)
         } else {
-
-            const data = []
-
-            const menu = await getDataMenu()
-            const x2 = menu.message
-
-
-        
-
-            x2.forEach(element => {
-
-
-                    if (element.multiple != 1) {
-                        element.view = false;
-                        element.add = false;
-                        element.update = false;
-                        element.remove = false;
-                    }
-    
-    
-                    data.push(element);
-                
-            });
-
-
-
-            const dataFinal= buildTree(data)
-
-            // console.log(dataFinal)
-
-            // const data = rows;
-            // console.log(data)
-
-            res.send(dataFinal);
-
+            // console.log(rows);
+            const filteredTree = buildTreeAccess(rows);
+            res.send(filteredTree);
         }
-
-
     })
-
-
 }
-
 
 
 const getDataMenu = async () =>{
 
     return new Promise((resolve, reject) => {
-
         const query = `SELECT * FROM menu`
         db.query(query, (err, rows)=>{
             dbResolveCondition(resolve, err, rows)
         })
-
-        
     })
-
-
 }
-
-
-
 
 export const getAddMenu = async (req, res)=>{
 
     var query = `SELECT * FROM menu`
     return new Promise((resolve, reject) => {
         
-    
         db.query(query, async (err, rows)=>{
-    
-            // console.log(rows)
-    
+
             if (err) {
                 res.status(400);
                 resolve(err)
@@ -138,26 +70,21 @@ export const getAddMenu = async (req, res)=>{
                         element.update = false;
                         element.remove = false;
                     }
-    
-    
                     data.push(element);
                 });
     
                 const dataFinal = buildTree(data);
                 resolve(dataFinal)
     
-    
             }
     
         })
     })
-
-
 }
 
 export const getUpdateMenu = async (req, res)=>{
 
-    console.log(req.body)
+    // console.log(req.body)
 
     var query = `
     SELECT 
@@ -185,7 +112,5 @@ export const getUpdateMenu = async (req, res)=>{
             }
         })
     })
-
-
 }
 

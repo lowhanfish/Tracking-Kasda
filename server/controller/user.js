@@ -32,7 +32,6 @@ export const getDataUser = async (req, res) => {
     
 }
 
-
 export const getUser = async (req, res, filterUnitKerja)=>{
     // console.log("Controller getUser di panggil")
     // console.log(req.body)
@@ -233,10 +232,6 @@ export const addUsersGroup = async (req, res) => {
     })
 }
 
-
-
-
-
 export const getProfile = async(req, res) =>{
     console.log("Controller getProfile user.js di panggil")
     const nip = await getNIPById(req, res);
@@ -248,7 +243,6 @@ export const getProfile = async(req, res) =>{
         educations : educations.message,
     })
 }
-
 
 export const getNIPById = async (req, res) =>{
 
@@ -275,7 +269,6 @@ export const getNIPById = async (req, res) =>{
 
 
 }
-
 
 export const getUserDetail = async (req, res)=>{
 
@@ -336,6 +329,7 @@ export const getUserEducations = async (req, res)=>{
     })
 
 }
+
 
 
 
