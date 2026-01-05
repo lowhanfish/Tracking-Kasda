@@ -305,6 +305,15 @@
 }
 
 
+
+.labelTitleSidebar {
+    padding: 5px 5px 5px 20px;
+    background-color: var(--color-banner-x2);
+    color: white;
+    font-size: 12px;
+}
+
+
 @media only screen and (max-width: 600px) {
 
     .h_Home1 {

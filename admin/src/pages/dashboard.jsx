@@ -127,7 +127,7 @@ const Dashboard = () => {
         });
         setListDocument(listDocumentx);
         // console.log("============")
-        // console.log(listDocumentx);
+        console.log(listDocumentx);
         getProgresPengajuan(listDocumentx[0].id, listDocumentx[0].master_jns_pencairan_id);
 
     }
@@ -261,7 +261,7 @@ const Dashboard = () => {
                                     <div key={index} onClick={() => { getProgresPengajuan(data.id, data.master_jns_pencairan_id); }}>
                                         <ListDataItemsDashboard
                                             title={data.uraian}
-                                            unit={data.sub_unit_kerja}
+                                            unit={data.sub_unit_kerja_uraian}
                                             price={data.nilai}
                                             status={data.status_temp}
                                         />

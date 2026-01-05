@@ -84,12 +84,16 @@ export const list_documents = (req, res)=> {
          const query = `
             SELECT 
             documents.* ,
-            master_jns_pencairan.uraian as uraian_jns_pencairan
+            master_jns_pencairan.uraian as uraian_jns_pencairan,
+            s_unit_kerja.unit_kerja as sub_unit_kerja_uraian
     
             FROM ${main}.documents documents
 
             LEFT JOIN ${main}.master_jns_pencairan master_jns_pencairan
             ON documents.master_jns_pencairan_id = master_jns_pencairan.id
+
+            LEFT JOIN ${simpeg}.unit_kerja s_unit_kerja
+            ON s_unit_kerja.id = documents.sub_unit_kerja
 
             ${filter_sub_unit_kerja}
             LIMIT `+req.body.limit+`

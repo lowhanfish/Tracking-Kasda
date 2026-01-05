@@ -128,7 +128,7 @@ export default function SideBar({ variant, open, onClose }) {
                 "Authorization": `kikensbatara ${token}`
             }
         }).then(result => {
-            console.log(result);
+            // console.log(result);
             SetAllMenu(result.data)
         }).catch(err => {
             console.log(err);
@@ -170,6 +170,9 @@ export default function SideBar({ variant, open, onClose }) {
                             display: "block",
                         }}
                     />
+                    <div className="labelTitleSidebar">
+                        e-Tracking <b>Ver. 0.0.1</b>
+                    </div>
                 </Box>
 
                 {/* Menu Items */}
