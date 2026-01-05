@@ -17,6 +17,11 @@ import SideBar from "../components/SideBar";
 const drawerWidth = 240;
 
 export default function MainLayout() {
+
+    console.log("Cocodark")
+
+
+
     const theme = useTheme();
     const isTabletOrBelow = useMediaQuery("(max-width:1024px)");
 

@@ -56,11 +56,11 @@ function MenuSetting() {
 
 
 
-    // ====== MAPPING ICON ====== 
+    // ====== MAPPING ICON ======
     const mapIcon = (data) => {
-        return iconMap[data] || null
+        return iconMap[data] || SettingsIcon
     }
-    // ====== MAPPING ICON ====== 
+    // ====== MAPPING ICON ======
 
     // ====== TOGLE SHOW/HIDE ====== 
     const [openParent, setOpenParent] = useState(null);
