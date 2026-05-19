@@ -3,23 +3,15 @@ import { Fieldx } from '@assets/styling/style'
 import { Button, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Checkbox } from "@mui/material";
 import { Clear } from '@mui/icons-material';
 
-
-
 import { Selectx, MenuItemx } from '@assets/styling/style';
 
 import axios from "axios";
 import useStorex from '@store/index.js';
 
-
-
-
 function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
     // var pathx = ''
     var pathMenux = ''
     var pathMenuxTahapan = ''
-
-
-
 
     const token = localStorage.getItem('authToken');
     const { url } = useStorex();
@@ -33,7 +25,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
     })
 
     const [listTahapan, setListTahapan] = useState([])
-
 
     const handleForm = (field) => (e) => {
         setForm(prevForm => ({
@@ -70,9 +61,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         setListTahapan(newList);
     };
 
-
-
-
     const getHandle = () => {
 
         // console.log(listTahapan)
@@ -89,7 +77,8 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                 'Authorization': `kikensbatara ${token}`
             }
         }).then((response) => {
-            console.log(response);
+            // console.log(response);
+            alert(`DATA SUCCESS ${typeEvent}..!`)
             getData();
         }).catch((error) => {
             // alert(JSON.stringify(error.response.data))
@@ -104,9 +93,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
 
         // console.log("UNTUK MENU : ", url.URL_MENU + pathMenux)
 
-
-
-
         axios.post(url.URL_MENU + pathMenux, JSON.stringify(formx), {
             headers: {
                 'Authorization': `kikensbatara ${token}`,
@@ -119,7 +105,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
             console.log(error)
         })
     }
-
 
     const getTahapan = () => {
 
@@ -143,11 +128,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         })
     }
 
-
-
-
-
-
     // ========================== CHECKBOX ==========================
 
     // 🔧 helper rekursif untuk update node berdasarkan id
@@ -163,20 +143,15 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
         setListMenu((prev) => updateNode(prev, id, field, e.target.checked));
     };
 
-
     // ========================== CHECKBOX ==========================
 
-
-
     useEffect(() => {
-
 
         setForm({
             id: '',
             title: '',
             access_unit: 0,
         })
-
 
         if (typeEvent === 'ADD') {
             setPathy("/add");
@@ -191,7 +166,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
             pathMenux = "/viewUpdateMenu"
             pathMenuxTahapan = "/viewAccessUserEdit"
 
-
             // console.log(formx)
 
             setForm({
@@ -200,19 +174,12 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                 access_unit: formx.access_unit,
             })
         }
-
-
         // console.log(typeEvent)
         // console.log("PATH USE EFFECT : ", pathx)
-
-
         getDataMenu();
         getTahapan();
 
     }, [])
-
-
-
 
 
     return (
@@ -379,8 +346,6 @@ function AccessSettingAdd({ handleCloseModalAdd, typeEvent, formx, getData }) {
                     Save
                 </Button>
             </DialogActions>
-
-
         </>
     )
 }

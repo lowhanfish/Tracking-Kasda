@@ -30,3 +30,23 @@ const insertData = (data, group_id) => {
     })
 
 }
+
+
+export const removeTahapan = (group_id) => {
+
+    return new Promise((resolve, reject) => {
+        
+        const query = `
+            DELETE FROM access_tahapan WHERE access_tahapan.group_id = ?
+        `
+        const values = [group_id]
+        db.query(query, values, (err, rows) => {
+            if(err){
+                reject(err)
+            }else{
+                resolve(rows)
+            }
+        })
+    })
+
+}
