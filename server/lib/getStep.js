@@ -48,11 +48,16 @@ export const LastStep = async (master_jns_pencairan, currentData) => {
 
 const getSteps = (master_jns_pencairan) => {
 
+    console.log("=================")
+    console.log(master_jns_pencairan)
+    console.log("=================")
+
     return new Promise((resolve, reject) => {
         
         const query = `
             SELECT master_tahapan_id FROM master_jns_pencairan_list
             WHERE master_jns_pencairan_list.master_jns_pencairan_id = ?
+            ORDER BY master_jns_pencairan_list.urut ASC
         `;
     
         const values = [master_jns_pencairan];
@@ -62,6 +67,9 @@ const getSteps = (master_jns_pencairan) => {
             if (err) {
                 reject(err);
             } else {
+                console.log("=======FIRST STEP")
+                console.log(rows)
+                console.log("=======FIRST STEP")
                 resolve(rows);
             }
         })

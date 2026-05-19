@@ -197,6 +197,8 @@ const view_master_jns_pencairan_list = (data) => {
             master_tahapan.id = master_jns_pencairan_list.master_tahapan_id
             AND
             master_jns_pencairan_list.master_jns_pencairan_id = ?)
+
+            ORDER BY master_jns_pencairan_list.urut ASC
         `
         db.query(query, values,(err, rows)=> {
 

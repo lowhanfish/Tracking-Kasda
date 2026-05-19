@@ -285,8 +285,7 @@ export const getAllStepByAccess = (req, res) => {
                     data.push(element)
                 }
             });
-
-
+            console.log(data)
 
             res.status(200).send(data);
         }

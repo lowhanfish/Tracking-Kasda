@@ -190,7 +190,7 @@ export const viewOne = async (req, res) => {
 export const add = async (req, res) => {
 
 
-    console.log(req.body)
+    // console.log(req.body)
 
     const query = `
         INSERT INTO documents
@@ -237,8 +237,13 @@ export const add = async (req, res) => {
             // console.log("numNextStep", numNextStep);
             // console.log("==================== CLEAR")
 
+            console.log("========== MASTER TAHAPAN ID ==============")
+            console.log(req.body.master_tahapan_id)
+            console.log("========== MASTER TAHAPAN ID ==============")
 
-            await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi");
+
+            // await save_tracking(req, req.body.master_tahapan_id, rows.insertId, 1, "Dokumen telah diregistrasi");
+            await save_tracking(req, FirstStepx, rows.insertId, 1, "Dokumen telah diregistrasi");
             
             if (numNextStep) {
                 await save_tracking(req, numNextStep, rows.insertId, 0, "Dokumen sedang diverifikasi");
